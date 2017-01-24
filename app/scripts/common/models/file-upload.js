@@ -37,7 +37,7 @@ angular.module('dmc.model.fileUpload', ['dmc.data'])
               console.log('file name: ' + file.name, name);
 
               //File Size Check
-              if(file.size > 10585760) {
+              if(file.size > 25585760) {
                 toastModel.showToast('error','Sorry, file size must be under 10MB');
                 return null;
               }
