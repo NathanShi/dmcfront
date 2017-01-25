@@ -4,7 +4,7 @@
 *
 * Dashboard
 */
-angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 'md.data.table', 'dmc.common.header', 'dmc.common.footer', 'dmc.model.user'])
+angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 'md.data.table', 'dmc.common.header', 'dmc.model.user'])
 .run(['$rootScope', function($rootScope){
       $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
 

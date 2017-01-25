@@ -28,7 +28,6 @@
 <script src="scripts/configs/ngMaterial-config.js"></script>
 <script src="scripts/common/header/header.js"></script>
 <script src="scripts/common/factory/notifications.factory.js"></script>
-<script src="scripts/common/footer/footer.js"></script>
 <script src="scripts/common/factory/socket.factory.js"></script>
 <script src="scripts/common/factory/ajax.factory.js"></script>
 <script src="scripts/common/factory/data.factory.js"></script>
@@ -60,5 +59,6 @@
         ?>
         window.apiUrl = '';
     </script>
+      <?php include 'footerZ.php' ?>
 </body>
 </html>

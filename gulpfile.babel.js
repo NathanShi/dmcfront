@@ -9,9 +9,32 @@ import del from 'del';
 import {stream as wiredep} from 'wiredep';
 var gzip = require('gulp-gzip');
 var tar = require('gulp-tar');
+var useref = require('gulp-useref');
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
+const eslint = require('gulp-eslint');
+
+
+gulp.task('elint', () => {
+    // ESLint ignores files with "node_modules" paths.
+    // So, it's best to have gulp ignore the directory as well.
+    // Also, Be sure to return the stream from the task;
+    // Otherwise, the task may end before the stream has finished.
+    return gulp.src(['**/*.js','!node_modules/**'])
+        // eslint() attaches the lint output to the "eslint" property
+        // of the file object so it can be used by other modules.
+        .pipe(eslint())
+        // eslint.format() outputs the lint results to the console.
+        // Alternatively use eslint.formatEach() (see Docs).
+        .pipe(eslint.format())
+        // To have the process exit with an error code (1) on
+        // lint error, return the stream and pipe to failAfterError last.
+        .pipe(eslint.failAfterError());
+});
+
+
+
 
 gulp.task('styles', () => {
   return gulp.src('app/styles/*.scss')
@@ -32,7 +55,7 @@ function lint(files, options) {
   return () => {
     return gulp.src(files)
       .pipe(reload({stream: true, once: true}))
-    //   .pipe($.eslint(options))
+      // .pipe($.eslint(options))
       .pipe($.eslint.format())
       .pipe($.if(!browserSync.active, $.eslint.failAfterError()));
   };
@@ -53,21 +76,20 @@ const uglifyOptions = {
 }
 
 gulp.task('lint', lint('app/scripts/**/*.js', lintOptions));
-gulp.task('lint:test', lint('test/spec/**/*.js', testLintOptions));
+// gulp.task('lint:test', lint('test/spec/**/*.js', testLintOptions));
 
 gulp.task('php', ['styles'], () => {
-  const assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
+  //  const assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
+
 
   return gulp.src('app/**/*.php')
-    .pipe(assets)
+    .pipe(useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe($.if('*.js', $.uglify(uglifyOptions)))
     .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
-    .pipe(assets.restore())
-    .pipe($.useref())
     .pipe($.if('*.php', $.minifyHtml({conditionals: true, loose: true})))
     .pipe(gulp.dest('dist'));
 });
-
+//
 gulp.task('images', () => {
   return gulp.src(['app/images/**/*','bower_components/angular-tree-control/images/*'])
     .pipe($.if($.if.isFile, $.cache($.imagemin({
@@ -89,7 +111,7 @@ gulp.task('ngtemplates', () => {
     .pipe(gulp.dest('.tmp/templates'))
     .pipe(gulp.dest('dist/templates'));
 });
-
+//
 gulp.task('phpservice', () => {
   return gulp.src('app/static/**/*')
     .pipe(gulp.dest('.tmp/static'))
@@ -104,9 +126,9 @@ gulp.task('extras', () => {
     dot: true
   }).pipe(gulp.dest('dist'));
 });
-
+//
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
-
+//
 gulp.task('serve', ['styles'], () => {
     connect.server({
         port: 9001,
@@ -170,7 +192,7 @@ gulp.task('serve:dist', () => {
   //   server: {
   //     baseDir: ['dist'],
   //   }
-  // });
+  // }
 });
 
 gulp.task('serve:test', () => {
@@ -215,5 +237,5 @@ gulp.task('buildTarGZ', ['lint', 'php', 'images', 'ngtemplates', 'phpservice', '
 });
 
 gulp.task('default', ['clean'], () => {
-  gulp.start('build');
+
 });

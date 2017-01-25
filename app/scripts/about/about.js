@@ -8,7 +8,7 @@ angular.module('dmc.about', [
     'md.data.table',
     'dmc.configs.ngmaterial',
     'dmc.common.header',
-    'dmc.common.footer',
+  
     'dmc.model.toast-model',
     "dmc.ajax",
     "dmc.data"

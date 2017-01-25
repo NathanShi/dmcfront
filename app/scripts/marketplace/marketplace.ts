@@ -4,6 +4,7 @@
 *
 * Dashboard
 */
+
 angular.module('dmc.marketplace', [
     'dmc.configs.ngmaterial',
     'ngMdIcons',
@@ -16,7 +17,7 @@ angular.module('dmc.marketplace', [
     'ngCookies',
     'dmc.widgets.documents',
     'dmc.common.header',
-  
+    'dmc.common.footer',
     'dmc.component.treemenu',
     'dmc.component.productscard',
     'dmc.component.carousel',
@@ -25,13 +26,13 @@ angular.module('dmc.marketplace', [
     'dmc.widgets.tabs',
     'dmc.component.products-filter'
 ])
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider){
     $stateProvider.state('marketplace', {
         url: '/home?product?type?text',
         templateUrl: 'templates/marketplace/marketplace.html',
         controller: 'DMCMarketplaceController',
         resolve: {
-            is_search: function () {
+            is_search: function() {
                 return false;
             }
         }
@@ -40,11 +41,10 @@ angular.module('dmc.marketplace', [
         templateUrl: 'templates/marketplace/marketplace.html',
         controller: 'DMCMarketplaceController',
         resolve: {
-            is_search: function () {
+            is_search: function() {
                 return true;
             }
         }
     });
     $urlRouterProvider.otherwise('/home?product=services');
 });
-//# sourceMappingURL=marketplace.js.map

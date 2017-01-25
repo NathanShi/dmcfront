@@ -47,5 +47,6 @@
         ?>
         window.apiUrl = '';
     </script>
+      <?php include 'footerZ.php' ?>
   </body>
 </html>
