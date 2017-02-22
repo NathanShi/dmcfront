@@ -47,6 +47,7 @@ angular.module('dmc.company-profile').
                     "CO|Colorado",
                     "CT|Connecticut",
                     "DE|Delaware",
+                    'DC|DC',
                     "FL|Florida",
                     "GA|Georgia",
                     "HI|Hawaii",
