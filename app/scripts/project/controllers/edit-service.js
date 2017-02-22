@@ -62,8 +62,11 @@ angular.module('dmc.project')
                   tag: 'IoT/IIoT',
                   name : 'IoT/IIoT'
               }, {
-                  tag : 'Fundamental Calculations',
-                  name : 'Fundamental Calculations'
+                  tag : 'Fundamental Calculations - Physics',
+                  name : 'Fundamental Calculations - Physics'
+              }, {
+                  tag : 'Fundamental Calculations - Fracture Mechanics',
+                  name : 'Fundamental Calculations - Fracture Mechanics'
               }, {
                   tag: 'Education & Workforce',
                   name : 'Education & Workforce'
