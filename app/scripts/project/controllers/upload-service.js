@@ -66,6 +66,9 @@ angular.module('dmc.project')
                   tag : 'Fundamental Calculations - Fracture Mechanics',
                   name : 'Fundamental Calculations - Fracture Mechanics'
               }, {
+                  tag : 'Fundamental Calculations - Engineering',
+                  name : 'Fundamental Calculations - Engineering'
+              }, {
                   tag: 'Education & Workforce',
                   name : 'Education & Workforce'
               }];
