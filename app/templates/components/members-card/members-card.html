@@ -22,6 +22,11 @@
 			<!-- <h3><a ng-href="{{'profile.php#/'+cardSource.id}}">{{cardSource.firstName + ' ' + cardSource.lastName}}</a></h3> -->
 			<h3><a ng-href="{{'profile.php#/'+cardSource.id}}">{{displayName}}</a></h3>
 		</div>
+		<div ng-if="fromSearch" class="companyName">
+			<div>
+				<a ng-href="{{'company-profile.php#/profile/'+cardSource.companyId}}">{{cardSource.companyName}}</a>
+			</div>
+		</div>
 		<!-- <h4>{{cardSource.jobTitle}}</h4> -->
 		<div>
 			<a class="detailsToggle" ng-init="showDetails=false" ng-click="showDetails = !showDetails">
@@ -48,7 +53,7 @@
 			<a href="" ng-if="!cardSource.isVerified && cardSource.id === userData.accountId" ng-click="resendNotification()">Resend Notification</a>
 		</div>
 
-		<div class="footer" layout="row" >
+		<div ng-if="!fromSearch" class="footer" layout="row" >
 
 			<md-button class="white-button" ng-click="setRole()" aria-label="Select Role" ng-hide="(!userData.isDmdiiAdmin && !userData.isAdmin) || !cardSource.isVerified || (settingRole || addingToProject)" flex>
 				Select Role

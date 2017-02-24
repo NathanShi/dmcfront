@@ -51,14 +51,13 @@
                     </div>
                     <div flex ng-if="type === 'members'">
                         <div layout="row" layout-wrap>
-                            <div dmc-member-card
-                                flex="20"
+                            <div style="padding: 8px"
                                 dir-paginate="item in arrayItems | itemsPerPage: totalItemsPerPage"
                                 total-items="totalResults"
                                 current-page="currentPage"
                                 all-buttons="true"
-                                card-source="item"
-                                class="member-card">
+                                card-source="item">
+                                <dmc-members-card from-search="true" card-source="item" company-id="company.id"></dmc-members-card>
                             </div>
                         </div>
                     </div>
