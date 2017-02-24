@@ -1,8 +1,8 @@
 <div ng-if="!not_found" class="company-profile">
 <md-content class="company-profile-padding">
 <div layout="row">
-    <div flex="20">
-        <img class="company-profile-image" ng-src="{{company.logoImage.documentUrl}}">
+    <div flex="20">  
+        <img class="company-profile-image" ng-src="{{company.logoImage.documentUrl ? company.logoImage.documentUrl : 'images/icon-company-lg.svg'}}">
     </div>
     <div flex="80" layout="column" class="company-profile-header">
         <div layout="row" layout-align="center center">
