@@ -10,6 +10,7 @@
             <div class="newsAndEvents" flex="95" layout="column">
                 <div class=" slim-margin">
                     <p class="news">Recent News</p>
+
                     <div class="slim-margin" ng-repeat="item in news">
                         <div layout="row" flex="75">
                             <div layout="column">
@@ -161,7 +162,10 @@
                             </td>
                             <td class="title-member">
                                 <h3><a ng-href="{{'/member-page.php#/'+member.id}}">{{member.organization.name}}</a></h3>
-                                <p class="description">{{member.organization.description}}</p>
+                                <p class="description" more-less
+                                  element-text="{{member.organization.description}}"
+                                  element-text-limit="140">
+                                </p>
                             </td>
                             <td>{{member.dmdiiType.dmdiiTypeCategory.category}}</td>
                             <td>{{member.dmdiiType.tier}}</td>
