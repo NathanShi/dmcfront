@@ -170,14 +170,35 @@
                             <td>{{member.dmdiiType.dmdiiTypeCategory.category}}</td>
                             <td>{{member.dmdiiType.tier}}</td>
                             <td>
-                                <a ng-repeat="project in activeProjects[member.id] track by $index" ng-href="{{'/dmdii-project-page.php#/' + project.id}}">{{project.projectTitle}}{{$last ? '' : ', '}}</a>
+
+                                <div layout="row" ng-repeat="project in activeProjects[member.id] track by $index">
+                                  <b>-</b>
+                                  <a more-less
+                                     element-text ="{{project.projectTitle}}"
+                                     element-text-limit="30"
+                                     ng-href="{{'/dmdii-project-page.php#/' + project.id}}">
+                                      <!-- {{project.projectTitle}} -->
+                                  </a>
+                                </div>
                             </td>
 
                             <td>
-                                <a ng-repeat="tag in member.organization.areasOfExpertise track by $index" ng-href="{{getUrl('expertiseTags', tag.id)}}">{{tag.name}}{{$last ? '' : ', '}}</a>
+                                <div layout="row" ng-repeat="tag in member.organization.areasOfExpertise track by $index">
+                                  <b>-</b>
+                                  <a more-less
+                                     ng-href="{{getUrl('expertiseTags', tag.id)}}"
+                                     element-text="{{tag.name}}"
+                                     element-text-limit="30">
+                                   </a>
                             </td>
                             <td>
-                                <a ng-repeat="tag in member.organization.desiredAreasOfExpertise track by $index" ng-href="{{getUrl('desiredExpertiseTags', tag.id)}}">{{tag.name}}{{$last ? '' : ', '}}</a>
+                                <div layout="row" ng-repeat="tag in member.organization.desiredAreasOfExpertise track by $index">
+                                  <b>-</b>
+                                  <a more-less
+                                     ng-href="{{getUrl('desiredExpertiseTags', tag.id)}}"
+                                     element-text="{{tag.name}}"
+                                     element-text-limit="30">
+                                   </a>
                             </td>
                         </tr>
                         <tr ng-if="members.arr.length == 0">
