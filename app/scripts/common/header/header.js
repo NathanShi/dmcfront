@@ -83,6 +83,16 @@ angular.module('dmc.common.header', ['ngAnimate', 'dmc.model.user', 'dmc.common.
           $mdMenu.cancel();
         };
 
+        $scope.closeSubMenus = function(){
+          // var subMenus = document.getElementsByClassName('sub-menu-content')
+          //
+          // for (var i=0; i<subMenus.length; i++) {
+          //   // subMenus[i].remove();
+          //   subMenus[i].style.display = "none";
+          // }
+
+        }
+
         function markRead(callback){
             var user = $.extend(true,{},$scope.userData);
             for(var i in user.notifications){
