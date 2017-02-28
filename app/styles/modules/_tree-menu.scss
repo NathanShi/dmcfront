@@ -63,6 +63,7 @@
 }
 
 .horizontal-menu{
+  margin: 0px 25px 20px 0px;
   .menu-title{
     border-right: 4px solid green;
     padding-right: 12px;
@@ -79,8 +80,17 @@
     .category{
       padding: 0px 2px;
     }
+    .category::before{
+      content: "-";
+    }
   }
   .selected{
     color: map-get($colors, secondary);
+  }
+}
+
+.search-filter{
+  md-content{
+    padding: 0px 15px;
   }
 }
