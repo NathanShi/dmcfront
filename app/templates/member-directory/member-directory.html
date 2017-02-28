@@ -1,9 +1,9 @@
 <div class="container members-box" layout="row" >
 
-    <div class="content-column" layout="column" flex='15'>
+    <!-- <div class="content-column" layout="column" flex='15'>
         <dmc-tree-menu tree-source="treeMenuModel"></dmc-tree-menu>
         <dmc-products-filter state-name="'members_search'" ng-if="isSearch"></dmc-products-filter>
-    </div>
+    </div> -->
         <!-- Left Content Column -->
     <div class="members" layout="column" flex>
         <md-content layout="row" layout-align="center">
@@ -102,9 +102,11 @@
 
         <md-divider></md-divider>
 
-        <md-content class="members-search" layout="row" layout-align="left center">
 
-            <form ng-submit="submit(searchModel)" class="dmc-search global-search-form" flex="60">
+
+        <md-content class="members-search" layout="row" layout-align="space-around center">
+
+            <form ng-submit="submit(searchModel)" class="dmc-search global-search-form" flex="35">
                 <div layout="column">
                     <div layout="row">
                         <div layout="column" flex>
@@ -121,10 +123,14 @@
                             </md-input-container>
                         </div>
                     </div>
+
+
+
                 </div>
             </form>
-            <span flex></span>
-            <md-input-container flex=class="show-filter-input-container">
+            <!-- <span flex></span> -->
+            <dmc-horizontal-menu tree-source="treeMenuModel"></dmc-horizontal-menu>
+            <md-input-container class="show-filter-input-container">
                 <label>Show</label>
                 <md-select ng-model="sizeModule" ng-change="selectItemDropDown()">
                     <md-option ng-repeat="item in showArray track by $index" ng-value="$index" >
@@ -134,9 +140,8 @@
             </md-input-container>
         </md-content>
 
-        <md-content>
-          <dmc-horizontal-menu tree-source="treeMenuModel"></dmc-horizontal-menu>
-        </md-content>
+        <!-- <md-content>
+        </md-content> -->
 
         <!-- <span flex></span> -->
         <md-content layout="column">
