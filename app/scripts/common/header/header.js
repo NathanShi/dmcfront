@@ -79,7 +79,7 @@ angular.module('dmc.common.header', ['ngAnimate', 'dmc.model.user', 'dmc.common.
           });
         };
 
-        $scope.closeMenu = function(event){
+        $scope.closeMenu = function(){
           $mdMenu.cancel();
         };
 
