@@ -243,6 +243,18 @@ div[dmc-top-header]{
       width: 90%;
     }
   }
+  a{
+    background: transparent;
+  }
+  a:hover{
+    background: transparent;
+  }
+  button:hover{
+    background: transparent;
+  }
+  md-menu:hover, md-menu-item:hover{
+    background: lightgrey;
+  }
 }
 
 .header-menu-content.md-default-theme{
