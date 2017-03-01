@@ -85,13 +85,10 @@
             "code":"AME"
          },
          "contributingCompanyIds":[
-            116,
-            161,
-            167,
-            182,
-            188,
-            191,
-            226
+           6,
+           7,
+           8,
+           9
          ],
          "rootNumber":14,
          "callNumber":1,
@@ -136,9 +133,10 @@
             "code":"AA"
          },
          "contributingCompanyIds":[
-            219,
-            235,
-            237
+           6,
+           7,
+           8,
+           9
          ],
          "rootNumber":15,
          "callNumber":7,
@@ -183,7 +181,7 @@
             "code":"AME"
          },
          "contributingCompanyIds":[
-            188
+            9
          ],
          "rootNumber":14,
          "callNumber":9,
