@@ -1,0 +1,196 @@
+{
+   "count":4,
+   "data":[
+      {
+         "id":10,
+         "primeOrganization":{
+            "id":2,
+            "name":"Beneral Alectric (BA)"
+         },
+         "principalInvestigator":{
+            "id":14,
+            "firstName":"Joan",
+            "lastName":"Dough",
+            "email":"jd@jd.com"
+         },
+         "projectStatus":{
+            "id":2,
+            "name":"awarded"
+         },
+         "awardedDate":"2016-06-16",
+         "endDate":"2017-12-16",
+         "projectTitle":"This is the project title",
+         "projectSummary":"This is a summary of the project.",
+         "principalPointOfContact":{
+            "id":1,
+            "firstName":"Joan",
+            "lastName":"Dough",
+            "email":"jd@jd.com"
+         },
+         "projectFocusArea":{
+            "id":3,
+            "name":"Sensors & Metrology"
+         },
+         "projectThrust":{
+            "id":2,
+            "name":"Intelligent Machining",
+            "code":"IM"
+         },
+         "contributingCompanyIds":[
+            6,
+            7,
+            8,
+            9
+         ],
+         "rootNumber":14,
+         "callNumber":7,
+         "projectNumber":1,
+         "costShare":99.88,
+         "dmdiiFunding":7777.33,
+         "projectIdentifier":"19-18-05"
+      },
+      {
+         "id":4,
+         "primeOrganization":{
+            "id":2,
+            "name":"Beneral Alectric (BA)"
+         },
+         "principalInvestigator":{
+            "id":8,
+            "firstName":"Joan",
+            "lastName":"Dough",
+            "email":"jd@jd.com"
+         },
+         "projectStatus":{
+            "id":2,
+            "name":"awarded"
+         },
+         "awardedDate":"2015-12-22",
+         "endDate":"2017-04-30",
+         "projectTitle":"This is the project title",
+         "projectSummary":"This is a summary of the project.",
+         "principalPointOfContact":{
+            "id":3,
+            "firstName":"Joan",
+            "lastName":"Dough",
+            "email":"jd@jd.com"
+         },
+         "projectFocusArea":{
+            "id":1,
+            "name":"Model-Based Design/Enterprise"
+         },
+         "projectThrust":{
+            "id":1,
+            "name":"Advanced Manufacturing Enterprise",
+            "code":"AME"
+         },
+         "contributingCompanyIds":[
+            116,
+            161,
+            167,
+            182,
+            188,
+            191,
+            226
+         ],
+         "rootNumber":14,
+         "callNumber":1,
+         "projectNumber":10,
+         "costShare":99.88,
+         "dmdiiFunding":7777.33,
+         "projectIdentifier":"19-18-05"
+      },
+      {
+         "id":28,
+         "primeOrganization":{
+            "id":2,
+            "name":"Beneral Alectric (BA)"
+         },
+         "principalInvestigator":{
+            "id":25,
+            "firstName":"Joan",
+            "lastName":"Dough",
+            "email":"jd@jd.com"
+         },
+         "projectStatus":{
+            "id":2,
+            "name":"awarded"
+         },
+         "awardedDate":"2016-09-12",
+         "endDate":"2018-09-12",
+         "projectTitle":"This is the project title",
+         "projectSummary":"This is a summary of the project.",
+         "principalPointOfContact":{
+            "id":3,
+            "firstName":"Joan",
+            "lastName":"Dough",
+            "email":"jd@jd.com"
+         },
+         "projectFocusArea":{
+            "id":2,
+            "name":"Manufacturing Processes"
+         },
+         "projectThrust":{
+            "id":3,
+            "name":"Advanced Analysis",
+            "code":"AA"
+         },
+         "contributingCompanyIds":[
+            219,
+            235,
+            237
+         ],
+         "rootNumber":15,
+         "callNumber":7,
+         "projectNumber":5,
+         "costShare":99.88,
+         "dmdiiFunding":7777.33,
+         "projectIdentifier":"19-18-05"
+      },
+      {
+         "id":14,
+         "primeOrganization":{
+            "id":2,
+            "name":"Beneral Alectric (BA)"
+         },
+         "principalInvestigator":{
+            "id":17,
+            "firstName":"Joan",
+            "lastName":"Dough",
+            "email":"jd@jd.com"
+         },
+         "projectStatus":{
+            "id":2,
+            "name":"awarded"
+         },
+         "awardedDate":"2016-03-14",
+         "endDate":"2017-03-14",
+         "projectTitle":"This is the project title",
+         "projectSummary":"This is a summary of the project.",
+         "principalPointOfContact":{
+            "id":3,
+            "firstName":"Joan",
+            "lastName":"Dough",
+            "email":"jd@jd.com"
+         },
+         "projectFocusArea":{
+            "id":1,
+            "name":"Model-Based Design/Enterprise"
+         },
+         "projectThrust":{
+            "id":1,
+            "name":"Advanced Manufacturing Enterprise",
+            "code":"AME"
+         },
+         "contributingCompanyIds":[
+            188
+         ],
+         "rootNumber":14,
+         "callNumber":9,
+         "projectNumber":2,
+         "costShare":99.88,
+         "dmdiiFunding":7777.33,
+         "projectIdentifier":"19-18-05"
+      }
+   ]
+}
