@@ -243,6 +243,10 @@ div[dmc-top-header]{
       width: 90%;
     }
   }
+  md-menu-item:empty{
+    min-height: 0px;
+    height: 0px;
+  }
   a{
     background: transparent;
   }
