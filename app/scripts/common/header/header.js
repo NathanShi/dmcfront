@@ -32,7 +32,7 @@ angular.module('dmc.common.header', ['ngAnimate', 'dmc.model.user', 'dmc.common.
         );
 
         $scope.screenSmall = function(){
-          return $mdMedia('sm');
+          return $mdMedia('(max-width: 768px)');
         }
 
         var initUserData = function(data) {
@@ -82,16 +82,6 @@ angular.module('dmc.common.header', ['ngAnimate', 'dmc.model.user', 'dmc.common.
         $scope.closeMenu = function(event){
           $mdMenu.cancel();
         };
-
-        $scope.closeSubMenus = function(){
-          // var subMenus = document.getElementsByClassName('sub-menu-content')
-          //
-          // for (var i=0; i<subMenus.length; i++) {
-          //   // subMenus[i].remove();
-          //   subMenus[i].style.display = "none";
-          // }
-
-        }
 
         function markRead(callback){
             var user = $.extend(true,{},$scope.userData);

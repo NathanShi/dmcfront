@@ -38,7 +38,7 @@
                     </md-menu-content>
                 </md-menu> -->
                 <!-- Notifications -->
-                <md-menu md-offset="0 64">
+                <md-menu md-offset="0 64" ng-hide="screenSmall()">
                     <md-button class="md-button"
                                aria-label="Notifications"
                                ng-click="closeMenu(); $mdOpenMenu($event)">
@@ -81,7 +81,7 @@
                     </md-menu-content>
                 </md-menu>
                 <!-- Messages -->
-                <md-menu md-offset="0 64">
+                <md-menu md-offset="0 64" ng-hide="screenSmall()">
                     <md-button class="md-button"
                                aria-label="Messages"
                                ng-click="closeMenu(); $mdOpenMenu($event)">
@@ -166,8 +166,8 @@
                         Dashboard
                     </md-button> -->
 
-                    <md-menu md-offset="0 57" class="item hamburger-menu" id="multimenu" ng-init="dropDownWidth = 200" style="overflow: visible">
-                      <!-- ng-if="screenSmall()"  -->
+                    <md-menu ng-if="screenSmall()" md-offset="0 57" class="item hamburger-menu" id="multimenu" ng-init="dropDownWidth = 200" style="overflow: visible">
+
                         <md-button ng-click="closeMenu(); $mdOpenMenu($event); setDropDown($event,dropDownWidth);">
                             <ng-md-icon icon="menu" size="25"></ng-md-icon>
                         </md-button>
