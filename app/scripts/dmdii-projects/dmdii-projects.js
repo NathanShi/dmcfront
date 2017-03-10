@@ -25,9 +25,11 @@ angular.module('dmc.dmdiiProjects', [
     'dmc.component.treemenu',
     'dmc.component.horizontalmenu',
     'dmc.widgets.tasks',
+    'ui.bootstrap',
+    'bootstrapLightbox',
     'dmc.widgets.tabs'
 ])
-.config(function($stateProvider, $urlRouterProvider, $httpProvider){
+.config(function($stateProvider, $urlRouterProvider, $httpProvider,LightboxProvider){
     $stateProvider.state('dmdii_projects', {
         url: '/dmdii_projects?status?rootNumber?callNumber?statusId?focusId?thrustId',
         templateUrl: 'templates/dmdii-projects/dmdii-projects.html',
@@ -48,4 +50,14 @@ angular.module('dmc.dmdiiProjects', [
         }
     });
     $urlRouterProvider.otherwise('/dmdii_projects');
+
+    LightboxProvider.calculateImageDimensionLimits = function (dimensions) {
+      return {
+        'maxWidth': dimensions.windowWidth >= 768 ? // default
+          dimensions.windowWidth - 92 :
+          dimensions.windowWidth - 52,
+        'maxHeight': dimensions.imageHeight                           // custom
+      };
+    };
+
 });

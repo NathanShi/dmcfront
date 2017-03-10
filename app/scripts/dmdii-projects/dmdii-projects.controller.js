@@ -15,6 +15,7 @@ angular.module('dmc.dmdiiProjects')
         'is_search',
         'DMCUserModel',
         '$mdDialog',
+        'Lightbox',
         '$window',
         function($state,
                  $stateParams,
@@ -29,7 +30,13 @@ angular.module('dmc.dmdiiProjects')
                  is_search,
                  DMCUserModel,
                  $mdDialog,
+                 Lightbox,
                  $window){
+
+             $scope.openLightboxModal=function(img){
+               console.log(Lightbox.getImageUrl(img));
+               Lightbox.openModal([{'url':img}],0);
+             }
 
             var apply = function(){
                 if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') $scope.$apply();
@@ -102,10 +109,12 @@ angular.module('dmc.dmdiiProjects')
             $scope.getProjectStaticImages = function() {
                 ajax.get(dataFactory.getDMDIIDocuments().overview, {}, function(response)  {
                     $scope.projectOverview = response.data;
+                    console.log($scope.projectOverview);
                 });
 
                 ajax.get(dataFactory.getDMDIIDocuments().status, {}, function(response)  {
                     $scope.projectStatus = response.data;
+                    console.log($scope.projectStatus);
                 });
             }
             $scope.getProjectStaticImages();

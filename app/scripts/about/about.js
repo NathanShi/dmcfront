@@ -24,7 +24,14 @@ angular.module('dmc.about', [
     });
     $urlRouterProvider.otherwise('/');
 
-    // LightboxProvider.fullScreenMode=true;
+    LightboxProvider.calculateImageDimensionLimits = function (dimensions) {
+      return {
+        'maxWidth': dimensions.windowWidth >= 768 ? // default
+          dimensions.windowWidth - 92 :
+          dimensions.windowWidth - 52,
+        'maxHeight': dimensions.imageHeight                           // custom
+      };
+    };
 
 
 });

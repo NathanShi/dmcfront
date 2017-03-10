@@ -30,7 +30,8 @@
                         <h3>Projects Overview</h3>
                         <a class="delete-btn" href ng-click="deleteDocument(projectOverview.id, 'projectOverview')" ng-show="userData.isDmdiiAdmin">delete</a>
 
-                        <img style="border:1px solid;width:100% " ng-src="{{projectOverview.documentUrl}}"></img>
+
+                        <img style="border:1px solid;width:100% " ng-src="{{projectOverview.documentUrl}}" ng-click="openLightboxModal('{{projectOverview.documentUrl}}')"></img>
 
                     </div>
 
@@ -38,7 +39,7 @@
                         <h3>Projects Status</h3>
                         <a class="delete-btn" href ng-click="deleteDocument(projectStatus.id, 'projectStatus')" ng-show="userData.isDmdiiAdmin">delete</a>
 
-                        <img style="border:1px solid; height:76%" ng-src="{{projectStatus.documentUrl}}"></img>
+                        <img style="border:1px solid; height:76%" ng-src="{{projectStatus.documentUrl}}" ng-click="openLightboxModal('{{projectStatus.documentUrl}}')"></img>
 
                     </div>
                     <div layout-align="end start" flex="33">
