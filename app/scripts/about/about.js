@@ -11,10 +11,9 @@ angular.module('dmc.about', [
     'dmc.common.footer',
     'dmc.model.toast-model',
     "dmc.ajax",
-    "ui.bootstrap",
-    "bootstrapLightbox",
     "dmc.data"
-]).config(function($stateProvider, $urlRouterProvider, $httpProvider, LightboxProvider){
+    
+]).config(function($stateProvider, $urlRouterProvider, $httpProvider){
     $stateProvider.state('about', {
         template: '<ui-view />'
       }).state('about.home', {
@@ -23,15 +22,5 @@ angular.module('dmc.about', [
         templateUrl: 'templates/about/about.html'
     });
     $urlRouterProvider.otherwise('/');
-
-    LightboxProvider.calculateImageDimensionLimits = function (dimensions) {
-      return {
-        'maxWidth': dimensions.windowWidth >= 768 ? // default
-          dimensions.windowWidth - 92 :
-          dimensions.windowWidth - 52,
-        'maxHeight': dimensions.imageHeight                           // custom
-      };
-    };
-
 
 });

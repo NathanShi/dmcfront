@@ -3,9 +3,6 @@
 
 <!-- build:css styles/vendor.css -->
 <!-- bower:css -->
-
-
-<link rel="stylesheet" href="/bower_components/angular-carousel/angular-carousel.css" />
 <link rel="stylesheet" href="/bower_components/angular-carousel/angular-carousel.css" />
 <link rel="stylesheet" href="/bower_components/angular-clndr/angular-clndr.css" />
 <link rel="stylesheet" href="/bower_components/angular-datepicker/dist/angular-datepicker.css" />
@@ -19,9 +16,7 @@
 <link rel="stylesheet" href="/bower_components/medium-editor/dist/css/medium-editor.min.css" />
 <link rel="stylesheet" href="/bower_components/medium-editor/dist/css/themes/beagle.css" />
 <link rel="stylesheet" href="/bower_components/angular-tree-control/css/tree-control-attribute.css" />
-
-<link rel="stylesheet" href="/bower_components/angular-bootstrap/ui-bootstrap-csp.css" />
-<link rel="stylesheet" href="/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css" />
+<link rel="stylesheet" href="/styles/lightbox.css"/>
 
 <!-- endbower -->
 <!-- endbuild -->
@@ -97,7 +92,6 @@
 
 
 <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-<!-- <script src="/bower_components/ng-bootstrap-lightbox/dist/js/lightbox.min.js"></script> -->
 <script src="/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.min.js"></script>
 
 
