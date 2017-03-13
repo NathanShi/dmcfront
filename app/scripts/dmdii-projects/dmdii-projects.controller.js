@@ -34,7 +34,6 @@ angular.module('dmc.dmdiiProjects')
                  $window){
 
              $scope.openLightboxModal=function(img){
-               console.log(Lightbox.getImageUrl(img));
                Lightbox.openModal([{'url':img}],0);
              }
 
@@ -109,12 +108,10 @@ angular.module('dmc.dmdiiProjects')
             $scope.getProjectStaticImages = function() {
                 ajax.get(dataFactory.getDMDIIDocuments().overview, {}, function(response)  {
                     $scope.projectOverview = response.data;
-                    console.log($scope.projectOverview);
                 });
 
                 ajax.get(dataFactory.getDMDIIDocuments().status, {}, function(response)  {
                     $scope.projectStatus = response.data;
-                    console.log($scope.projectStatus);
                 });
             }
             $scope.getProjectStaticImages();
