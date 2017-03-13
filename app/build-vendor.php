@@ -16,7 +16,6 @@
 <link rel="stylesheet" href="/bower_components/medium-editor/dist/css/medium-editor.min.css" />
 <link rel="stylesheet" href="/bower_components/medium-editor/dist/css/themes/beagle.css" />
 <link rel="stylesheet" href="/bower_components/angular-tree-control/css/tree-control-attribute.css" />
-<link rel="stylesheet" href="/bower_components/angular-tree-control/css/tree-control-attribute.css" />
 <link rel="stylesheet" href="/bower_components/angular-bootstrap/ui-bootstrap-csp.css" />
 <link rel="stylesheet" href="/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css" />
 <!-- endbower -->
