@@ -209,18 +209,15 @@ angular.module('dmc.members')
                     $scope.members.arr = response.data.data;
                     $scope.members.count = response.data.count;
                     insertData(response.data.data);
-                    var numberMembers=$scope.members.arr.length;
-                    $scope.randMemberId=Math.floor(Math.random()*numberMembers);
-                    $scope.randMember = $scope.members.arr[$scope.randMemberId];
-
                 } else {
                     $scope.members.arr = response.data;
                     insertData(response.data);
-                    var numberMembers=$scope.members.arr.length;
-                    $scope.randMemberId=Math.floor(Math.random()*numberMembers);
-                    $scope.randMember = $scope.members.arr[$scope.randMemberId];
-
                 }
+
+                var numberMembers=$scope.members.arr.length;
+                $scope.randMemberId=Math.floor(Math.random()*numberMembers);
+                $scope.randMember = $scope.members.arr[$scope.randMemberId];
+                $scope.randMember.organization.description = truncateText($scope.randMember.organization.description,350);
                 $scope.activeProjects = {};
 
                 angular.forEach($scope.members.arr, function(member, index) {
@@ -229,6 +226,14 @@ angular.module('dmc.members')
                     });
                 });
             };
+
+            var truncateText = function(text,length) {
+              if (text.length > length) {
+                return text.substring(0, length)+"...";
+              } else {
+                return text;
+              }
+            }
 
             var responseData = function(){
                 var data = {

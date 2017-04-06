@@ -26,6 +26,10 @@ a {
 	color: $brand-accent;
 }
 
+a:hover {
+	color: $dark-green;
+}
+
 h1 {
 	font-weight:300;
 	font-size: 36px;
@@ -58,6 +62,14 @@ time {
 
 }
 
+.content-padding {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.top-border {
+	border-top:1px solid $border-color;
+}
 
 .recent-news article{
 
@@ -163,4 +175,17 @@ div.progress {
 		transform: rotate(0deg);
 	}
 }
+}
+
+.sublabels {
+	div {
+		color: $gray;
+		border-right: 1px solid $gray;
+		margin-right: 15px;
+		margin-bottom: 10px;
+		padding-right: 15px;
+	}
+	div:last-child {
+		border-right: none;
+	}
 }

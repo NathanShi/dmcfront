@@ -121,6 +121,22 @@
 		</div>
 	</section>
 
+	<!-- TODO this needs to be made in to a module suitable for members, projects and ideally services -->
+	<section class="container content-padding">
+			<div class="row">
+					<div class="col-md-12 project-main">
+							<div class="top-border"></div>
+							<div layout="row">
+								<div class="status status-complete">FEATURED MEMBER</div>
+								<div class="status">TIER {{randMember.dmdiiType.tier}} {{randMember.dmdiiType.dmdiiTypeCategory.category}}</div>
+							</div>
+							<h1><a ng-href="{{'/member-page.php#/'+randMember.id}}">{{randMember.organization.name}}</a></h1>
+							<div class="slim-margin" markdown-to-html="randMember.organization.description"></div>
+					</div>
+					</div>
+			</div>
+	</section>
+
 	<section class="container">
 
 		<dmc-horizontal-menu tree-source="treeMenuModel"></dmc-horizontal-menu>
@@ -137,7 +153,8 @@
 			</div>
 			<div class="col-xs-4 col-xs-offset-4 ">
 
-				<div class="dropdown pull-right">
+				<!-- Commenting this dropdown out due to cookie/scope conflict on reload -->
+				<!-- <div class="dropdown pull-right">
 					<button class="btn btn-default dropdown-toggle" type="button" id="itemstoshowdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 		    			{{showArray[0].name}}<span class="caret"></span>
 		  				</button>
@@ -146,7 +163,7 @@
 							<a ng-click="selectItemDropDown($index)">{{item.name}}</a>
 						</li>
 					</ul>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="members-table">

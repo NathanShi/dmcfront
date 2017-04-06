@@ -42,6 +42,29 @@
 
 		</section>
 
+		<!-- TODO this needs to be made in to a module suitable for members, projects and ideally services -->
+		<section class="container content-padding">
+        <div class="row">
+            <div class="col-md-12 project-main">
+								<div class="top-border"></div>
+                <div layout="row">
+									<div class="status status-complete">FEATURED PROJECT</div>
+									<div class="status">{{randProject.projectStatus.name}}</div>
+								</div>
+								<!-- <time>{{randProject.rootNumber | numberFixedLen:2}}-{{randProject.callNumber | numberFixedLen:2}}-{{randProject.projectNumber | numberFixedLen:2}}</time> -->
+                <h1><a ng-href="{{'/dmdii-project-page.php#/'+randProject.id}}">{{randProject.projectTitle}}</a></h1>
+								<!-- <h4>Summary</h4> -->
+								<div class="sublabels" layout="row">
+									<div>{{randProject.projectFocusArea.name}}</div>
+									<div>{{randProject.projectThrust.name}}</div>
+								</div>
+								<div class="slim-margin" markdown-to-html="randProject.projectSummary"></div>
+            </div>
+            </div>
+        </div>
+		</section>
+
+
 		<section class="container">
       <dmc-horizontal-menu tree-source="treeMenuModel"></dmc-horizontal-menu>
 
@@ -58,7 +81,8 @@
 
 				<div class="dropdown">
 
-						<div class="dropdown pull-right">
+					<!-- Commenting this dropdown out due to cookie/scope conflict on reload -->
+						<!-- <div class="dropdown pull-right">
 							<button class="btn btn-default dropdown-toggle" type="button" id="itemstoshowdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 									{{showArray[0].name}}<span class="caret"></span>
 									</button>
@@ -67,7 +91,7 @@
 									<a ng-click="selectItemDropDown($index)">{{item.name}}</a>
 								</li>
 							</ul>
-						</div>
+						</div> -->
 
 					</div>
 				</div>
