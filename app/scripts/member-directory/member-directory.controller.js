@@ -214,10 +214,11 @@ angular.module('dmc.members')
                     insertData(response.data);
                 }
 
-                var numberMembers=$scope.members.arr.length;
-                $scope.randMemberId=Math.floor(Math.random()*numberMembers);
-                $scope.randMember = $scope.members.arr[$scope.randMemberId];
-                $scope.randMember.organization.description = truncateText($scope.randMember.organization.description,350);
+                    ajax.get(dataFactory.getStaticJSON('featured.json'), {}, function(response){
+                      $scope.randMember = $scope.members.arr.find(function(project){return project.id=response.data.featuredMemberId});
+                      $scope.randMember.organization.description = truncateText($scope.randMember.organization.description,350);
+                    });
+
                 $scope.activeProjects = {};
 
                 angular.forEach($scope.members.arr, function(member, index) {

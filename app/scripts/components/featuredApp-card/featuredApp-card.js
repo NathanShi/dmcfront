@@ -25,16 +25,14 @@ angular.module('dmc.component.featuredAppcard', [
       templateUrl: 'templates/components/featuredApp-card/featuredApp-card-tpl.html',
       controller: function($scope, $rootScope, $cookies,$timeout,ajax,dataFactory, $mdDialog, previousPage,CompareModel,DMCUserModel){
 
-
         $scope.projects = [];
         $scope.addingToProject = false;
 
-
+        //Displays a featured application in the marketplace that is decided in the featured.json file
         $scope.$watch(function(){return $scope.cards.length}, function(){
-          $scope.items = $scope.cards;
-          var numberApps = $scope.items.length;
-          var randId = Math.floor(Math.random()*numberApps);
-          $scope.randApp = $scope.items[randId];
+          ajax.get(dataFactory.getStaticJSON('featured.json'), {}, function(response){
+            $scope.randApp = $scope.cards.find(function(project){return project.id=response.data.featuredAppId});
+          });
         });
 
         var userData = null;

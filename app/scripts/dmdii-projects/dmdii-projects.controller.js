@@ -279,10 +279,12 @@ angular.module('dmc.dmdiiProjects')
                 }
 
                 $scope.dmdiiProjectsLoading = false;
-                var numberProjects=$scope.projects.arr.length;
-                $scope.randProjectId = Math.floor(Math.random()*numberProjects);
-                $scope.randProject = $scope.projects.arr[$scope.randProjectId];
-                $scope.randProject.projectSummary = truncateText($scope.randProject.projectSummary, 350);
+
+                //Displays a featured DMDII Project that is selected in the featured.json file
+                ajax.get(dataFactory.getStaticJSON('featured.json'), {}, function(response){
+                    $scope.randProject = $scope.projects.arr.find(function(project){return project.id=response.data.featuredProjectId});
+                    $scope.randProject.projectSummary = truncateText($scope.randProject.projectSummary, 350);
+                });
 
                 // insertData(response.data);
             };
