@@ -295,18 +295,29 @@ angular.module('dmc.project', [
             };
 
             $scope.accept = function(){
-                if($scope.profile) {
-                    toastModel.showToast('success', 'Invited to ' + projectData.type + ' Project by ' + $scope.invitation.from);
-                    document.location.href = 'project.php#/' + $stateParams.projectId + '/home';
-                }else{
-                    toastModel.showToast('error', 'Your Profile does not found');
-                }
-            };
+              if($scope.profile) {
+                  // toastModel.showToast('success', 'Invited to ' + projectData.type + ' Project by ' + $scope.invitation.from);
+                  // document.location.href = 'project.php#/' + $stateParams.projectId + '/home';
+                  ajax.get(dataFactory.getMembersToProjectById($scope.invitation.id),{},
+                      function(response){
+                          response.data.accept = true;
+                          ajax.update(dataFactory.updateMembersToProject($scope.invitation.id),
+                              response.data,
+                              function(response){
+                                  toastModel.showToast("success", "You have accepted the invitation from "+ $scope.invitation.from);
+                              }
+                          );
+                      }
+                  )
+              }else{
+                  toastModel.showToast('error', 'Your profile is not found');
+              }
+            }
 
             $scope.decline = function(){
                 ajax.delete(dataFactory.declineProject($stateParams.projectId, $scope.invitation.id), {},
                     function(response){
-                        //toastModel.showToast('success', 'You have declined the invitation from ' + $scope.invitation.from);
+                        toastModel.showToast('success', 'You have declined the invitation from ' + $scope.invitation.from);
                         $cookieStore.put('toast', 'You have declined the invitation from ' + $scope.invitation.from);
                         document.location.href = 'dashboard.php#/';
                     }
