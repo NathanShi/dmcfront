@@ -235,6 +235,9 @@ angular.module('dmc.data',[])
             updateServiceStatus: function(id){
                 return localhost + 'service_runs/'+id;
             },
+            cancelServiceRun: function(id){
+                return localhost + 'service_runs/cancel_run/'+id;
+            },
             getServiceRun: function(id){
                 return localhost + 'service_runs/'+id;
             },
@@ -750,6 +753,9 @@ angular.module('dmc.data',[])
                     all : localhost + name
                 }
             },
+            getRecentUpdates : function() {
+              return localhost+'recent_updates';
+            },
             // ---------------------------
 
 
@@ -1032,6 +1038,9 @@ angular.module('dmc.data',[])
                 return {
                     get: localhost + 'user/' + id
                 }
+            },
+            getUserName: function(id) {
+                return localhost + 'user/' + id + '/userName';
             },
             getOnboardingBasicInfoUrl: function() {
                 return localhost+'user-basic-information'

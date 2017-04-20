@@ -21,6 +21,7 @@ angular.module('dmc.common.header', ['ngAnimate', 'dmc.model.user', 'dmc.common.
     templateUrl: 'templates/common/header/header-tpl.html',
     controller : function($scope,ajax,dataFactory,$window,$mdMedia){
         $scope.userData;
+        $scope.invitations = [];
         $scope.userName = userModel.getUserName();
         userModel.getUserData().then(
             function(response){
@@ -32,7 +33,7 @@ angular.module('dmc.common.header', ['ngAnimate', 'dmc.model.user', 'dmc.common.
         );
 
         $scope.screenSmall = function(){
-          return $mdMedia('(max-width: 768px)');
+          return $mdMedia('(max-width: 868px)');
         }
 
         var initUserData = function(data) {
@@ -46,6 +47,24 @@ angular.module('dmc.common.header', ['ngAnimate', 'dmc.model.user', 'dmc.common.
               $scope.runningServicesList = $scope.userData.runningServices.items;
               $scope.service_alert = $scope.userData.runningServices.total;
           }
+          if($scope.userData.profileId !=1 ){
+            ajax.get(dataFactory.getMembersToProject(),
+                {
+                    'profileId' : $scope.userData.profileId,
+                    'accept' : false,
+                },
+                function(response){
+                  $scope.invitations = response.data;
+                  $scope.message_alert = 0;
+                  for(var i in $scope.invitations){
+                    $scope.message_alert++;
+                    $scope.invitations[i].date = moment($scope.invitations[i].date).format('MM/DD/YYYY, hh:mm A');
+                    getProfile($scope.invitations[i]);
+                  }
+
+                }
+            )
+
 
           if ($scope.userData.messages) {
               for (var i=0; i<$scope.userData.messages.items.length; i++) {
@@ -55,17 +74,35 @@ angular.module('dmc.common.header', ['ngAnimate', 'dmc.model.user', 'dmc.common.
               $scope.message_alert = $scope.userData.messages.total;
           }
 
+
           if ($scope.userData.notifications) {
               $scope.notification_alert = 0;
 
               angular.forEach($scope.userData.notifications, function(item) {
-                  if (item.unread === true && !item.cleared){
+                  if (item.unread === true && !item.cleared && !item.deleted){
                       $scope.notification_alert++;
                   }
               });
+              notificationsMessages.setNotificationAlerts($scope.notification_alert);
           }
             apply();
         };
+
+
+        var getProfile = function(invitation){
+          ajax.get(dataFactory.profiles(invitation.fromProfileId).get,{},
+            function(response){
+              invitation['profileImage'] = response.data.image;
+            }
+          );
+        }
+// =======
+//         $scope.$watch(function () { return notificationsMessages.getNotificationAlerts(); }, function (newValue, oldValue) {
+//           if (newValue != null) {
+//             $scope.notification_alert = newValue;
+//           }
+//         }, true);
+// >>>>>>> master
 
         $scope.setDropDown = function(event,width){
             width = $(event.currentTarget).width()+12;
@@ -121,6 +158,11 @@ angular.module('dmc.common.header', ['ngAnimate', 'dmc.model.user', 'dmc.common.
             ajax.get(dataFactory.markNotificationRead(item.createdFor.id, item.id),function(response){
             });
         };
+
+        $scope.$on('notificationCleared', function (event, notificationId) {
+          $scope.notification_alert--;
+          notificationsMessages.setNotificationAlerts($scope.notification_alert);
+        });
 
         function apply() {
             if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') $scope.$apply();

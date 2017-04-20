@@ -81,13 +81,11 @@ angular.module('dmc.members')
                 }
             }
 
-            $scope.selectItemDropDown = function(){
-                if($scope.sizeModule != 0) {
+            $scope.selectItemDropDown = function(showIndex){
+                if($scope.sizeModule != showIndex) {
+                    $scope.sizeModule = showIndex
                     var item = $scope.showArray[$scope.sizeModule];
                     $scope.updatePageSize(item.val);
-                    $scope.showArray.splice($scope.sizeModule, 1);
-                    $scope.showArray = $scope.showArray.sort(function(a,b){return a.id - b.id});
-                    if ($scope.showArray.unshift(item)) $scope.sizeModule = 0;
                 }
             };
 
@@ -201,7 +199,7 @@ angular.module('dmc.members')
 
             // callback for services
             var callbackFunction = function(response){
-				$scope.membersLoading = false;
+				          $scope.membersLoading = false;
                 if (angular.isDefined(response.data.count)) {
                     $scope.members.arr = response.data.data;
                     $scope.members.count = response.data.count;
@@ -210,6 +208,11 @@ angular.module('dmc.members')
                     $scope.members.arr = response.data;
                     insertData(response.data);
                 }
+
+                var numberMembers=$scope.members.arr.length;
+                $scope.randMemberId=Math.floor(Math.random()*numberMembers);
+                $scope.randMember = $scope.members.arr[$scope.randMemberId];
+                $scope.randMember.organization.description = truncateText($scope.randMember.organization.description,350);
                 $scope.activeProjects = {};
 
                 angular.forEach($scope.members.arr, function(member, index) {
@@ -218,6 +221,14 @@ angular.module('dmc.members')
                     });
                 });
             };
+
+            var truncateText = function(text,length) {
+              if (text.length > length) {
+                return text.substring(0, length)+"...";
+              } else {
+                return text;
+              }
+            }
 
             var responseData = function(){
                 var data = {

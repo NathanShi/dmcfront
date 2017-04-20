@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+var fs = require('fs');
 var jsonServer = require('json-server');
 var request = require('ajax-request');
 // Returns an Express server
@@ -47,10 +47,12 @@ server.use(jsonServer.rewriter({
     '/dmdiiMember/events': '/dmdiiMemberEvents',
     '/dmdiiMember/news': '/dmdiiMemberNews',
     '/dmdiiMember/mapEntry' : '/dmdiiMemberMap',
-    '/dmdiiProject/:id': '/dmdiiProjects/:id',
     '/dmdiiProject/events': '/dmdiiProjectEvents',
     '/dmdiiProject/news': '/dmdiiProjectNews',
+    '/dmdiiprojects/member/active': '/dmdiiprojectsmembersactive',
+    '/dmdiiProject/:id': '/dmdiiProjects/:id',
     '/dmdiidocuments/dmdiiProjectId': '/dmdiidocuments',
+    '/dmdiidocument/filetype': '/dmdiidocument',
     '/documents/tags': '/document_tags',
     '/resource/lab' : '/resource_labs',
     '/resource/lab/:id':'/resource_labs/:id',
@@ -71,6 +73,43 @@ server.use(jsonServer.rewriter({
 server.post('/dmdiidocument', function(req,res) {
   console.log('request',req)
   res.jsonp(req.query)
+})
+
+server.get('/dmdiiMember', function (req, res) {
+  var membersOrig = JSON.parse(fs.readFileSync('stubs/dmdiiMember.json'));
+  var membersData = membersOrig;
+
+  var page = parseInt(req.query.page)
+  var size = parseInt(req.query.pageSize)
+  var start = page*size
+  var end = (page+1)*size
+
+  membersOrig = {"count": membersData.length ,"data" : membersData.slice(start,end) }
+
+  res.jsonp(membersOrig)
+})
+
+server.get('/dmdiiprojects', function (req, res) {
+  var projectsOrig = JSON.parse(fs.readFileSync('stubs/dmdiiprojects.json'));
+  var projectsData = projectsOrig;
+
+  var page = parseInt(req.query.page)
+  var size = parseInt(req.query.pageSize)
+  var start = page*size
+  var end = (page+1)*size
+
+  projectsOrig = {"count": projectsData.length ,"data" : projectsData.slice(start,end) }
+
+  res.jsonp(projectsOrig)
+})
+server.post('/services', function(req,res) {
+ res.jsonp({"id":906,"companyId":"1","title":"K Max","description":"The formula used is Kmax = BetaFactor * AppliedLoad / (Thickness * math.sqrt(SpecimenWidth.getValue())). The four inputs are BetaFactor (no unit), AppliedLoad (Newton), SpecimenWidth (meter), and Thickness (meter). The output is Kmax (pascal square root meter).",
+ "owner":"269","profileId":"269","releaseDate":"2017-01-21",
+ "serviceType":"Fundamental Calculations - Fracture Mechanics","tags":[],"specifications":"/services/3/specifications",
+ "featureImage":{"thumbnail":"","large":""},
+ "currentStatus":{"percentCompleted":"0","startDate":"","startTime":""},
+ "projectId":"147","from":"marketplace","type":"service","parent":null,"published":false,"averageRun":""})
+
 })
 
 server.get('/getChildren', function (req, res) {
@@ -156,6 +195,12 @@ server.get('/runModel', function(req, res){
     }, function(err, response, body) {
         res.json(body);
     });
+});
+
+server.post('/service_runs/cancel_run/:id', function(req, res){
+  res.jsonp({serviceId: "444",accountId: "0",runBy: "179",status: 2,percentCompleted: 100,startDate: "2017-03-09",startTime: null,project: {id: "87",title: "MRA01"},id: "539",stopDate: "2017-03-09",stopTime: null,interface: {inParams: {Alpha: {type: "Real",name: "Alpha",unit: "no unit",category: "no unit",value: "4",parameterid: "d9f30f56-d800-1004-8f53-704dbfababa8",instancename: null}},outParams: {BetaFactor: {type: "Real",name: "BetaFactor",unit: "no unit",category: "no unit",value: "1370.3879999999997",parameterid: "d9f30f59-d800-1004-8f53-704dbfababa8",instancename: "BetaFactor"}}}})
+  // res.sendStatus(500)
+  // res.status(403).send("Not authorized to cancel run")
 });
 
 // Returns an Express router
