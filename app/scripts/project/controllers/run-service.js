@@ -37,6 +37,7 @@ angular.module('dmc.project')
             $scope.isChangedOrder = false;
             $scope.isChangedValues = false;
             $scope.hasCustomUI = false;
+            $scope.status = getStatus($scope.service.currentStatus.status);
 
             $scope.sortableOptions = {
                 update: function(e, ui) {
@@ -329,6 +330,7 @@ angular.module('dmc.project')
                           $scope.service.interfaceModel.inParams[key].value = $scope.service.interfaceModel.inParams[key].value.replace(/"/g, '\\"');
                       }
                   }
+                  $scope.status = "Running";
                     domeModel.runModel({
                         serviceId : $scope.service.id.toString(),
                         inParams: $scope.service.interfaceModel.inParams,
