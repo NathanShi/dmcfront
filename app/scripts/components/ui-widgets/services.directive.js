@@ -276,7 +276,7 @@ angular.module('dmc.widgets.services',[
                                 }
                                 var deleteItem = $.extend(true, {}, itemData);
                                 deleteItem.currentStatus = {};
-                                deleteItem.projectId = 0;
+                                deleteItem.isDeleted = Math.round((new Date()).getTime() / 1000);
                                 ajax.update(dataFactory.services(item.id).update, deleteItem, function(response){
                                     for(var i in $scope.services){
                                         if($scope.services[i].id == item.id){
