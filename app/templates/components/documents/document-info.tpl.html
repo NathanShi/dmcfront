@@ -14,7 +14,7 @@
 
   <div layout='row'>
     <div layout='column' flex='25' class="attribute">Last Virus Scan Date</div>
-    <div layout='column' flex='75' class="value">{{selectedDocument.scanDate}}</div>
+    <div layout='column' flex='75' class="value">{{selectedDocument.scanDate | date:'yyyy-MM-dd HH:mm Z'}}</div>
   </div>
   <div layout='row'>
     <div layout='column' flex='25' class="attribute">Download</div>

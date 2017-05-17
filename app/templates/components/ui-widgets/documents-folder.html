@@ -24,6 +24,7 @@
                 <th name="Expires"></th>
                 <th name="Last Modifed"></th>
 								<th name="Sha"></th>
+								<th name="Last Virus Scan Date"></th>
 								<th name="Encryption Type"></th>
             </tr>
             </thead>
@@ -45,6 +46,7 @@
                 <td>{{item.expires|date}}</td>
                 <td>{{item.modified|date}}</td>
 								<td>{{item.sha256}}</td>
+								<td>{{item.scanDate|date}}</td>
 								<td>{{item.encryptionType}}</td>
             </tr>
             <tr ng-show="indexfolder.length > 0 && folder.length == 0">
