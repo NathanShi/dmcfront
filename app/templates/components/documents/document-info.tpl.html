@@ -26,6 +26,10 @@
     <div layout='column' flex='25' class="attribute">Accessible By</div>
     <div layout='column' flex='75' class="value">{{selectedDocument.accessLevel}}</div>
   </div>
+  <div layout='row'>
+    <div layout='column' flex='25' class="attribute">Encryption Type</div>
+    <div layout='column' flex='75' class="value">{{selectedDocument.encryptionType}}</div>
+  </div>
   <!-- <div class='sub-info'>Modify</div> -->
   <md-divider ng-if="$root.userData.isDmdiiAdmin" style="margin: 15px 0px 15px 0px;"></md-divider>
   <div ng-if="$root.userData.isDmdiiAdmin" layout='row'>
