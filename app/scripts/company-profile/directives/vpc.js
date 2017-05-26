@@ -1,5 +1,25 @@
 'use strict';
 angular.module('dmc.company-profile').
+	directive('modelPrefix', [function() {
+	return {
+	    restrict: 'AE',
+	    require: '^ngModel',
+	    link: function(scope, element, attributes, ngModelController) {
+	        var prefix = attributes.modelPrefix;
+	        // Pipeline of functions called to read value from DOM
+	        ngModelController.$parsers.push(function(value) {
+	            return prefix + ' ' + value;
+	        });
+	        
+	        // Pipeline of functions called to display on DOM
+	        ngModelController.$formatters.push(function(value) {
+	            if (value) {
+                    return value.replace(prefix, '');
+                }
+	        });
+	    }
+	}
+	}]).
     directive('tabVpc', ['$parse', 'toastModel', function ($parse, toastModel) {
         return {
             restrict: 'A',
@@ -10,6 +30,8 @@ angular.module('dmc.company-profile').
                 $element.addClass("tab-vpc");
                 
                 $scope.vpc = {};
+        
+                $scope.addInput = [];
 
                 $scope.$watch(function () {
                     return $scope.source.productionCapabilities;
@@ -406,7 +428,6 @@ angular.module('dmc.company-profile').
 
                 $scope.submitMyForm=function(){
                   $scope.contents=[];
-
                   for (var i=0;i<$scope.arr_json.length;i++){
                     if($scope.myForm[i]!=undefined){
                       $scope.contents.push({
@@ -418,8 +439,15 @@ angular.module('dmc.company-profile').
                       //clear values in default form when submitted
                       $scope.myForm[i] = undefined;
                     }
-                    $scope.vpc = addToVPC($scope.contents, $scope.vpc);
                   }
+                  if ($scope.addInput.length > 0) {
+                  	for (var i=0; i<$scope.addInput.length; i++) {
+                  		$scope.addInput[i].value = parseFloat($scope.addInput[i].value);
+                    }
+                  }
+                  $scope.contents = $scope.contents.concat($scope.addInput);
+	                console.log($scope.contents);
+                  $scope.vpc = addToVPC($scope.contents, $scope.vpc);
                   $scope.source.productionCapabilities = JSON.stringify($scope.vpc);
 	                console.log($scope.source.productionCapabilities);
                   toastModel.showToast('success', 'VPC submitted, Save organization to complete.');
