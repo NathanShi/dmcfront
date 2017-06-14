@@ -4,10 +4,10 @@ angular.module('dmc.profile')
     	function (profileData, profileModel, $stateParams, $scope, $location, $anchorScroll, ajax, dataFactory, $state) {
 
         $scope.profile = profileData;  //profile
+        // åconsole.log(".", $scope.profile);
 
         ajax.get(dataFactory.documentsUrl().getList, {page: 0, pageSize: 1, parentType: 'USER', parentId: $scope.profile.id, docClass: 'IMAGE'}, function(response) {
             if (response.data && response.data.data) {
-
                 if(response.data.data[0].documentUrl.substr(8,10) == 'dmcupfinal'){
                   $scope.profile.image = response.data.data[0].documentUrl;
                 }
@@ -170,6 +170,7 @@ angular.module('dmc.profile')
             dataFactory.getProjects(),
             {},
             function(response){
+                // console.log("--getProjects Called--", response.data);
                 $scope.projects = response.data;
             }
         )

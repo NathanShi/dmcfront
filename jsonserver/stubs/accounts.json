@@ -10,7 +10,11 @@
 		"deactivated": false,
 		"location": "Schenectady",
 		"timezone": "(UTC -05:00) America/Atikokan",
-		"userContactInfo": null
+		"userContactInfo": null,
+		"privacy":{
+       "private":null,
+       "public":null
+    }
 	},
 	{
 		"id": 2,

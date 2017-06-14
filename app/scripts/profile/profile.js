@@ -64,8 +64,9 @@ angular.module('dmc.profile', [
 
             return $q.all(promises).then(function(responses) {
                 var profile = extractData(responses.profile);
-                DMCUserModel.getUserData().then(function(res){
-                    ajax.get(dataFactory.getAccount(res.accountId),{},function(data){
+                //Call /rest/user again to get account is not needed, get accountId from profile.
+                // DMCUserModel.getUserData().then(function(res){
+                    ajax.get(dataFactory.getAccount(profile.accountId),{},function(data){
                         profile.account = extractData(data);
                         profile.isPublicContacts = false;
                         for(var key in profile.account.privacy.public){
@@ -75,7 +76,7 @@ angular.module('dmc.profile', [
                             }
                         }
                     });
-                });
+                // });
                 // TODO remove at a later date
                 // profile.profile_reviews = extractData(responses.profile_reviews);
                 // profile.rating = profile.profile_reviews.map(function(value, index){
