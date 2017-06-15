@@ -285,9 +285,6 @@ angular.module('dmc.marketplace')
 
             // callback for services
             var callbackServices = function(response){
-				console.log('callbackServices: $scope.currentProduct: ' + $scope.currentProduct)
-				console.log('callbackServices: $scope.currentProductType: ' + $scope.currentProductType)
-
                 for(var index in response.data){
                     response.data[index].type = 'service';
                 }
