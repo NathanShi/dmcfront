@@ -182,7 +182,9 @@ angular.module('dmc.marketplace')
             };
 
             $scope.submit=function(queryWs){
-              queryWs=queryWs.toLowerCase();
+              if (queryWs){
+                queryWs=queryWs.toLowerCase();                
+              }
               var item =$scope.originalArr.filter(function (obj){
                 if (obj.title.toLowerCase().includes(queryWs)){
                   return obj;
