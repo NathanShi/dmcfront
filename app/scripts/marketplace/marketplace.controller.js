@@ -57,21 +57,22 @@ angular.module('dmc.marketplace')
             var userData = null;
             DMCUserModel.getUserData().then(function(res){
                 userData = res;
-                getFavoriteCount();
+                // getFavoriteCount(); Marketplace.html page commented favoritesCount.
                 // not calling getFollowCompanies since we're not using that data
                 // $scope.getFollowCompanies(userData.accountId);
                 CompareModel.get('services',userData);
             });
 
-            $scope.favoritesCount = 0;
-            function getFavoriteCount(){
-                ajax.get(dataFactory.getFavoriteProducts(),{
-                    accountId : userData.accountId
-                },function(response){
-                    $scope.favoritesCount = response.data.length;
-                    apply();
-                });
-            }
+            // Marketplace.html page commented favoritesCount.
+            // $scope.favoritesCount = 0;
+            // function getFavoriteCount(){
+            //     ajax.get(dataFactory.getFavoriteProducts(),{
+            //         accountId : userData.accountId
+            //     },function(response){
+            //         $scope.favoritesCount = response.data.length;
+            //         apply();
+            //     });
+            // }
 
 
             $scope.$on('UpdateFavorite', function(){
@@ -125,29 +126,30 @@ angular.module('dmc.marketplace')
 
 
             // function for get Popular marketplace services
-            $scope.getPopularServices = function(){
-                ajax.get(dataFactory.getMarketPopularServices(), responseDataForCarousel,
-                    function(response){
-                        $scope.carouselData.popular = {arr : response.data, count : response.data.length};
-                        isFavorite.check($scope.carouselData.popular.arr);
-                        apply();
-                    }
-                );
-            };
-            if(!$scope.isSearch) $scope.getPopularServices();
+            // In marketplace.html, the use of popular services are commented.
+            // $scope.getPopularServices = function(){
+            //     ajax.get(dataFactory.getMarketPopularServices(), responseDataForCarousel,
+            //         function(response){
+            //             $scope.carouselData.popular = {arr : response.data, count : response.data.length};
+            //             isFavorite.check($scope.carouselData.popular.arr);
+            //             apply();
+            //         }
+            //     );
+            // };
+            // if(!$scope.isSearch) $scope.getPopularServices();
 
 
 
             // function for get New marketplace services
-            $scope.getNewServices = function(){
-                ajax.get(dataFactory.getMarketNewServices(), responseDataForCarousel,
-                    function(response){
-                        $scope.carouselData.new = {arr : response.data, count : response.data.length};
-                        isFavorite.check($scope.carouselData.new.arr);
-                        apply();
-                    }
-                );
-            };
+            // $scope.getNewServices = function(){
+            //     ajax.get(dataFactory.getMarketNewServices(), responseDataForCarousel,
+            //         function(response){
+            //             $scope.carouselData.new = {arr : response.data, count : response.data.length};
+            //             isFavorite.check($scope.carouselData.new.arr);
+            //             apply();
+            //         }
+            //     );
+            // };
 
 
             // $scope.marketplaceItems = {arr: data, count: data.length};
@@ -169,7 +171,7 @@ angular.module('dmc.marketplace')
 
 
 
-            if(!$scope.isSearch) $scope.getNewServices();
+            // if(!$scope.isSearch) $scope.getNewServices();
 
             // if(!$scope.isSearch) $scope.featuredApp();
 
@@ -285,6 +287,9 @@ angular.module('dmc.marketplace')
 
             // callback for services
             var callbackServices = function(response){
+				console.log('callbackServices: $scope.currentProduct: ' + $scope.currentProduct)
+				console.log('callbackServices: $scope.currentProductType: ' + $scope.currentProductType)
+
                 for(var index in response.data){
                     response.data[index].type = 'service';
                 }

@@ -3,8 +3,8 @@
     <slide ng-repeat="slide in arrayItems.slice(0, countSlides) track by $index">
       <div ng-if="typeCarousel != 'images'" class="slide-item" style="width:{{100/showItems}}%" ng-repeat="item in arrayItems.slice($index*showItems, $index*showItems+showItems)">
         <div class="one-item">
-          <dmc-product-card 
-            type-product="item.type" 
+          <dmc-product-card
+            type-product="item.type"
             card-source="item"
             ng-if="typeCarousel != 'images'">
           </dmc-product-card>
@@ -16,17 +16,16 @@
              ng-class="{'selected-image' : item.selected}"
              ng-if="typeCarousel === 'images'"
              ng-repeat="item in arrayItems.slice($index*showItems, $index*showItems+showItems) track by $index">
-            
-            <md-button 
+            <md-button
               class="md-fab md-mini md-warn md-raised delete"
-              ng-if="edit" 
-              ng-click="functions.deleteImage($index + $parent.$parent.$parent.$index*showItems)" 
+              ng-if="edit"
+              ng-click="functions.deleteImage($index + $parent.$parent.$parent.$index*showItems)"
               aria-label="delete">
               <ng-md-icon icon="delete" style="fill: #fff" size="17"></ng-md-icon>
             </md-button>
-            <img 
-              ng-src="{{item.url}}" 
-              ng-class="{'selected' : (functions.selected($index + $parent.$parent.$index*showItems) == true)}" 
+            <img
+              ng-src="{{item.url}}"
+              ng-class="{'selected' : (functions.selected($index + $parent.$parent.$index*showItems) == true)}"
               ng-click="functions.openImage($index + $parent.$parent.$index*showItems)" alt=""/>
         </div>
       </div>

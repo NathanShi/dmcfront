@@ -70,9 +70,10 @@ angular.module('dmc.service-marketplace')
                 }
             });
 
-            ajax.get(dataFactory.getUserName($scope.product.owner), {}, function(response) {
-                $scope.owner_name = response.data.displayName
-            });
+            // Not used
+            // ajax.get(dataFactory.getUserName($scope.product.owner), {}, function(response) {
+            //     $scope.owner_name = response.data.displayName
+            // });
 
             // check if service is favorite for current user
             isFavorite.check([$scope.product]);
@@ -232,7 +233,7 @@ angular.module('dmc.service-marketplace')
             DMCUserModel.getUserData().then(function(res){
                 userData = res;
                 CompareModel.get('services',userData);
-                getFavoriteCount();
+                // getFavoriteCount();
             });
 
             ///////// commenting out as part of pre-beta sprint
@@ -324,12 +325,13 @@ angular.module('dmc.service-marketplace')
 
 //load data
 
-            //get similar product
-            serviceModel.get_all_service({'_limit': 4}, function(data){
-                $scope.products_card = data;
-                isFavorite.check($scope.products_card);
-                apply();
-            });
+            // get similar product
+            // Not needed
+            // serviceModel.get_all_service({'_limit': 4}, function(data){
+            //     $scope.products_card = data;
+            //     isFavorite.check($scope.products_card);
+            //     apply();
+            // });
 
 //review
             //Show Leave A Review form
@@ -543,25 +545,25 @@ angular.module('dmc.service-marketplace')
             };
 
 
-            $scope.addToFavorite = function(){
-                if(!$scope.product.favorite){
-                    // add to favorites
-                    var requestData = {
-                        accountId : $scope.$root.userData.accountId,
-                        serviceId : $scope.product.id
-                    };
-                    ajax.create(dataFactory.addFavorite(), requestData, function(response){
-                        $scope.product.favorite = response.data;
-                        getFavoriteCount();
-                    });
-                }else{
-                    // remove from favorites
-                    ajax.delete(dataFactory.deleteFavorite($scope.product.favorite.id), {}, function(response){
-                        $scope.product.favorite = false;
-                        getFavoriteCount();
-                    });
-                }
-            };
+            // $scope.addToFavorite = function(){
+            //     if(!$scope.product.favorite){
+            //         // add to favorites
+            //         var requestData = {
+            //             accountId : $scope.$root.userData.accountId,
+            //             serviceId : $scope.product.id
+            //         };
+            //         ajax.create(dataFactory.addFavorite(), requestData, function(response){
+            //             $scope.product.favorite = response.data;
+            //             getFavoriteCount();
+            //         });
+            //     }else{
+            //         // remove from favorites
+            //         ajax.delete(dataFactory.deleteFavorite($scope.product.favorite.id), {}, function(response){
+            //             $scope.product.favorite = false;
+            //             getFavoriteCount();
+            //         });
+            //     }
+            // };
 
             $scope.SortingReviews($scope.sortList[0].val);
 

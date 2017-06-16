@@ -75,11 +75,13 @@ angular.module('dmc.component.productcard', [
 
               }
 
-              if (!angular.isDefined($scope.cardSource.ownerName)) {
-                  ajax.get(dataFactory.userAccount($scope.cardSource.owner).get, {}, function(response) {
-                      $scope.cardSource.ownerName = response.data.displayName;
-                  });
-              }
+              // In product-card-tpl.html, this cardSource.ownerName is commented.
+
+              // if (!angular.isDefined($scope.cardSource.ownerName)) {
+              //     ajax.get(dataFactory.userAccount($scope.cardSource.owner).get, {}, function(response) {
+              //         $scope.cardSource.ownerName = response.data.displayName;
+              //     });
+              // }
           }
           //$scope.hideButtons = [];
           $scope.compareStyle = {
@@ -305,6 +307,7 @@ angular.module('dmc.component.productcard', [
                 var components_id = [];
 
                 for (var i in items) {
+                  // console.log(items[i]);
                     if (items[i].type == 'service') {
                         services_id.push(items[i].id);
                     } else if (items[i].type == 'component') {
@@ -330,9 +333,10 @@ angular.module('dmc.component.productcard', [
                 };
 
                 // services
-                if( services_id.length > 0 ) ajax.get(dataFactory.getFavorites(), { accountId: userData.accountId, serviceId: services_id }, callback );
+                // favorite_products is not used.
+                // if( services_id.length > 0 ) ajax.get(dataFactory.getFavorites(), { accountId: userData.accountId, serviceId: services_id }, callback );
                 // components
-                if( components_id.length > 0 ) ajax.get(dataFactory.getFavorites(), { accountId: userData.accountId, componentId: components_id }, callback );
+                // if( components_id.length > 0 ) ajax.get(dataFactory.getFavorites(), { accountId: userData.accountId, componentId: components_id }, callback );
             }
         });
     };
