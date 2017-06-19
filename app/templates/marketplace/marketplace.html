@@ -59,14 +59,14 @@
         <md-content class="carousel-padding">
           <md-content class="marketplace-search" layout="row" layout-align="center center">
 
-            <form ng-click="submit(searchModel)" class="dmc-search global-search-form" flex="40">
+            <form ng-click="submit(appQuery)" class="dmc-search global-search-form" flex="40">
               <div layout="row">
                   <div layout="column" flex>
                       <md-input-container md-no-float>
                           <md-icon>
                               <ng-md-icon icon="search"></ng-md-icon>
                           </md-icon>
-                          <input type="text" placeholder="Search Marketplace" ng-model="searchModel">
+                          <input type="text" placeholder="Search Marketplace" ng-model="appQuery">
                       </md-input-container>
                   </div>
                   <div layout="column">
@@ -79,25 +79,6 @@
 
             <span flex></span>
           </md-content>
-
-
-          <!-- <md-autocomplete flex
-                 md-input-name="autocomplete"
-                 md-no-cache="true"
-                 md-selected-item="projectModel"
-                 md-search-text="queryWs"
-                 md-clear-button="false"
-                 md-items="item in searchWorkspace(queryWs)"
-                 md-item-text="item.title"
-                 placeholder="Search for Workspace">
-                 <md-item-template>
-                     <span md-highlight-text="searchText">{{item.title}}</span>
-                 </md-item-template>
-                 <md-not-found>
-                     No matches found for "{{item.title}}".
-                 </md-not-found>
-               </md-autocomplete> -->
-
 
 
 
