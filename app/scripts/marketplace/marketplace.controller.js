@@ -145,6 +145,7 @@ angular.module('dmc.marketplace')
                         $scope.carouselData.new = {arr : response.data, count : response.data.length};
                         isFavorite.check($scope.carouselData.new.arr);
                         apply();
+                        $scope.originalArr=$scope.carouselData.new.arr;
                     }
                 );
             };
@@ -175,17 +176,20 @@ angular.module('dmc.marketplace')
 
             // ---------------------------------------------------------
 
-            $scope.submit = function(text){
-                $stateParams.text = text;
-                //$state.go('marketplace_search', dataSearch, {reload: true});
-                if(!$window.apiUrl){
-                    responseDataForCarousel.title_like = text;
-                }else{
-                    delete responseDataForCarousel.title_like;
-                }
-                loadingData(true);
-                ajax.get(dataFactory.searchMarketplace(text), responseDataForCarousel, callbackServices);
-            };
+            $scope.submit=function(appQuery){
+              if (appQuery){
+                appQuery=appQuery.toLowerCase();
+                var item =$scope.originalArr.filter(function (obj){
+                  if (obj.title.toLowerCase().includes(appQuery)){
+                    return obj;
+                  }
+                });
+                $scope.carouselData.new.arr=item
+              }
+              else{
+                $scope.carouselData.new.arr=$scope.originalArr;
+              }
+            }
 
             var loadingData = function(start){ // progress line
                 $scope.downloadData = start;

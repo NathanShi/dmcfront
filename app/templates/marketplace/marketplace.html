@@ -57,9 +57,35 @@
 
       <md-tab label="DMC Marketplace">
         <md-content class="carousel-padding">
+          <md-content class="marketplace-search" layout="row" layout-align="center center">
+
+            <form ng-click="submit(appQuery)" class="dmc-search global-search-form" flex="40">
+              <div layout="row">
+                  <div layout="column" flex>
+                      <md-input-container md-no-float>
+                          <md-icon>
+                              <ng-md-icon icon="search"></ng-md-icon>
+                          </md-icon>
+                          <input type="text" placeholder="Search Marketplace" ng-model="appQuery">
+                      </md-input-container>
+                  </div>
+                  <div layout="column">
+                      <md-input-container>
+                          <md-button type="submit" class="search-button">Search</md-button>
+                      </md-input-container>
+                  </div>
+              </div>
+            </form>
+
+            <span flex></span>
+          </md-content>
+
+
+
+
           <div dmc-carousel
               name-carousel="'carouselNew'"
-              max-items="24"
+              max-items="100"
               show-items="3"
               carousel-source="carouselData.new.arr"
               run-carousel="true"

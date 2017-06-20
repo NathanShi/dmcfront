@@ -35,7 +35,7 @@ angular.module('dmc.component.carousel', [
           $scope.countSlides = ($scope.arrayItems.length == 0 ? 0 : Math.ceil($scope.arrayItems.length / $scope.showItems));
           $scope.currentSlide = 1;
 
-          $scope.$watch(function(){return $scope.carouselSource.length}, function(){
+          $scope.$watch(function(){return $scope.carouselSource}, function(){
               $scope.arrayItems = ($scope.carouselSource.length > $scope.maxItems ? $scope.carouselSource.slice(0, $scope.maxItems) : $scope.carouselSource);
               $scope.countSlides = ($scope.arrayItems.length == 0 ? 0 : Math.ceil($scope.arrayItems.length / $scope.showItems));
               if(Carousel.get($scope.nameCarousel).slidesCount){
