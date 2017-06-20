@@ -201,9 +201,9 @@ angular.module('dmc.marketplace')
             };
             // insert response data to array of marketplace items
             var insertData = function(data){
-				console.log('insertData: $scope.currentProduct: ' + $scope.currentProduct)
-				console.log('insertData: $scope.currentProductType: ' + $scope.currentProductType)
-				console.log('insertData: $location.$$path: ' + $location.$$path)
+				// console.log('insertData: $scope.currentProduct: ' + $scope.currentProduct)
+				// console.log('insertData: $scope.currentProductType: ' + $scope.currentProductType)
+				// console.log('insertData: $location.$$path: ' + $location.$$path)
 
                 totalCountItems = {
                     all : 0, services : { total : 0, analytical : 0, solid : 0, data : 0 }, components : 0
@@ -287,8 +287,8 @@ angular.module('dmc.marketplace')
 
             // callback for services
             var callbackServices = function(response){
-				console.log('callbackServices: $scope.currentProduct: ' + $scope.currentProduct)
-				console.log('callbackServices: $scope.currentProductType: ' + $scope.currentProductType)
+				// console.log('callbackServices: $scope.currentProduct: ' + $scope.currentProduct)
+				// console.log('callbackServices: $scope.currentProductType: ' + $scope.currentProductType)
 
                 for(var index in response.data){
                     response.data[index].type = 'service';

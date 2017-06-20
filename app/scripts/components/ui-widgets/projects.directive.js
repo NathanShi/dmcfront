@@ -70,7 +70,7 @@ angular.module('dmc.widgets.projects', [
                     vm.getProjects();
                 }
             }, true);
-            
+
             $scope.$watch(function () {
                 return vm.sortProjects;
             }, function (newValue, oldValue) {
@@ -79,7 +79,7 @@ angular.module('dmc.widgets.projects', [
                     vm.getProjects();
                 }
             }, true);
-    
+
             $scope.$watch(function () {
                 return vm.activeFilter;
             }, function (newValue, oldValue) {
@@ -88,7 +88,7 @@ angular.module('dmc.widgets.projects', [
                     vm.getProjects();
                 }
             }, true);
-            
+
             var limit = (vm.limit ? vm.limit : (vm.widgetShowAllBlocks === true ? null : 2));
 
             vm.flexBox = (vm.widgetShowAllBlocks == true ? 28 : 60);
@@ -101,59 +101,65 @@ angular.module('dmc.widgets.projects', [
             // function for get all projects from DB
             vm.getProjects = function () {
 
-                var requestData = {
-                    _sort: vm.sortProjects,
-                    _order: vm.order,
-                    _start: vm.start,
-                    _limit: vm.limit,
-                    _filter: vm.activeFilter
-                };
-                var getProjectsUrl = '';
-                
-                if (vm.filterTag == 'from_company') requestData.companyId = $rootScope.userData.companyId;
-                if (vm.widgetFormat === 'my-projects') {
-                    getProjectsUrl = dataFactory.getMyProjects();
-                } else {
-                    getProjectsUrl = dataFactory.getPublicProjects();
-                }
-                ajax.get(getProjectsUrl, requestData, function (response) {
-                    vm.userCompanyId = $rootScope.userData.companyId;
-                    vm.projects = response.data;
-                    vm.totalItems = response.data.length;
-                    var ids = [];
-                    for (var i in vm.projects) {
-
-                        if (vm.widgetFormat == 'all-projects') {
-                            if (!vm.projects[i].isPublic && vm.projects[i].projectManagerId != $rootScope.userData.accountId) {
-                                if (vm.projects[i].companyId != $rootScope.userData.companyId) {
-                                    vm.projects.splice(i, 1);
-                                    continue;
-                                }
-                            }
-                        }
-
-                        ids.push(vm.projects[i].id);
-                        if (vm.projects[i].dueDate) {
-                            var day = 86400000;
-                            var dueDateCompare = (new Date() - new Date(vm.projects[i].dueDate));
-                            if (dueDateCompare <= day) {
-                                vm.projects[i].dueDate = moment(vm.projects[i].dueDate).format('MM/DD/YYYY');
-                            } else {
-                                vm.projects[i].dueDate = Math.floor(dueDateCompare / day) + ' days';
-                            }
-                        }
-
-                        vm.projects[i].description = $showdown.stripHtml($showdown.makeHtml(vm.projects[i].description));
-
-                    }
-                    isCurrentUserMember(ids);
-
-                    isProjectsJoinRequests(ids);
-                    getTags(ids);
+                if (vm.projects.length != 0){
                     apply();
-                }, function (response) {
-                    toastModel.showToast('error', 'Ajax faild: getProjects');
-                });
+                }
+
+                else{
+                  var requestData = {
+                      _sort: vm.sortProjects,
+                      _order: vm.order,
+                      _start: vm.start,
+                      _limit: vm.limit,
+                      _filter: vm.activeFilter
+                  };
+                  var getProjectsUrl = '';
+
+                  if (vm.filterTag == 'from_company') requestData.companyId = $rootScope.userData.companyId;
+                  if (vm.widgetFormat === 'my-projects') {
+                      getProjectsUrl = dataFactory.getMyProjects();
+                  } else {
+                      getProjectsUrl = dataFactory.getPublicProjects();
+                  }
+                  ajax.get(getProjectsUrl, requestData, function (response) {
+                      vm.userCompanyId = $rootScope.userData.companyId;
+                      vm.projects = response.data;
+                      vm.totalItems = response.data.length;
+                      var ids = [];
+                      for (var i in vm.projects) {
+
+                          if (vm.widgetFormat == 'all-projects') {
+                              if (!vm.projects[i].isPublic && vm.projects[i].projectManagerId != $rootScope.userData.accountId) {
+                                  if (vm.projects[i].companyId != $rootScope.userData.companyId) {
+                                      vm.projects.splice(i, 1);
+                                      continue;
+                                  }
+                              }
+                          }
+
+                          ids.push(vm.projects[i].id);
+                          if (vm.projects[i].dueDate) {
+                              var day = 86400000;
+                              var dueDateCompare = (new Date() - new Date(vm.projects[i].dueDate));
+                              if (dueDateCompare <= day) {
+                                  vm.projects[i].dueDate = moment(vm.projects[i].dueDate).format('MM/DD/YYYY');
+                              } else {
+                                  vm.projects[i].dueDate = Math.floor(dueDateCompare / day) + ' days';
+                              }
+                          }
+
+                          vm.projects[i].description = $showdown.stripHtml($showdown.makeHtml(vm.projects[i].description));
+
+                      }
+                      isCurrentUserMember(ids);
+
+                      isProjectsJoinRequests(ids);
+                      getTags(ids);
+                      apply();
+                  }, function (response) {
+                      toastModel.showToast('error', 'Ajax faild: getProjects');
+                  });
+                }
             };
 
             function isProjectsJoinRequests(ids) {
@@ -270,13 +276,13 @@ angular.module('dmc.widgets.projects', [
                     apply();
                 });
             };
-            
+
             vm.getNextPage = function () {
                 vm.start += vm.limit;
                 vm.getProjects();
                 $window.scrollTo(0, 0);
             };
-            
+
             vm.getPreviousPage = function () {
                 vm.start -= vm.limit;
                 vm.getProjects();

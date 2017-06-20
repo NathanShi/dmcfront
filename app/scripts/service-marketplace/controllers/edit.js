@@ -62,7 +62,7 @@ angular.module('dmc.service-marketplace')
                     angular.forEach($scope.service_images, function(image, index) {
                         $scope.service_images[index].url = image.documentUrl;
                     });
-                    console.log($scope.service_images)
+                    // console.log($scope.service_images)
                 }
             });
 
