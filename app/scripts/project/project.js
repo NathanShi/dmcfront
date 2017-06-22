@@ -60,47 +60,47 @@ angular.module('dmc.project', [
             url: '/preview/:projectId',
             templateUrl: 'templates/project/pages/home.html',
             controller: 'DMCPreviewProjectController as projectCtrl',
-            resolve: resolve
+            //resolve: resolve
         }).state('blank_submission', {
             url: '/submission/blank/:projectId',
             templateUrl: 'templates/project/blank-submission.html',
             controller: 'DMCBlankSubmissionProjectController as projectCtrl',
-            resolve: resolve
+            //resolve: resolve
         }).state('submission', {
             url: '/submission/:projectId',
             templateUrl: 'templates/project/pages/home.html',
             controller: 'DMCSubmissionProjectController as projectCtrl',
-            resolve: resolve
+            //resolve: resolve
         }).state('submissions', {
             url: '/submissions/:projectId',
             templateUrl: 'templates/project/submissions.html',
             controller: 'DMCSubmissionsProjectController as projectCtrl',
-            resolve: resolve
+            //resolve: resolve
         }).state('project_rfp_blank', {
             url: '/rfp/blank/:projectId',
             templateUrl: 'templates/project/rfp-home-blank.html',
             controller: 'DMCRfpBlankHomeProjectController as projectCtrl',
-            resolve: resolve
+            //resolve: resolve
         }).state('project_rfp', {
             url: '/rfp/:projectId',
             templateUrl: 'templates/project/rfp-home.html',
             controller: 'DMCRfpHomeProjectController as projectCtrl',
-            resolve: resolve
+            //resolve: resolve
         }).state('submit', {
             url: '/submit/:projectId',
             templateUrl: 'templates/project/submit.html',
             controller: 'DMCSubmitProjectController as projectCtrl',
-            resolve: resolve
+            //resolve: resolve
         }).state('submitted', {
             url: '/submitted/:projectId',
             templateUrl: 'templates/project/submitted.html',
             controller: 'DMCSubmittedProjectController as projectCtrl',
-            resolve: resolve
+            //resolve: resolve
         }).state('project.home', {
             url: '/home',
             controller: 'HomeCtrl as projectCtrl',
             templateUrl: 'templates/project/pages/home.html',
-            resolve: resolve
+            //resolve: resolve
         }).state('project.workspace', {
             url: '/workspace',
             controller: 'WorkspaceCtrl as projectCtrl',
@@ -109,12 +109,12 @@ angular.module('dmc.project', [
             url: '/edit',
             controller: 'EditProjectCtrl as projectCtrl',
             templateUrl: 'templates/project/pages/edit.html',
-            resolve: resolve
+            //resolve: resolve
         }).state('project.documents', {
             url: '/documents',
             controller: 'DocumentsCtrl as projectCtrl',
             templateUrl: 'templates/project/pages/documents.html',
-            resolve: resolve
+            //resolve: resolve
         }).state('project.documents-upload', {
             url: '/documents/upload',
             controller: 'DocumentsUploadCtrl as projectCtrl',
@@ -123,7 +123,7 @@ angular.module('dmc.project', [
             url: '/tasks?text?type',
             controller: 'TasksCtrl as projectCtrl',
             templateUrl: 'templates/project/pages/tasks.html',
-            resolve: resolve
+            //resolve: resolve
         }).state('project.task', {
             url: '/task/:taskId',
             controller: 'TaskCtrl as projectCtrl',
@@ -140,12 +140,12 @@ angular.module('dmc.project', [
             url: '/team?text?type',
             controller: 'TeamCtrl as projectCtrl',
             templateUrl: 'templates/project/pages/team.html',
-            resolve: resolve
+            //resolve: resolve
         }).state('project.discussions', {
             url: '/discussions?text?type',
             controller: 'DiscussionsCtrl as projectCtrl',
             templateUrl: 'templates/project/pages/discussions.html',
-            resolve: resolve
+            //resolve: resolve
         }).state('project.rfp-home', {
             url: '/rfp-home',
             controller: 'RfpHomeCtrl as projectCtrl',
@@ -176,10 +176,11 @@ angular.module('dmc.project', [
                     serviceData: ['serviceModel', '$stateParams', function (serviceModel, $stateParams) {
                         return serviceModel.get_project_services($stateParams.projectId);
                     }],
-                    projectData: ['DMCProjectModel', '$stateParams',
-                        function(DMCProjectModel, $stateParams) {
-                            return DMCProjectModel.getModel($stateParams.projectId);
-                        }]
+                    // projectData: resolve.projectData
+                    // projectData: ['DMCProjectModel', '$stateParams',
+                    //     function(DMCProjectModel, $stateParams) {
+                    //         return DMCProjectModel.getModel($stateParams.projectId);
+                    //     }]
                 }
             }).state('project.upload-services', {
                 url: '/upload-service',
@@ -1047,14 +1048,14 @@ angular.module('dmc.project', [
             };
 
             this.get_service_run_history = function(id, params, callback){
-                
+
                 return $http.get(dataFactory.services(id).get_run_history, (params)? params : {
                     _sort: 'id',
                     _order: 'DESC',
                     status_ne : 'running'
                 }, {}).then(function(response){
                     var history = response.data;
-                    
+
                     for (var i = 0; i < history.length; i++) {
                         history[i].runTime = calcRunTime(history[i]);
                         history[i].date = moment(new Date(history[i].startDate+' '+history[i].startTime)).format('MM/DD/YYYY hh:mm A');
@@ -1066,9 +1067,9 @@ angular.module('dmc.project', [
                         };
                         userName(i);
                     }
-                    
+
                     return history;
-                    
+
                 });
             };
 

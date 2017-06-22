@@ -46,9 +46,9 @@ angular.module('dmc.widgets.services',[
                         }
                     );
                 };
-    
+
                 function getAddedByName(id, index) {
-                    
+
                     ajax.get(dataFactory.getUserName(id), {}, function (response) {
                         $scope.services[index].addedBy = response.data.displayName;
                     }, function (response) {

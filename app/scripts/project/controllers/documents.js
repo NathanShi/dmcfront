@@ -10,4 +10,6 @@ angular.module('dmc.project')
         $scope.addDocument = function(){
             $state.go("project.documents-upload");
         };
+
+        console.log(projectData);
     })

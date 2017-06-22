@@ -147,7 +147,7 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
 
           }
         }
-        getTags();
+        //getTags();
 
         $scope.removeFile = function(item) {
           if (item.file._removeLink) {
@@ -876,6 +876,7 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
           if ($scope.projectId) {
             resetSelection();
             ajax.get(dataFactory.getProject($scope.projectId), {}, function(projResp) {
+              console.log(projResp.data);
               $scope.projectHome = projResp.data.directoryId;
               ajax.get(dataFactory.directoriesUrl($scope.projectHome).get, {}, function(dirResp) {
                 $scope.directories = dirResp.data;
