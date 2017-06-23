@@ -37,33 +37,33 @@ angular.module('dmc.widgets.discussions',[
                         $scope.total = response.data.length;
                         $scope.discussions = response.data;
                         var ids = $.map($scope.discussions,function(x){ return x.id; });
-                        // ajax.get(dataFactory.addCommentIndividualDiscussion(),{
-                        //     'individual-discussionId' : ids,
-                        //     '_order' : 'DESC',
-                        //     '_sort' : 'id',
-                        //     'commentId': 0
-                        // },function(res){
-                        //     for(var i in $scope.discussions){
-                        //         $scope.discussions[i].created_at_format = moment(new Date($scope.discussions[i].created_at)).format('MM/DD/YYYY hh:mm A');
-                        //         $scope.discussions[i].replies = 0;
-                        //         for(var j in res.data){
-                        //             if($scope.discussions[i].id == res.data[j]['individual-discussionId']){
-                        //                 $scope.discussions[i].replies++;
-                        //                 $scope.discussions[i].last = res.data[j];
-                        //                 $scope.discussions[i].last.created_at_format = moment(new Date($scope.discussions[i].last.created_at)).format('MM/DD/YYYY hh:mm A');
-                        //                 if($scope.discussions[i].isPosted == null){
-                        //                     $scope.discussions[i].isPosted = true;
-                        //                 }else if($scope.discussions[i].isPosted == true){
-                        //                     $scope.discussions[i].isPosted = false;
-                        //                 }
-                        //             }
-                        //         }
-                        //         if($scope.discussions[i].replies > 0) $scope.discussions[i].replies--;
-                        //         if($scope.discussions[i].isPosted == null) $scope.discussions[i].isPosted = true;
-                        //     }
-                        //     //$scope.discussions.sort(function(a,b){ return b.last.created_at - a.last.created_at; });
-                        //     if(limit < $scope.discussions.length) $scope.discussions.splice(limit,$scope.discussions.length);
-                        // });
+                        ajax.get(dataFactory.addCommentIndividualDiscussion(),{
+                            'individual-discussionId' : ids,
+                            '_order' : 'DESC',
+                            '_sort' : 'id',
+                            'commentId': 0
+                        },function(res){
+                            for(var i in $scope.discussions){
+                                $scope.discussions[i].created_at_format = moment(new Date($scope.discussions[i].created_at)).format('MM/DD/YYYY hh:mm A');
+                                $scope.discussions[i].replies = 0;
+                                for(var j in res.data){
+                                    if($scope.discussions[i].id == res.data[j]['individual-discussionId']){
+                                        $scope.discussions[i].replies++;
+                                        $scope.discussions[i].last = res.data[j];
+                                        $scope.discussions[i].last.created_at_format = moment(new Date($scope.discussions[i].last.created_at)).format('MM/DD/YYYY hh:mm A');
+                                        if($scope.discussions[i].isPosted == null){
+                                            $scope.discussions[i].isPosted = true;
+                                        }else if($scope.discussions[i].isPosted == true){
+                                            $scope.discussions[i].isPosted = false;
+                                        }
+                                    }
+                                }
+                                if($scope.discussions[i].replies > 0) $scope.discussions[i].replies--;
+                                if($scope.discussions[i].isPosted == null) $scope.discussions[i].isPosted = true;
+                            }
+                            //$scope.discussions.sort(function(a,b){ return b.last.created_at - a.last.created_at; });
+                            if(limit < $scope.discussions.length) $scope.discussions.splice(limit,$scope.discussions.length);
+                        });
                         if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') $scope.$apply();
                     });
                 };
