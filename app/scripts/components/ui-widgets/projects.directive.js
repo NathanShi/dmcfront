@@ -43,7 +43,8 @@ angular.module('dmc.widgets.projects', [
                 getProjectsOnReady: '=',
                 filters: '=',
                 activeFilter: '=',
-                activeTab: '='
+                activeTab: '=',
+                searchTerm: '='
             },
             controller: UiWidgetProjectsController,
             controllerAs: '$ctrl'
@@ -56,7 +57,7 @@ angular.module('dmc.widgets.projects', [
             vm.total = 0;
             vm.order = 'DESC';
             vm.start = 0;
-            vm.currentPage = 0;
+            vm.currentPage = 1;
             vm.filterTag = null;
             vm.userCompany = null;
             vm.pageSize = 10;
@@ -67,6 +68,16 @@ angular.module('dmc.widgets.projects', [
                 return vm.getProjectsFlag;
             }, function (newValue, oldValue) {
                 if (newValue !== oldValue || vm.getProjectsOnReady === true || (newValue === oldValue && vm.widgetFormat === 'my-projects')) {
+                    vm.activeFilter = null;
+                    vm.searchTerm = null;
+                    vm.getProjects();
+                }
+            }, true);
+    
+            $scope.$watch(function () {
+                return vm.searchTerm;
+            }, function (newValue, oldValue) {
+                if (newValue !== oldValue && vm.widgetFormat === vm.activeTab && vm.searchTerm === null) {
                     vm.getProjects();
                 }
             }, true);
@@ -76,6 +87,7 @@ angular.module('dmc.widgets.projects', [
             }, function (newValue, oldValue) {
                 if (newValue !== oldValue && vm.widgetFormat === vm.activeTab) {
                     vm.start = 0;
+                    vm.currentPage = 1;
                     vm.getProjects();
                 }
             }, true);
@@ -85,9 +97,14 @@ angular.module('dmc.widgets.projects', [
             }, function (newValue, oldValue) {
                 if (newValue !== oldValue && vm.widgetFormat === vm.activeTab) {
                     vm.start = 0;
+                    vm.currentPage = 1;
                     vm.getProjects();
                 }
             }, true);
+            
+            $scope.$on('searchProjects', function(event) {
+                vm.getProjects();
+            });
             
             var limit = (vm.limit ? vm.limit : (vm.widgetShowAllBlocks === true ? null : 2));
 
@@ -106,7 +123,9 @@ angular.module('dmc.widgets.projects', [
                     _order: vm.order,
                     _start: vm.start,
                     _limit: vm.limit,
-                    _filter: vm.activeFilter
+                    _page: vm.currentPage,
+                    _filter: vm.activeFilter,
+                    _search: vm.searchTerm
                 };
                 var getProjectsUrl = '';
                 
@@ -118,7 +137,9 @@ angular.module('dmc.widgets.projects', [
                 }
                 ajax.get(getProjectsUrl, requestData, function (response) {
                     vm.userCompanyId = $rootScope.userData.companyId;
-                    vm.projects = response.data;
+                    vm.projects = response.data.content;
+                    vm.last = response.data.last;
+                    vm.first = response.data.number == 1 || response.data.first ? true : false;
                     vm.totalItems = response.data.length;
                     var ids = [];
                     for (var i in vm.projects) {
@@ -273,12 +294,14 @@ angular.module('dmc.widgets.projects', [
             
             vm.getNextPage = function () {
                 vm.start += vm.limit;
+                vm.currentPage = vm.currentPage + 1;
                 vm.getProjects();
                 $window.scrollTo(0, 0);
             };
             
             vm.getPreviousPage = function () {
                 vm.start -= vm.limit;
+                vm.currentPage = vm.currentPage - 1;
                 vm.getProjects();
                 $window.scrollTo(0, 0);
             };
