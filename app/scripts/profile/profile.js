@@ -64,18 +64,18 @@ angular.module('dmc.profile', [
 
             return $q.all(promises).then(function(responses) {
                 var profile = extractData(responses.profile);
-                //Call /rest/user again to get account is not needed, get accountId from profile.
+                // profile.isPublicContacts never used .
                 // DMCUserModel.getUserData().then(function(res){
-                    ajax.get(dataFactory.getAccount(profile.accountId),{},function(data){
-                        profile.account = extractData(data);
-                        profile.isPublicContacts = false;
-                        for(var key in profile.account.privacy.public){
-                            if(profile.account.privacy.public[key].enable == true){
-                                profile.isPublicContacts = true;
-                                break;
-                            }
-                        }
-                    });
+                    // ajax.get(dataFactory.getAccount(profile.accountId),{},function(data){
+                    //     profile.account = extractData(data);
+                    //     profile.isPublicContacts = false;
+                    //     for(var key in profile.account.privacy.public){
+                    //         if(profile.account.privacy.public[key].enable == true){
+                    //             profile.isPublicContacts = true;
+                    //             break;
+                    //         }
+                    //     }
+                    // });
                 // });
                 // TODO remove at a later date
                 // profile.profile_reviews = extractData(responses.profile_reviews);

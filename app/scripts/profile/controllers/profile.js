@@ -4,7 +4,6 @@ angular.module('dmc.profile')
     	function (profileData, profileModel, $stateParams, $scope, $location, $anchorScroll, ajax, dataFactory, $state) {
 
         $scope.profile = profileData;  //profile
-        // åconsole.log(".", $scope.profile);
 
         ajax.get(dataFactory.documentsUrl().getList, {page: 0, pageSize: 1, parentType: 'USER', parentId: $scope.profile.id, docClass: 'IMAGE'}, function(response) {
             if (response.data && response.data.data) {
