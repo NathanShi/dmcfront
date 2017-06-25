@@ -147,7 +147,7 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
 
           }
         }
-        //getTags();
+        getTags();
 
         $scope.removeFile = function(item) {
           if (item.file._removeLink) {
