@@ -1,7 +1,7 @@
 angular.module('dmc.profile')
     .controller('profileController',
-    	['profileData', 'profileModel', '$stateParams', '$scope', '$location', '$anchorScroll', 'ajax', 'dataFactory', '$state',
-    	function (profileData, profileModel, $stateParams, $scope, $location, $anchorScroll, ajax, dataFactory, $state) {
+    	['profileData', 'profileModel', '$stateParams', '$scope', '$location', '$anchorScroll', 'ajax', 'dataFactory', '$state','DMCUserModel',
+    	function (profileData, profileModel, $stateParams, $scope, $location, $anchorScroll, ajax, dataFactory, $state, DMCUserModel) {
 
         $scope.profile = profileData;  //profile
 
@@ -30,6 +30,8 @@ angular.module('dmc.profile')
         $scope.selectSortingStar = 0;
         $scope.projects = [];
         $scope.toProjectId = null;
+
+
 
             $scope.privacyInfo = {
                 email : {
@@ -164,15 +166,23 @@ angular.module('dmc.profile')
             }
         );
         */
-
-        ajax.get(
-            dataFactory.getProjects(),
-            {},
-            function(response){
-                // console.log("--getProjects Called--", response.data);
-                $scope.projects = response.data;
-            }
-        )
+        $scope.user = null;
+        DMCUserModel.getUserData().then(function(res){
+            $scope.user = res;
+            if ($scope.user.id != profileData.id)
+              viewOthersProfile();
+        });
+        
+        function viewOthersProfile() {
+          ajax.get(
+              dataFactory.getProjects(),
+              {},
+              function(response){
+                  // console.log("--getProjects Called--", response.data);
+                  $scope.projects = response.data;
+              }
+          )
+        }
 
 //review
         //Show Leave A Review form
