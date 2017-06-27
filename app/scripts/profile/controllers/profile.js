@@ -169,19 +169,25 @@ angular.module('dmc.profile')
         $scope.user = null;
         DMCUserModel.getUserData().then(function(res){
             $scope.user = res;
-            if ($scope.user.id != profileData.id)
-              viewOthersProfile();
+            if ($scope.user.id != profileData.id){
+               viewOthersProfile();
+             }
         });
-        
+
         function viewOthersProfile() {
           ajax.get(
-              dataFactory.getProjects(),
+              dataFactory.getPublicProjects(),
               {},
               function(response){
-                  // console.log("--getProjects Called--", response.data);
                   $scope.projects = response.data;
-              }
-          )
+              });
+
+          ajax.get(
+              dataFactory.getMyProjects(),{
+                _limit: 300
+              },function(response){
+                  $scope.projects += response.data;
+              });
         }
 
 //review
