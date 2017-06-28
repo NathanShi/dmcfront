@@ -186,7 +186,10 @@ angular.module('dmc.profile')
               dataFactory.getMyProjects(),{
                 _limit: 300
               },function(response){
-                  $scope.projects += response.data;
+                  for (var ele in response.data){
+                    if ($scope.projects.indexOf(ele) == -1)
+                      $scope.projects += ele;
+                  }              
               });
         }
 
