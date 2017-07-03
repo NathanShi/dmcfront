@@ -54,6 +54,20 @@ angular.module('dmc.account')
           $scope.changesSkills = $scope.profile.skills.length;
           $scope.companies = [];
 
+          $scope.zones = [];
+          $scope.ctrl = {};
+          $scope.ctrl.simulateQuery = false;
+          $scope.ctrl.isDisabled = false;
+          // list of `state` value/display objects
+          $scope.ctrl.states = loadAll();
+          $scope.ctrl.querySearch = querySearch;
+          $scope.ctrl.selectedItemChange = selectedItemChange;
+          $scope.ctrl.searchTextChange = searchTextChange;
+          $scope.ctrl.searchText = $scope.profile.timezone;
+          $scope.ctrl.setCompany = setCompany;
+          $scope.ctrl.queryCompanySearch = queryCompanySearch;
+          $scope.ctrl.searchCompanyChange = searchCompanyChange;
+
 
 
           if ($scope.profile && $scope.profile.roles && $scope.profile.roles[$scope.profile.companyId]) {
@@ -256,5 +270,97 @@ angular.module('dmc.account')
               }
           };
 
+          function createFilterFor(query) {
+              var lowercaseQuery = angular.lowercase(query);
+              return function filterFn(item) {
+                  return (item.value.indexOf(lowercaseQuery) != -1);
+              };
+          }
+
+          function querySearch(query) {
+              var results = query ? $scope.ctrl.states.filter(createFilterFor(query)) : $scope.ctrl.states,
+                  deferred;
+              if ($scope.ctrl.simulateQuery) {
+                  deferred = $q.defer();
+                  $timeout(function () {
+                      deferred.resolve(results);
+                  }, Math.random() * 1000, false);
+                  return deferred.promise;
+              } else {
+                  return results;
+              }
+          }
+
+          function selectedItemChange(item) {
+              if (!item || !item.display) {
+                  $scope.profile.timezone = null;
+              } else {
+                  $scope.profile.timezone = item.display;
+              }
+          }
+
+          function searchTextChange(text) {
+              if (text.trim().length == 0) {
+                  $scope.profile.timezone = null;
+              }
+            }
+
+          function queryCompanySearch(query) {
+                  console.log($scope.ctrl, query)
+                  var results = query ? $scope.ctrl.companies.filter( createCompanyFilterFor(query) ) : $scope.ctrl.companies,
+                      deferred;
+                  if ($scope.ctrl.simulateQuery) {
+                      deferred = $q.defer();
+                      $timeout(function () {
+                          deferred.resolve(results);
+                      }, Math.random() * 1000, false);
+                      return deferred.promise;
+                  } else {
+                      return results;
+                  }
+              }
+
+          function searchCompanyChange(text) {
+                  if (text.trim().length == 0) {
+                      $scope.profile.companyId = null;
+                  }
+              }
+
+          function setCompany(company) {
+                  $scope.profile.companyId = company.id;
+                  hasCompanyChange = true;
+              }
+
+
+          function loadAll() {
+              if ($scope.zones.length == 0) {
+                  var zones = moment.tz.names();
+                  for (var i = 0; i < zones.length; i++) {
+                      var zone = moment.tz.zone(zones[i]);
+                      if (Date.UTC(2012, 1, 1)) {
+                          var time = Math.round((zone.parse(Date.UTC(2012, 1, 1)) / 60));
+                          var t = time;
+                          if (t > 0) {
+                              if (t < 10) t = '0' + t;
+                              t = '(UTC -' + t + ':00)';
+                          } else if (t < 0) {
+                              t *= -1;
+                              if (t < 10) t = '0' + t;
+                              t = '(UTC +' + t + ':00)';
+                          } else {
+                              t = '(UTC 00:00)';
+                          }
+                          $scope.zones.push(t + ' ' + zones[i]);
+                          //$scope.zones.push(zones[i]);
+                      }
+                  }
+              }
+              return $scope.zones.map(function (state) {
+                  return {
+                      value: state.toLowerCase(),
+                      display: state
+                  };
+              });
+          }
 
         }]);

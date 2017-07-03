@@ -40,11 +40,11 @@
                               <div class="profile-header" flex="70" layout="row">
                                   <div flex="50" layout="column">
                                       <md-input-container>
-                                          <label>Display Name</label>
-                                          <input id="editDisplayNameProfile"
-                                                 ng-change="change()"
-                                                 ng-init="changes.displayName = profile.displayName"
-                                                 ng-model="profile.displayName">
+                                          <label>Display Name </label>
+                                          <input ng-model="profile.realname"
+                                                 id="editFirstName"
+                                                 ng-blur="blurInput()"
+                                                 ng-disabled="isVerified">
                                       </md-input-container>
                                       <md-input-container>
                                           <label>Job Title</label>
@@ -66,12 +66,38 @@
                                                          ng-show="!isVerified && profile.companyId">Resend Notification</md-button>
                                           </div>
                                       </md-input-container>
-
+                                      <md-input-container>
+                                          <label>Email Address</label>
+                                          <input ng-model="profile.email"
+                                                 id="userEmail"
+                                                 ng-blur="blurInput()"
+                                                 ng-disabled="isVerified">
+                                      </md-input-container>
                                       <md-input-container ng-if="isVerified">
                                           <label>Company</label>
                                           <input ng-model="profile.companyName" ng-disabled="isVerified"></input>
                                       </md-input-container>
-
+                                      <md-autocomplete
+                                          md-floating-label="Time Zone"
+                                          ng-disabled="ctrl.isDisabled"
+                                          md-no-cache="ctrl.noCache"
+                                          md-selected-item="ctrl.selectedItem"
+                                          md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                          md-search-text="ctrl.searchText"
+                                          md-selected-item-change="ctrl.selectedItemChange(item)"
+                                          md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                          md-item-text="item.display"
+                                          md-min-length="0"
+                                          ng-blur="blurInput()"
+                                          placeholder="What is your time zone?"
+                                      >
+                                          <md-item-template>
+                                              <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                                          </md-item-template>
+                                          <md-not-found>
+                                              No matches found for "{{ctrl.searchText}}".
+                                          </md-not-found>
+                                      </md-autocomplete>
                                       <!-- <md-input-container class="md-icon-float title-input-left">
                                           <label>Location</label>
                                           <md-icon class="location-gps" ng-click="getLocation()">
@@ -81,7 +107,7 @@
                                                  ng-init="changes.address = profile.address"
                                                  ng-change="change()"
                                                  type="text">
-                                      </md-input-container> -->
+                                      </md-input-container>  -->
 
                                   </div>
                                   <div flex="50" layout="row" layout-align="end start">

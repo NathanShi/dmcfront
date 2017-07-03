@@ -10,11 +10,11 @@ angular.module('dmc.account').directive('accountMenu', [function () {
         },
         controller: function($scope, $element, $attrs) {
             $scope.menu = {
-                basics : {
-                    title : pageTitles.basics,
-                    url : '/account.php#/'+$scope.accountId+'/basics',
-                    selected : ($scope.page == 'basics' ? true : false)
-                },
+                //  basics : {
+                //      title : pageTitles.basics,
+                //     url : '/account.php#/'+$scope.accountId+'/basics',
+                //     selected : ($scope.page == 'basics' ? true : false)
+                // },
                 profile : {
                     title : pageTitles.profile,
                     url : '/account.php#/'+$scope.accountId+'/profile',

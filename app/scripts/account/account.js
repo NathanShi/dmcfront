@@ -149,7 +149,7 @@ angular.module('dmc.account', [
 }])
 
 var pageTitles = {
-    basics : 'Account Basics',
+    // basics : 'Account Basics',
     profile: 'Profile',
     privacy : 'Privacy',
     notifications : 'Notifications',
