@@ -1,0 +1,31 @@
+.welcome{
+  h2{
+    margin-bottom: -15px;
+    color: $brand-accent;
+    font-weight: bolder;
+  }
+  p{
+    font-weight: lighter;
+    font-size: 1.3em;
+  }
+  .small-underline{
+    height: 1px;
+    margin: 0px 15px 10px;
+    background: $brand-accent;
+  }
+}
+.social-button{
+  md-icon{
+    width: 40px;
+    height: 40px;
+    padding-left: 5px;
+    svg{
+      fill: $brand-accent;
+    }
+  }
+  &:hover{
+    md-icon svg{
+      fill: $brand-accent;
+    }
+  }
+}
