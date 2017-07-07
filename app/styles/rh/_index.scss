@@ -1,3 +1,11 @@
+.lighter{
+  font-weight: lighter;
+}
+.small-underline{
+  height: 1px;
+  margin: 0px 15px 10px;
+  background: $brand-accent;
+}
 .welcome{
   h2{
     margin-bottom: -15px;
@@ -5,13 +13,8 @@
     font-weight: bolder;
   }
   p{
-    font-weight: lighter;
     font-size: 1.3em;
-  }
-  .small-underline{
-    height: 1px;
-    margin: 0px 15px 10px;
-    background: $brand-accent;
+    margin-bottom: 30px;
   }
 }
 .social-button{
@@ -29,3 +32,36 @@
     }
   }
 }
+
+.about-img{
+  text-align: center; margin: 1em 0;
+  img{
+    vertical-align: middle;
+    max-height: 100%;
+    max-width: 100%;
+  }
+}
+
+.about-txt{
+  h3{
+    padding-bottom: 5px;
+    &.green{
+      border-bottom: 1px solid $brand-accent;
+    }
+    &.blue{
+      border-bottom: 1px solid #1656bc;
+    }
+  }
+}
+
+.section-header{
+  margin: 30px 0px 15px;
+  background: #363636;
+  font-weight: bolder;
+  text-align: center;
+  color: white;
+  padding: 5px;
+  letter-spacing: 7px;
+  font-size: .9em;
+}
+
