@@ -15,6 +15,19 @@
       </div>
     </div>
 
+<div layout="column" style="padding:20px 0px 45px">
+  <h1>CookieTest</h1>
+  <div>
+    <a ng-href='loginURL' ng-click="clickedAltLogin()">Alternative Login</a>
+    <div ng-if="fromSignup">
+      Came through signup
+    </div>
+    <div ng-if="!fromSignup">
+      Did not come through signup
+    </div>
+  </div>
+</div>
+
 <md-divider></md-divider>
 
     <!-- Feeds -->
@@ -65,6 +78,19 @@
 	  	</md-button>
   	</div>
   	<md-divider></md-divider> -->
+
+    <div layout="column" style="padding:20px 0px 45px">
+      <h1>CookieTest</h1>
+      <div>
+        <a ng-href='loginURL' ng-click="clickedAltLogin()">Alternative Login</a>
+        <div ng-if="fromSignup">
+          Came through signup
+        </div>
+        <div ng-if="!fromSignup">
+          Did not come through signup
+        </div>
+      </div>
+    </div>
 
   	<div layout="row" layout-align="center center" layout-padding>
 	  	<div class="content-column" layout="column" ng-repeat="p in pages">
