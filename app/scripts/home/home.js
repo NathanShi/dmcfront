@@ -10,11 +10,10 @@ angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 
             if (error == 'User not created') {
                 event.preventDefault();
                 window.location = '/onboarding.php#/home';
-            } 
-            // else if (error == 'New user from DMDII Signup') {
-            //     event.preventDefault();
-            //     window.location = '/company-onboarding.php#/companyinfo';
-            // }
+            } else if (error == 'New user from DMDII Signup') {
+                event.preventDefault();
+                window.location = '/company-onboarding.php#/companyinfo';
+            }
       });
 }])
 .config(function($stateProvider, $urlRouterProvider){

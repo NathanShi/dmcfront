@@ -45,7 +45,9 @@ angular.module('dmc.model.user', ['dmc.data', 'dmc.ajax', 'ngCookies'])
                     //     deferred.reject('New user from DMDII Signup');
                     // } else if (!data.termsConditions) {
                     //     deferred.reject('User not created');
-                    if (!data.termsConditions) {
+                    if (fromDMDIISignup) {
+                        deferred.reject('New user from DMDII Signup');
+                    } else if (!data.termsConditions) {
                         deferred.reject('User not created');
                     } else {
                         deferred.resolve();
