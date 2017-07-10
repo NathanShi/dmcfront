@@ -36,10 +36,12 @@ angular.module('dmc.model.user', ['dmc.data', 'dmc.ajax', 'ngCookies'])
             if (this.isLoggedIn()) {
                 this.getUserData().then(function(response){
                 var data = response.data ? response.data : response;
-                    if (fromDMDIISignup && !data.termsConditions) {
-                        // deferred.reject('User not created');
-                        deferred.reject('New user from DMDII Signup');
-                    } else if (!data.termsConditions) {
+                    // if (fromDMDIISignup && !data.termsConditions) {
+                    //     // deferred.reject('User not created');
+                    //     deferred.reject('New user from DMDII Signup');
+                    // } else if (!data.termsConditions) {
+                    //     deferred.reject('User not created');
+                    if (!data.termsConditions) {
                         deferred.reject('User not created');
                     } else {
                         deferred.resolve();
