@@ -1,0 +1,30 @@
+<section class="onboarding-section">
+
+  <div class="header">
+    <h1>Tier 3 Membership Sign Up Page</h1>
+  </div>
+
+  <signup-tabs>
+  </signup-tabs>
+
+
+  <div class="container">
+    <div class="row">
+      PLACEHOLDER
+     </div>
+
+     <div class="row">
+       Before creating a company membership, you need to become a user of the DMC.
+      </div>
+
+      <div class="row" ng-if="$root.isLogged">
+        You are currently logged in as {{$root.userData.displayName}}
+      </div>
+
+      <div class="row" ng-if="!$root.isLogged">
+        You are NOT logged in
+      </div>
+
+  </div>
+
+</section>

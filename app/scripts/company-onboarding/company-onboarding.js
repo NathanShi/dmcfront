@@ -45,6 +45,16 @@ angular.module('dmc.company.onboarding', [
                 templateUrl: 'templates/company-onboarding/home.html',
                 controller: 'co-homeController'
             })
+            .state('co-onboarding.companyinfo', {
+                url: '/companyinfo',
+                templateUrl: 'templates/company-onboarding/companyinfo.html',
+                controller: 'co-homeController'
+            })
+            .state('co-onboarding.createuser', {
+                url: '/createuser',
+                templateUrl: 'templates/company-onboarding/createuser.html',
+                controller: 'co-homeController'
+            })
         $urlRouterProvider.otherwise('/home');
     })
     .service('companyOnboardingModel', ['ajax', 'dataFactory', '$stateParams', 'toastModel', 'DMCUserModel',
