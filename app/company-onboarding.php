@@ -21,7 +21,7 @@
 
 <?php include 'build-vendor-rh.php' ?>
 
-<!-- build:js scripts/onboarding/index.js -->
+<!-- build:js scripts/company-onboarding/index.js -->
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1B_bspUI3Mpd5W1SVELtp-_OY--UPV-Q"></script> -->
 <script src="scripts/company-onboarding/controller/autocomplete.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyB1B_bspUI3Mpd5W1SVELtp-_OY--UPV-Q"></script>
