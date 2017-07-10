@@ -22,9 +22,10 @@
 <?php include 'build-vendor-rh.php' ?>
 
 <!-- build:js scripts/company-onboarding/index.js -->
-<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1B_bspUI3Mpd5W1SVELtp-_OY--UPV-Q"></script> -->
-<script src="scripts/company-onboarding/controller/autocomplete.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyB1B_bspUI3Mpd5W1SVELtp-_OY--UPV-Q"></script>
+<script src="scripts/company-onboarding/company-onboarding.js"></script>
+<script src="scripts/company-onboarding/controller/home.js"></script>
+<script src="scripts/company-onboarding/controller/autocomplete.js"></script>
 <script src="scripts/socket/socket.io.js"></script>
 <script src="scripts/configs/ngMaterial-config.js"></script>
 <script src="scripts/common/header/header.js"></script>
@@ -46,23 +47,7 @@
 <script src="scripts/common/models/phone-model.js"></script>
 <script src="scripts/common/models/question-toast-model.js"></script>
 <script src="scripts/common/models/previous-page.js"></script>
-
 <script src="scripts/components/ui-widgets/company-onboarding-tabs.directive.js"></script>
-<script src="scripts/company-onboarding/company-onboarding.js"></script>
-<script src="scripts/company-onboarding/controller/home.js"></script>
-
-<!-- <script data-require="angular.js@1.0.x" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.js" data-semver="1.0.7"></script>
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
-<script src="http://jvandemo.github.io/angularjs-google-maps/dist/angularjs-google-maps.js"></script> -->
-<!-- <script src="scripts/onboarding/onboarding.js"></script>
-<script src="scripts/onboarding/controllers/onboarding.js"></script>
-<script src="scripts/onboarding/controllers/home.js"></script>
-<script src="scripts/onboarding/controllers/profile.js"></script>
-<script src="scripts/onboarding/controllers/account.js"></script>
-<script src="scripts/onboarding/controllers/company.js"></script>
-<script src="scripts/onboarding/controllers/storefront.js"></script>
-<script src="scripts/onboarding/controllers/basic-informations.js"></script>
-<script src="scripts/onboarding/controllers/terms-conditions.js"></script> -->
 <!-- endbuild -->
 
     <script type="text/javascript">
