@@ -24,7 +24,8 @@ angular.module('dmc.company.onboarding', [
     'dmc.phone-format',
     'ngMaterial',
     'ngMessages',
-    'google.places'
+    'google.places',
+    'ngCookies'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
