@@ -4,6 +4,7 @@ angular.module('dmc.model.user', ['dmc.data', 'dmc.ajax', 'ngCookies'])
     .service('DMCUserModel', ['$http', 'dataFactory', '$q', '$window', '$rootScope', 'ajax', '$cookies', function($http, dataFactory, $q, $window, $rootScope, ajax, $cookies) {
 
         var _userName = $window.apiUrl ? $window.givenName : 'DMC User';
+        // _userName = ''
         $rootScope.isLogged = _userName == ''  ? false : true;
         // var _user;
 

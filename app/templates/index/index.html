@@ -1,7 +1,7 @@
 
 
 <main>
-    <section class="container" ng-if="!(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))">
+    <section class="container" ng-if="(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))">
     <!-- <section class="container" ng-if="($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin)"> -->
         <div class="row">
           <h1 class="col-xs-9">DIGITAL MANUFACTURING COMMONS</h1>
@@ -48,7 +48,7 @@
     </section>
 
 
-    <section class="container">
+    <section class="container" ng-if="!$root.isLogged || !(userData.roles && userData.roles[userData.companyId])">
     <!-- <section class="container" ng-if="!(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))"> -->
 
       <div class="row welcome">
