@@ -9,20 +9,23 @@
 
 
   <div class="container">
-    <div class="row">
-      PLACEHOLDER
-     </div>
 
      <div class="row">
-       Before creating a company membership, you need to become a user of the DMC.
+       <h3 class="col-xs-12">Before creating a company membership, you need to become a user of the DMC.</h3>
       </div>
 
       <div class="row" ng-if="$root.isLogged">
-        You are currently logged in as {{$root.userData.displayName}}
+        <p class="col-xs-12">You are currently logged in as {{$root.userData.displayName}}</p>
       </div>
 
       <div class="row" ng-if="!$root.isLogged">
-        You are NOT logged in
+        <p class="col-xs-12">You are NOT logged in</p>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <button ng-href='loginURL' ng-click="clickSignup">Create User Account</button>
+        </div>
       </div>
 
   </div>

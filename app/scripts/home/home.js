@@ -13,7 +13,7 @@ angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 
             }
             if (error == 'New user from DMDII Signup') {
                 event.preventDefault();
-                window.location = '/academia.php#/';
+                window.location = '/company-onboarding.php#/companyinfo';
             }
       });
 }])

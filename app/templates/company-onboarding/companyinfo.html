@@ -10,7 +10,10 @@
 
   <div class="container">
     <div class="row">
-      PLACEHOLDER FOR REDIRECT AFTER SIGN IN
+      <h3 class="col-xs-12">Placeholder for Redirect After Sign-In</h3>
+     </div>
+     <div class="row" ng-if="$root.isLogged">
+       <p class="col-xs-12">You are currently logged in as {{$root.userData.displayName}}</p>
      </div>
   </div>
 

@@ -14,4 +14,8 @@ angular.module('dmc.company.onboarding')
 
       $scope.tierLevel = 'Tier3';
 
+      $scope.clickSignup = function() {
+        $cookies.put('fromDMDIISignup',true)
+      }
+
 }])
