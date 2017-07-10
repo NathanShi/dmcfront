@@ -11,6 +11,10 @@ angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 
                 event.preventDefault();
                 window.location = '/onboarding.php#/home';
             }
+            if (error == 'New user from DMDII Signup') {
+                event.preventDefault();
+                window.location = '/academia.php#/';
+            }
       });
 }])
 .config(function($stateProvider, $urlRouterProvider){
