@@ -3,9 +3,41 @@ $icon_color: #666;
 
 }
 
+.content{
+	h2{
+		font-size: 18px;
+		color:green;
+		font-weight:normal;
+	}
+	md-card{
+		background-color: rgb(224,224,224);
+		height:250px;
+		width:300px;
+		.md-card-image{
+			height:180px;
+		}
+	}
+
+}
+
 .marketplace{
 	background: white;
 	padding: 0;
+	h1{
+		font-weight: normal;
+		font-size: 20px;
+		padding-left:20px;
+		padding-top:10px;
+		span{
+	    font-size: 30px;
+	    font-weight: lighter;
+	    color: green;
+	    margin: 0px;
+		}
+	}
+	.layout-padding{
+		padding:0px;
+	}
 
 	&-search{
 		height: 79px;

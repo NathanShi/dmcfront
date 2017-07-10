@@ -1,4 +1,4 @@
-<!-- <div class="container marketplace-box" layout="row" >
+<div class="container marketplace-box" layout="row" >
   <div class="marketplace" layout="column" flex>
     <h1><span>DMC Marketplace</h1></span>
     <hr />
@@ -6,15 +6,14 @@
 
 
     <div layout="row" class="wh-nav"layout-wrap>
-        <a class="wh-link" ui-sref="{{tab.state}}" ng-repeat="tab in tabs" ng-class="{ active: $state.includes('{{p.state}}')}">
+        <a class="wh-link" ui-sref="{{tab.state}}" ng-repeat="tab in tabs" ng-class="{ selected: tab.state=='apps'}">
           {{tab.title}}
         </a>
     </div>
- -->
 
-    <!-- <h1>Apps</h1> -->
 
-    <!-- <md-content class="marketplace-search" layout="row" layout-align="center center">
+
+    <md-content class="marketplace-search" layout="row" layout-align="center center">
       <form ng-click="submit(appQuery)" class="dmc-search global-search-form" flex="40">
         <div layout="row">
             <div layout="column" flex>
@@ -22,7 +21,7 @@
                     <md-icon>
                         <ng-md-icon icon="search"></ng-md-icon>
                     </md-icon>
-                    <input type="text" placeholder="Search by name, category, keywords" ng-model="appQuery">
+                    <input type="text" placeholder="Name, category or keyword" ng-model="appQuery">
                 </md-input-container>
             </div>
             <div layout="column">
@@ -49,4 +48,4 @@
           layout-margin>
       </dmc-products-card>
   </div>
-</div> -->
+</div>

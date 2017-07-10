@@ -1,0 +1,54 @@
+<div class="container marketplace-box"  layout="row">
+	<!--Product-->
+	<div class="content-column" flex='100'>
+		<md-content class="product">
+			<div layout="row" layout-margin>
+				<!--product image-->
+				<div class="product-image" layout="column">
+					<img class="main-image" ng-src="images/combined.jpg">
+				</div>
+				<div flex>
+					<!--product header-->
+					<div class="product-header">
+						<div layout="row">
+							<h2>{{categoryTitle}}</h2>
+              <span flex></span>
+            </div>
+					</div>
+
+					<md-divider></md-divider>
+					<br></br>
+
+					<!--product description-->
+					<!-- <div class="product-description" markdown-to-html="product.description">description
+					</div> -->
+					<div layout="row">
+						<span>Description:</span>
+					</div>
+				</div>
+			</div>
+
+			<!--product tabs-->
+			<md-tabs md-selected="$parent.selectedTab" md-dynamic-height md-border-bottom>
+        <md-tab label="Documents">
+
+          <div layout="row" class="preview" layout-align="center center">
+            <div layout-padding layout-margin flex="76">
+                <h2>Content on: </h2>
+            </div>
+          </div>
+        </md-tab>
+
+
+
+
+				<md-tab label="Videos">
+					<md-content class="md-padding">
+
+					</md-content>
+				</md-tab>
+			</md-tabs>
+			<md-divider></md-divider>
+		</md-content>
+	</div>
+</div>

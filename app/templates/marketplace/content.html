@@ -1,0 +1,31 @@
+<div class="container marketplace-box" layout="row" >
+  <div class="marketplace" layout="column" flex>
+    <h1><span>DMC Marketplace</h1></span>
+    <hr />
+
+
+
+    <div layout="row" class="wh-nav"layout-wrap>
+        <a class="wh-link" ui-sref="{{tab.state}}" ng-repeat="tab in tabs" ng-class="{ selected: tab.state=='content'}">
+          {{tab.title}}
+        </a>
+    </div>
+
+    <div class='md-padding content' layout="row" layout-wrap>
+      <md-card ng-repeat="card in cards">
+        <img src="{{card.image}}" class="md-card-image">
+        <md-card-content>
+          <!-- <h2><a ng-href="{{'/marketplace-content.php'}}">{{card.title}}</a></h2> -->
+          <h2><a ui-sref="content-details({contentTitle:card.title})">{{card.title}}</a></h2>
+          <!-- <p>{{card.description}}</p> -->
+          <!-- <div class="md-actions" layout="row" layout-align="end center">
+            <md-button class="md-raised dmc-button md-primary">Documents</md-button>
+            <md-button class="md-raised dmc-button md-primary">Videos</md-button>
+          </div> -->
+        </md-card-content>
+      </md-card>
+    </div>
+
+
+  </div>
+</div>

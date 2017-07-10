@@ -14,7 +14,7 @@
   align-items: flex-start;
 }
 
-// 
+//
 
 .content-panel-marketplace {
   .show-filter-input-container{
@@ -35,11 +35,15 @@
     h2 {
       font-weight: normal;
       color: black;
-      font-size: 23px;
+      font-size: 20px;
     }
   }
   .content-panel-body {
     background-color: #FFF;
+    h2{
+      font-weight:normal;
+      font-size: 18px;
+    }
   }
 }
 .products-card{

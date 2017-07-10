@@ -45,6 +45,63 @@ angular.module('dmc.marketplace')
                 },
                 'components' : []
             };
+
+
+            $scope.cards =[
+              {
+                title:'CyberSecurity',
+                tag:'cybersecurity',
+                description:'',
+                image:'https://tr1.cbsistatic.com/hub/i/r/2016/08/17/258e164e-4173-4969-88b9-630f646fd54c/thumbnail/768x432/5dab7d062c8fd4edb03aeb1d45faedb8/cybersecurity1.jpg'
+              },
+              {
+                title:'Model Based Enterprises',
+                tag:'mbe',
+                description:'',
+                image:'http://www.lifecycleinsights.com/wp-content/uploads/2016/03/3D-PMI.png'
+              },
+              {
+                title:'Digital Thread',
+                description:'',
+                tag:'digital-thread',
+                image:'http://dsg.files.app.content.prod.s3.amazonaws.com/gereports/wp-content/uploads/2016/02/03201500/Screen-Shot-2016-02-03-at-3.19.47-PM.jpg'
+              },
+              {
+                title:'Design & Supply Networks',
+                description:'',
+                tag:'supply-network',
+                image:'http://www.shipitsmarter.net/wp-content/uploads/2016/08/Supply-chain-control.png'
+              },
+              {
+                title:'Jobs & Organizational Change',
+                description:'',
+                tag:'jobs-change',
+                image:'http://www.careercast.com/sites/default/files/200-jobs-headline-2016.jpg'
+              }
+            ]
+
+            $scope.tabs = [
+                {
+                    title : 'Apps',
+                    state : 'apps'
+                },
+                {
+                    title : 'Content',
+                    state : 'content'
+                },
+                {
+                    title : 'Services',
+                    state : 'services'
+                },
+                {
+                    title : 'Swag',
+                    state : 'swag'
+                }
+            ];
+
+
+
+
             $scope.currentProduct = angular.isDefined($stateParams.product) && defaultPages[$stateParams.product] ? $stateParams.product : 'services';
             $scope.currentProductType = (angular.isDefined($stateParams.type) ? $stateParams.type : null);
             //if($scope.currentProduct == 'services' && $scope.currentProductType == null) $scope.currentProductType = 'analytical';

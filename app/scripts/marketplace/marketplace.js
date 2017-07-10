@@ -22,6 +22,7 @@ angular.module('dmc.marketplace', [
     'dmc.component.productscard',
     'dmc.component.carousel',
     'dmc.component.featuredAppcard',
+    'dmc.marketplace-content',
     'dmc.compare',
     'dmc.widgets.tasks',
     'dmc.widgets.tabs',
@@ -30,7 +31,7 @@ angular.module('dmc.marketplace', [
 .config(function($stateProvider, $urlRouterProvider, $httpProvider){
     $stateProvider.state('marketplace', {
         url: '/home?product?type?text',
-        templateUrl: 'templates/marketplace/marketplace.html',
+        templateUrl: 'templates/marketplace/apps.html',
         controller: 'DMCMarketplaceController',
         resolve: {
             is_search: function() {
@@ -45,6 +46,35 @@ angular.module('dmc.marketplace', [
             is_search: function() {
                 return true;
             }
+        }
+    }).state('apps', {
+        // url: '/search?product?type?authors?ratings?favorites?dates?text?tag',
+        templateUrl: 'templates/marketplace/apps.html',
+        controller: 'DMCMarketplaceController',
+        resolve: {
+            is_search: function() {
+                return false;
+            }
+        }
+    }).state('content', {
+        // url: '/search?product?type?authors?ratings?favorites?dates?text?tag',
+        templateUrl: 'templates/marketplace/content.html',
+        controller: 'DMCMarketplaceController',
+        resolve: {
+            is_search: function() {
+                return false;
+            }
+        }
+    }).state('content-details', {
+        url: '/:contentTitle',
+        templateUrl: 'templates/marketplace-content/marketplace-content.html',
+        controller: 'MarketplaceContentController',
+        resolve: {
+          contentData: ['$stateParams', function ( $stateParams) {
+              console.log('stateparams',$stateParams)
+              return $stateParams;
+              // return serviceModel.get_service($stateParams.serviceId);
+          }]
         }
     });
     $urlRouterProvider.otherwise('/home?product=services');
