@@ -47,6 +47,7 @@
 <script src="scripts/company-onboarding/controller/home.js"></script>
 <script src="scripts/company-onboarding/company-onboarding.js"></script>
 <script src="scripts/company-onboarding/controller/autocomplete.js"></script>
+<script src="scripts/company-onboarding/controller/home.js"></script>
 <script src="scripts/components/ui-widgets/company-onboarding-tabs.directive.js"></script>
 <!-- endbuild -->
 
