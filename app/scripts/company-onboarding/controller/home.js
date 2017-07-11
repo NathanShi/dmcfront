@@ -30,7 +30,7 @@ angular.module('dmc.company.onboarding')
   		    });
   		}
 
-      if (!$rootScope.isLogged && !$rootScope.userData.termsConditions) {
+      if ($rootScope.isLogged && !$rootScope.userData.termsConditions) {
         $scope.showModalTermsConditions();
       }
 
