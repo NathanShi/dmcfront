@@ -21,11 +21,12 @@ angular.module('dmc.widgets.companyonboardingTabs',[])
         {icon:'credit_card', content:'Payment Information'}
       ];
 
+
       $scope.checkComplete = function(index){
         if (index < $scope.currentStage)
-          return 'fill:#75bc52';
+          return '<ng-md-icon icon={{$scope.steps[index+1].icon}} style="fill:#75bc52" size="28"></ng-md-icon>';
         else
-          return 'fill:#6e797a';
+          return '<ng-md-icon icon={{$scope.steps[index+1].icon}} style="fill:#6e797a" size="28"></ng-md-icon>';
       }
 
 }])
