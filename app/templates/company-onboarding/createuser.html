@@ -12,21 +12,39 @@
   <div class="container">
 
      <div class="row">
-       <h3 class="col-xs-12">Before creating a company membership, you need to become a user of the DMC.</h3>
+       <div class="col-lg-12 col-md-12">
+         <h3>Create a DMC User Account</h3>
+       </div>
+       <div class="col-lg-12 col-md-12">
+         <p>Before you can create a company membership, you need to become a user of the Digital Manufacturing Commons.</p>
+         <p>
+           The DMC uses federated authentication, which means your identity is verified by a third party (this may be your own organization or a service like Google or LinkedIn).
+           If your organization has federated with the DMC, you will be able to log into the DMC using your organization credentials.
+           If your organization has not federated with the DMC, you will still be able to log into the DMC using your choice of common third parties.
+           Before logging into the DMC, make sure that you are not logged into any e-mail accounts in the browser you are using.
+         </p>
+       </div>
       </div>
 
       <div class="row" ng-if="$root.isLogged">
-        <p class="col-xs-12">You are currently logged in as {{$root.userData.displayName}}</p>
+        <div class="col-xs-12">
+          <h4 style="font-size: 1.2em;">You are currently logged in to the DMC<span ng-show="$root.userData.displayName"> as {{$root.userData.displayName}}</span></h4>
+          <p>If you do not want to proceed with membership sign up as your current user, please log out of the DMC and log with the desired account.</p>
+        </div>
+        <div class="col-xs-12" style="margin-bottom: 30px;">
+          <button type="submit" class="btn btn-next pull-right ng-scope" ng-href="/company-onboarding.php#/companyinfo">
+                  NEXT
+          </button>
+        </div>
       </div>
 
       <div class="row" ng-if="!$root.isLogged">
-        <p class="col-xs-12">You are NOT logged in</p>
-      </div>
-
-      <div class="row">
-        <div class="col-xs-12">
-          <a ng-click="clickSignup()" ng-href='loginURL'>Create User Account</a>
-        </div>
+          <div class="col-xs-12" style="margin: 15px 0px 30px;">
+            <button style="" class="btn btn-next ng-scope" ng-click="clickSignup()" ng-href='loginURL'>
+                    CREATE ACCOUNT
+            </button>
+          </div>
+          <!-- <a ng-click="clickSignup()" ng-href='loginURL'>Create User Account</a> -->
       </div>
 
   </div>
