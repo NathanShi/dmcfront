@@ -4,16 +4,454 @@
     <h1>Tier 3 Membership Sign Up Page</h1>
   </div>
 
-  <signup-tabs>
+  <signup-tabs
+    current-stage="2">
   </signup-tabs>
 
 
   <div class="container">
     <div class="row">
-      <h3 class="col-xs-12">Placeholder for Redirect After Sign-In</h3>
-     </div>
-     <div class="row" ng-if="$root.isLogged">
-       <p class="col-xs-12">You are currently logged in as {{$root.userData.displayName}}</p>
+      <form name="companyGeneralForm" ng-submit="submitForm(companyGeneralForm.$valid)">
+      <div class="col-lg-12 col-md-12">
+        <h3>General Information</h3>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4">
+              <div class="form-group" ng-class="{ 'has-error' : companyGeneralForm.company.name.$invalid}">
+                  <label class="section">Legal Corporate/Organization Name</label>
+                  <input name="orgName" class="form-control" ng-model="company.name" type="text" required>
+                  <p ng-show="companyGeneralForm.company.name.$invalid" class="help-block">Required</p>
+                  <div ng-bind="companyGeneralForm.company.name.$invalid"></div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <div>
+            <label class="section">Principal Office Address</label> or North American HQ if outside US
+            <div class="row">
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Line 1
+                    </div>
+                    <input class="form-control" type="text" g-places-autocomplete ng-model="autocomplete">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      City
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      State
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label>
+                    </label>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Line 2</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Zip code
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-8 col-md-8">
+              <input type="checkbox" name="subCompany" id="subCompany" ng-model="subCompany"/>
+              <label for="subCompany" class="labelForOp selection" style="font-weight:bold">Subsidary Office Address</label>
+              <span>Check if your primary company is <strong>OUTSIDE</strong> the US</span>
+            </div>
+          </div>
+
+          <div ng-show="subCompany" class="subComAddress">
+            <div class="row">
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Line 1
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      City
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      State
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label></label>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Line 2</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Zip code
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <label class="section">Main Point of Contact</label>
+          <div>
+            <div class="row">
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      First Name
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Last Name
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Phone Number
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Email
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Mailing Address
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-8 col-md-8">
+              <input type="checkbox" name="financialContact" id="financialContact" ng-model="financialContact"/>
+              <label for="financialContact" class="labelForOp selection" style="font-weight:bold">Financial Contact</label>
+              <span>Check if different for Financial Point of Contact</span>
+            </div>
+          </div>
+
+          <div ng-show="financialContact">
+            <div class="row">
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      First Name
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Last Name
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Phone Number
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Email
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Mailing Address
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-8 col-md-8">
+              <input type="checkbox" name="legalContact" id="legalContact" ng-model="legalContact"/>
+              <label for="legalContact" class="labelForOp selection" style="font-weight:bold">Legal Contact</label>
+              <span>Check if different for Legal Point of Contact</span>
+            </div>
+          </div>
+
+          <div ng-show="legalContact">
+            <div class="row">
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      First Name
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Last Name
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Phone Number
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Email
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <div class="sublabels">
+                      Mailing Address
+                    </div>
+                    <input class="form-control" type="text">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+      </div>
+
+      <div class="col-lg-12 col-md-12">
+        <h3>Company Information</h3>
+
+        <div>
+          <label class="section">Corporation/Organization type</label>
+          <div class="row col-lg-12 col-md-12">
+            <input type="checkbox" name="coType" id="coType1" />
+            <label for="coType1" class="labelForOp">Public Company</label>
+            <input type="checkbox" name="coType" id="coType2" />
+            <label for="coType2" class="labelForOp">Educational</label>
+            <input type="checkbox" name="coType" id="coType3" />
+            <label for="coType3" class="labelForOp">Self Employed</label>
+            <input type="checkbox" name="coType" id="coType4" />
+            <label for="coType4" class="labelForOp">Government Agency</label>
+            <input type="checkbox" name="coType" id="coType5" />
+            <label for="coType5" class="labelForOp">Non Profit</label>
+            <input type="checkbox" name="coType" id="coType6" />
+            <label for="coType6" class="labelForOp">Self Owned</label>
+            <input type="checkbox" name="coType" id="coType7" />
+            <label for="coType7" class="labelForOp">Privately Held</label>
+            <input type="checkbox" name="coType" id="coType8" />
+            <label for="coType8" class="labelForOp">Partnership</label>
+          </div>
+        </div>
+
+        <hr>
+        <hr>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-4">
+            <label class="section">Number of employees</label>
+            <div>
+              <select>
+                <option value="selfEmployed">Self-employed</option>
+                <option value="lessThan10">1-10 employees</option>
+                <option value="lessThan50">11-50 employees</option>
+                <option value="lessThan200">51-200 employees</option>
+                <option value="lessThan1000">501-1000 employees</option>
+                <option value="lessThan5000">1001-5000 employees</option>
+                <option value="lessThan10000">5001-10,000 employees</option>
+                <option value="moreThan10000">10,000+ employees</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4">
+            <label class="section">Annual Revenue</label>
+            <div>
+              <select>
+                <option value="lessThan25M">0-25M</option>
+                <option value="lessThan50M">26M-50M</option>
+                <option value="lessThan100M">51M-100M</option>
+                <option value="lessThan250M">101M-250M</option>
+                <option value="lessThan500M">251M-500M</option>
+                <option value="lessThan1B">501M-1B</option>
+                <option value="lessThan10B">2B-10B</option>
+                <option value="moreThan10B">11B+</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4">
+            <label class="section">Is your organization a start-up?</label>
+            <div>
+              <input type="radio" name="startUp" id="startUp1"/>
+              <label for="startUp1" class="labelForOp">Yes</label>
+              <input type="radio" name="startUp" id="startUp2"/>
+              <label for="startUp2" class="labelForOp">No</label>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-lg-6 col-md-6">
+            <div class="form-group">
+                <label class="section">Primary NAICS code</label>
+                <input class="form-control" type="text">
+                <p class="help-block">Required, Enter if known or look up on <a href="https://www.naics.com/search/" target="_blank">naics</a></p>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6">
+            <div class="form-group">
+                <label class="section">DUNS Number (or EIN)</label>
+                <input class="form-control" type="text">
+                <p class="help-block">Required, Enter if known or look up <a href="http://www.dnb.com/duns-number/lookup.html" target="_blank">dnb</a></p>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+      </form>
+
+      <div class="col-lg-12 col-md-12">
+        <hr>
+
+        <button ng-disabled="companyGeneralForm.$invalid" type="submit" class="btn btn-next pull-right ng-scope" ng-click="getNext()">
+  							NEXT
+  			</button>
+      </div>
      </div>
   </div>
 
