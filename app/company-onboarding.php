@@ -21,8 +21,8 @@
 
 <?php include 'build-vendor-rh.php' ?>
 
+
 <!-- build:js scripts/company-onboarding/index.js -->
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyB1B_bspUI3Mpd5W1SVELtp-_OY--UPV-Q"></script>
 <script src="scripts/socket/socket.io.js"></script>
 <script src="scripts/configs/ngMaterial-config.js"></script>
 <script src="scripts/common/header/header.js"></script>
@@ -48,6 +48,8 @@
 <script src="scripts/company-onboarding/controller/home.js"></script>
 <script src="scripts/company-onboarding/controller/autocomplete.js"></script>
 <script src="scripts/components/ui-widgets/company-onboarding-tabs.directive.js"></script>
+<script src="scripts/company-onboarding/controller/companyinfo.js"></script>
+
 <!-- endbuild -->
 
     <script type="text/javascript">

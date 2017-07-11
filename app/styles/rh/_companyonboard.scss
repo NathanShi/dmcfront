@@ -52,7 +52,7 @@ input[type="radio"]{
   height: 15px;
   border: 2px solid #75bc52;
   border-radius: 4px;
-  // z-index: -1;
+  z-index: -1;
 }
 
 input[type="radio"] + .labelForOp::before {
@@ -105,7 +105,7 @@ option{
 }
 
 .header h1{
-  text-align: center;
+  // text-align: center;
   margin-top: 4rem;
 }
 
@@ -160,4 +160,15 @@ option{
 .basic-informations {
   margin-top: 45px;
   padding: 15px;
+}
+
+._show_type{
+  margin-left: 1rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+._show{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
 }
