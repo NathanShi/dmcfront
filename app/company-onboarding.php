@@ -23,8 +23,8 @@
 
 <!-- build:js scripts/onboarding/index.js -->
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1B_bspUI3Mpd5W1SVELtp-_OY--UPV-Q"></script> -->
-<script src="scripts/company-onboarding/controller/autocomplete.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyB1B_bspUI3Mpd5W1SVELtp-_OY--UPV-Q"></script>
+<!-- <script src="scripts/company-onboarding/controller/autocomplete.js"></script> -->
+<!-- <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyB1B_bspUI3Mpd5W1SVELtp-_OY--UPV-Q"></script> -->
 <script src="scripts/socket/socket.io.js"></script>
 <script src="scripts/configs/ngMaterial-config.js"></script>
 <script src="scripts/common/header/header.js"></script>
@@ -46,10 +46,9 @@
 <script src="scripts/common/models/phone-model.js"></script>
 <script src="scripts/common/models/question-toast-model.js"></script>
 <script src="scripts/common/models/previous-page.js"></script>
-
-<script src="scripts/components/ui-widgets/company-onboarding-tabs.directive.js"></script>
 <script src="scripts/company-onboarding/company-onboarding.js"></script>
-<script src="scripts/company-onboarding/controller/home.js"></script>
+<script src="scripts/components/ui-widgets/company-onboarding-tabs.directive.js"></script>
+<script src="scripts/company-onboarding/controller/companyinfo.js"></script>
 
 <!-- endbuild -->
 

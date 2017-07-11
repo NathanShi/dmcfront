@@ -22,9 +22,6 @@ angular.module('dmc.company.onboarding', [
     'dmc.model.profile',
     'dmc.model.user',
     'dmc.phone-format',
-    'ngMaterial',
-    'ngMessages',
-    'google.places'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -40,64 +37,70 @@ angular.module('dmc.company.onboarding', [
                         }]
                 }
             })
-            .state('co-onboarding.home', {
-                url: '/home',
-                templateUrl: 'templates/company-onboarding/home.html',
-                controller: 'co-homeController'
+            .state('co-onboarding.companyinfo', {
+                url: '/companyinfo',
+                templateUrl: 'templates/company-onboarding/companyinfo.html',
+                controller: 'co-companyinfoController'
             })
-        $urlRouterProvider.otherwise('/home');
+            .state('co-onboarding.pay', {
+                url: '/pay',
+                templateUrl: 'templates/company-onboarding/pay.html',
+                controller: 'co-payController'
+            })
+        $urlRouterProvider.otherwise('/companyinfo');
     })
     .service('companyOnboardingModel', ['ajax', 'dataFactory', '$stateParams', 'toastModel', 'DMCUserModel',
          function (ajax, dataFactory, $stateParams, toastModel, DMCUserModel) {
 
-            this.get_account = function(accountId, callback){
-                return ajax.get(
-                    dataFactory.getAccount(accountId),
-                    {},
-                    function(response){
-                        callback(response.data);
-                    }
-                );
+            var company = {};
+
+            this.save_companyInfo = function(companyinfo){
+                company = angular.copy(companyinfo);
+                console.log(company);
             }
 
-            this.update_account = function(accountId, params, callback){
-                ajax.get(
-                    dataFactory.getAccount(accountId),
-                    {},
-                    function(response){
-                        var account = response.data;
-                        for(var item in params){
-                           account.privacy[item] = params[item];
-                        }
-                        ajax.update(
-                            dataFactory.updateAccount(accountId),
-                            account,
-                            function(response){
-                                callback(response.data);
-                            }
-                        );
-                    }
-                );
+            this.get_companyInfo = function(){
+                return company;
             }
 
-            this.update_notfications = function(notificationId, selected, callback){
-                ajax.update(
-                    dataFactory.updateUserAccountNotification(notificationId),
-                    {
-                        'selected': selected
-                    },
-                    function(response){
-                        callback(response.data);
-                    }
-                );
-            }
-
-            this.get_servers = function(accountId, callback){
-                ajax.get(dataFactory.getAccountServersUrl(accountId),
-                    {},
-                    function (response) {
-                        callback(response.data);
-                    }
-                );
-            };
+            // this.update_account = function(accountId, params, callback){
+            //     ajax.get(
+            //         dataFactory.getAccount(accountId),
+            //         {},
+            //         function(response){
+            //             var account = response.data;
+            //             for(var item in params){
+            //                account.privacy[item] = params[item];
+            //             }
+            //             ajax.update(
+            //                 dataFactory.updateAccount(accountId),
+            //                 account,
+            //                 function(response){
+            //                     callback(response.data);
+            //                 }
+            //             );
+            //         }
+            //     );
+            // }
+            //
+            // this.update_notfications = function(notificationId, selected, callback){
+            //     ajax.update(
+            //         dataFactory.updateUserAccountNotification(notificationId),
+            //         {
+            //             'selected': selected
+            //         },
+            //         function(response){
+            //             callback(response.data);
+            //         }
+            //     );
+            // }
+            //
+            // this.get_servers = function(accountId, callback){
+            //     ajax.get(dataFactory.getAccountServersUrl(accountId),
+            //         {},
+            //         function (response) {
+            //             callback(response.data);
+            //         }
+            //     );
+            // };
     }])
