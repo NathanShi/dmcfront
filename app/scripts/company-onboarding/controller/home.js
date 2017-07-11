@@ -6,8 +6,8 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-homeController', ['$scope', 'companyOnboardingModel', 'userData', 'DMCUserModel', '$rootScope', '$cookies',
-    function($scope, companyOnboardingModel, userData, DMCUserModel, $rootScope, $cookies){
+.controller('co-homeController', ['$scope', 'companyOnboardingModel', 'userData', 'DMCUserModel', '$rootScope', '$cookies', '$mdDialog',
+    function($scope, companyOnboardingModel, userData, DMCUserModel, $rootScope, $cookies, $mdDialog){
       $scope.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
             'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
             'WY').split(' ').map(function (state) { return { abbrev: state }; });
@@ -15,8 +15,30 @@ angular.module('dmc.company.onboarding')
       $scope.tierLevel = 'Tier3';
 
       $scope.clickSignup = function() {
-        console.log('cookie=', $cookies.get('fromDMDIISignup'))
         $cookies.put('fromDMDIISignup',true)
+      }
+
+      $scope.showModalTermsConditions = function(){
+  			$mdDialog.show({
+  			    controller: 'TermsConditionsController',
+  			    templateUrl: 'templates/onboarding/terms-conditions.html',
+  			    parent: angular.element(document.body),
+  			    locals: {
+             userInfo: $scope.userBasicInformation
+           	},
+  			    clickOutsideToClose: false
+  		    })
+  		    .then(function(answer) {
+  		      	$scope.$parent.first = false;
+                      $rootScope.userData.companyId = $scope.userBasicInformation.company;
+  		      	$rootScope.userData.termsConditions = true;
+  		      	DMCUserModel.UpdateUserData($rootScope.userData);
+  		    }, function() {
+  		    });
+  		}
+
+      if (!$rootScope.userData.termsConditions) {
+        $scope.showModalTermsConditions();
       }
 
 }])

@@ -112,3 +112,24 @@ angular.module('dmc.company.onboarding', [
                 );
             };
     }])
+
+    .directive('signupTabs', function () {
+        return {
+            restrict: 'E',
+            controller: 'uiWidgetCompanyOnboardingTabs',
+            templateUrl: 'templates/components/ui-widgets/company-onboarding-tab.html',
+        };
+    })
+
+    .controller('TermsConditionsController',
+    	['$scope', '$rootScope', '$mdDialog','$window', 'userInfo', 'DMCUserModel', "toastModel",
+    	function ($scope, $rootScope, $mdDialog, $window, userInfo, DMCUserModel, toastModel) {
+        $scope.userInfo = userInfo;
+
+    	$scope.enter = function(){
+    		DMCUserModel.onboardingBasicInformation($scope.userInfo, function(response){
+    		    $mdDialog.hide();
+          },	function() { toastModel.showToast("error", "Error updating information."); }
+        )
+      };
+    }]);
