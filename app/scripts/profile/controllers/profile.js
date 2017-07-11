@@ -182,15 +182,15 @@ angular.module('dmc.profile')
                   $scope.projects = response.data;
               });
 
-          ajax.get(
-              dataFactory.getMyProjects(),{
-                _limit: 300
-              },function(response){
-                  for (var ele in response.data){
-                    if ($scope.projects.indexOf(ele) == -1)
-                      $scope.projects += ele;
-                  }              
-              });
+          // ajax.get(
+          //     dataFactory.getMyProjects(),{
+          //       _limit: 300
+          //     },function(response){
+          //         for (var ele in response.data){
+          //           if ($scope.projects.indexOf(ele) == -1)
+          //             $scope.projects += ele;
+          //         }
+          //     });
         }
 
 //review
