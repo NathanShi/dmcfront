@@ -33,6 +33,7 @@
 <script src="scripts/common/models/user-model.js"></script>
 <script src="scripts/common/models/toast-model.js"></script>
 <script src="scripts/transform/transform.js"></script>
+<script src="scripts/utilities/scroll.service.js"></script>
 
 <!-- endbuild -->
 
