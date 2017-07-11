@@ -1,5 +1,5 @@
 'use strict';
-angular.module('dmc.transform', [
+angular.module('dmc.educate', [
     'ngMdIcons',
     'ngAnimate',
     'ngMaterial',
@@ -22,7 +22,7 @@ angular.module('dmc.transform', [
         templateUrl: 'templates/educate/educate.html'
     });
     $urlRouterProvider.otherwise('/');
-}).controller('TransformController', function ($scope, $element, $location, scrollService) {
+}).controller('EducateController', function ($scope, $element, $location, scrollService) {
     $scope.gotoElement = function (eID) {
         // set the location.hash to the id of
         // the element you wish to scroll to.
