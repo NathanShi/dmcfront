@@ -32,17 +32,21 @@
           <p>If you do not want to proceed with membership sign up as your current user, please log out of the DMC and log with the desired account.</p>
         </div>
         <div class="col-xs-12" style="margin-bottom: 30px;">
-          <button type="submit" class="btn btn-next pull-right ng-scope" ng-href="/company-onboarding.php#/companyinfo">
+          <a href="/company-onboarding.php#/companyinfo">
+          <button type="submit" class="btn btn-next pull-right ng-scope">
                   NEXT
           </button>
+          </a>
         </div>
       </div>
 
       <div class="row" ng-if="!$root.isLogged">
           <div class="col-xs-12" style="margin: 15px 0px 30px;">
-            <button style="" class="btn btn-next ng-scope" ng-click="clickSignup()" ng-href='loginURL'>
-                    CREATE ACCOUNT
-            </button>
+            <a href="loginURL">
+              <button style="" class="btn btn-next ng-scope" ng-click="clickSignup()">
+                      CREATE ACCOUNT
+              </button>
+            </a>
           </div>
           <!-- <a ng-click="clickSignup()" ng-href='loginURL'>Create User Account</a> -->
       </div>
