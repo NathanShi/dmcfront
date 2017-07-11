@@ -250,6 +250,10 @@ server.post('/service_runs/cancel_run/:id', function(req, res){
   // res.status(403).send("Not authorized to cancel run")
 });
 
+server.post('/user-accept-terms-and-conditions', function(req, res){
+  res.json({"id": -99999})
+});
+
 // Returns an Express router
 var port = 3000;
 var router = jsonServer.router(require('./db'));

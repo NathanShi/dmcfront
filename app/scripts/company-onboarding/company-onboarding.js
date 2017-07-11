@@ -122,14 +122,16 @@ angular.module('dmc.company.onboarding', [
     })
 
     .controller('TermsConditionsController',
-    	['$scope', '$rootScope', '$mdDialog','$window', 'userInfo', 'DMCUserModel', "toastModel",
-    	function ($scope, $rootScope, $mdDialog, $window, userInfo, DMCUserModel, toastModel) {
-        $scope.userInfo = userInfo;
-
-    	$scope.enter = function(){
-    		DMCUserModel.onboardingBasicInformation($scope.userInfo, function(response){
-    		    $mdDialog.hide();
-          },	function() { toastModel.showToast("error", "Error updating information."); }
-        )
-      };
+    	['$scope', '$mdDialog','$window', "toastModel", 'ajax', 'dataFactory',
+    	function ($scope, $mdDialog, $window, toastModel, ajax, dataFactory) {
+      	$scope.enter = function(){
+          ajax.create(dataFactory.getUserAcceptTermsAndConditionsUrl(), {},
+            function() {
+              $mdDialog.hide();
+            },
+            function() {
+              toastModel.showToast("error", "Error updating information.");
+            }
+          )
+        };
     }]);

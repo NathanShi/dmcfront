@@ -23,16 +23,9 @@ angular.module('dmc.company.onboarding')
   			    controller: 'TermsConditionsController',
   			    templateUrl: 'templates/onboarding/terms-conditions.html',
   			    parent: angular.element(document.body),
-  			    locals: {
-             userInfo: $scope.userBasicInformation
-           	},
   			    clickOutsideToClose: false
   		    })
-  		    .then(function(answer) {
-  		      	$scope.$parent.first = false;
-                      $rootScope.userData.companyId = $scope.userBasicInformation.company;
-  		      	$rootScope.userData.termsConditions = true;
-  		      	DMCUserModel.UpdateUserData($rootScope.userData);
+  		    .then(function() {
   		    }, function() {
   		    });
   		}
