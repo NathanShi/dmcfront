@@ -6,8 +6,8 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$state',
-    function($scope, companyOnboardingModel, $state){
+.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$location',
+    function($scope, companyOnboardingModel, $location){
       $scope.orgType = [
         { selection : 'Public Company', selected : false },
         { selection : 'Educational', selected : false },
@@ -96,7 +96,7 @@ angular.module('dmc.company.onboarding')
         });
       };
 
-      $scope.companyinfo = {};
+      $scope.companyinfo = companyOnboardingModel.get_companyInfo();
 
       $scope.save = function(company) {
         var type = [];
@@ -110,13 +110,20 @@ angular.module('dmc.company.onboarding')
         $scope.companyinfo.type = type;
 
         companyOnboardingModel.save_companyInfo($scope.companyinfo);
-        $state.go('../pay');
+        $location.path('/pay');
       };
 }])
 
-.controller('co-payController', ['$scope', 'companyOnboardingModel',
-    function($scope, companyOnboardingModel){
-      $scope.company = get_companyInfo();
+.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll',
+    function($scope, companyOnboardingModel, $location, $anchorScroll){
+      $anchorScroll();
+
+      $scope.company = companyOnboardingModel.get_companyInfo();
 
       console.log($scope.company);
+
+      $scope.back = function(){
+        companyOnboardingModel.save_companyInfo($scope.company);
+        $location.path('/companyinfo');
+      }
 }])

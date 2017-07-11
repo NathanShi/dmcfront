@@ -20,7 +20,7 @@
             <div class="col-lg-4 col-md-4">
               <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgName.$invalid && companyGeneralForm.orgName.$touched}">
                   <label class="section">Legal Corporate/Organization Name *</label>
-                  <input name="orgName" class="form-control" ng-model="company.name" type="text" required>
+                  <input name="orgName" value="company.name" class="form-control" ng-model="company.name" type="text" required>
                   <p class="help-block">Required</p>
               </div>
             </div>
