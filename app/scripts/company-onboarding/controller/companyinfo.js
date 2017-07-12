@@ -6,8 +6,10 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$location',
-    function($scope, companyOnboardingModel, $location){
+.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll',
+    function($scope, companyOnboardingModel, $location, $anchorScroll){
+      $anchorScroll();
+
       $scope.orgType = [
         { selection : 'Public Company', selected : false },
         { selection : 'Educational', selected : false },
@@ -96,7 +98,11 @@ angular.module('dmc.company.onboarding')
         });
       };
 
-      $scope.companyinfo = companyOnboardingModel.get_companyInfo();
+      $scope.company = companyOnboardingModel.get_companyInfo();
+      $scope.company.selectedEmployeeSize = null;
+      $scope.company.selectedAnnualRevenue = null;
+
+      $scope.companyinfo = {};
 
       $scope.save = function(company) {
         var type = [];
@@ -106,7 +112,21 @@ angular.module('dmc.company.onboarding')
               type.push(element.selection);
         });
 
+        if (company.subCompany == undefined || company.subCompany == false){
+            company.secondAddress = null;
+        }
+
+        if (company.financialContact == undefined || company.financialContact == false){
+            company.finance = null;
+        }
+
+        if (company.legalContact == undefined || company.legalContact == false){
+            company.legal = null;
+        }
+
         $scope.companyinfo = angular.copy(company);
+        $scope.companyinfo.selectedEmployeeSize = $scope.companyinfo.selectedEmployeeSize.value;
+        $scope.companyinfo.selectedAnnualRevenue = $scope.companyinfo.selectedAnnualRevenue.value;
         $scope.companyinfo.type = type;
 
         companyOnboardingModel.save_companyInfo($scope.companyinfo);
@@ -119,8 +139,6 @@ angular.module('dmc.company.onboarding')
       $anchorScroll();
 
       $scope.company = companyOnboardingModel.get_companyInfo();
-
-      console.log($scope.company);
 
       $scope.back = function(){
         companyOnboardingModel.save_companyInfo($scope.company);
