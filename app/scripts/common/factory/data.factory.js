@@ -1059,6 +1059,9 @@ angular.module('dmc.data', [])
       getOnboardingBasicInfoUrl: function() {
         return localhost + 'user-basic-information'
       },
+      getUserAcceptTermsAndConditionsUrl: function() {
+        return localhost + 'user-accept-terms-and-conditions'
+      },
       getAccountNotificationCategoryItems: function() {
         return localhost + 'account-notification-category-items';
       },

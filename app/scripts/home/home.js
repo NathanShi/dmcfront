@@ -10,6 +10,9 @@ angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 
             if (error == 'User not created') {
                 event.preventDefault();
                 window.location = '/onboarding.php#/home';
+            } else if (error == 'New user from DMDII Signup') {
+                event.preventDefault();
+                window.location = '/company-onboarding.php#/companyinfo';
             }
       });
 }])
@@ -59,16 +62,5 @@ angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 
     $scope.cancel = function(index){
         $scope.pages[index].show = true;
     }
-
-    $scope.clickedAltLogin = function() {
-      $cookies.put('fromSignup', true);
-    }
-
-    var checkSignupCookie = function() {
-      $scope.fromSignup = $cookies.get('fromSignup');
-      $cookies.remove('fromSignup');
-    }
-
-    checkSignupCookie();
 
 }]);

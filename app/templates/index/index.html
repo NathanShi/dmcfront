@@ -1,7 +1,7 @@
 
 
 <main>
-    <section class="container" ng-if="!(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))">
+    <section class="container" ng-if="(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))">
     <!-- <section class="container" ng-if="($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin)"> -->
         <div class="row">
           <h1 class="col-xs-9">DIGITAL MANUFACTURING COMMONS</h1>
@@ -48,7 +48,7 @@
     </section>
 
 
-    <section class="container">
+    <section class="container" ng-if="!$root.isLogged || !(userData.roles && userData.roles[userData.companyId])">
     <!-- <section class="container" ng-if="!(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))"> -->
 
       <div class="row welcome">
@@ -81,6 +81,14 @@
             <h3 class="blue">About DMDII</h3>
             <p class="lighter">Mi sit condimentum vitae non, id consectetuer sit ullamcorper velit eu. Lectus vel. Dolor vestibulum ut sem, sit tempus, odio autem, arcu massa. Lorem sem risus. Non cum viverra vitae at diam arcu. Pellentesque nulla cursus lorem conubia, amet ultrices metus tincidunt vivamus, integer faucibus sed ante. Excepturi amet ornare libero phasellus sagittis lacinia, eget tristique ac pede erat, vel rutrum a, orci velit fringilla senectus aenean posuere lobortis.</p>
           </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-3"></div>
+        <div class="col-xs-9 about-txt">
+          <h3 class="grey">Already a Member?</h3>
+          <p class="lighter">If your organization is already a DMC/DMDII member, you need to be verfied by your organization's administrator. You can find instructions on how to get verified <a href>here</a>.</p>
         </div>
       </div>
 
