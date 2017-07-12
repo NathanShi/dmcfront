@@ -12,7 +12,8 @@
   <div class="container">
     <div class="row">
         <div class="col-lg-12 col-md-12">
-          <h3>General Information</h3>
+          <hr>
+          <!-- <h3>General Information</h3> -->
 
           <div class="row">
             <div class="col-lg-4 col-md-4">
@@ -39,7 +40,7 @@
             <div class="col-lg-12 col-md-12">
               <label class="section">Main Point of Contact : </label>
               <span class="_show"> {{company.main.fname}} {{company.main.lname}}</span>
-              <div class="_show">{{company.main.phone}} | {{company.main.email}} | {{company.main.mailAddress}}</div>
+              <span class="_show">    :    {{company.main.phone}} | {{company.main.email}} | {{company.main.mailAddress}}</span>
             </div>
           </div>
 
@@ -47,7 +48,7 @@
             <div class="col-lg-12 col-md-12" ng-show="company.finance">
               <label class="section">Financial Point of Contact : </label>
               <span class="_show"> {{company.finance.fname}} {{company.finance.lname}}</span>
-              <div class="_show">{{company.finance.phone}} | {{company.finance.email}} | {{company.finance.mailAddress}}</div>
+              <span class="_show">    :    {{company.finance.phone}} | {{company.finance.email}} | {{company.finance.mailAddress}}</span>
             </div>
           </div>
 
@@ -55,13 +56,13 @@
             <div class="col-lg-12 col-md-12" ng-show="company.legal">
               <label class="section">Legal Point of Contact : </label>
               <span class="_show"> {{company.legal.fname}} {{company.legal.lname}}</span>
-              <div class="_show">{{company.legal.phone}} | {{company.legal.email}} | {{company.legal.mail}}</div>
+              <span class="_show">    :    {{company.legal.phone}} | {{company.legal.email}} | {{company.legal.mail}}</span>
             </div>
           </div>
       </div>
 
         <div class="col-lg-12 col-md-12">
-          <h3>Company Information</h3>
+          <!-- <h3>Company Information</h3> -->
 
           <div class="row">
             <div class="col-lg-12 col-md-12">
@@ -106,22 +107,18 @@
           <button ng-click="back()" class="btn btn-cancel">
       							Back to Edit
       		</button>
-        </div>
 
-        <div class="col-lg-12 col-md-12">
-            <h3>Payment</h3>
-
-            <form action="/your-server-side-code" method="POST">
-              <script
-                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                data-key="pk_test_xQ5iVIgTvkehDjRgvaj3kbRC"
-                data-amount="999"
-                data-name="Demo Site"
-                data-description="Widget"
-                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                data-locale="auto">
-              </script>
-            </form>
+          <form action="/your-server-side-code" method="POST" class="pull-right">
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_xQ5iVIgTvkehDjRgvaj3kbRC"
+              data-amount="999"
+              data-name="Demo Site"
+              data-description="Widget"
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+              data-locale="auto">
+            </script>
+          </form>
         </div>
      </div>
   </div>
