@@ -9,6 +9,7 @@
 .transform-title {
   color: $brand-accent;
   margin-top: 0px;
+  border-bottom: none;
 }
 
 .help-title {
@@ -115,4 +116,13 @@
 .video-column {
   height: 140px;
   margin-top: 23px;
+}
+
+.col-md-12 h3.transform-title  {
+  border-bottom: none;
+  margin-top: 0px;
+}
+
+.col-md-12 h3.help-title  {
+  margin-top: 0px;
 }
