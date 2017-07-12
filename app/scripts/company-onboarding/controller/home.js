@@ -13,10 +13,7 @@ angular.module('dmc.company.onboarding')
             'WY').split(' ').map(function (state) { return { abbrev: state }; });
 
       $scope.tierLevel = 'Tier3';
-
-      $scope.clickSignup = function() {
-        $cookies.put('fromDMDIISignup',true)
-      }
+      $cookies.put('fromDMDIISignup',true)
 
       $scope.showModalTermsConditions = function(){
   			$mdDialog.show({
