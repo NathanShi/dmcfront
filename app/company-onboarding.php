@@ -22,30 +22,28 @@
 <?php include 'build-vendor-rh.php' ?>
 
 <!-- build:js scripts/onboarding/index.js -->
-<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1B_bspUI3Mpd5W1SVELtp-_OY--UPV-Q"></script> -->
-<!-- <script src="scripts/company-onboarding/controller/autocomplete.js"></script> -->
-<!-- <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyB1B_bspUI3Mpd5W1SVELtp-_OY--UPV-Q"></script> -->
 <script src="scripts/socket/socket.io.js"></script>
 <script src="scripts/configs/ngMaterial-config.js"></script>
 <script src="scripts/common/header/header.js"></script>
 <script src="scripts/common/factory/notifications.factory.js"></script>
 <script src="scripts/common/footer/footer.js"></script>
 <script src="scripts/common/factory/location.factory.js"></script>
-<script src="scripts/components/ui-widgets/documents.directive.js"></script>
-<script src="scripts/components/ui-widgets/stars.directive.js"></script>
-<script src="scripts/components/ui-widgets/review.directive.js"></script>
-<script src="scripts/components/ui-widgets/rich-text.directive.js"></script>
-<script src="scripts/components/dropzone/dropzone.directive.js"></script>
+<!-- <script src="scripts/components/ui-widgets/documents.directive.js"></script> -->
+<!-- <script src="scripts/components/ui-widgets/stars.directive.js"></script> -->
+<!-- <script src="scripts/components/ui-widgets/review.directive.js"></script> -->
+<!-- <script src="scripts/components/ui-widgets/rich-text.directive.js"></script> -->
+<!-- <script src="scripts/components/dropzone/dropzone.directive.js"></script> -->
 <script src="scripts/common/factory/socket.factory.js"></script>
 <script src="scripts/common/factory/ajax.factory.js"></script>
 <script src="scripts/common/factory/data.factory.js"></script>
-<script src="scripts/common/models/file-upload.js"></script>
+<!-- <script src="scripts/common/models/file-upload.js"></script> -->
 <script src="scripts/common/models/profile-model.js"></script>
 <script src="scripts/common/models/user-model.js"></script>
 <script src="scripts/common/models/toast-model.js"></script>
-<script src="scripts/common/models/phone-model.js"></script>
+<!-- <script src="scripts/common/models/phone-model.js"></script> -->
 <script src="scripts/common/models/question-toast-model.js"></script>
-<script src="scripts/common/models/previous-page.js"></script>
+<!-- <script src="scripts/common/models/previous-page.js"></script> -->
+<script src="https://js.stripe.com/v3/"></script>
 <script src="scripts/company-onboarding/company-onboarding.js"></script>
 <script src="scripts/components/ui-widgets/company-onboarding-tabs.directive.js"></script>
 <script src="scripts/company-onboarding/controller/companyinfo.js"></script>

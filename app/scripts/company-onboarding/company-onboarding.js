@@ -3,25 +3,25 @@
 angular.module('dmc.company.onboarding', [
     'dmc.configs.ngmaterial',
     'ngMdIcons',
-    'ngtimeago',
+    // 'ngtimeago',
     'ui.router',
     'dmc.widgets.companyonboardingTabs',
-    'md.data.table',
+    // 'md.data.table',
     'dmc.ajax',
     'dmc.data',
     'dmc.socket',
-    'dmc.widgets.stars',
-    'dmc.widgets.documents',
-    'dmc.widgets.review',
+    // 'dmc.widgets.stars',
+    // 'dmc.widgets.documents',
+    // 'dmc.widgets.review',
     'dmc.model.question-toast-model',
     'dmc.common.header',
     'dmc.common.footer',
     'dmc.location',
     'dmc.model.toast-model',
-    'dmc.model.fileUpload',
+    // 'dmc.model.fileUpload',
     'dmc.model.profile',
     'dmc.model.user',
-    'dmc.phone-format',
+    // 'dmc.phone-format',
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -62,45 +62,4 @@ angular.module('dmc.company.onboarding', [
             this.get_companyInfo = function(){
                 return company;
             }
-
-            // this.update_account = function(accountId, params, callback){
-            //     ajax.get(
-            //         dataFactory.getAccount(accountId),
-            //         {},
-            //         function(response){
-            //             var account = response.data;
-            //             for(var item in params){
-            //                account.privacy[item] = params[item];
-            //             }
-            //             ajax.update(
-            //                 dataFactory.updateAccount(accountId),
-            //                 account,
-            //                 function(response){
-            //                     callback(response.data);
-            //                 }
-            //             );
-            //         }
-            //     );
-            // }
-            //
-            // this.update_notfications = function(notificationId, selected, callback){
-            //     ajax.update(
-            //         dataFactory.updateUserAccountNotification(notificationId),
-            //         {
-            //             'selected': selected
-            //         },
-            //         function(response){
-            //             callback(response.data);
-            //         }
-            //     );
-            // }
-            //
-            // this.get_servers = function(accountId, callback){
-            //     ajax.get(dataFactory.getAccountServersUrl(accountId),
-            //         {},
-            //         function (response) {
-            //             callback(response.data);
-            //         }
-            //     );
-            // };
     }])

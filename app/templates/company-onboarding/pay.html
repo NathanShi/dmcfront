@@ -1,4 +1,4 @@
-<section class="onboarding-section">
+<pay_section class="onboarding-pay_section">
 
   <div class="header container">
     <h1>Tier 3 Membership Sign Up Page</h1>
@@ -17,28 +17,28 @@
 
           <div class="row">
             <div class="col-lg-4 col-md-4">
-                <label class="section">Legal Corporate/Organization Name :  </label>
+                <label class="pay_section">Legal Corporate/Organization Name :  </label>
                 <span ng-bind="company.name" class="_show"></span>
             </div>
           </div>
 
           <div class="row">
             <div class="col-lg-12 col-md-12">
-              <label class="section">Principal Office Address : </label>
+              <label class="pay_section">Principal Office Address : </label>
               <span class="_show"> {{company.firstAddress.line1}} {{company.firstAddress.line2}}, {{company.firstAddress.city}}, {{company.firstAddress.state}}, {{company.firstAddress.zipcode}}</span>
             </div>
           </div>
 
           <div class="row">
             <div class="col-lg-12 col-md-12" ng-show="company.secondAddress">
-                <label class="section">Subsidary Office Address : </label>
+                <label class="pay_section">Subsidary Office Address : </label>
                 <span class="_show">{{company.secondAddress.line1}} {{company.secondAddress.line2}} , {{company.secondAddress.city}}, {{company.secondAddress.state}}, {{company.secondAddress.zipcode}}</span>
             </div>
           </div>
 
           <div class="row">
             <div class="col-lg-12 col-md-12">
-              <label class="section">Main Point of Contact : </label>
+              <label class="pay_section">Main Point of Contact : </label>
               <span class="_show"> {{company.main.fname}} {{company.main.lname}}</span>
               <span class="_show">    :    {{company.main.phone}} | {{company.main.email}} | {{company.main.mailAddress}}</span>
             </div>
@@ -46,7 +46,7 @@
 
           <div class="row">
             <div class="col-lg-12 col-md-12" ng-show="company.finance">
-              <label class="section">Financial Point of Contact : </label>
+              <label class="pay_section">Financial Point of Contact : </label>
               <span class="_show"> {{company.finance.fname}} {{company.finance.lname}}</span>
               <span class="_show">    :    {{company.finance.phone}} | {{company.finance.email}} | {{company.finance.mailAddress}}</span>
             </div>
@@ -54,7 +54,7 @@
 
           <div class="row">
             <div class="col-lg-12 col-md-12" ng-show="company.legal">
-              <label class="section">Legal Point of Contact : </label>
+              <label class="pay_section">Legal Point of Contact : </label>
               <span class="_show"> {{company.legal.fname}} {{company.legal.lname}}</span>
               <span class="_show">    :    {{company.legal.phone}} | {{company.legal.email}} | {{company.legal.mail}}</span>
             </div>
@@ -66,36 +66,36 @@
 
           <div class="row">
             <div class="col-lg-12 col-md-12">
-                <label class="section">Corporation/Organization type : </label>
+                <label class="pay_section">Corporation/Organization type : </label>
                 <span ng-repeat="type in company.type" class="_show_type label label-success">{{type}}</span>
             </div>
           </div>
 
           <div class="row">
             <div class="col-lg-4 col-md-4">
-                <label class="section">Number of employees : </label>
+                <label class="pay_section">Number of employees : </label>
                 <span ng-bind="company.selectedEmployeeSize" class="_show"></span>
             </div>
 
             <div class="col-lg-4 col-md-4">
-                <label class="section">Annual Revenue : </label>
+                <label class="pay_section">Annual Revenue : </label>
                 <span ng-bind="company.selectedAnnualRevenue" class="_show"></span>
             </div>
 
             <div class="col-lg-4 col-md-4">
-                <label class="section">StartUp Organization : </label>
+                <label class="pay_section">StartUp Organization : </label>
                 <span ng-bind="company.startUp == 1 ? 'Yes' : 'No' " class="_show"></span>
             </div>
           </div>
 
           <div class="row">
             <div class="col-lg-6 col-md-6">
-                <label class="section">Primary NAICS Code : </label>
+                <label class="pay_section">Primary NAICS Code : </label>
                 <span ng-bind="company.naicsCode" class="_show"></span>
             </div>
 
             <div class="col-lg-6 col-md-6">
-                <label class="section">DUNS Number (or EIN) : </label>
+                <label class="pay_section">DUNS Number (or EIN) : </label>
                 <span ng-bind="company.duns" class="_show"></span>
             </div>
           </div>
@@ -104,21 +104,43 @@
 
         <div class="col-lg-12 col-md-12">
           <hr>
-          <button ng-click="back()" class="btn btn-cancel">
+          <button ng-click="back()" class="btn btn-default">
       							Back to Edit
       		</button>
 
-          <form action="/your-server-side-code" method="POST" class="pull-right">
-            <script
-              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-              data-key="pk_test_xQ5iVIgTvkehDjRgvaj3kbRC"
-              data-amount="999"
-              data-name="Demo Site"
-              data-description="Widget"
-              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-              data-locale="auto">
-            </script>
+          <button class="btn btn-success pull-right" ng-click="payment = true">
+      							Proceed to Pay
+      		</button>
+
+        </div>
+
+        <div class="col-lg-12 col-md-12" ng-show="payment">
+           <h3>Proceed to Pay</h3>
+           <br>
+
+           <form action="/charge" method="post" id="payment-form">
+            <div class="row">
+              <div class="col-lg-6 col-md-6">
+                <label class="paymentLabel" for="card-element">
+                  Credit or debit card
+                </label>
+                <div id="card-element">
+                  <!-- a Stripe Element will be inserted here. -->
+                </div>
+
+                <!-- Used to display form errors -->
+                <div id="card-errors" role="alert"></div>
+              </div>
+
+              <div class="col-lg-6 col-md-6">
+                <button class="paymentButton pull-right">Submit Payment</button>
+              </div>
+            </div>
+
+
           </form>
+
+
         </div>
      </div>
   </div>
@@ -127,4 +149,4 @@
 
   <br>
   <br>
-</section>
+</pay_section>
