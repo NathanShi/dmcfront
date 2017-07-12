@@ -6,8 +6,8 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$location',
-    function($scope, companyOnboardingModel, $location){
+.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$location', '$rootScope', '$mdDialog',
+    function($scope, companyOnboardingModel, $location, $rootScope, $mdDialog){
       $scope.orgType = [
         { selection : 'Public Company', selected : false },
         { selection : 'Educational', selected : false },
@@ -112,6 +112,23 @@ angular.module('dmc.company.onboarding')
         companyOnboardingModel.save_companyInfo($scope.companyinfo);
         $location.path('/pay');
       };
+
+      $scope.showModalTermsConditions = function(){
+  			$mdDialog.show({
+  			    controller: 'TermsConditionsController',
+  			    templateUrl: 'templates/onboarding/terms-conditions.html',
+  			    parent: angular.element(document.body),
+  			    clickOutsideToClose: false
+  		    })
+  		    .then(function() {
+  		    }, function() {
+  		    });
+  		}
+
+      if ($rootScope.isLogged && !$rootScope.userData.termsConditions) {
+        $scope.showModalTermsConditions();
+      }
+
 }])
 
 .controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll',
