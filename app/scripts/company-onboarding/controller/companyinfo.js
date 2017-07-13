@@ -6,6 +6,12 @@ angular.module('dmc.company.onboarding')
 
 }])
 
+.controller('co-homeController', ['$scope', 'companyOnboardingModel', 'userData', 'DMCUserModel', '$rootScope', '$cookies', '$mdDialog',
+    function($scope, companyOnboardingModel, userData, DMCUserModel, $rootScope, $cookies, $mdDialog){
+      $cookies.put('fromDMDIISignup',true);
+
+}])
+
 .controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$rootScope', '$mdDialog',
     function($scope, companyOnboardingModel, $location, $anchorScroll, $rootScope, $mdDialog){
       $anchorScroll();

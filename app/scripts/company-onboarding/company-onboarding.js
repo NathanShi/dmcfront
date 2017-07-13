@@ -21,7 +21,7 @@ angular.module('dmc.company.onboarding', [
     // 'dmc.model.fileUpload',
     'dmc.model.profile',
     'dmc.model.user',
-    'dmc.phone-format',
+    // 'dmc.phone-format',
     'ngMaterial',
     'ngMessages',
     'ngCookies'
