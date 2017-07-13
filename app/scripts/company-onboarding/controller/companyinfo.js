@@ -132,6 +132,23 @@ angular.module('dmc.company.onboarding')
         companyOnboardingModel.save_companyInfo($scope.companyinfo);
         $location.path('/pay');
       };
+
+      $scope.showModalTermsConditions = function(){
+  			$mdDialog.show({
+  			    controller: 'TermsConditionsController',
+  			    templateUrl: 'templates/onboarding/terms-conditions.html',
+  			    parent: angular.element(document.body),
+  			    clickOutsideToClose: false
+  		    })
+  		    .then(function() {
+  		    }, function() {
+  		    });
+  		}
+
+      if ($rootScope.isLogged && !$rootScope.userData.termsConditions) {
+        $scope.showModalTermsConditions();
+      }
+
 }])
 
 .controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$http', 'dataFactory',

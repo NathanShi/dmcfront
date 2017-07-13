@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'bootstrap';
 @import 'bs';
+@import 'index';
 @import 'timeline';
 @import 'calendar';
 @import 'header';
@@ -9,6 +10,7 @@
 @import 'projects';
 @import 'members';
 @import 'academia';
+@import 'workspaces';
 @import 'companyonboard';
 
 body {
@@ -228,4 +230,22 @@ ng-md-icon {
 	margin-right: 32px;
 	padding-left: 26px;
 	padding-right: 50px;
+}
+
+.discussions-list {
+	.badge {
+		background-color: white;
+		color: darkgrey;
+		font-weight: normal;
+		min-width: 66px;
+	}
+	.md-list-item-text {
+		h3 {
+			line-height: 1.4em !important;
+			padding-left: 15px;
+		}
+	}
+	.info{
+		padding-left: 15px;
+	}
 }
