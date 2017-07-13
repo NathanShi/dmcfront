@@ -157,8 +157,9 @@ angular.module('dmc.company.onboarding')
 
       $scope.company = companyOnboardingModel.get_companyInfo();
 
-      if (angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null)
+      if (angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
         $location.path('/companyinfo');
+      }
 
       $scope.back = function(){
         companyOnboardingModel.save_companyInfo($scope.company);
