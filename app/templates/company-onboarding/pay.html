@@ -108,7 +108,7 @@
       							Back to Edit
       		</button>
 
-          <button class="btn btn-success pull-right" ng-click="payment = true">
+          <button class="btn btn-success pull-right" ng-disabled="!company.name" ng-click="payment = true">
       							Proceed to Pay
       		</button>
 
@@ -118,7 +118,7 @@
            <h3>Proceed to Pay</h3>
            <br>
 
-           <form action="/charge" method="post" id="payment-form">
+           <form method="post" id="payment-form">
             <div class="row">
               <div class="col-lg-6 col-md-6">
                 <label class="paymentLabel" for="card-element">

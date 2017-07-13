@@ -48,16 +48,18 @@
         "link":null
       }],
 
-    "contacts":[{
-      "contactType":{
-        "id":5,
-        "contactType":"SUPPORT"
-      },
-      "name":"Jane Doe",
-      "phoneNumber":null,
-      "title":null,
-      "email":"jane.doe@uilabs.org"
-    }],
+    "contacts":[
+      {
+        "contactType":{
+          "id":5,
+          "contactType":"SUPPORT"
+        },
+        "name":"Jane Doe",
+        "phoneNumber":null,
+        "title":null,
+        "email":"jane.doe@uilabs.org"
+      }
+  ],
 
     "areasOfExpertise":[{
       "name":"Business Process Management",
@@ -126,7 +128,6 @@
         "link":null,
         "isDmdii":true
     }],
-    "dmdiiMemberId":1,
     "postCollaboration":"DMDII and City Digital",
     "upcomingProjectInterests":"Project 15-16-08",
     "pastProjects":"",

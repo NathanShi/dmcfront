@@ -124,9 +124,9 @@ angular.module('dmc.company.onboarding')
             company.legal = null;
         }
 
+        company.selectedEmployeeSize = company.selectedEmployeeSize.value;
+        company.selectedAnnualRevenue = company.selectedAnnualRevenue.value;
         $scope.companyinfo = angular.copy(company);
-        $scope.companyinfo.selectedEmployeeSize = $scope.companyinfo.selectedEmployeeSize.value;
-        $scope.companyinfo.selectedAnnualRevenue = $scope.companyinfo.selectedAnnualRevenue.value;
         $scope.companyinfo.type = type;
 
         companyOnboardingModel.save_companyInfo($scope.companyinfo);
@@ -134,11 +134,15 @@ angular.module('dmc.company.onboarding')
       };
 }])
 
-.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll',
-    function($scope, companyOnboardingModel, $location, $anchorScroll){
+.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$http', 'dataFactory',
+    function($scope, companyOnboardingModel, $location, $anchorScroll, $http, dataFactory){
       $anchorScroll();
 
       $scope.company = companyOnboardingModel.get_companyInfo();
+
+      if (angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null)
+        $location.path('/companyinfo');
+
       $scope.back = function(){
         companyOnboardingModel.save_companyInfo($scope.company);
         $location.path('/companyinfo');
@@ -204,16 +208,71 @@ angular.module('dmc.company.onboarding')
       });
 
       function stripeTokenHandler(token) {
-      // Insert the token ID into the form so it gets submitted to the server
-      var form = document.getElementById('payment-form');
-      var hiddenInput = document.createElement('input');
-      hiddenInput.setAttribute('type', 'hidden');
-      hiddenInput.setAttribute('name', 'stripeToken');
-      hiddenInput.setAttribute('value', token.id);
-      form.appendChild(hiddenInput);
 
-      // Submit the form
-      form.submit();
-    }
+          var jsoninfo = companyInfotoJson(token);
+          console.log(jsoninfo);
+          $http.post(dataFactory.payment().pay, {jsoninfo})
+            .then(function successCallback(response) {
+              console.log("success");
+            }, function errorCallback(response) {
+              console.log("error");
+            });
+
+      }
+
+      function companyInfotoJson(token){
+
+          $scope.payment = {
+            stripeToken: token.id,
+            organizationModel:{
+              name:$scope.company.name,
+              location:null,
+              description:null,
+              division:null,
+              industry:null,
+              naicsCode:$scope.company.naicsCode,
+              email:null,
+              phone:null,
+              website:null,
+              socialMediaLinkedin:null,
+              socialMediaTwitter:null,
+              socialMediaInthenews:null,
+              perferedCommMethod:null,
+              productionCapabilities:null,
+              address:{
+                streetAddress1:$scope.company.firstAddress.line1,
+                streetAddress2:($scope.company.firstAddress.line2?$scope.company.firstAddress.line2:null),
+                city:$scope.company.firstAddress.city,
+                state:$scope.company.firstAddress.state,
+                country:"US",
+                zip:$scope.company.firstAddress.zipcode,
+              },
+              reasonJoining:null,
+              featureImage:null,
+
+              awards:null,
+              contacts:null,
+              areasOfExpertise:null,
+              desiredAreasOfExpertise:null,
+              postCollaboration:null,
+              upcomingProjectInterests:null,
+              pastProjects:null,
+              dmdiiMembershipInfo:{
+                mainPointContact: $scope.company.main,
+                financePointContact: $scope.company.finance,
+                legalPointContact: $scope.company.legal,
+                secondAddress: $scope.company.secondAddress,
+                annualRevenue: $scope.company.selectedAnnualRevenue,
+                employeeSize: $scope.company.selectedEmployeeSize,
+                startUp: $scope.company.startUp,
+                dunsCode: $scope.company.duns
+              }
+            }
+          };
+
+          // console.log($scope.payment);
+          return angular.toJson($scope.payment);
+
+      }
 
 }])
