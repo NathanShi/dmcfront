@@ -6,8 +6,8 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll',
-    function($scope, companyOnboardingModel, $location, $anchorScroll){
+.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$rootScope', '$mdDialog',
+    function($scope, companyOnboardingModel, $location, $anchorScroll, $rootScope, $mdDialog){
       $anchorScroll();
 
       $scope.orgType = [
