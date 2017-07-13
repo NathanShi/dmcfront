@@ -21,7 +21,7 @@
 
 <?php include 'build-vendor-rh.php' ?>
 
-
+<script src="https://js.stripe.com/v3/"></script>
 <!-- build:js scripts/company-onboarding/index.js -->
 <script src="scripts/socket/socket.io.js"></script>
 <script src="scripts/configs/ngMaterial-config.js"></script>
@@ -44,7 +44,6 @@
 <!-- <script src="scripts/common/models/phone-model.js"></script> -->
 <script src="scripts/common/models/question-toast-model.js"></script>
 <!-- <script src="scripts/common/models/previous-page.js"></script> -->
-<script src="https://js.stripe.com/v3/"></script>
 <script src="scripts/company-onboarding/company-onboarding.js"></script>
 <script src="scripts/company-onboarding/controller/home.js"></script>
 <!-- <script src="scripts/company-onboarding/controller/autocomplete.js"></script> -->

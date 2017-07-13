@@ -234,8 +234,8 @@ angular.module('dmc.company.onboarding')
       function stripeTokenHandler(token) {
 
           var jsoninfo = companyInfotoJson(token);
-          console.log(jsoninfo);
-          $http.post(dataFactory.payment().pay, {jsoninfo})
+          // console.log(jsoninfo);
+          $http.post(dataFactory.payment().pay, jsoninfo)
             .then(function successCallback(response) {
               console.log("success");
             }, function errorCallback(response) {
