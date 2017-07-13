@@ -21,6 +21,9 @@ angular.module('dmc.company.onboarding', [
     // 'dmc.model.fileUpload',
     'dmc.model.profile',
     'dmc.model.user',
+    'dmc.phone-format',
+    'ngMaterial',
+    'ngMessages',
     'ngCookies'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
