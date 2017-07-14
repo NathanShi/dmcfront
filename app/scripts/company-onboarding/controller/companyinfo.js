@@ -157,8 +157,8 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$http', 'dataFactory',
-    function($scope, companyOnboardingModel, $location, $anchorScroll, $http, dataFactory){
+.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$http', 'dataFactory', 'ajax',
+    function($scope, companyOnboardingModel, $location, $anchorScroll, $http, dataFactory, ajax){
       $anchorScroll();
 
       $scope.company = companyOnboardingModel.get_companyInfo();
@@ -259,12 +259,18 @@ angular.module('dmc.company.onboarding')
 
           var jsoninfo = companyInfotoJson(token);
           // console.log(jsoninfo);
-          $http.post(dataFactory.payment().pay, jsoninfo)
-            .then(function successCallback(response) {
-              console.log("success");
-            }, function errorCallback(response) {
-              console.log("error");
-            });
+          // $http.post(dataFactory.payment().pay, jsoninfo)
+          //   .then(function successCallback(response) {
+          //     console.log("success");
+          //   }, function errorCallback(response) {
+          //     console.log("error");
+          //   });
+
+          ajax.create(dataFactory.payment().pay, jsoninfo, function successCallback(response) {
+            console.log("success");
+          }, function errorCallback(response) {
+            console.log("error");
+          });
 
       }
 
