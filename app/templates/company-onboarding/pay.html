@@ -12,13 +12,12 @@
   <div class="container">
     <div class="row">
         <div class="col-lg-12 col-md-12">
-          <hr>
           <!-- <h3>General Information</h3> -->
 
           <div class="row">
             <div class="col-lg-4 col-md-4">
-                <label class="pay_section">Legal Corporate/Organization Name :  </label>
-                <span ng-bind="company.name" class="_show"></span>
+                <!-- <label class="pay_section">Legal Corporate/Organization Name :  </label> -->
+                <div ng-bind="company.name" class="_name"></div>
             </div>
           </div>
 
@@ -108,9 +107,10 @@
       							Back to Edit
       		</button>
 
-          <button class="btn btn-success pull-right" ng-disabled="!company.name" ng-click="payment = true">
-      							Proceed to Pay
-      		</button>
+          <!-- ng-disabled="!company.name" -->
+          <button class="btn btn-success pull-right"  ng-click="scroll()">
+      						Proceed to Pay
+      		 </button>
 
         </div>
 

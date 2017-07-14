@@ -162,14 +162,38 @@ angular.module('dmc.company.onboarding')
       $anchorScroll();
 
       $scope.company = companyOnboardingModel.get_companyInfo();
+      //
+      //
+      // if(angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
+      //   var haveStored = $localStorage.get("companyInfo");
+      //   console.log(haveStored);
+      //   if (haveStored){
+      //     $scope.company = haveStored;
+      //   }
+      //   else{
+      //     //   $location.path('/companyinfo');
+      //   }
+      // }
+      //
+      // $localStorage.set("companyInfo",$scope.company);
+      // var haveStored = $localStorage.get("companyInfo");
+      // console.log($scope.company, haveStored);
 
-      if (angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
-        $location.path('/companyinfo');
-      }
+      // if (angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
+            //   $location.path('/companyinfo');
+      // }
 
       $scope.back = function(){
         companyOnboardingModel.save_companyInfo($scope.company);
         $location.path('/companyinfo');
+      }
+
+      $scope.scroll = function(id){
+        $scope.payment = true;
+        var div = document.getElementById(id);
+        $('body').animate({
+          scrollTop: document.body.scrollHeight
+        }, 1200);
       }
 
       //== Stripe ==
