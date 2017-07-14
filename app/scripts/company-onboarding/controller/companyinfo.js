@@ -270,6 +270,20 @@ angular.module('dmc.company.onboarding')
 
       function companyInfotoJson(token){
 
+          $scope.dmdiiMembershipInfo = {
+            mainPointContact: $scope.company.main,
+            financePointContact: $scope.company.finance,
+            legalPointContact: $scope.company.legal,
+            secondAddress: $scope.company.secondAddress,
+            annualRevenue: $scope.company.selectedAnnualRevenue,
+            employeeSize: $scope.company.selectedEmployeeSize,
+            startUp: $scope.company.startUp,
+            dunsCode: $scope.company.duns
+          };
+
+          var MembershipInfo = JSON.stringify($scope.dmdiiMembershipInfo);
+          // console.log(MembershipInfo);
+
           $scope.payment = {
             stripeToken: token.id,
             organizationModel:{
@@ -297,28 +311,19 @@ angular.module('dmc.company.onboarding')
               },
               reasonJoining:null,
               featureImage:null,
-
+              dmdiiMembershipInfo:MembershipInfo,
               awards:null,
               contacts:null,
               areasOfExpertise:null,
               desiredAreasOfExpertise:null,
               postCollaboration:null,
               upcomingProjectInterests:null,
-              pastProjects:null,
-              dmdiiMembershipInfo:{
-                mainPointContact: $scope.company.main,
-                financePointContact: $scope.company.finance,
-                legalPointContact: $scope.company.legal,
-                secondAddress: $scope.company.secondAddress,
-                annualRevenue: $scope.company.selectedAnnualRevenue,
-                employeeSize: $scope.company.selectedEmployeeSize,
-                startUp: $scope.company.startUp,
-                dunsCode: $scope.company.duns
-              }
+              pastProjects:null
             }
           };
 
-          // console.log($scope.payment);
+          var jsoninfo = angular.toJson($scope.payment);
+          // console.log(jsoninfo);
           return angular.toJson($scope.payment);
 
       }
