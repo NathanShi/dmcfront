@@ -15,20 +15,4 @@ angular.module('dmc.company.onboarding')
       $scope.tierLevel = 'Tier3';
       $cookies.put('fromDMDIISignup',true)
 
-      $scope.showModalTermsConditions = function(){
-  			$mdDialog.show({
-  			    controller: 'TermsConditionsController',
-  			    templateUrl: 'templates/onboarding/terms-conditions.html',
-  			    parent: angular.element(document.body),
-  			    clickOutsideToClose: false
-  		    })
-  		    .then(function() {
-  		    }, function() {
-  		    });
-  		}
-
-      if ($rootScope.isLogged && !$rootScope.userData.termsConditions) {
-        $scope.showModalTermsConditions();
-      }
-
 }])
