@@ -179,9 +179,9 @@ angular.module('dmc.company.onboarding')
       // var haveStored = $localStorage.get("companyInfo");
       // console.log($scope.company, haveStored);
 
-      // if (angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
-            //   $location.path('/companyinfo');
-      // }
+      if (angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
+              $location.path('/companyinfo');
+      }
 
       $scope.back = function(){
         companyOnboardingModel.save_companyInfo($scope.company);
