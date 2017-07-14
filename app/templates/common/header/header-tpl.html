@@ -80,8 +80,11 @@
             </div>
 
             <!-- User Account -->
-            <div layout="column">
-              <md-button id="login" ng-href='loginURL' class="login-button" ng-if="!$root.isLogged">Login</md-button>
+            <div layout="column" class="button-container">
+                <md-button class="md-button not-member-button" ng-if="!$root.isLogged">NOT A MEMBER? SIGN UP</md-button>
+            </div>
+            <div layout="column" ng-class="!$root.isLogged ? 'login-button-container' : null">
+                <md-button id="login" ng-href='loginURL' class="login-button" ng-if="!$root.isLogged">Login</md-button>
                 <md-menu md-offset="0 64" ng-if="$root.isLogged">
                     <md-button id="user-menu" class="user-button"
                                aria-label="Open Latest Services Menu"
