@@ -198,7 +198,7 @@ angular.module('dmc.company.onboarding')
 
       //== Stripe ==
       // Create a Stripe client
-      var stripe = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+      var stripe = Stripe('pk_test_xQ5iVIgTvkehDjRgvaj3kbRC');
 
       // Create an instance of Elements
       var elements = stripe.elements();
