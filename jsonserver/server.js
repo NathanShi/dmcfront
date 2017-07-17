@@ -137,6 +137,11 @@ server.get('/projects/:projectId', function (req, res) {
   res.jsonp(project)
 })
 
+server.get('/directories/:dirId', function (req, res) {
+  var directories = JSON.parse(fs.readFileSync('stubs/directories.json'));
+  res.jsonp(directories)
+})
+
 server.get('/dmdiiprojects', function (req, res) {
   var projectsOrig = JSON.parse(fs.readFileSync('stubs/dmdiiprojects.json'));
   var projectsData = projectsOrig;

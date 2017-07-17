@@ -1,8 +1,11 @@
-[
-  {
+[{
     "id": 26,
     "name": "home",
     "parent": null,
-    "children": []
-    }
-]
+    "children": [{
+        "id": 285,
+        "name": "Beta Factor",
+        "parent": 260,
+        "children": []
+    }]
+}]

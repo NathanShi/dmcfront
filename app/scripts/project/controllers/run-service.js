@@ -16,6 +16,8 @@ angular.module('dmc.project')
         '$compile',
         '$mdDialog',
         'questionToastModel',
+        'fileUpload',
+        '$q',
         function ($scope,
                   $stateParams,
                   projectData,
@@ -31,7 +33,9 @@ angular.module('dmc.project')
                   $state,
                   $compile,
                   $mdDialog,
-                  questionToastModel) {
+                  questionToastModel,
+                  fileUpload,
+                  $q,) {
             $scope.ServiceId = $stateParams.ServiceId;
             $scope.rerun = (angular.isDefined($stateParams.rerun) ? $stateParams.rerun : null);
             $scope.projectData = projectData;
@@ -504,22 +508,108 @@ angular.module('dmc.project')
               });
             }
 
-            $scope.uploadAppFile = function(ev,task){
-                $mdDialog.show({
-                    controller: 'uploadAppFileController',
-                    templateUrl: 'templates/components/dialogs/upload-app-file.html',
-                    parent: angular.element(document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                    locals : {
-                        project : $scope.projectData
-                    }
-                }).then(function (answer) {
+            // $scope.uploadAppFile = function(ev){
+            //     $mdDialog.show({
+            //         controller: 'uploadAppFileController',
+            //         templateUrl: 'templates/components/dialogs/upload-app-file.html',
+            //         parent: angular.element(document.body),
+            //         targetEvent: ev,
+            //         clickOutsideToClose: true,
+            //         locals : {
+            //             project : $scope.projectData
+            //         }
+            //     }).then(function (answer) {
+            //
+            //     }, function (update) {
+            //
+            //     });
+            // };
 
-                }, function (update) {
+            // var buildDocPromises = function(directoryId) {
+            //   var promises = {};
+            //
+            //   for (var i in $scope.docsToUpload) {
+            //     (function(doc) {
+            //       promises[doc.title] = fileUpload.uploadFileToUrl(doc.file, {}, doc.title + doc.type).then(function(response) {
+            //         var docData = {
+            //           parentId: $scope.projectId,
+            //           parentType: "PROJECT",
+            //           documentUrl: response.file.name,
+            //           documentName: doc.title + doc.type,
+            //           ownerId: $rootScope.userData.accountId,
+            //           docClass: 'SUPPORT',
+            //           accessLevel: doc.accessLevel || "MEMBER",
+            //           directoryId: directoryId
+            //         };
+            //
+            //         console.log('docData', docData)
+            //
+            //         return ajax.create(dataFactory.documentsUrl().save, docData, function(resp) {});
+            //       });
+            //     })($scope.docsToUpload[i]);
+            //   }
+            //
+            //   $q.all(promises).then(function() {
+            //     // toastModel.showToast("success", "Documents uploaded to '" + $scope.currentDir.name + "'.");
+            //     // $scope.changeDir($scope.currentDir.id);
+            //   });
+            //
+            // };
 
-                });
+            var buildDocPromises = function(directoryId) {};
+
+            $scope.uploadAppFile = function(ev) {
+              $mdDialog.show({
+                controller: 'uploadAppFileController',
+                templateUrl: 'templates/project/pages/documents-upload.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false
+              }).then(function(documents) {
+                var $scope.docsToUpload = documents;
+                // var directoryId = getOrCreateDirectory($scope.service.title, buildDocPromises);
+              });
             };
+
+
+
+
+            var getOrCreateDirectory = function(appName, callback) {
+              // var directoryId = 9999;
+              var directoryId;
+
+              ajax.get(dataFactory.directoriesUrl($scope.projectData.directoryId).get, {}, function(response) {
+                var directories = response.data;
+                console.log('directories', directories)
+                // see if app directory already exists
+                if (directories.children) {
+                  for (var i=0; i<directories.children.length; i++) {
+                    if (directories.children[i].name == appName) {
+                      directoryId = directories.children[i].id
+                      break;
+                    }
+                  }
+                }
+                // if the previous loop didn't 'find' the app directory, create it
+                if (!directoryId) {
+                  console.log('no dirId')
+                  directoryId = createAppDirectory(directories.id, appName)
+                }
+
+                console.log('the dir ID is', directoryId)
+                callback(directoryId);
+
+              },
+              function() {
+                console.log('ERROR GETTING DIRS')
+              });
+            }
+
+            var createAppDirectory = function(homeDir, appName) {
+              console.log('create app dir, app name', appName)
+              return 9999;
+            }
+
 
             $scope.cancelServiceRun = function(event,item){
                 questionToastModel.show({
@@ -542,14 +632,22 @@ angular.module('dmc.project')
         }
     ]
 )
-.controller('uploadAppFileController',function($scope,$mdDialog,ajax,dataFactory,$compile,project,$http,toastModel){
+// .controller('uploadAppFileController',function($scope,$mdDialog,ajax,dataFactory,$compile,project,$http,toastModel){
+//     $scope.project = project;
+//     console.log('PROJECT DATA',$scope.project)
+//     $scope.cancel = function() {
+//         $mdDialog.cancel(false);
+//     };
+//     $scope.saveAttachment = function() {
+//       console.log('save!')
+//     }
+// })
+.controller('uploadAppFileController', ['$scope', '$mdDialog', function($scope, $mdDialog) {
+  $scope.cancel = function() {
+    $mdDialog.cancel();
+  }
 
-    $scope.project = project;
-
-    console.log('PROJECT DATA',$scope.project)
-
-    $scope.cancel = function() {
-        $mdDialog.cancel(false);
-    };
-
-});
+  $scope.uploadDocuments = function() {
+    $mdDialog.hide($scope.documents);
+  }
+}]);
