@@ -42,6 +42,7 @@ angular.module('dmc.model.user', ['dmc.data', 'dmc.ajax', 'ngCookies'])
                     //     deferred.reject('New user from DMDII Signup');
                     // } else if (!data.termsConditions) {
                     //     deferred.reject('User not created');
+
                     if (fromDMDIISignup) {
                         deferred.reject('New user from DMDII Signup');
                     } else if (!data.termsConditions) {
@@ -50,7 +51,10 @@ angular.module('dmc.model.user', ['dmc.data', 'dmc.ajax', 'ngCookies'])
                         deferred.resolve();
                     }
                 });
-            } else {
+            } else if (fromDMDIISignup){
+                deferred.reject('User not logged in');
+            }
+              else{
                 deferred.resolve();
             }
             return deferred.promise;
