@@ -175,3 +175,87 @@ option{
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
 }
+
+.landing-container {
+  margin: 40px auto 40px auto;
+  width: 90%;
+  max-width: 1300px;
+}
+
+.column-header {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.pricing-title-container  {
+  margin: 0px;
+}
+
+.tier3-title-container {
+  background-color: $brand-accent;
+  color: white;
+}
+
+.tier2-title-container {
+  background-color: darkcyan;
+  color: white;
+}
+
+.tier1-title-container {
+  background-color: black;
+  color: white;
+}
+
+.tier1-title-container h2, .tier2-title-container h2, .tier3-title-container h2 {
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.no-margin-row {
+  margin: 0px;
+}
+
+.sign-up-button {
+  width: 90%;
+  margin: 10px auto;
+  display: block;
+  color: white;
+  font-weight: 800;
+  min-height: 50px;
+  letter-spacing: .1em;
+}
+
+.tier1-button {
+  background-color: black;
+}
+
+.tier2-button {
+  background-color: darkcyan;
+}
+
+.tier3-button {
+  background-color: $brand-accent;
+}
+
+.content-row {
+  background-color: #F3F4F4;
+}
+
+.margin-left-10 {
+  margin-left: 10px;
+}
+
+.header {
+  font-weight: 600;
+}
+
+.row h4.text-center {
+  font-weight: normal;
+  text-transform: none;
+  font-size: 16px;
+}
+
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
