@@ -52,7 +52,7 @@ angular.module('dmc.model.user', ['dmc.data', 'dmc.ajax', 'ngCookies'])
                     }
                 });
             } else if (fromDMDIISignup){
-                deferred.reject('User not logged in');
+                deferred.reject('User account failed');
             }
               else{
                 deferred.resolve();

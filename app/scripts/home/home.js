@@ -13,7 +13,7 @@ angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 
             } else if (error == 'New user from DMDII Signup') {
                 event.preventDefault();
                 window.location = '/company-onboarding.php#/companyinfo';
-            } else if (error == 'User not logged in'){
+            } else if (error == 'User account failed'){
                 event.preventDefault();
                 window.location = '/company-onboarding.php#/createuser';
             }
