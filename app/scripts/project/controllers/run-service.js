@@ -512,12 +512,12 @@ angular.module('dmc.project')
                     targetEvent: ev,
                     clickOutsideToClose: true,
                     locals : {
-                        task : task
+                        project : $scope.projectData
                     }
                 }).then(function (answer) {
 
                 }, function (update) {
-                    $scope.getTasks();
+
                 });
             };
 
@@ -542,92 +542,14 @@ angular.module('dmc.project')
         }
     ]
 )
-.controller('uploadAppFileController',function($scope,$mdDialog,ajax,dataFactory,$compile,task,$http,toastModel){
-    $scope.task = $.extend(true,{},task);
-    $scope.task.dueDateForEdit = new Date(moment($scope.task.dueDateForEdit).format('MM/DD/YYYY'));
-    $scope.priorities = [
-        {
-            id : 4,
-            name : 'Low'
-        }, {
-            id : 3,
-            name : 'Medium'
-        }, {
-            id : 2,
-            name : 'High'
-        }, {
-            id : 1,
-            name : 'Critical'
-        }
-    ];
+.controller('uploadAppFileController',function($scope,$mdDialog,ajax,dataFactory,$compile,project,$http,toastModel){
 
-    $scope.statuses = ['Open','Completed'];
+    $scope.project = project;
+
+    console.log('PROJECT DATA',$scope.project)
 
     $scope.cancel = function() {
         $mdDialog.cancel(false);
     };
 
-    $scope.users = [];
-
-
-
-
-    $scope.getMembers = function () {
-        $scope.loading = true;
-        $scope.companyNameList = {};
-        ajax.get(dataFactory.getProjectMembers(), {projectId: $scope.selectedProject}, function (response) {
-            var profileIds = $.map(response.data, function (x) {
-                return x.profileId;
-            });
-            $scope.users = response.data;
-            ajax.get(dataFactory.profiles().all, {
-                id: profileIds,
-                displayName_like: $scope.searchModel,
-                _type: $scope.typeModel
-            }, function (res) {
-                $scope.loading = false;
-                for(var i in $scope.users){
-
-                    for(var j in res.data){
-                        if($scope.users[i].profileId == res.data[j].id){
-                            $scope.users[i].member = res.data[j];
-
-
-                            //break;
-                        }
-                    }
-                }
-
-                apply();
-            });
-        });
-    };
-
-
-    $scope.getMembers();
-
-
-    $scope.updateTask = function(){
-        var assignee = null;
-        for(var i in $scope.users){
-            if($scope.users[i].id == $scope.task.assigneeId){
-                assignee = $scope.users[i].name;
-                break;
-            }
-        }
-        ajax.update(dataFactory.updateTask($scope.task.id),{
-                'title': $scope.task.title,
-                'description': $scope.task.title,
-                'assignee': assignee,
-                'assigneeId': $scope.task.assigneeId,
-                'dueDate': Date.parse($scope.task.dueDateForEdit),
-                'priority': $scope.task.priority,
-                'status': $scope.task.status
-            }, function(response){
-                $scope.task = response.data;
-                $mdDialog.cancel($scope.task);
-                toastModel.showToast('success', 'Task successfully updated!');
-            }
-        );
-    };
 });
