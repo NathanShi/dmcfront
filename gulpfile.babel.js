@@ -9,6 +9,7 @@ import del from 'del';
 import {stream as wiredep} from 'wiredep';
 var gzip = require('gulp-gzip');
 var tar = require('gulp-tar');
+var gutil = require('gulp-util');
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -60,7 +61,10 @@ gulp.task('php', ['styles'], () => {
 
   return gulp.src('app/**/*.php')
     .pipe(assets)
-    .pipe($.if('*.js', $.uglify(uglifyOptions)))
+    .pipe($.if('*.js', $.uglify(uglifyOptions).on('error', function(err) {
+gutil.log(gutil.colors.red('[Error]'), err.toString());
+this.emit('end');
+})))
     .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
     .pipe(assets.restore())
     .pipe($.useref())

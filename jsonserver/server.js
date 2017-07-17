@@ -43,6 +43,7 @@ server.use(jsonServer.rewriter({
     '/market/new_services': '/services',
     '/market/services': '/services',
     '/market/components': '/services',
+    '/companies/short' : '/companies_short',
     '/companies/:id/new': '/companies/:id/services',
     '/company/follow': '/following_companies',
     '/company/unfollow/:id': '/following_companies/:id',
@@ -76,7 +77,7 @@ server.use(jsonServer.rewriter({
     '/user/organization/:id': '/userByOrganization',
     '/services/:id/dome-interfaces': '/dome-interfaces',
     '/organizations/myVPC': '/myVPC',
-    '/searchworkspace/:id': '/searchworkspace'
+    '/searchworkspace/:id': '/searchworkspace',
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
 }));
 

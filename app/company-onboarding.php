@@ -21,7 +21,7 @@
 
 <?php include 'build-vendor-rh.php' ?>
 
-
+<script src="https://js.stripe.com/v3/"></script>
 <!-- build:js scripts/company-onboarding/index.js -->
 <script src="scripts/socket/socket.io.js"></script>
 <script src="scripts/configs/ngMaterial-config.js"></script>
@@ -29,24 +29,24 @@
 <script src="scripts/common/factory/notifications.factory.js"></script>
 <script src="scripts/common/footer/footer.js"></script>
 <script src="scripts/common/factory/location.factory.js"></script>
-<script src="scripts/components/ui-widgets/documents.directive.js"></script>
-<script src="scripts/components/ui-widgets/stars.directive.js"></script>
-<script src="scripts/components/ui-widgets/review.directive.js"></script>
-<script src="scripts/components/ui-widgets/rich-text.directive.js"></script>
-<script src="scripts/components/dropzone/dropzone.directive.js"></script>
+<!-- <script src="scripts/components/ui-widgets/documents.directive.js"></script> -->
+<!-- <script src="scripts/components/ui-widgets/stars.directive.js"></script> -->
+<!-- <script src="scripts/components/ui-widgets/review.directive.js"></script> -->
+<!-- <script src="scripts/components/ui-widgets/rich-text.directive.js"></script> -->
+<!-- <script src="scripts/components/dropzone/dropzone.directive.js"></script> -->
 <script src="scripts/common/factory/socket.factory.js"></script>
 <script src="scripts/common/factory/ajax.factory.js"></script>
 <script src="scripts/common/factory/data.factory.js"></script>
-<script src="scripts/common/models/file-upload.js"></script>
+<!-- <script src="scripts/common/models/file-upload.js"></script> -->
 <script src="scripts/common/models/profile-model.js"></script>
 <script src="scripts/common/models/user-model.js"></script>
 <script src="scripts/common/models/toast-model.js"></script>
-<script src="scripts/common/models/phone-model.js"></script>
+<!-- <script src="scripts/common/models/phone-model.js"></script> -->
 <script src="scripts/common/models/question-toast-model.js"></script>
-<script src="scripts/common/models/previous-page.js"></script>
+<!-- <script src="scripts/common/models/previous-page.js"></script> -->
 <script src="scripts/company-onboarding/company-onboarding.js"></script>
 <script src="scripts/company-onboarding/controller/home.js"></script>
-<script src="scripts/company-onboarding/controller/autocomplete.js"></script>
+<!-- <script src="scripts/company-onboarding/controller/autocomplete.js"></script> -->
 <script src="scripts/components/ui-widgets/company-onboarding-tabs.directive.js"></script>
 <script src="scripts/company-onboarding/controller/companyinfo.js"></script>
 
