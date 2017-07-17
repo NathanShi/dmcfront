@@ -15,6 +15,7 @@ angular.module('dmc.project')
         '$state',
         '$compile',
         '$mdDialog',
+        'questionToastModel',
         function ($scope,
                   $stateParams,
                   projectData,
@@ -29,8 +30,8 @@ angular.module('dmc.project')
                   domeModel,
                   $state,
                   $compile,
-                  $mdDialog) {
-
+                  $mdDialog,
+                  questionToastModel) {
             $scope.ServiceId = $stateParams.ServiceId;
             $scope.rerun = (angular.isDefined($stateParams.rerun) ? $stateParams.rerun : null);
             $scope.projectData = projectData;
@@ -302,6 +303,9 @@ angular.module('dmc.project')
                     if('outputTemplate' in $scope.service.interfaceModel.outParams){
                       updateCustomUIForOutputs();
                     }
+                } else if (response.data.status == 2) {
+                  // run has been cancelled
+                  stopPolling();
                 } else {
                     // model still running
                 }
@@ -517,7 +521,24 @@ angular.module('dmc.project')
                 });
             };
 
+            $scope.cancelServiceRun = function(event,item){
+                questionToastModel.show({
+                    question: "Are you sure you want to cancel this service run?",
+                    buttons: {
+                        ok: function(){
+                          ajax.create(dataFactory.cancelServiceRun(item.currentStatus.id), {}, function(response){
+                              updateServiceStatus(item, response.data);
+                              toastModel.showToast("success", "Service run cancelled");
+                          }, function(response){
+                            console.log(response)
+                            toastModel.showToast("error", response.data ? response.data : response.statusText)
+                          });
+                        },
+                        cancel: function(){}
+                    }
+                }, event);
 
+            };
         }
     ]
 )
