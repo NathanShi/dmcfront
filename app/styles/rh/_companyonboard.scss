@@ -183,8 +183,6 @@ option{
 }
 
 .column-header {
-  margin-left: auto;
-  margin-right: auto;
   text-align: center;
 }
 
@@ -198,18 +196,27 @@ option{
 }
 
 .tier2-title-container {
-  background-color: darkcyan;
+  background-color: #0797AE;
   color: white;
 }
 
 .tier1-title-container {
-  background-color: black;
+  background-color: #364141;
   color: white;
 }
 
 .tier1-title-container h2, .tier2-title-container h2, .tier3-title-container h2 {
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+}
+
+.sub-title {
+  margin-top: 0px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: .1em;
+  font-size: 11px;
 }
 
 .no-margin-row {
@@ -227,11 +234,11 @@ option{
 }
 
 .tier1-button {
-  background-color: black;
+  background-color: #364141;
 }
 
 .tier2-button {
-  background-color: darkcyan;
+  background-color: #0797AE;
 }
 
 .tier3-button {
@@ -258,4 +265,18 @@ option{
 
 .margin-bottom-20 {
   margin-bottom: 20px;
+}
+
+.content-row.no-pad-top {
+  padding-top: 0;
+}
+
+.arrow-icon svg {
+  transform: rotate(45deg);
+  margin-top: -18px;
+}
+
+.arrow-icon {
+  margin: 0px auto;
+  display: block;
 }
