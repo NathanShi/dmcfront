@@ -580,12 +580,12 @@ angular.module('dmc.project')
                 var directories = response.data;
                 console.log('directories', directories)
                 // see if app directory already exists
-                if (directories.children) {
-                  for (var i=0; i<directories.children.length; i++) {
-                    if (directories.children[i].name == appName) {
-                      directoryId = directories.children[i].id
-                      break;
-                    }
+                for (var i=0; i<directories.children.length; i++) {
+                  console.log('appName', appName)
+                  console.log('directories.children[i].name', directories.children[i].name)
+                  if (directories.children[i].name == appName) {
+                    directoryId = directories.children[i].id
+                    break;
                   }
                 }
                 // if the previous loop didn't 'find' the app directory, create it
