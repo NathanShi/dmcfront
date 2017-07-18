@@ -521,6 +521,75 @@ angular.module('dmc.project')
             //     });
             // };
 
+            // PSEUDO CODE
+            // .then(docs) {
+            //   getOrCreateDirectory(appname, docs, uploadDocs) {
+            //     findDir()
+            //       .then(
+            //         uploadDocs(docs)
+            //       )
+            //   }
+            // }
+
+            var uploadDocs = function(documents) {
+              var promises = {};
+
+              for (var i in documents) {
+                (function(doc) {
+                  promises[doc.title] = fileUpload.uploadFileToUrl(doc.file, {}, doc.title + doc.type).then(function(response) {
+                    var docData = {
+                      parentId: $scope.projectId,
+                      parentType: "PROJECT",
+                      documentUrl: response.file.name,
+                      documentName: doc.title + doc.type,
+                      ownerId: $rootScope.userData.accountId,
+                      docClass: 'SUPPORT',
+                      accessLevel: doc.accessLevel || "MEMBER",
+                      directoryId: $scope.currentDir.id
+                    };
+
+                    return ajax.create(dataFactory.documentsUrl().save, docData, function(resp) {});
+                  });
+                })(documents[i]);
+              }
+
+              $q.all(promises).then(function() {
+                // toastModel.showToast("success", "Documents uploaded to '" + $scope.currentDir.name + "'.");
+                // $scope.changeDir($scope.currentDir.id);
+              });
+            }
+
+            var getOrCreateDirectory = function(appName, documents, callback) {
+              // var directoryId = 9999;
+              var directoryId;
+
+              ajax.get(dataFactory.directoriesUrl($scope.projectData.directoryId).get, {}, function(response) {
+                var directories = response.data;
+                console.log('directories', directories)
+                // see if app directory already exists
+                if (directories.children) {
+                  for (var i=0; i<directories.children.length; i++) {
+                    if (directories.children[i].name == appName) {
+                      directoryId = directories.children[i].id
+                      break;
+                    }
+                  }
+                }
+                // if the previous loop didn't 'find' the app directory, create it
+                if (!directoryId) {
+                  console.log('no dirId')
+                  directoryId = createAppDirectory(directories.id, appName)
+                }
+
+                console.log('the dir ID is', directoryId)
+                callback(documents, directoryId);
+
+              },
+              function() {
+                console.log('ERROR GETTING DIRS')
+              });
+            }
+
             $scope.uploadAppFile = function(ev) {
               $mdDialog.show({
                 controller: 'DocumentsUploadCtrl as projectCtrl',
@@ -529,33 +598,11 @@ angular.module('dmc.project')
                 targetEvent: ev,
                 clickOutsideToClose: false
               }).then(function(documents) {
-                var promises = {};
-
-                for (var i in documents) {
-                  (function(doc) {
-                    promises[doc.title] = fileUpload.uploadFileToUrl(doc.file, {}, doc.title + doc.type).then(function(response) {
-                      var docData = {
-                        parentId: $scope.projectId,
-                        parentType: "PROJECT",
-                        documentUrl: response.file.name,
-                        documentName: doc.title + doc.type,
-                        ownerId: $rootScope.userData.accountId,
-                        docClass: 'SUPPORT',
-                        accessLevel: doc.accessLevel || "MEMBER",
-                        directoryId: $scope.currentDir.id
-                      };
-
-                      return ajax.create(dataFactory.documentsUrl().save, docData, function(resp) {});
-                    });
-                  })(documents[i]);
+                if (documents.length > 0) {
+                  getOrCreateDirectory($scope.service.title, documents, uploadDocs);
                 }
-
-                $q.all(promises).then(function() {
-                  toastModel.showToast("success", "Documents uploaded to '" + $scope.currentDir.name + "'.");
-                  $scope.changeDir($scope.currentDir.id);
-                });
               });
-            }
+            };
 
             $scope.cancelServiceRun = function(event,item){
                 questionToastModel.show({
