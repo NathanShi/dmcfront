@@ -504,22 +504,58 @@ angular.module('dmc.project')
               });
             }
 
-            $scope.uploadAppFile = function(ev,task){
-                $mdDialog.show({
-                    controller: 'uploadAppFileController',
-                    templateUrl: 'templates/components/dialogs/upload-app-file.html',
-                    parent: angular.element(document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                    locals : {
-                        project : $scope.projectData
-                    }
-                }).then(function (answer) {
+            // $scope.uploadAppFile = function(ev,task){
+            //     $mdDialog.show({
+            //         controller: 'uploadAppFileController',
+            //         templateUrl: 'templates/components/dialogs/upload-app-file.html',
+            //         parent: angular.element(document.body),
+            //         targetEvent: ev,
+            //         clickOutsideToClose: true,
+            //         locals : {
+            //             project : $scope.projectData
+            //         }
+            //     }).then(function (answer) {
+            //
+            //     }, function (update) {
+            //
+            //     });
+            // };
 
-                }, function (update) {
+            $scope.uploadAppFile = function(ev) {
+              $mdDialog.show({
+                controller: 'DocumentsUploadCtrl as projectCtrl',
+                templateUrl: 'templates/project/pages/documents-upload.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false
+              }).then(function(documents) {
+                var promises = {};
 
+                for (var i in documents) {
+                  (function(doc) {
+                    promises[doc.title] = fileUpload.uploadFileToUrl(doc.file, {}, doc.title + doc.type).then(function(response) {
+                      var docData = {
+                        parentId: $scope.projectId,
+                        parentType: "PROJECT",
+                        documentUrl: response.file.name,
+                        documentName: doc.title + doc.type,
+                        ownerId: $rootScope.userData.accountId,
+                        docClass: 'SUPPORT',
+                        accessLevel: doc.accessLevel || "MEMBER",
+                        directoryId: $scope.currentDir.id
+                      };
+
+                      return ajax.create(dataFactory.documentsUrl().save, docData, function(resp) {});
+                    });
+                  })(documents[i]);
+                }
+
+                $q.all(promises).then(function() {
+                  toastModel.showToast("success", "Documents uploaded to '" + $scope.currentDir.name + "'.");
+                  $scope.changeDir($scope.currentDir.id);
                 });
-            };
+              });
+            }
 
             $scope.cancelServiceRun = function(event,item){
                 questionToastModel.show({
@@ -543,13 +579,17 @@ angular.module('dmc.project')
     ]
 )
 .controller('uploadAppFileController',function($scope,$mdDialog,ajax,dataFactory,$compile,project,$http,toastModel){
-
-    $scope.project = project;
-
-    console.log('PROJECT DATA',$scope.project)
+    // $scope.project = project;
+    // console.log('PROJECT DATA',$scope.project)
+    // $scope.cancel = function() {
+    //     $mdDialog.cancel(false);
+    // };
 
     $scope.cancel = function() {
-        $mdDialog.cancel(false);
-    };
+      $mdDialog.cancel();
+    }
 
+    $scope.uploadDocuments = function() {
+      $mdDialog.hide($scope.documents);
+    }
 });
