@@ -553,7 +553,7 @@ angular.module('dmc.project')
                 (function(doc) {
                   promises[doc.title] = fileUpload.uploadFileToUrl(doc.file, {}, doc.title + doc.type).then(function(response) {
                     var docData = {
-                      parentId: $scope.projectId,
+                      parentId: $scope.projectData.id,
                       parentType: "PROJECT",
                       documentUrl: response.file.name,
                       documentName: doc.title + doc.type,
