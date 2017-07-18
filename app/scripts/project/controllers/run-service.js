@@ -17,6 +17,7 @@ angular.module('dmc.project')
         '$mdDialog',
         'questionToastModel',
         '$q',
+        'fileUpload',
         function ($scope,
                   $stateParams,
                   projectData,
@@ -33,7 +34,8 @@ angular.module('dmc.project')
                   $compile,
                   $mdDialog,
                   questionToastModel,
-                  $q) {
+                  $q,
+                  fileUpload) {
             $scope.ServiceId = $stateParams.ServiceId;
             $scope.rerun = (angular.isDefined($stateParams.rerun) ? $stateParams.rerun : null);
             $scope.projectData = projectData;
@@ -533,16 +535,16 @@ angular.module('dmc.project')
             //   }
             // }
 
-            var uploadFileToUrl = function() {
-              return {
-                then: function(func) {
-                  func({file: {name: "theFileName.txt"}})
-                }
-              }
-            }
-
-            var fileUpload = {};
-            fileUpload["uploadFileToUrl"] = uploadFileToUrl;
+            // var uploadFileToUrl = function() {
+            //   return {
+            //     then: function(func) {
+            //       func({file: {name: "theFileName.txt"}})
+            //     }
+            //   }
+            // }
+            //
+            // var fileUpload = {};
+            // fileUpload["uploadFileToUrl"] = uploadFileToUrl;
 
             var uploadDocs = function(documents, directoryId) {
               var promises = {};
@@ -578,11 +580,8 @@ angular.module('dmc.project')
 
               ajax.get(dataFactory.directoriesUrl($scope.projectData.directoryId).get, {}, function(response) {
                 var directories = response.data;
-                console.log('directories', directories)
                 // see if app directory already exists
                 for (var i=0; i<directories.children.length; i++) {
-                  console.log('appName', appName)
-                  console.log('directories.children[i].name', directories.children[i].name)
                   if (directories.children[i].name == appName) {
                     directoryId = directories.children[i].id
                     break;
@@ -590,16 +589,14 @@ angular.module('dmc.project')
                 }
                 // if the previous loop didn't 'find' the app directory, create it
                 if (!directoryId) {
-                  console.log('no dirId')
                   directoryId = createAppDirectory(directories.id, appName)
                 }
 
-                console.log('the dir ID is', directoryId)
                 callback(documents, directoryId);
 
               },
               function() {
-                console.log('ERROR GETTING DIRS')
+                console.log('Error getting directories')
               });
             }
 
@@ -618,8 +615,15 @@ angular.module('dmc.project')
             };
 
             var createAppDirectory = function(homeDir, appName) {
-              console.log('create app dir, app name', appName)
-              return 9999;
+
+              ajax.create(dataFactory.directoriesUrl().save, {
+                name: appName,
+                parent: homeDir,
+                children: []
+              }, function(resp) {
+                return resp.id
+              });
+
             };
 
             $scope.cancelServiceRun = function(event,item){

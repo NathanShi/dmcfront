@@ -7,6 +7,8 @@ var server = jsonServer.create();
 // Set default middlewares (logger, static, cors and no-cache)
 //server.use(jsonServer.defaults());
 server.use(jsonServer.defaults());
+// 
+server.use(jsonServer.bodyParser)
 // Add this before server.use(router)
 server.use(jsonServer.rewriter({
     '/documents/directories/26': '/documentsdirectories',
@@ -168,6 +170,11 @@ server.patch('/documents/:id/accept', function(req, res) {
 server.get('/directories/:dirId', function (req, res) {
   var directories = JSON.parse(fs.readFileSync('stubs/directories.json'));
   res.jsonp(directories)
+})
+
+server.post('/directories', function (req, res) {
+  console.log('req',req.body)
+  res.jsonp({"id":286,"name":req.body.name,"parent":req.body.parent,"children":[]})
 })
 
 server.get('/getChildren', function (req, res) {
