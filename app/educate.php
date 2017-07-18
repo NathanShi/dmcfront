@@ -21,7 +21,7 @@
 
 <?php include 'build-vendor-rh.php' ?>
 
-<!-- build:js scripts/about/index.js -->
+<!-- build:js scripts/educate/index.js -->
 <script src="scripts/configs/ngMaterial-config.js"></script>
 <script src="scripts/common/header/header.js"></script>
 <script src="scripts/common/factory/notifications.factory.js"></script>
