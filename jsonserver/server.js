@@ -165,6 +165,11 @@ server.patch('/documents/:id/accept', function(req, res) {
     res.jsonp({"result": "success"});
 });
 
+server.get('/directories/:dirId', function (req, res) {
+  var directories = JSON.parse(fs.readFileSync('stubs/directories.json'));
+  res.jsonp(directories)
+})
+
 server.get('/getChildren', function (req, res) {
 
     var data = (req.query ? req.query : null);
