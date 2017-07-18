@@ -16,6 +16,7 @@ angular.module('dmc.project')
         '$compile',
         '$mdDialog',
         'questionToastModel',
+        '$q',
         function ($scope,
                   $stateParams,
                   projectData,
@@ -31,7 +32,8 @@ angular.module('dmc.project')
                   $state,
                   $compile,
                   $mdDialog,
-                  questionToastModel) {
+                  questionToastModel,
+                  $q) {
             $scope.ServiceId = $stateParams.ServiceId;
             $scope.rerun = (angular.isDefined($stateParams.rerun) ? $stateParams.rerun : null);
             $scope.projectData = projectData;
@@ -531,7 +533,18 @@ angular.module('dmc.project')
             //   }
             // }
 
-            var uploadDocs = function(documents) {
+            var uploadFileToUrl = function() {
+              return {
+                then: function(func) {
+                  func({file: {name: "theFileName.txt"}})
+                }
+              }
+            }
+
+            var fileUpload = {};
+            fileUpload["uploadFileToUrl"] = uploadFileToUrl;
+
+            var uploadDocs = function(documents, directoryId) {
               var promises = {};
 
               for (var i in documents) {
@@ -545,7 +558,7 @@ angular.module('dmc.project')
                       ownerId: $rootScope.userData.accountId,
                       docClass: 'SUPPORT',
                       accessLevel: doc.accessLevel || "MEMBER",
-                      directoryId: $scope.currentDir.id
+                      directoryId: directoryId
                     };
 
                     return ajax.create(dataFactory.documentsUrl().save, docData, function(resp) {});
@@ -602,6 +615,11 @@ angular.module('dmc.project')
                   getOrCreateDirectory($scope.service.title, documents, uploadDocs);
                 }
               });
+            };
+
+            var createAppDirectory = function(homeDir, appName) {
+              console.log('create app dir, app name', appName)
+              return 9999;
             };
 
             $scope.cancelServiceRun = function(event,item){
