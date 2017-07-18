@@ -589,10 +589,11 @@ angular.module('dmc.project')
                 }
                 // if the previous loop didn't 'find' the app directory, create it
                 if (!directoryId) {
-                  directoryId = createAppDirectory(directories.id, appName)
+                  directoryId = createAppDirectory(directories.id, appName, documents, callback)
+                } else {
+                  callback(documents, directoryId);
                 }
 
-                callback(documents, directoryId);
 
               },
               function() {
@@ -614,14 +615,14 @@ angular.module('dmc.project')
               });
             };
 
-            var createAppDirectory = function(homeDir, appName) {
+            var createAppDirectory = function(homeDir, appName, documents, callback) {
 
               ajax.create(dataFactory.directoriesUrl().save, {
                 name: appName,
                 parent: homeDir,
                 children: []
               }, function(resp) {
-                return resp.id
+                callback(documents, resp.data.id);
               });
 
             };
@@ -635,7 +636,6 @@ angular.module('dmc.project')
                               updateServiceStatus(item, response.data);
                               toastModel.showToast("success", "Service run cancelled");
                           }, function(response){
-                            console.log(response)
                             toastModel.showToast("error", response.data ? response.data : response.statusText)
                           });
                         },
