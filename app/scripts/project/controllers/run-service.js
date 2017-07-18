@@ -586,6 +586,7 @@ angular.module('dmc.project')
                 children: []
               }, function(resp) {
                 console.log('resp.data', resp.data)
+                console.log('resp', resp)
                 callback(documents, resp.data.id);
               });
 
