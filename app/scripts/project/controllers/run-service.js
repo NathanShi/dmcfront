@@ -508,43 +508,6 @@ angular.module('dmc.project')
               });
             }
 
-            // $scope.uploadAppFile = function(ev,task){
-            //     $mdDialog.show({
-            //         controller: 'uploadAppFileController',
-            //         templateUrl: 'templates/components/dialogs/upload-app-file.html',
-            //         parent: angular.element(document.body),
-            //         targetEvent: ev,
-            //         clickOutsideToClose: true,
-            //         locals : {
-            //             project : $scope.projectData
-            //         }
-            //     }).then(function (answer) {
-            //
-            //     }, function (update) {
-            //
-            //     });
-            // };
-
-            // PSEUDO CODE
-            // .then(docs) {
-            //   getOrCreateDirectory(appname, docs, uploadDocs) {
-            //     findDir()
-            //       .then(
-            //         uploadDocs(docs)
-            //       )
-            //   }
-            // }
-
-            // var uploadFileToUrl = function() {
-            //   return {
-            //     then: function(func) {
-            //       func({file: {name: "theFileName.txt"}})
-            //     }
-            //   }
-            // }
-            //
-            // var fileUpload = {};
-            // fileUpload["uploadFileToUrl"] = uploadFileToUrl;
 
             var uploadDocs = function(documents, directoryId) {
               var promises = {};
@@ -589,7 +552,7 @@ angular.module('dmc.project')
                 }
                 // if the previous loop didn't 'find' the app directory, create it
                 if (!directoryId) {
-                  directoryId = createAppDirectory(directories.id, appName, documents, callback)
+                  createAppDirectory(directories.id, appName, documents, callback)
                 } else {
                   callback(documents, directoryId);
                 }
@@ -622,6 +585,7 @@ angular.module('dmc.project')
                 parent: homeDir,
                 children: []
               }, function(resp) {
+                console.log('resp.data', resp.data)
                 callback(documents, resp.data.id);
               });
 
