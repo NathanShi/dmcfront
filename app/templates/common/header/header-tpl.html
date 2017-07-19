@@ -81,7 +81,7 @@
 
             <!-- User Account -->
             <div layout="column" class="button-container">
-                <a href="/company-onboarding.php#/landing"><md-button class="md-button not-member-button" ng-if="!$root.isLogged">NOT A MEMBER? SIGN UP</md-button></a>
+                <a href="/company-onboarding.php#/landing"><md-button class="md-button not-member-button" ng-if="!$root.isLogged && location != '/createuser' && location != '/landing'">NOT A MEMBER? SIGN UP</md-button></a>
             </div>
             <div layout="column" ng-class="!$root.isLogged ? 'login-button-container' : null">
                 <md-button id="login" ng-href='loginURL' class="login-button" ng-if="!$root.isLogged">Login</md-button>

@@ -19,8 +19,20 @@ angular.module('dmc.common.header', ['ngAnimate', 'dmc.model.user', 'dmc.common.
       //userData: '='
     },
     templateUrl: 'templates/common/header/header-tpl.html',
-    controller : function($scope,ajax,dataFactory,$window,$mdMedia){
+    controller : function($scope,ajax,dataFactory,$window,$mdMedia, $location){
+        
+        $scope.location = $location.$$path;
+        
+        $scope.$watch(function () {
+            return $location.$$path;
+        }, function (newValue, oldValue) {
+            if (newValue !== oldValue) {
+                $scope.location = $location.$$path;
+            }
+        }, true);
+        
         $scope.userData;
+        console.log($location.$$path);
         //$scope.invitations = [];
         $scope.userName = userModel.getUserName();
         userModel.getUserData().then(
