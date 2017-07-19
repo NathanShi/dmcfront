@@ -5,7 +5,7 @@ angular.module('dmc.model.user', ['dmc.data', 'dmc.ajax', 'ngCookies'])
 
         var _userName = $window.apiUrl ? $window.givenName : 'DMC User';
         // _userName = ''
-        $rootScope.isLogged = _userName == ''  ? false : false;
+        $rootScope.isLogged = _userName == ''  ? false : true;
         // var _user;
 
         this.getUserName = function() {
