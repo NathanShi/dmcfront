@@ -612,6 +612,11 @@ return {
           delete: localhost + 'dmdiiquicklink/' + id
         };
       },
+      payment: function(){
+        return {
+          pay: localhost + 'payment'
+        };
+      },
       getDMDIIDocuments: function(id) {
         return {
           all: localhost + 'dmdiidocuments',
