@@ -267,9 +267,9 @@ angular.module('dmc.company.onboarding')
           //   });
 
           ajax.create(dataFactory.payment().pay, jsoninfo, function successCallback(response) {
-            console.log("success");
+            alert("success");
           }, function errorCallback(response) {
-            console.log("error");
+            alert("error");
           });
 
       }
