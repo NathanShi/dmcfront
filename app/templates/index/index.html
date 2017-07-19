@@ -1,9 +1,7 @@
 
 
 <main>
-    <!-- <section class="container" ng-if="(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))"> -->
-    <section class="container">
-
+    <section class="container" ng-if="(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))">
 
     <div class="row welcome margin-bottom-30">
       <h2 class="col-xs-12">WELCOME TO THE</h2>
@@ -52,8 +50,7 @@
 
     </section>
 
-    <!-- <section class="container" ng-if="!(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))"> -->
-    <section class="container">
+    <section class="container" ng-if="!(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))">
 
     <div class="row welcome">
       <h2 class="col-xs-12">WELCOME TO THE</h2>
