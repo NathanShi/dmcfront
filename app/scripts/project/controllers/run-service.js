@@ -613,12 +613,6 @@ angular.module('dmc.project')
     ]
 )
 .controller('uploadAppFileController',function($scope,$mdDialog,ajax,dataFactory,$compile,project,$http,toastModel){
-    // $scope.project = project;
-    // console.log('PROJECT DATA',$scope.project)
-    // $scope.cancel = function() {
-    //     $mdDialog.cancel(false);
-    // };
-
     $scope.cancel = function() {
       $mdDialog.cancel();
     }
