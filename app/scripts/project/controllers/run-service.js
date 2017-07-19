@@ -537,22 +537,25 @@ angular.module('dmc.project')
               });
             }
 
-            var getOrCreateDirectory = function(appName, documents, callback) {
+            var getOrCreateDirectory = function(app, documents, callback) {
               // var directoryId = 9999;
               var directoryId;
+              var appName = app.title;
+              var appId = app.id;
+              var directoryName = appName+" ("+appId+")"
 
               ajax.get(dataFactory.directoriesUrl($scope.projectData.directoryId).get, {}, function(response) {
                 var directories = response.data;
                 // see if app directory already exists
                 for (var i=0; i<directories.children.length; i++) {
-                  if (directories.children[i].name == appName) {
+                  if (directories.children[i].name == directoryName) {
                     directoryId = directories.children[i].id
                     break;
                   }
                 }
                 // if the previous loop didn't 'find' the app directory, create it
                 if (!directoryId) {
-                  createAppDirectory(directories.id, appName, documents, callback)
+                  createAppDirectory(directories.id, directoryName, documents, callback)
                 } else {
                   callback(documents, directoryId);
                 }
@@ -573,20 +576,17 @@ angular.module('dmc.project')
                 clickOutsideToClose: false
               }).then(function(documents) {
                 if (documents.length > 0) {
-                  getOrCreateDirectory($scope.service.title, documents, uploadDocs);
+                  getOrCreateDirectory($scope.service, documents, uploadDocs);
                 }
               });
             };
 
             var createAppDirectory = function(homeDir, appName, documents, callback) {
-
               ajax.create(dataFactory.directoriesUrl().save, {
                 name: appName,
                 parent: homeDir,
                 children: []
               }, function(resp) {
-                console.log('resp.data', resp.data)
-                console.log('resp', resp)
                 callback(documents, resp.data.id);
               });
 
