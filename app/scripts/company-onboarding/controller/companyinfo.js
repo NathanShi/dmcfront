@@ -157,31 +157,28 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$http', 'dataFactory', 'ajax',
-    function($scope, companyOnboardingModel, $location, $anchorScroll, $http, dataFactory, ajax){
+.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', 'dataFactory', 'ajax', 'storageService',
+    function($scope, companyOnboardingModel, $location, $anchorScroll, dataFactory, ajax, storageService){
       $anchorScroll();
 
       $scope.company = companyOnboardingModel.get_companyInfo();
-      //
-      //
-      // if(angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
-      //   var haveStored = $localStorage.get("companyInfo");
-      //   console.log(haveStored);
-      //   if (haveStored){
-      //     $scope.company = haveStored;
-      //   }
-      //   else{
-      //     //   $location.path('/companyinfo');
-      //   }
-      // }
-      //
-      // $localStorage.set("companyInfo",$scope.company);
-      // var haveStored = $localStorage.get("companyInfo");
-      // console.log($scope.company, haveStored);
+      if(angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
+          var haveStored = storageService.get('companyinfoCache');
+          if (haveStored){
+              $scope.company = JSON.parse(haveStored);
+          }
 
-      if (angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
+          else{
               $location.path('/companyinfo');
+          }
       }
+      else{
+          storageService.set('companyinfoCache', JSON.stringify($scope.company));
+      }
+
+      // if (angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
+      //         $location.path('/companyinfo');
+      // }
 
       $scope.back = function(){
         companyOnboardingModel.save_companyInfo($scope.company);
