@@ -600,9 +600,10 @@ angular.module('dmc.project')
 
             var createAttachmentDOMElement = function() {
               var attachmentDOMElement = document.createElement("input");
+              attachmentDOMElement.style.display = "none";
               attachmentDOMElement.id = uploadFileListId;
               attachmentDOMElement.value = JSON.stringify([]);
-              document.getElementById('uploadAppFile').append(attachmentDOMElement);
+              $('.content-placeholder').append(attachmentDOMElement);
               return attachmentDOMElement;
             }
 
