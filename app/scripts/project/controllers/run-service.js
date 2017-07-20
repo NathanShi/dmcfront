@@ -593,15 +593,32 @@ angular.module('dmc.project')
 
             };
 
+            var uploadFileListId = 'uploadFileList';
+
             var addAttachmentToApp = function(attachment) {
-              console.log('addAttachmentToApp')
-              var newDiv = document.createElement("div");
-              newDiv.innerText = "IS THIS WORKING"
-              angular.element(document.getElementById('uploadAppFile')).append(newDiv);
+              var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
+              console.log(uploadFileList)
+              angular.element(document.getElementById('uploadAppFile')).append(uploadFileList);
             }
 
-            setTimeout(addAttachmentToApp,1000)
+            var createAttachmentDOMElement = function() {
+              var attachmentDOMElement = document.createElement("input");
+              attachmentDOMElement.id = uploadFileListId;
+              attachmentDOMElement.value = JSON.stringify([]);
+              return attachmentDOMElement;
+            }
 
+            var addAttachmentToList = function(uploadFileList, attachment) {
+              var fileList = JSON.parse(uploadFileList.value)
+              fileList.push(attachment)
+              uploadFileList.value = JSON.stringify(fileList)
+            }
+
+            addAttachmentToApp();
+
+            setTimeout(function(){
+              addAttachmentToList(document.getElementById(uploadFileListId),{id: 33, name: "filename"})
+            },2000)
 
             $scope.cancelServiceRun = function(event,item){
                 questionToastModel.show({
