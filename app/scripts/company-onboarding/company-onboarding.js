@@ -55,6 +55,11 @@ angular.module('dmc.company.onboarding', [
                 templateUrl: 'templates/company-onboarding/pay.html',
                 controller: 'co-payController'
             })
+            .state('co-onboarding.landing', {
+                url: '/landing',
+                templateUrl: 'templates/company-onboarding/landing.html',
+                controller: 'co-landingController'
+            });
         $urlRouterProvider.otherwise('/createuser');
     })
     .service('companyOnboardingModel', ['$cacheFactory',
