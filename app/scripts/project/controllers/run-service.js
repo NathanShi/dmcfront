@@ -526,12 +526,13 @@ angular.module('dmc.project')
                       directoryId: directoryId
                     };
 
-                    return ajax.create(dataFactory.documentsUrl().save, docData, function(resp) {});
+                    return ajax.create(dataFactory.documentsUrl().save, docData, function(resp) { return resp.data });
                   });
                 })(documents[i]);
               }
 
-              $q.all(promises).then(function() {
+              $q.all(promises).then(function(doc) {
+                console.log('doc',doc)
                 // toastModel.showToast("success", "Documents uploaded to '" + $scope.currentDir.name + "'.");
                 // $scope.changeDir($scope.currentDir.id);
               });
@@ -591,6 +592,16 @@ angular.module('dmc.project')
               });
 
             };
+
+            var addAttachmentToApp = function(attachment) {
+              console.log('addAttachmentToApp')
+              var newDiv = document.createElement("div");
+              newDiv.innerText = "IS THIS WORKING"
+              angular.element(document.getElementById('uploadAppFile')).append(newDiv);
+            }
+
+            setTimeout(addAttachmentToApp,1000)
+
 
             $scope.cancelServiceRun = function(event,item){
                 questionToastModel.show({
