@@ -614,7 +614,8 @@ return {
       },
       payment: function(){
         return {
-          pay: localhost + 'payment'
+          pay: localhost + 'payment',
+          organizations: localhost + 'organizations/user'
         };
       },
       getDMDIIDocuments: function(id) {

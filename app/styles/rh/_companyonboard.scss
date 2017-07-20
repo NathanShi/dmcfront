@@ -243,3 +243,23 @@ option{
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.alert-modal{
+  color: red;
+}
+
+.success-modal{
+  color: #75bc52;
+}
+
+.modal{
+  font-family: 'Roboto', sans-serif;
+}
+
+.modal-title{
+  font-size: 16px;
+}
+
+.modal-dialog {
+    width: 500px;
+    margin: 200px auto;
+}

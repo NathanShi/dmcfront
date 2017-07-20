@@ -434,12 +434,21 @@
           </div>
 
 
+
         </div>
 
+        <div class="col-lg-12 col-md-12">
+          <h3>Membership Agreement</h3>
+
+          <div>
+            <label class="section">Please sign the MEMBERSHIP AGREEMENT on the bottom *</label>
+            <!-- <script src="https://www.smartwaiver.com/m/webpl/f.js?webpl_waiver=596d227c4530f&webpl_title=Sign%20the%20Membership%20Agreement&webpl_align=Right&webpl_fontsize=14&webpl_background=%2375bc52&webpl_fontcolor=%23ffffff&webpl_font=Trebuchet%20MS" type="text/javascript"></script> -->
+          </div>
+        </div>
       </form>
 
       <div class="col-lg-12 col-md-12">
-        <hr>
+        <!-- <hr> -->
 
 
 
@@ -450,6 +459,7 @@
         <br>
         <br>
         <label ng-show="companyGeneralForm.$invalid" class="help-block has-error pull-right">Required Field Invaild</label>
+        <label ng-show="companyGeneralForm.$invalid" class="help-block has-error pull-right">Please sign the agreements on bottom</label>
 
       </div>
      </div>
@@ -459,4 +469,21 @@
 
   <br>
   <br>
+
+  <div class="modal fade" id="orgExist" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header alert-modal">
+          <h5 class="modal-title">Alert</h5>
+        </div>
+        <div class="modal-body">
+          You already have a Tier3 Membership organization database, will redirect to dashboard.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="linkToPage()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>
