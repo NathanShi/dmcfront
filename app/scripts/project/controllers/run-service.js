@@ -532,9 +532,7 @@ angular.module('dmc.project')
               }
 
               $q.all(promises).then(function(doc) {
-                console.log('doc',doc)
-                // toastModel.showToast("success", "Documents uploaded to '" + $scope.currentDir.name + "'.");
-                // $scope.changeDir($scope.currentDir.id);
+                addAttachmentToApp(doc)
               });
             }
 
@@ -597,14 +595,14 @@ angular.module('dmc.project')
 
             var addAttachmentToApp = function(attachment) {
               var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
-              console.log(uploadFileList)
-              angular.element(document.getElementById('uploadAppFile')).append(uploadFileList);
+              addAttachmentToList(uploadFileList, attachment);
             }
 
             var createAttachmentDOMElement = function() {
               var attachmentDOMElement = document.createElement("input");
               attachmentDOMElement.id = uploadFileListId;
               attachmentDOMElement.value = JSON.stringify([]);
+              document.getElementById('uploadAppFile').append(attachmentDOMElement);
               return attachmentDOMElement;
             }
 
@@ -613,12 +611,6 @@ angular.module('dmc.project')
               fileList.push(attachment)
               uploadFileList.value = JSON.stringify(fileList)
             }
-
-            addAttachmentToApp();
-
-            setTimeout(function(){
-              addAttachmentToList(document.getElementById(uploadFileListId),{id: 33, name: "filename"})
-            },2000)
 
             $scope.cancelServiceRun = function(event,item){
                 questionToastModel.show({
