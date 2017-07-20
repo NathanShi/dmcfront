@@ -28,5 +28,7 @@ log/
 # Ignore cloud foundry files
 manifest.yml
 
+# Ignore OSX .DS_Store
+.DS_Store
 
 
