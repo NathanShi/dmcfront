@@ -638,10 +638,12 @@ return {
         return {
           getSingle: localhost + 'documents/' + id,
           getList: localhost + 'documents',
+          download: localhost + 'documents/' + id + '/download',
           save: localhost + 'documents',
           update: localhost + 'documents/' + id,
           delete: localhost + 'documents/' + id,
           versioned: localhost + 'documents/versions/' + id,
+          s_versioned: localhost + 'documents/s_versions/' + id,
           // share: localhost + 'documents/'+id+'/user/'+userid
           share: localhost + 'documents/' + id + '/share?user=' + user + '&internal=' + internal + '&email=' + email,
           accept: localhost + 'documents/' + id + '/accept',
@@ -658,7 +660,8 @@ return {
           save: localhost + endpoint,
           update: localhost + endpoint + id,
           delete: localhost + endpoint + id,
-          files: localhost + 'documents/' + endpoint + id
+          files: localhost + 'documents/' + endpoint + id,
+          s_files: localhost + 'documents/' + 's_' + endpoint + id
         }
       },
       getApplicationTags: function() {
@@ -730,6 +733,9 @@ return {
       },
       getAccountServersUrl: function(id) {
         return localhost + 'accounts/' + id + '/account_servers';
+      },
+      getServerSecureUrl: function(id) {
+        return localhost + 'accounts/' + id + '/servers';
       },
       // ---------------------------
       getServices: function(projectId) {
