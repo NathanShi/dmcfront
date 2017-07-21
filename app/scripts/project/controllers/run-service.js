@@ -593,7 +593,7 @@ angular.module('dmc.project')
 
             };
 
-            var uploadFileListId = 'uploadFileList';
+            var uploadFileListId = 'attachedFileList';
 
             var addAttachmentToApp = function(attachment) {
               addAttachmentToList(attachment);
