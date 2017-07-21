@@ -233,6 +233,12 @@ option{
   -webkit-transition: all 150ms ease;
   transition: all 150ms ease;
   margin-top: 31px;
+
+}
+
+button[disabled]{
+    cursor: not-allowed;
+    background: #777;
 }
 
 ._name{

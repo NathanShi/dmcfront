@@ -83,6 +83,9 @@ angular.module('dmc.company.onboarding', [
             },
             set: function(key, data) {
                 localStorage.setItem(key, data);
+            },
+            remove: function(key){
+                localStorage.removeItem(key);
             }
         };
     }])

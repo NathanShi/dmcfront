@@ -23,11 +23,11 @@ angular.module('dmc.company.onboarding')
       $scope.company = companyOnboardingModel.get_companyInfo();
       if (angular.equals($scope.company, {})){
           ajax.get(dataFactory.payment().organizations, {}, function(response){
-            console.log(response.data);
+            // console.log(response.data);
             if (response.data.id != null){
               if (response.data.isPaid == false){
                 transResponse(response.data);
-                console.log($scope.company);
+                // console.log($scope.company);
                 companyOnboardingModel.save_companyInfo($scope.company);
                 $location.path('/pay');
               }
@@ -243,6 +243,7 @@ angular.module('dmc.company.onboarding')
 .controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', 'dataFactory', 'ajax', 'storageService',
     function($scope, companyOnboardingModel, $location, $anchorScroll, dataFactory, ajax, storageService){
       $anchorScroll();
+      $scope.isDisabled = false;
 
       $scope.company = companyOnboardingModel.get_companyInfo();
       if(angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
@@ -322,7 +323,8 @@ angular.module('dmc.company.onboarding')
       var form = document.getElementById('payment-form');
       form.addEventListener('submit', function(event) {
         event.preventDefault();
-        changeButton();
+        $scope.disableButton();
+        // changeButton();
 
         stripe.createToken(card).then(function(result) {
           if (result.error) {
@@ -336,43 +338,81 @@ angular.module('dmc.company.onboarding')
         });
       });
 
-      function changeButton(){
-        if ($scope.submitted == true)
-          $scope.submitted = false;
-        else
-          $scope.submitted = true;
+      $scope.enableButton = function(){
+        $scope.isDisabled = false;
+      }
+
+      $scope.disableButton = function(){
+        $scope.isDisabled = true;
       }
 
       function stripeTokenHandler(token) {
 
           var jsoninfo = companyInfotoJson(token);
+          storageService.remove('companyinfoCache');
 
-          ajax.create(dataFactory.payment().pay, jsoninfo, function successCallback(response) {
+          if (!jsoninfo.id){
+            ajax.get(dataFactory.payment().organizations, {}, function(response){
+              console.log("response.data.id", response.data.id);
+              if (response.data.name != null){
+                if (response.data.isPaid == false){
+                  jsoninfo.organizationModel.id = response.data.id;
+                  console.log("jsoninfo.id", jsoninfo.id);
+                }
+
+                else{
+                  alert("You already have a Tier3 Membership organization database, will redirect to dashboard");
+                  $window.location.href = '/onboarding.php';
+                  // $('#orgExist').modal('show');
+                }
+              }
+            }).then(function(){
+              console.log("jsoninfo", jsoninfo.id);
+              $scope.submitOrgPayment(jsoninfo);
+            });
+          }
+          else {
+              $scope.submitOrgPayment(jsoninfo);
+          }
+
+          // ajax.create(dataFactory.payment().pay, jsoninfo, function successCallback(response) {
+          //   if (response.data.status == "succeeded"){
+          //     alert("Successful payment!");
+          //     // $('#successPay').modal('show');
+          //     // console.log("success");
+          //   }
+          //   else if (response.data.status == "failed"){
+          //     alert(response.data.reason);
+          //   }
+          // }, function errorCallback(response) {
+          //   alert("Oops, something went wrong, please contact us");
+          //   // $scope.body = "Oops, something went wrong, please contact us for more information";
+          //   // $('#failedPay').modal('show');
+          // }).then(function(){
+          //     $scope.enableButton();
+          //     // $scope.flag = false;
+          // });
+
+      }
+
+      $scope.submitOrgPayment = function(info){
+          ajax.create(dataFactory.payment().pay, info, function successCallback(response) {
             if (response.data.status == "succeeded"){
               alert("Successful payment!");
               // $('#successPay').modal('show');
-              console.log("success");
+              // console.log("success");
             }
             else if (response.data.status == "failed"){
-              if (response.data.reason.indexOf("Invalid") !== -1){
-                alert("Payment failed, please try again!");
-                // $scope.body = "Payment failed, please try again!";
-                // $('#failedPay').modal('show');
-              }
-              else{
-                alert("Cannot create organization, please try again!");
-                // $scope.body = "Cannot create organization, please try again!";
-                // $('#failedPay').modal('show');
-              }
+              alert(response.data.reason);
             }
           }, function errorCallback(response) {
             alert("Oops, something went wrong, please contact us");
             // $scope.body = "Oops, something went wrong, please contact us for more information";
             // $('#failedPay').modal('show');
           }).then(function(){
-            changeButton();
+              $scope.enableButton();
+              // $scope.flag = false;
           });
-
       }
 
       $scope.linkToPage = function(){
@@ -395,23 +435,24 @@ angular.module('dmc.company.onboarding')
           var MembershipInfo = JSON.stringify($scope.dmdiiMembershipInfo);
           // console.log(MembershipInfo);
 
-          if (!$scope.company.id){
-            ajax.get(dataFactory.payment().organizations, {}, function(response){
-              console.log(response.data);
-              if (response.data.length != 0){
-                if (response.data.isPaid == false){
-                  $scope.company.id = response.data.id;
-                }
-
-                else{
-                  alert("You already have a Tier3 Membership organization database, will redirect to dashboard");
-                  $window.location.href = '/onboarding.php';
-                  // $('#orgExist').modal('show');
-                }
-              }
-            });
-          }
-
+          // if (!$scope.company.id){
+          //   ajax.get(dataFactory.payment().organizations, {}, function(response){
+          //     console.log("response.data.id", response.data.id);
+          //     if (response.data.name != null){
+          //       if (response.data.isPaid == false){
+          //         $scope.company.id = response.data.id;
+          //         $scope.payment.id = $scope.company.id;
+          //         console.log("$scope.company.id in", $scope.company.id);
+          //       }
+          //
+          //       else{
+          //         alert("You already have a Tier3 Membership organization database, will redirect to dashboard");
+          //         $window.location.href = '/onboarding.php';
+          //         // $('#orgExist').modal('show');
+          //       }
+          //     }
+          //   });
+          // }
           $scope.payment = {
             stripeToken: token.id,
             organizationModel:{
