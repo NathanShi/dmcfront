@@ -11,7 +11,10 @@ server.use(jsonServer.defaults());
 server.use(jsonServer.rewriter({
     '/documents/directories/26': '/documentsdirectories',
     '/documents/directories/29': '/documentsdirectoriestwo',
+    '/documents/s_directories/26': '/documentsSdirectories',
+    '/documents/s_directories/29': '/documentsSdirectories',
     '/documents/versions/:id': '/documentversions',
+    '/documents/s_versions/:id': '/documentSversions',
     '/user/createtoken':'/createtoken',
     '/project/:pid/invite/:uid': '/projects_members/:uid',
     '/mark-read-notifications': '/user',
@@ -43,6 +46,7 @@ server.use(jsonServer.rewriter({
     '/market/new_services': '/services',
     '/market/services': '/services',
     '/market/components': '/services',
+    '/companies/short' : '/companies_short',
     '/companies/:id/new': '/companies/:id/services',
     '/company/follow': '/following_companies',
     '/company/unfollow/:id': '/following_companies/:id',
@@ -76,13 +80,27 @@ server.use(jsonServer.rewriter({
     '/user/organization/:id': '/userByOrganization',
     '/services/:id/dome-interfaces': '/dome-interfaces',
     '/organizations/myVPC': '/myVPC',
-    '/searchworkspace/:id': '/searchworkspace'
+    '/searchworkspace/:id': '/searchworkspace',
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
 }));
 
 server.post('/dmdiidocument', function(req,res) {
   console.log('request',req)
   res.jsonp(req.query)
+})
+
+server.post('/model_run', function(req,res) {
+  res.jsonp({"runId":9999})
+})
+
+var modelPollCount = 0
+server.get('/model_poll/:id', function(req,res) {
+  modelPollCount++
+  if (modelPollCount < 5) {
+    res.jsonp({"outParams":{},"status":0})
+  } else {
+    res.jsonp({"outParams":{"outputFile":{"type":"String","name":"outputFile","unit":"","category":null,"value":"https://psubucket01.s3.amazonaws.com/TDP_1496950468.zip?Signature=KcDIjOLmMxU9oVFcGOQbZxliEfs%3D&Expires=1498160069&AWSAccessKeyId=AKIAJAPMB5APBIC6STKQ","parameterid":"20984","instancename":null},"outputTemplate":{"type":"String","name":"outputTemplate","unit":"","category":null,"value":"<div class=\"project-run-services padding-10\" ng-if=\"!runHistory\" layout=\"column\">          <style>            #custom-dome-UI {             margin-top: -30px;           }          </style>            <div id=\"custom-dome-UI\">             <div layout=\"row\" layout-wrap style=\"padding: 0px 30px\">               <h2>Technical Data Package Created Successfully:</h2>               <p><a href=\"{{outputFile}}\">{{outputFile}}</a></p>             </div>           </div>        </div>   <script> </script>","parameterid":"20985","instancename":null}},"status":1})
+  }
 })
 
 server.get('/dmdiiMember', function (req, res) {
@@ -99,6 +117,25 @@ server.get('/dmdiiMember', function (req, res) {
   res.jsonp(membersOrig)
 })
 
+server.get('/projects_tags', function (req, res) {
+  var projectTags = JSON.parse(fs.readFileSync('stubs/project_tags.json'));
+  res.jsonp(projectTags)
+})
+
+server.get('/projects/:projectId', function (req, res) {
+  var allProjects = JSON.parse(fs.readFileSync('stubs/projects.json'));
+  allProjects = allProjects.content;
+  var project = {}
+
+  for (var i = 0; i<allProjects.length; i++) {
+    if (allProjects[i].id == req.params.projectId) {
+      project = allProjects[i];
+      break;
+    }
+  }
+  res.jsonp(project)
+})
+
 server.get('/dmdiiprojects', function (req, res) {
   var projectsOrig = JSON.parse(fs.readFileSync('stubs/dmdiiprojects.json'));
   var projectsData = projectsOrig;
@@ -108,7 +145,8 @@ server.get('/dmdiiprojects', function (req, res) {
   var start = page*size
   var end = (page+1)*size
 
-  projectsOrig = {"count": projectsData.length ,"data" : projectsData.slice(start,end) }
+  // projectsOrig = {"count": projectsData.length ,"data" : projectsData.slice(start,end) }
+  projectsOrig = {"count": projectsData.length ,"data" : projectsData }
 
   res.jsonp(projectsOrig)
 })
@@ -215,6 +253,10 @@ server.post('/service_runs/cancel_run/:id', function(req, res){
   res.jsonp({serviceId: "444",accountId: "0",runBy: "179",status: 2,percentCompleted: 100,startDate: "2017-03-09",startTime: null,project: {id: "87",title: "MRA01"},id: "539",stopDate: "2017-03-09",stopTime: null,interface: {inParams: {Alpha: {type: "Real",name: "Alpha",unit: "no unit",category: "no unit",value: "4",parameterid: "d9f30f56-d800-1004-8f53-704dbfababa8",instancename: null}},outParams: {BetaFactor: {type: "Real",name: "BetaFactor",unit: "no unit",category: "no unit",value: "1370.3879999999997",parameterid: "d9f30f59-d800-1004-8f53-704dbfababa8",instancename: "BetaFactor"}}}})
   // res.sendStatus(500)
   // res.status(403).send("Not authorized to cancel run")
+});
+
+server.post('/user-accept-terms-and-conditions', function(req, res){
+  res.json({"id": -99999})
 });
 
 // Returns an Express router

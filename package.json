@@ -18,7 +18,7 @@
     "eslint-config-angular": "^0.5.0",
     "eslint-plugin-angular": "^1.5.0",
     "express": "^4.10.2",
-    "gulp": "3.9.1",
+    "gulp": "^3.9.1",
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-cache": "^0.4.5",
@@ -38,7 +38,7 @@
     "gulp-tar": "^1.9.0",
     "gulp-uglify": "^2.0.0",
     "gulp-useref": "2.1.0",
-    "gulp-util": "^3.0.6",
+    "gulp-util": "^3.0.8",
     "handlebars": "^4.0.5",
     "http-proxy": "^1.11.2",
     "json-server": "^0.9.4",
@@ -63,7 +63,10 @@
       ]
     }
   },
-  "dependencies": {},
+  "dependencies": {
+    "awesome-bootstrap-checkbox": "^1.0.0-alpha.5",
+    "babel-register": "^6.24.1"
+  },
   "scripts": {
     "postinstall": "./post-install.sh",
     "serve": "gulp serve & (cd jsonserver; node server.js)"

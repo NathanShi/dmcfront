@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('dmc.model.user', ['dmc.data', 'dmc.ajax'])
-    .service('DMCUserModel', ['$http', 'dataFactory', '$q', '$window', '$rootScope', 'ajax', function($http, dataFactory, $q, $window, $rootScope, ajax) {
+angular.module('dmc.model.user', ['dmc.data', 'dmc.ajax', 'ngCookies'])
+    .service('DMCUserModel', ['$http', 'dataFactory', '$q', '$window', '$rootScope', 'ajax', '$cookies', function($http, dataFactory, $q, $window, $rootScope, ajax, $cookies) {
 
         var _userName = $window.apiUrl ? $window.givenName : 'DMC User';
+        // _userName = ''
         $rootScope.isLogged = _userName == ''  ? false : true;
         // var _user;
 
@@ -23,12 +24,27 @@ angular.module('dmc.model.user', ['dmc.data', 'dmc.ajax'])
           return $rootScope.isLogged;
         }
 
+        this.isFromDMDIISignup = function() {
+          var fromSignup =  $cookies.get('fromDMDIISignup') ? true : false;
+          $cookies.remove('fromDMDIISignup')
+          return fromSignup;
+        }
+
         this.resolver = function() {
+            var fromDMDIISignup = this.isFromDMDIISignup();
+
             var deferred = $q.defer();
             if (this.isLoggedIn()) {
                 this.getUserData().then(function(response){
                 var data = response.data ? response.data : response;
-                    if (!data.termsConditions) {
+                    // if (fromDMDIISignup && !data.termsConditions) {
+                    //     // deferred.reject('User not created');
+                    //     deferred.reject('New user from DMDII Signup');
+                    // } else if (!data.termsConditions) {
+                    //     deferred.reject('User not created');
+                    if (fromDMDIISignup) {
+                        deferred.reject('New user from DMDII Signup');
+                    } else if (!data.termsConditions) {
                         deferred.reject('User not created');
                     } else {
                         deferred.resolve();
