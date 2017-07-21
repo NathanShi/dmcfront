@@ -130,6 +130,8 @@ angular.module('dmc.project')
                 // Add the compiled html to the page
                 $('.content-placeholder').html(compiledHtml);
                 $scope.hasCustomUI = true;
+                updateScopeIfAttachments();
+
               }else{
                 $scope.hasCustomUI = false;
               }
@@ -617,12 +619,17 @@ angular.module('dmc.project')
               uploadFileList.value = JSON.stringify($scope.appAttachments)
             }
 
+            var updateScopeIfAttachments = function() {
+              var uploadFileList = document.getElementById(uploadFileListId)
+              if (uploadFileList.value && uploadFileList.value.length > 0) {
+                $scope.appAttachments = JSON.parse(uploadFileList.value);
+              }
+            }
+
             $scope.removeAppAttachmentFromList = function(index) {
               $scope.appAttachments.splice(index, 1);
               updateAttachmentsDOMEInput();
             }
-
-            $scope.appAttachments = [{documentName: "The Doc Name.txt"}]
 
             $scope.cancelServiceRun = function(event,item){
                 questionToastModel.show({
