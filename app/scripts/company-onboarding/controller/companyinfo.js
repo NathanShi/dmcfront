@@ -23,13 +23,11 @@ angular.module('dmc.company.onboarding')
       $scope.company = companyOnboardingModel.get_companyInfo();
       if (angular.equals($scope.company, {})){
           ajax.get(dataFactory.payment().organizations, {}, function(response){
-            // console.log(response.data);
             if (response.data.id != null){
               if (response.data.isPaid == false){
                 transResponse(response.data);
-                // console.log($scope.company);
                 companyOnboardingModel.save_companyInfo($scope.company);
-                $location.path('/pay');
+                // $location.path('/pay');
               }
 
               else{
@@ -57,7 +55,6 @@ angular.module('dmc.company.onboarding')
         $scope.company.firstAddress.zipcode = data.address.zip;
 
         var jsonType = angular.fromJson(data.dmdiiMembershipInfo);
-        console.log(jsonType);
         $scope.company.main = jsonType.mainPointContact;
         $scope.company.finance = jsonType.financePointContact;
         $scope.company.legal = jsonType.legalPointContact;
@@ -67,7 +64,6 @@ angular.module('dmc.company.onboarding')
         $scope.company.type = null;
         $scope.company.startUp = jsonType.startUp;
         $scope.company.duns = jsonType.dunsCode;
-        console.log($scope.company);
       }
 
       $scope.company.selectedEmployeeSize = null;
