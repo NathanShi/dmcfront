@@ -26,6 +26,7 @@ angular.module('dmc.company.onboarding')
             if (response.data.id != null){
               if (response.data.isPaid == false){
                 transResponse(response.data);
+                // console.log($scope.company);
                 companyOnboardingModel.save_companyInfo($scope.company);
                 // $location.path('/pay');
               }
@@ -55,10 +56,17 @@ angular.module('dmc.company.onboarding')
         $scope.company.firstAddress.zipcode = data.address.zip;
 
         var jsonType = angular.fromJson(data.dmdiiMembershipInfo);
+        // console.log(jsonType);
         $scope.company.main = jsonType.mainPointContact;
         $scope.company.finance = jsonType.financePointContact;
+        if ($scope.company.finance != null)
+          $scope.company.financialContact = true;
         $scope.company.legal = jsonType.legalPointContact;
+        if ($scope.company.legal != null)
+          $scope.company.legalContact = true;
         $scope.company.secondAddress = jsonType.secondAddress;
+        if ($scope.company.secondAddress != null)
+          $scope.company.subCompany = true;
         $scope.company.selectedAnnualRevenue = null;
         $scope.company.selectedEmployeeSize = null;
         $scope.company.type = null;
@@ -169,15 +177,15 @@ angular.module('dmc.company.onboarding')
               type.push(element.selection);
         });
 
-        if (company.subCompany == undefined || company.subCompany == false){
+        if (!company.subCompany){
             company.secondAddress = null;
         }
 
-        if (company.financialContact == undefined || company.financialContact == false){
+        if (!company.financialContact){
             company.finance = null;
         }
 
-        if (company.legalContact == undefined || company.legalContact == false){
+        if (!company.legalContact){
             company.legal = null;
         }
 
@@ -210,8 +218,8 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', 'dataFactory', 'ajax', 'storageService',
-    function($scope, companyOnboardingModel, $location, $anchorScroll, dataFactory, ajax, storageService){
+.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$window', 'dataFactory', 'ajax', 'storageService',
+    function($scope, companyOnboardingModel, $location, $anchorScroll, $window, dataFactory, ajax, storageService){
       $anchorScroll();
       $scope.isDisabled = false;
 
@@ -326,7 +334,7 @@ angular.module('dmc.company.onboarding')
               if (response.data.name != null){
                 if (response.data.isPaid == false){
                   jsoninfo.organizationModel.id = response.data.id;
-                  console.log("jsoninfo.id", jsoninfo.organizationModel.id);
+                  // console.log("jsoninfo.id", jsoninfo.organizationModel.id);
                 }
 
                 else{
@@ -336,7 +344,7 @@ angular.module('dmc.company.onboarding')
                 }
               }
             }).then(function(){
-              console.log("jsoninfo", jsoninfo.organizationModel.id);
+              // console.log("jsoninfo", jsoninfo.organizationModel.id);
               if (!jsoninfo.organizationModel.id)
                 jsoninfo.organizationModel.id = null;
               $scope.submitOrgPayment(jsoninfo);
@@ -351,7 +359,7 @@ angular.module('dmc.company.onboarding')
       $scope.submitOrgPayment = function(info){
           ajax.create(dataFactory.payment().pay, info, function successCallback(response) {
             if (response.data.status == "succeeded"){
-              alert("Successful payment!");
+              alert("Successful payment! Redirect to dashboard");
               $window.location.href = '/onboarding.php';
               // $('#successPay').modal('show');
               // console.log("success");
