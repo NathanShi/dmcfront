@@ -55,26 +55,11 @@
             <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
             <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc.png" type="image/png" height="25px">
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="transform-title">TRANSFORM:</h3>
-                <h3 class="help-title">IMPROVE ESTIMATES</h3>
-            </div>
-        </div>
-        <div class="row margin-bottom-10">
-            <div class="col-sm-3 col-md-3 video-column border-right">
-                Video Here
-            </div>
-            <div class="col-sm-9 col-md-9">
-                <h3 class="border-bottom">DFM Tool</h3>
-                <p>
-                    This is an online application that allows you to upload a 3D solid model and promptly see where the
-                    problem spots lie. It will help you generate a more accurate quote or better negotiate with your client
-                    to avoid losing money and maximizing profit.
-                </p>
-                <button class="btn green-button">LAUNCH APP</button>
-            </div>
-        </div>
+        <div ui-widget-content
+             content-type="contentType"
+             title="'TRANSFORM:'"
+             category="'IMPROVE ESTIMATES'"
+             content-items="estimateContentItems"></div>
     </div>
 </section>
 

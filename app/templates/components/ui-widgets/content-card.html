@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="transform-title">{{$ctrl.title}}</h3>
+        <h3 class="help-title">{{$ctrl.category}}</h3>
+    </div>
+</div>
+<div class="row margin-bottom-10" ng-repeat="item in $ctrl.contentItems">
+    <div class="col-sm-3 col-md-3 video-column border-right">
+        Video Here
+    </div>
+    <div class="col-sm-9 col-md-9">
+        <h3 class="border-bottom">{{item.contentTitle}}</h3>
+        <p>
+            {{item.description}}
+        </p>
+        <button class="btn green-button">{{item.buttonText}}</button>
+    </div>
+</div>

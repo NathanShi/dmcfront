@@ -12,7 +12,8 @@ angular.module('dmc.transform', [
     'dmc.model.toast-model',
     "dmc.ajax",
     "dmc.data",
-    "dmc.utilities"
+    "dmc.utilities",
+    'dmc.widgets.content'
 ]).config(function($stateProvider, $urlRouterProvider, $httpProvider){
     $stateProvider.state('transform', {
         template: '<ui-view />'
@@ -31,5 +32,13 @@ angular.module('dmc.transform', [
         // call scrollTo
         scrollService.scrollTo(eID);
     };
+    
+    $scope.estimateContentItems = [{
+        contentTitle: 'ANA',
+        description: 'Etiam non  sem suscipit, pulvinar est non, luctus magna. Proin a placerat enim, eu porta velit.' +
+            ' Sed placerat pallentesque lorem, vitae volupat orci suscipit eu. Praesent sceleerisque leo' +
+            ' vehicula, pulvinar arcu quis, tincidunt quam.',
+        buttonText: 'LAUNCH APP'
+    }]
    
 });
