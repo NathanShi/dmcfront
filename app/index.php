@@ -1,55 +1,52 @@
 <!doctype html>
 <html class="no-js" lang="">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Digital Manufacturing Commons</title>
+    <!--  <base href="/">-->
 
-  </head>
-  <body ng-app="dmc.home">
-    <!--[if lt IE 10]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+</head>
+<body ng-app="dmc.transform" ng-controller="TransformController">
 
-    <!-- Top Header -->
-    <div dmc-top-header active-page="'index'"></div>
+<!--[if lt IE 10]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
 
-    <div ui-view></div>
+<!-- Top Header -->
+<div dmc-top-header></div>
+<div ui-view></div>
+<dmc-footer></dmc-footer>
 
-    <!-- Footer -->
-    <dmc-footer></dmc-footer>
+<?php include 'build-vendor-rh.php' ?>
 
-    <?php include 'build-vendor-rh.php' ?>
+<!-- build:js scripts/transform/index.js -->
+<script src="scripts/configs/ngMaterial-config.js"></script>
+<script src="scripts/common/header/header.js"></script>
+<script src="scripts/common/factory/notifications.factory.js"></script>
+<script src="scripts/common/footer/footer.js"></script>
+<script src="scripts/common/factory/location.factory.js"></script>
+<script src="scripts/common/factory/socket.factory.js"></script>
+<script src="scripts/common/factory/ajax.factory.js"></script>
+<script src="scripts/common/factory/data.factory.js"></script>
+<script src="scripts/common/models/user-model.js"></script>
+<script src="scripts/common/models/toast-model.js"></script>
+<script src="scripts/transform/transform.js"></script>
+<script src="scripts/utilities/scroll.service.js"></script>
 
-    <!-- build:js scripts/home/index.js -->
-    <script src="scripts/common/models/toast-model.js"></script>
-    <script src="scripts/configs/ngMaterial-config.js"></script>
-    <script src="scripts/common/header/header.js"></script>
-    <script src="scripts/common/factory/notifications.factory.js"></script>
-    <script src="scripts/common/footer/footer.js"></script>
-    <script src="scripts/common/factory/ajax.factory.js"></script>
-    <script src="scripts/common/factory/data.factory.js"></script>
-    <script src="scripts/common/models/user-model.js"></script>
-    <script src="scripts/common/models/previous-page.js"></script>
-    <script src="scripts/home/home.js"></script>
-    <script src="scripts/home/directives/dmc-recent-updates.js"></script>
+<!-- endbuild -->
 
-    <!-- for social media feeds -->
-    <script src="bower_components/ngtweet/dist/ngtweet.min.js"></script>
-    <script src="bower_components/ng-youtube-embed/build/ng-youtube-embed.min.js"></script>
-    <!-- endbuild -->
+<script type="text/javascript">
+    <?php
+    if (isset($_SERVER['AJP_givenName'])) {
+        echo('window.givenName = "'.$_SERVER['AJP_givenName'].'";');
+    } else {
+        echo('window.givenName = "";');
+    }
+    ?>
 
-    <script type="text/javascript">
-        <?php
-            if (isset($_SERVER['AJP_givenName'])) {
-                echo('window.givenName = "'.$_SERVER['AJP_givenName'].'";');
-            } else {
-                echo('window.givenName = "";');
-            }
-        ?>
-
-        window.apiUrl = '';
-    </script>
-  </body>
+    window.apiUrl = '';
+</script>
+</body>
 </html>
