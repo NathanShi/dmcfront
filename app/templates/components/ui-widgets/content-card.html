@@ -1,7 +1,7 @@
-<div class="row">
+<div ng-if="$ctrl.title || $ctrl.category" class="row">
     <div class="col-md-12">
-        <h3 class="transform-title">{{$ctrl.title}}</h3>
-        <h3 class="help-title">{{$ctrl.category}}</h3>
+        <h3 ng-if="$ctrl.title" class="transform-title">{{$ctrl.title}}</h3>
+        <h3 ng-if="$ctrl.category" class="help-title">{{$ctrl.category}}</h3>
     </div>
 </div>
 <div class="row margin-bottom-10" ng-repeat="item in $ctrl.contentItems">
@@ -13,6 +13,6 @@
         <p>
             {{item.description}}
         </p>
-        <button class="btn green-button">{{item.buttonText}}</button>
+        <button ng-if="item.buttonText" class="btn green-button">{{item.buttonText}}</button>
     </div>
 </div>

@@ -39,6 +39,65 @@ angular.module('dmc.transform', [
             ' Sed placerat pallentesque lorem, vitae volupat orci suscipit eu. Praesent sceleerisque leo' +
             ' vehicula, pulvinar arcu quis, tincidunt quam.',
         buttonText: 'LAUNCH APP'
-    }]
+    }];
+    
+    $scope.cncContentItems = [
+        {
+            contentTitle: 'Gear Machining Tools',
+            description: 'Etiam non  sem suscipit, pulvinar est non, luctus magna. Proin a placerat enim, eu porta velit.' +
+            ' Sed placerat pallentesque lorem, vitae volupat orci suscipit eu. Praesent sceleerisque leo' +
+            ' vehicula, pulvinar arcu quis, tincidunt quam.'
+        },
+        {
+            contentTitle: 'Haas Program Optimizer',
+            description: 'Etiam non  sem suscipit, pulvinar est non, luctus magna. Proin a placerat enim, eu porta velit.' +
+            ' Sed placerat pallentesque lorem, vitae volupat orci suscipit eu. Praesent sceleerisque leo' +
+            ' vehicula, pulvinar arcu quis, tincidunt quam.'
+        }
+    ];
+    
+    $scope.cmmContentItems = [
+        {
+            contentTitle: 'Zeiss CMM',
+            description: 'Etiam non  sem suscipit, pulvinar est non, luctus magna. Proin a placerat enim, eu porta velit.' +
+            ' Sed placerat pallentesque lorem, vitae volupat orci suscipit eu. Praesent sceleerisque leo' +
+            ' vehicula, pulvinar arcu quis, tincidunt quam.'
+        },
+        {
+            contentTitle: 'Automatic Probe Calibration',
+            description: 'Etiam non  sem suscipit, pulvinar est non, luctus magna. Proin a placerat enim, eu porta velit.' +
+            ' Sed placerat pallentesque lorem, vitae volupat orci suscipit eu. Praesent sceleerisque leo' +
+            ' vehicula, pulvinar arcu quis, tincidunt quam.',
+            buttonText: 'LAUNCH APP'
+        },
+        {
+            contentTitle: 'NX CMM 10',
+            description: 'Etiam non  sem suscipit, pulvinar est non, luctus magna. Proin a placerat enim, eu porta velit.' +
+            ' Sed placerat pallentesque lorem, vitae volupat orci suscipit eu. Praesent sceleerisque leo' +
+            ' vehicula, pulvinar arcu quis, tincidunt quam.',
+            buttonText: 'LAUNCH APP'
+        }
+    ];
+    
+    $scope.getLeanContentItems = [
+        {
+            contentTitle: 'Lean Manufacturing',
+            description: 'Etiam non  sem suscipit, pulvinar est non, luctus magna. Proin a placerat enim, eu porta velit.' +
+            ' Sed placerat pallentesque lorem, vitae volupat orci suscipit eu. Praesent sceleerisque leo' +
+            ' vehicula, pulvinar arcu quis, tincidunt quam.'
+        },
+        {
+            contentTitle: 'System 100',
+            description: 'Etiam non  sem suscipit, pulvinar est non, luctus magna. Proin a placerat enim, eu porta velit.' +
+            ' Sed placerat pallentesque lorem, vitae volupat orci suscipit eu. Praesent sceleerisque leo' +
+            ' vehicula, pulvinar arcu quis, tincidunt quam.'
+        },
+        {
+            contentTitle: 'Toyota Material Handling',
+            description: 'Etiam non  sem suscipit, pulvinar est non, luctus magna. Proin a placerat enim, eu porta velit.' +
+            ' Sed placerat pallentesque lorem, vitae volupat orci suscipit eu. Praesent sceleerisque leo' +
+            ' vehicula, pulvinar arcu quis, tincidunt quam.'
+        }
+    ];
    
 });
