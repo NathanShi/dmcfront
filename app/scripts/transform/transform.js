@@ -38,7 +38,8 @@ angular.module('dmc.transform', [
         description: 'Etiam non  sem suscipit, pulvinar est non, luctus magna. Proin a placerat enim, eu porta velit.' +
             ' Sed placerat pallentesque lorem, vitae volupat orci suscipit eu. Praesent sceleerisque leo' +
             ' vehicula, pulvinar arcu quis, tincidunt quam.',
-        buttonText: 'LAUNCH APP'
+        buttonText: 'LAUNCH APP',
+        videoLink: 'https://youtu.be/ajJdK30NM1g'
     }];
     
     $scope.cncContentItems = [

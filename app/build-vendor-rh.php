@@ -84,6 +84,8 @@
 <script src="/bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js"></script>
 <script src="/scripts/common/analytics/analytics.js"></script>
 <script src="/bower_components/angular-tree-control/angular-tree-control.js"></script>
+<script src="/bower_components/ng-youtube-embed/build/ng-youtube-embed.min.js"></script>
+
 
 <!-- endbower -->
 <!-- endbuild -->

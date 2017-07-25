@@ -4,7 +4,8 @@ angular.module('dmc.widgets.content', [
     'dmc.ajax',
     'dmc.data',
     'dmc.socket',
-    'ng-showdown'
+    'ng-showdown',
+    'ngYoutubeEmbed'
 ]).directive('uiWidgetContent', ['$parse', function ($parse) {
     return {
         restrict: 'A',
