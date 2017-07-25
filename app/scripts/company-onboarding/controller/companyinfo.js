@@ -6,8 +6,8 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-homeController', ['$scope', 'companyOnboardingModel', 'userData', 'DMCUserModel', '$location', '$rootScope', '$cookies', '$mdDialog',
-    function($scope, companyOnboardingModel, userData, DMCUserModel, $location, $rootScope, $cookies, $mdDialog){
+.controller('co-homeController', ['$scope', 'companyOnboardingModel', '$cookies', '$mdDialog',
+    function($scope, companyOnboardingModel, $cookies, $mdDialog){
       $cookies.put('fromDMDIISignup',true);
 
 }])
@@ -36,19 +36,13 @@ angular.module('dmc.company.onboarding')
                 // $window.location.href = '/onboarding.php';
                 $mdDialog.show(
                   $mdDialog.alert()
-                    // .parent(angular.element(document.querySelector('#popupContainer')))
-                    .clickOutsideToClose(true)
-                    .title('This is an alert title')
-                    .textContent('You can specify some description text in here.')
-                    .ariaLabel('Alert Dialog Demo')
+                    .clickOutsideToClose(false)
+                    .title('Alert')
+                    .content('You already have a Tier3 Membership organization database, will redirect to dashboard.')
                     .ok('Got it!')
-                    .targetEvent(ev)
-                );
-                // $('#orgExist').modal('show');
-                // $('#orgExist').on('hidden.bs.modal', function (e) {
-                //   $window.location.href = '/onboarding.php';
-                // });
-
+                ).then(function(){
+                  $window.location.href = '/onboarding.php';
+                });
               }
             }
           });
@@ -228,8 +222,8 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$window', 'dataFactory', 'ajax', 'storageService',
-    function($scope, companyOnboardingModel, $location, $anchorScroll, $window, dataFactory, ajax, storageService){
+.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$window', 'dataFactory', 'ajax', 'storageService', '$mdDialog',
+    function($scope, companyOnboardingModel, $location, $anchorScroll, $window, dataFactory, ajax, storageService, $mdDialog){
       $anchorScroll();
       $scope.isDisabled = false;
 
@@ -348,9 +342,17 @@ angular.module('dmc.company.onboarding')
                 }
 
                 else{
-                  alert("You already have a Tier3 Membership organization database, will redirect to dashboard");
-                  $window.location.href = '/onboarding.php';
-                  // $('#orgExist').modal('show');
+                  // alert("You already have a Tier3 Membership organization database, will redirect to dashboard");
+                  // $window.location.href = '/onboarding.php';
+                  $mdDialog.show(
+                    $mdDialog.alert()
+                      .clickOutsideToClose(false)
+                      .title('Alert')
+                      .content('You already have a Tier3 Membership organization database, will redirect to dashboard.')
+                      .ok('Got it!')
+                  ).then(function(){
+                    $window.location.href = '/onboarding.php';
+                  });
                 }
               }
             }).then(function(){
@@ -369,18 +371,33 @@ angular.module('dmc.company.onboarding')
       $scope.submitOrgPayment = function(info){
           ajax.create(dataFactory.payment().pay, info, function successCallback(response) {
             if (response.data.status == "succeeded"){
-              alert("Successful payment! Redirect to dashboard");
-              $window.location.href = '/onboarding.php';
-              // $('#successPay').modal('show');
-              // console.log("success");
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Great')
+                  .content('Successful payment! Redirect to dashboard.')
+                  .ok('OK')
+              ).then(function(){
+                $window.location.href = '/onboarding.php';
+              });
             }
             else if (response.data.status == "failed"){
-              alert(response.data.reason);
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Alert')
+                  .content(response.data.reason)
+                  .ok('OK')
+              );
             }
           }, function errorCallback(response) {
-            alert("Oops, something went wrong, please contact us");
-            // $scope.body = "Oops, something went wrong, please contact us for more information";
-            // $('#failedPay').modal('show');
+            $mdDialog.show(
+              $mdDialog.alert()
+                .clickOutsideToClose(false)
+                .title('Alert')
+                .content('Oops, something went wrong, please contact us.')
+                .ok('OK')
+            );
           }).then(function(){
               $scope.enableButton();
               // $scope.flag = false;
