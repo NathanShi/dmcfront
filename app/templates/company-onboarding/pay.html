@@ -38,7 +38,7 @@
           <div class="row">
             <div class="col-lg-12 col-md-12">
               <label class="pay_section">Main Point of Contact : </label>
-              <span class="_show"> {{company.main.fname}} {{company.main.lname}}</span>
+              <span class="_show" style="color: #75bc52; font-size:24px;">    {{company.main.fname}} {{company.main.lname}}</span>
               <span class="_show">    :    {{company.main.phone}} | {{company.main.email}} | {{company.main.mailAddress}}</span>
             </div>
           </div>
@@ -103,7 +103,7 @@
 
         <div class="col-lg-12 col-md-12">
           <hr>
-          <button ng-click="back()" class="btn btn-default">
+          <button ng-click="back()" class="btn btn-danger">
       							Back to Edit
       		</button>
 
@@ -133,7 +133,9 @@
               </div>
 
               <div class="col-lg-6 col-md-6">
-                <button class="paymentButton pull-right">Submit Payment</button>
+                <button class="paymentButton pull-right" ng-disabled="isDisabled">
+                  Submit Payment
+                </button>
               </div>
             </div>
 
@@ -149,4 +151,52 @@
 
   <br>
   <br>
+
+  <div class="modal fade" id="successPay" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header success-modal">
+          <h5 class="modal-title">Success</h5>
+        </div>
+        <div class="modal-body">
+          Successful payment!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Great</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="failedPay" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title alert-modal">Alert</h5>
+        </div>
+        <div class="modal-body" ng-bind="body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="orgExist" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header alert-modal">
+          <h5 class="modal-title">Alert</h5>
+        </div>
+        <div class="modal-body">
+          You already have a Tier3 Membership organization database, will redirect to dashboard.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="linkToPage()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </pay_section>
