@@ -130,6 +130,8 @@ angular.module('dmc.project')
                 // Add the compiled html to the page
                 $('.content-placeholder').html(compiledHtml);
                 $scope.hasCustomUI = true;
+                updateScopeIfAttachments();
+
               }else{
                 $scope.hasCustomUI = false;
               }
@@ -526,14 +528,13 @@ angular.module('dmc.project')
                       directoryId: directoryId
                     };
 
-                    return ajax.create(dataFactory.documentsUrl().save, docData, function(resp) {});
+                    return ajax.create(dataFactory.documentsUrl().save, docData, function(resp) { return resp.data });
                   });
                 })(documents[i]);
               }
 
-              $q.all(promises).then(function() {
-                // toastModel.showToast("success", "Documents uploaded to '" + $scope.currentDir.name + "'.");
-                // $scope.changeDir($scope.currentDir.id);
+              $q.all(promises).then(function(doc) {
+                addAttachmentToApp(doc[Object.keys(doc)[0]]);
               });
             }
 
@@ -591,6 +592,44 @@ angular.module('dmc.project')
               });
 
             };
+
+            var uploadFileListId = 'attachedFileList';
+
+            var addAttachmentToApp = function(attachment) {
+              addAttachmentToList(attachment);
+              updateAttachmentsDOMEInput();
+            }
+
+            var createAttachmentDOMElement = function() {
+              var attachmentDOMElement = document.createElement("input");
+              attachmentDOMElement.style.display = "none";
+              attachmentDOMElement.id = uploadFileListId;
+              attachmentDOMElement.value = JSON.stringify([]);
+              $('.content-placeholder').append(attachmentDOMElement);
+              return attachmentDOMElement;
+            }
+
+            var addAttachmentToList = function(attachment) {
+              $scope.appAttachments = $scope.appAttachments || [];
+              $scope.appAttachments.push(attachment)
+            }
+
+            var updateAttachmentsDOMEInput = function() {
+              var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
+              uploadFileList.value = JSON.stringify($scope.appAttachments)
+            }
+
+            var updateScopeIfAttachments = function() {
+              var uploadFileList = document.getElementById(uploadFileListId)
+              if (uploadFileList.value && uploadFileList.value.length > 0) {
+                $scope.appAttachments = JSON.parse(uploadFileList.value);
+              }
+            }
+
+            $scope.removeAppAttachmentFromList = function(index) {
+              $scope.appAttachments.splice(index, 1);
+              updateAttachmentsDOMEInput();
+            }
 
             $scope.cancelServiceRun = function(event,item){
                 questionToastModel.show({
