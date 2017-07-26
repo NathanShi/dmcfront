@@ -1,30 +1,36 @@
 <div class="container marketplace-box" layout="row" >
   <div class="marketplace" layout="column" flex>
+    <br><br>
     <h1><span>DMC Marketplace</h1></span>
     <hr />
 
 
 
-    <div layout="row" class="wh-nav"layout-wrap>
-        <a class="wh-link" ui-sref="{{tab.state}}" ng-repeat="tab in tabs" ng-class="{ selected: tab.state=='content'}">
-          {{tab.title}}
-        </a>
+    <ul class="nav nav-tabs">
+      <li><a ui-sref="apps">Apps</a></li>
+      <li class="active"><a class="wh-link" ui-sref="content">Content</a></li>
+      <li><a ui-sref="services">Services</a></li>
+      <li><a ui-sref="swag">Swag</a></li>
+    </ul>
+
+    <div class="card" style="width: 300px;" ng-repeat="card in cards" layout="row" layout-wrap>
+      <img class="md-card-image" src="{{card.image}}" style="width:300px;height:200px">
+      <div class="card-block">
+        <h4 class="card-title"><a ui-sref="content-details({contentTitle:card.title})">{{card.title}}</a></h4>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">View</a>
+      </div>
     </div>
 
-    <div class='md-padding content' layout="row" layout-wrap>
+
+    <!-- <div class='md-padding content' layout="row" layout-wrap>
       <md-card ng-repeat="card in cards">
         <img src="{{card.image}}" class="md-card-image">
         <md-card-content>
-          <!-- <h2><a ng-href="{{'/marketplace-content.php'}}">{{card.title}}</a></h2> -->
           <h2><a ui-sref="content-details({contentTitle:card.title})">{{card.title}}</a></h2>
-          <!-- <p>{{card.description}}</p> -->
-          <!-- <div class="md-actions" layout="row" layout-align="end center">
-            <md-button class="md-raised dmc-button md-primary">Documents</md-button>
-            <md-button class="md-raised dmc-button md-primary">Videos</md-button>
-          </div> -->
         </md-card-content>
       </md-card>
-    </div>
+    </div> -->
 
 
   </div>

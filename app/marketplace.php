@@ -21,7 +21,7 @@
     <!-- Footer -->
     <dmc-footer></dmc-footer>
 
-    <?php include 'build-vendor.php' ?>
+    <?php include 'build-vendor-rh.php' ?>
 
     <!-- build:js scripts/marketplace/index.js -->
     <script src="scripts/configs/ngMaterial-config.js"></script>
@@ -58,7 +58,7 @@
 
     <script src="scripts/marketplace-content/marketplace-content.js"></script>
     <script src="scripts/marketplace-content/marketplace-content-controller.js"></script>
-    
+
     <!-- endbuild -->
     <script type="text/javascript">
         <?php

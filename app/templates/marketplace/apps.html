@@ -1,19 +1,28 @@
 <div class="container marketplace-box" layout="row" >
   <div class="marketplace" layout="column" flex>
+    <br><br>
     <h1><span>DMC Marketplace</h1></span>
     <hr />
 
 
 
-    <div layout="row" class="wh-nav"layout-wrap>
+    <!-- <div layout="row" class="wh-nav"layout-wrap>
         <a class="wh-link" ui-sref="{{tab.state}}" ng-repeat="tab in tabs" ng-class="{ selected: tab.state=='apps'}">
           {{tab.title}}
         </a>
-    </div>
+    </div> -->
+
+    <ul class="nav nav-tabs">
+      <li class="active"><a ui-sref="apps">Apps</a></li>
+      <li><a class="wh-link" ui-sref="content">Content</a></li>
+      <li><a ui-sref="services">Services</a></li>
+      <li><a ui-sref="swag">Swag</a></li>
+    </ul>
 
 
 
-    <md-content class="marketplace-search" layout="row" layout-align="center center">
+
+    <!-- <md-content class="marketplace-search" layout="row" layout-align="center center">
       <form ng-click="submit(appQuery)" class="dmc-search global-search-form" flex="40">
         <div layout="row">
             <div layout="column" flex>
@@ -32,9 +41,9 @@
         </div>
       </form>
       <span flex></span>
-    </md-content>
+    </md-content> -->
 
-      <dmc-products-card
+      <!-- <dmc-products-card
           search-card="isSearch"
           card-source="marketplaceItems"
           card-loading="downloadData"
@@ -46,6 +55,6 @@
           hide-buttons="['compare']"
           view-all-link="'/marketplace.php#/search?product=services'"
           layout-margin>
-      </dmc-products-card>
+      </dmc-products-card> -->
   </div>
 </div>
