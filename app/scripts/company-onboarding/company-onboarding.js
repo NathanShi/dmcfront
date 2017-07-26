@@ -74,7 +74,7 @@ angular.module('dmc.company.onboarding', [
 
             this.get_companyInfo = function(){
                 return company;
-            }
+        }
     }])
     .factory('storageService', ['$rootScope', function($rootScope) {
         return {

@@ -76,12 +76,13 @@
               </div>
 
               <div class="col-lg-3 col-md-3">
-                <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgFirstZip.$invalid && companyGeneralForm.orgFirstZip.$touched || companyGeneralForm.orgFirstZip.$error.number}">
+                <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgFirstZip.$invalid && companyGeneralForm.orgFirstZip.$touched}">
                     <div class="sublabels">
                       Zip Code
                     </div>
-                    <input name="orgFirstZip" ng-value="company.firstAddress.zipcode" ng-model="company.firstAddress.zipcode" class="form-control" type="number" required>
-                    <p class="help-block">Required</p>
+                    <input name="orgFirstZip" ng-value="company.firstAddress.zipcode" ng-model="company.firstAddress.zipcode" class="form-control" type="tel" pattern="^\d{5}$" required>
+                    <span class="help-block" ng-show="!companyGeneralForm.orgFirstZip.$dirty || companyGeneralForm.orgFirstZip.$valid && companyGeneralForm.orgFirstZip.$touched || !(companyGeneralForm.orgFirstZip.$invalid && companyGeneralForm.orgFirstZip.$dirty)">Required</span>
+                    <span class="help-block" ng-show="companyGeneralForm.orgFirstZip.$invalid && companyGeneralForm.orgFirstZip.$dirty"> ZipCode should be 5 digits</span>
                 </div>
               </div>
             </div>
@@ -148,8 +149,9 @@
                     <div class="sublabels">
                       Zip Code
                     </div>
-                    <input name="orgSecondZip" ng-value="company.secondAddress.zipcode" ng-model="company.secondAddress.zipcode" class="form-control" type="number" ng-required="company.subCompany">
-                    <p class="help-block">Required</p>
+                    <input name="orgSecondZip" ng-value="company.secondAddress.zipcode" ng-model="company.secondAddress.zipcode" class="form-control" type="tel" pattern="^\d{5}$" ng-required="company.subCompany">
+                    <span class="help-block" ng-show="!companyGeneralForm.orgSecondZip.$dirty || companyGeneralForm.orgSecondZip.$valid && companyGeneralForm.orgFirstZip.$touched || !(companyGeneralForm.orgSecondZip.$invalid && companyGeneralForm.orgSecondZip.$dirty)">Required</span>
+                    <span class="help-block" ng-show="companyGeneralForm.orgSecondZip.$invalid && companyGeneralForm.orgSecondZip.$dirty"> ZipCode should be 5 digits</span>
                 </div>
               </div>
             </div>
@@ -188,8 +190,9 @@
                     <div class="sublabels">
                       Phone Number
                     </div>
-                    <input name="orgMainPhone" ng-value="company.main.phone" ng-model="company.main.phone" class="form-control" type="number" required>
-                    <p class="help-block">Required</p>
+                    <input name="orgMainPhone" ng-value="company.main.phone" ng-model="company.main.phone" class="form-control" type="tel" pattern="^\d{10}$" required>
+                    <span class="help-block" ng-show="!companyGeneralForm.orgMainPhone.$dirty || companyGeneralForm.orgMainPhone.$valid && companyGeneralForm.orgMainPhone.$touched || !(companyGeneralForm.orgMainPhone.$invalid && companyGeneralForm.orgMainPhone.$dirty)">Required</span>
+                    <span class="help-block" ng-show="companyGeneralForm.orgMainPhone.$invalid && companyGeneralForm.orgMainPhone.$dirty"> Phone number should be 10 digits</span>
                 </div>
               </div>
 
@@ -199,8 +202,8 @@
                       Email
                     </div>
                     <input name="orgMainEmail" ng-value="company.main.email" ng-model="company.main.email" class="form-control" type="email" required>
-                    <span class="help-block" ng-show="!companyGeneralForm.orgMainEmail.$touched">Required</span>
-                    <span class="help-block" ng-show="companyGeneralForm.orgMainEmail.$invalid && companyGeneralForm.orgMainEmail.$touched">Invaild Email Address</span>
+                    <span class="help-block" ng-show="!companyGeneralForm.orgMainEmail.$dirty || companyGeneralForm.orgMainEmail.$valid && companyGeneralForm.orgMainEmail.$dirty">Required</span>
+                    <span class="help-block" ng-show="companyGeneralForm.orgMainEmail.$invalid && companyGeneralForm.orgMainEmail.$dirty">Invaild Email Address</span>
                 </div>
               </div>
 
@@ -254,8 +257,9 @@
                     <div class="sublabels">
                       Phone Number
                     </div>
-                    <input name="orgFinPhone" ng-value="company.finance.phone" ng-model="company.finance.phone" class="form-control" type="number" ng-required="company.financialContact">
-                    <p class="help-block">Required</p>
+                    <input name="orgFinPhone" ng-value="company.finance.phone" ng-model="company.finance.phone" class="form-control" type="tel" pattern="^\d{10}$" ng-required="company.financialContact">
+                    <span class="help-block" ng-show="!companyGeneralForm.orgFinPhone.$dirty || companyGeneralForm.orgFinPhone.$valid && companyGeneralForm.orgFinPhone.$touched || !(companyGeneralForm.orgFinPhone.$invalid && companyGeneralForm.orgFinPhone.$dirty)">Required</span>
+                    <span class="help-block" ng-show="companyGeneralForm.orgFinPhone.$invalid && companyGeneralForm.orgFinPhone.$dirty"> Phone number should be 10 digits</span>
                 </div>
               </div>
 
@@ -265,8 +269,8 @@
                       Email
                     </div>
                     <input name="orgFinEmail" ng-value="company.finance.email" ng-model="company.finance.email" class="form-control" type="email" ng-required="company.financialContact">
-                    <span class="help-block" ng-show="!companyGeneralForm.orgFinEmail.$touched">Required</span>
-                    <span class="help-block" ng-show="companyGeneralForm.orgFinEmail.$invalid && companyGeneralForm.orgFinEmail.$touched">Invaild Email Address</span>
+                    <span class="help-block" ng-show="!companyGeneralForm.orgFinEmail.$dirty || companyGeneralForm.orgFinEmail.$valid && companyGeneralForm.orgFinEmail.$dirty">Required</span>
+                    <span class="help-block" ng-show="companyGeneralForm.orgFinEmail.$invalid && companyGeneralForm.orgFinEmail.$dirty">Invaild Email Address</span>
                 </div>
               </div>
 
@@ -320,8 +324,9 @@
                     <div class="sublabels">
                       Phone Number
                     </div>
-                    <input name="orgLegalPhone" ng-value="company.legal.phone" ng-model="company.legal.phone" class="form-control" type="number" ng-required="company.legalContact">
-                    <p class="help-block">Required</p>
+                    <input name="orgLegalPhone" ng-value="company.legal.phone" ng-model="company.legal.phone" class="form-control" type="tel" pattern="^\d{10}$" ng-required="company.legalContact">
+                    <span class="help-block" ng-show="!companyGeneralForm.orgLegalPhone.$dirty || companyGeneralForm.orgLegalPhone.$valid && companyGeneralForm.orgLegalPhone.$touched || !(companyGeneralForm.orgLegalPhone.$invalid && companyGeneralForm.orgLegalPhone.$dirty)">Required</span>
+                    <span class="help-block" ng-show="companyGeneralForm.orgLegalPhone.$invalid && companyGeneralForm.orgLegalPhone.$dirty"> Phone number should be 10 digits</span>
                 </div>
               </div>
 
@@ -331,8 +336,8 @@
                       Email
                     </div>
                     <input name="orgLegalEmail" ng-value="company.legal.email" ng-model="company.legal.email" class="form-control" type="email" ng-required="company.legalContact">
-                    <span class="help-block" ng-show="!companyGeneralForm.orgLegalEmail.$touched">Required</span>
-                    <span class="help-block" ng-show="companyGeneralForm.orgLegalEmail.$invalid && companyGeneralForm.orgLegalEmail.$touched">Invaild Email Address</span>
+                    <span class="help-block" ng-show="!companyGeneralForm.orgLegalEmail.$dirty || companyGeneralForm.orgLegalEmail.$valid && companyGeneralForm.orgLegalEmail">Required</span>
+                    <span class="help-block" ng-show="companyGeneralForm.orgLegalEmail.$invalid && companyGeneralForm.orgLegalEmail.$dirty">Invaild Email Address</span>
                 </div>
               </div>
 
