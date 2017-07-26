@@ -76,11 +76,11 @@
               </div>
 
               <div class="col-lg-3 col-md-3">
-                <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgFirstZip.$invalid && companyGeneralForm.orgFirstZip.$touched}">
+                <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgFirstZip.$invalid && companyGeneralForm.orgFirstZip.$touched || companyGeneralForm.orgFirstZip.$error.number}">
                     <div class="sublabels">
                       Zip Code
                     </div>
-                    <input name="orgFirstZip" ng-value="company.firstAddress.zipcode" ng-model="company.firstAddress.zipcode" class="form-control" type="text" required>
+                    <input name="orgFirstZip" ng-value="company.firstAddress.zipcode" ng-model="company.firstAddress.zipcode" class="form-control" type="number" required>
                     <p class="help-block">Required</p>
                 </div>
               </div>
@@ -148,7 +148,7 @@
                     <div class="sublabels">
                       Zip Code
                     </div>
-                    <input name="orgSecondZip" ng-value="company.secondAddress.zipcode" ng-model="company.secondAddress.zipcode" class="form-control" type="text" ng-required="company.subCompany">
+                    <input name="orgSecondZip" ng-value="company.secondAddress.zipcode" ng-model="company.secondAddress.zipcode" class="form-control" type="number" ng-required="company.subCompany">
                     <p class="help-block">Required</p>
                 </div>
               </div>
@@ -188,7 +188,7 @@
                     <div class="sublabels">
                       Phone Number
                     </div>
-                    <input name="orgMainPhone" ng-value="company.main.phone" ng-model="company.main.phone" class="form-control" type="text" required>
+                    <input name="orgMainPhone" ng-value="company.main.phone" ng-model="company.main.phone" class="form-control" type="number" required>
                     <p class="help-block">Required</p>
                 </div>
               </div>
@@ -254,7 +254,7 @@
                     <div class="sublabels">
                       Phone Number
                     </div>
-                    <input name="orgFinPhone" ng-value="company.finance.phone" ng-model="company.finance.phone" class="form-control" type="text" ng-required="company.financialContact">
+                    <input name="orgFinPhone" ng-value="company.finance.phone" ng-model="company.finance.phone" class="form-control" type="number" ng-required="company.financialContact">
                     <p class="help-block">Required</p>
                 </div>
               </div>
@@ -320,7 +320,7 @@
                     <div class="sublabels">
                       Phone Number
                     </div>
-                    <input name="orgLegalPhone" ng-value="company.legal.phone" ng-model="company.legal.phone" class="form-control" type="text" ng-required="company.legalContact">
+                    <input name="orgLegalPhone" ng-value="company.legal.phone" ng-model="company.legal.phone" class="form-control" type="number" ng-required="company.legalContact">
                     <p class="help-block">Required</p>
                 </div>
               </div>
@@ -441,8 +441,12 @@
           <h3>Membership Agreement</h3>
 
           <div>
-            <label class="section">Please sign the MEMBERSHIP AGREEMENT on the bottom</label>
-            <!-- <script src="https://www.smartwaiver.com/m/webpl/f.js?webpl_waiver=596d227c4530f&webpl_title=Sign%20the%20Membership%20Agreement&webpl_align=Right&webpl_fontsize=14&webpl_background=%2375bc52&webpl_fontcolor=%23ffffff&webpl_font=Trebuchet%20MS" type="text/javascript"></script> -->
+            <label class="membershipAgreement">Please sign the <a href="https://www.smartwaiver.com/v/uilab" class="section" target="_blank"><strong>MEMBERSHIP AGREEMENT</strong></a></label>
+            <div class="form-group" ng-class="{'has-error':companyGeneralForm.agreement.$invalid && companyGeneralForm.agreement.$touched}">
+              <input type="checkbox" name="agreement" data-ng-model="company.agreement" id="agreement" required/>
+              <label for="agreement" class="labelForOp">I have <strong>signed</strong> the Membership Agreement document</label>
+              <!-- <script src="https://www.smartwaiver.com/m/webpl/f.js?webpl_waiver=5977adb88a4d6&webpl_title=Sign%20the%20Membership%20Agreement&webpl_align=Right&webpl_fontsize=14&webpl_background=%2375bc52&webpl_fontcolor=%23ffffff&webpl_font=Trebuchet%20MS" type="text/javascript"></script> -->
+            </div>
           </div>
         </div>
       </form>
@@ -459,7 +463,7 @@
         <br>
         <br>
         <label ng-show="companyGeneralForm.$invalid" class="help-block has-error pull-right">Required Field Invaild</label>
-        <label ng-show="companyGeneralForm.$invalid" class="help-block has-error pull-right">Please sign the agreements on bottom</label>
+        <!-- <label ng-show="companyGeneralForm.$invalid" class="help-block has-error pull-right">Please sign the agreements on bottom</label> -->
 
       </div>
      </div>

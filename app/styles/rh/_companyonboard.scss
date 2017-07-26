@@ -239,6 +239,7 @@ option{
 button[disabled]{
     cursor: not-allowed;
     background: #777;
+    border: #777;
 }
 
 ._name{
@@ -373,4 +374,12 @@ button[disabled]{
 .arrow-icon {
   margin: 0px auto;
   display: block;
+}
+
+.membershipAgreement{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 4px 0px;
+  border-radius: 4px;
 }

@@ -73,6 +73,7 @@ angular.module('dmc.company.onboarding')
           $scope.company.subCompany = true;
         $scope.company.selectedAnnualRevenue = null;
         $scope.company.selectedEmployeeSize = null;
+        $scope.company.agreement = null;
         $scope.company.type = null;
         $scope.company.startUp = jsonType.startUp;
         $scope.company.duns = jsonType.dunsCode;
@@ -80,6 +81,7 @@ angular.module('dmc.company.onboarding')
 
       $scope.company.selectedEmployeeSize = null;
       $scope.company.selectedAnnualRevenue = null;
+      $scope.company.agreement = null;
 
       $scope.orgType = [
         { selection : 'Public Company', selected : false },
