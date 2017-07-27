@@ -609,9 +609,11 @@ angular.module('dmc.project')
 
             var checkForExistingAttachments = function() {
               var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
-              var existingFiles = JSON.parse(uploadFileList.value);
-              if (existingFiles.length > 0 && $scope.appAttachments.length == 0) {
-                $scope.appAttachments = existingFiles;
+              if (uploadFileList.value.length>0) {
+                var existingFiles = JSON.parse(uploadFileList.value);
+                if (existingFiles.length > 0 && $scope.appAttachments.length == 0) {
+                  $scope.appAttachments = existingFiles;
+                }
               }
             }
 
