@@ -168,6 +168,7 @@ angular.module('dmc.project')
 
                 // Add the compiled html to the page
                 $('.content-placeholder').html(compiledHtml);
+                checkForExistingAttachments();
                 $scope.hasCustomUI = true;
               }else{
                 $scope.hasCustomUI = false;
@@ -616,13 +617,6 @@ angular.module('dmc.project')
                 }
               }
             }
-
-            $scope.$watch(function() {return $scope.isRunning()}, function(isRunning) {
-              // if service was running and now is not, check attachments
-              if (!isRunning) {
-                checkForExistingAttachments();
-              }
-            });
 
             $scope.removeAppAttachmentFromList = function(index) {
               $scope.appAttachments.splice(index,1)
