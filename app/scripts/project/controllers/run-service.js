@@ -129,7 +129,6 @@ angular.module('dmc.project')
 
                 // Add the compiled html to the page
                 $('.content-placeholder').html(compiledHtml);
-                checkForExistingAttachments();
                 $scope.hasCustomUI = true;
 
               }else{
@@ -593,46 +592,44 @@ angular.module('dmc.project')
 
             };
 
-            var uploadFileListId = 'attachedFileList';
-            $scope.appAttachments = [];
+            // var uploadFileListId = 'attachedFileList';
+            var attachFileInputId = 'attachedFileList';
+            // $scope.appAttachments = [];
 
             var addAttachmentToApp = function(attachment) {
-              checkForExistingAttachments();
-              $scope.appAttachments.push(attachment);
-              updateAppAttachmentInput();
+              // checkForExistingAttachments();
+              // $scope.appAttachments.push({id: attachment.id, documentName: attachment.documentName});
+              // updateAppAttachmentInput();
+              var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
+              attachFileInput.value = JSON.stringify(attachment)
+              // $scope.run();
             }
 
-            var updateAppAttachmentInput = function() {
-              var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
-              uploadFileList.value = JSON.stringify($scope.appAttachments);
-            }
-
-            var checkForExistingAttachments = function() {
-              var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
-              if (uploadFileList.value.length>0) {
-                var existingFiles = JSON.parse(uploadFileList.value);
-                if (existingFiles.length > 0 && $scope.appAttachments.length == 0) {
-                  $scope.appAttachments = existingFiles;
-                }
-              }
-            }
-
-            $scope.$watch(function() {return $scope.isRunning()}, function(isRunning) {
-              // if service was running and now is not, check attachments
-              if (!isRunning) {
-                checkForExistingAttachments();
-              }
-            });
-
-            $scope.removeAppAttachmentFromList = function(index) {
-              $scope.appAttachments.splice(index,1)
-              updateAppAttachmentInput();
-            }
+            // var updateAppAttachmentInput = function() {
+            //   var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
+            //   uploadFileList.value = JSON.stringify($scope.appAttachments);
+            // }
+            //
+            // var checkForExistingAttachments = function() {
+            //   var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
+            //   if (uploadFileList.value.length>0) {
+            //     var existingFiles = JSON.parse(uploadFileList.value);
+            //     if (existingFiles.length > 0 && $scope.appAttachments.length == 0) {
+            //       $scope.appAttachments = existingFiles;
+            //     }
+            //   }
+            // }
+            //
+            // $scope.removeAppAttachmentFromList = function(index) {
+            //   $scope.appAttachments.splice(index,1)
+            //   updateAppAttachmentInput();
+            // }
 
             var createAttachmentDOMElement = function() {
               var attachmentDOMElement = document.createElement("input");
               attachmentDOMElement.style.display = "none";
-              attachmentDOMElement.id = uploadFileListId;
+              // attachmentDOMElement.id = uploadFileListId;
+              attachmentDOMElement.id = attachFileInputId;
               attachmentDOMElement.value = JSON.stringify([]);
               $('.content-placeholder').append(attachmentDOMElement);
               return attachmentDOMElement;
