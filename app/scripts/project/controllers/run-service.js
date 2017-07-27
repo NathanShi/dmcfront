@@ -130,7 +130,6 @@ angular.module('dmc.project')
                 // Add the compiled html to the page
                 $('.content-placeholder').html(compiledHtml);
                 $scope.hasCustomUI = true;
-                updateScopeIfAttachments();
 
               }else{
                 $scope.hasCustomUI = false;
@@ -594,10 +593,17 @@ angular.module('dmc.project')
             };
 
             var uploadFileListId = 'attachedFileList';
+            $scope.appAttachments = [];
 
             var addAttachmentToApp = function(attachment) {
-              addAttachmentToList(attachment);
-              updateAttachmentsDOMEInput();
+              // addAttachmentToList(attachment);
+              // updateAttachmentsDOMEInput();
+              $scope.appAttachments.push(attachment);
+              var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
+              var files = JSON.parse(uploadFileList.value);
+              files.push(attachment);
+              uploadFileList.value = JSON.stringify(files);
+              addAttachmentToAppList(attachment);
             }
 
             var createAttachmentDOMElement = function() {
@@ -609,26 +615,57 @@ angular.module('dmc.project')
               return attachmentDOMElement;
             }
 
-            var addAttachmentToList = function(attachment) {
-              $scope.appAttachments = $scope.appAttachments || [];
-              $scope.appAttachments.push(attachment)
+
+            var returnAttachementRemovalButton = function(attachment) {
+              // var removeSpan = document.createElement("a");
+              // removeSpan.className = "attachment-remove";
+              // // var removeOnClick = document.createAttribute("ng-click");
+              // // removeOnClick.value = "removeAppAttachmentFromList("+attachment.id+")";
+              // // removeSpan.setAttributeNode(removeOnClick);
+              // removeSpan.setAttribute("ng-click","removeAppAttachmentFromList("+attachment.id+")");
+              // removeSpan.innerHTML = "remove"
+
+              var removeSpan = $compile( '<a class="attachment-remove" ng-click="removeAppAttachmentFromList()">remove</a>' )( $scope );
+              // $element.parent().append( removeSpan );
+
+              return removeSpan;
             }
 
-            var updateAttachmentsDOMEInput = function() {
-              var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
-              uploadFileList.value = JSON.stringify($scope.appAttachments)
+            var addAttachmentToAppList = function(attachment) {
+              // var attachementList = document.getElementsByClassName('attachments-list')[0];
+              // var attachmentDOMElement = document.createElement("dd");
+              // attachmentDOMElement.innerHTML = attachment.documentName;
+              // attachmentDOMElement.id = "appAttachment"+attachment.id;
+              //
+              // var removeSpan = returnAttachementRemovalButton(attachment);
+              // attachmentDOMElement.appendChild(removeSpan);
+              //
+              // attachementList.appendChild(attachmentDOMElement);
+              //
+              // var scope = $scope;
+              // console.log($compile("<dd>some stuff</dd>")(scope));
+
+              // $('.attachments-list')[0].append();
+              // scope.$apply();
+
             }
 
-            var updateScopeIfAttachments = function() {
-              var uploadFileList = document.getElementById(uploadFileListId)
-              if (uploadFileList.value && uploadFileList.value.length > 0) {
-                $scope.appAttachments = JSON.parse(uploadFileList.value);
-              }
-            }
 
             $scope.removeAppAttachmentFromList = function(index) {
-              $scope.appAttachments.splice(index, 1);
-              updateAttachmentsDOMEInput();
+              console.log('removeAppAttachmentFromList')
+              var uploadFileList = document.getElementById(uploadFileListId);
+              // var files = JSON.parse(uploadFileList.value);
+              //
+              // for (var i=0; i<files.length; i++) {
+              //   console.log('file:',files[i])
+              //   if (files[i].id == attachmentId) {
+              //     files.splice(i,1);
+              //     break;
+              //   }
+              // }
+              $scope.appAttachments.splice(index,1)
+
+              uploadFileList.value = JSON.stringify($scope.appAttachments);
             }
 
             $scope.cancelServiceRun = function(event,item){

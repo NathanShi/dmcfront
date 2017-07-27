@@ -2,9 +2,10 @@
 
 <div id="uploadAppFile">
   <a href ng-click="uploadAppFile()">Upload File</a>
-  <dl ng-if="appAttachments" class="attachments-list">
-  <dt>Attachments</dt>
-    <dd ng-repeat="attachment in appAttachments track by $index">{{attachment.documentName}}<span class="attachment-remove" ng-click="removeAppAttachmentFromList($index)"></span></dd>
+  <input type='text' id='attachedFileList' value='[]'/>
+  <dl class="attachments-list">
+  <dt>Attachments in Scope</dt>
+    <dd ng-repeat="attachment in appAttachments track by $index">{{attachment.documentName}}<span class="attachment-remove" ng-click="removeAppAttachmentFromList($index)">remove</span></dd>
   </dl>
 </div>
 
