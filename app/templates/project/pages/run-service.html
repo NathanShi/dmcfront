@@ -1,14 +1,5 @@
 <workspace-header class="workspace-header" ng-init="currentPage='7'"></workspace-header>
 
-<div id="uploadAppFile">
-  <a href ng-click="uploadAppFile()">Upload File</a>
-  <input type='text' id='attachedFileList' value='[]'/>
-  <dl class="attachments-list">
-  <dt>Attachments in Scope</dt>
-    <dd ng-repeat="attachment in appAttachments track by $index">{{attachment.documentName}}<span class="attachment-remove" ng-click="removeAppAttachmentFromList($index)">remove</span></dd>
-  </dl>
-</div>
-
 <div class="project-run-services" ng-if="!runHistory" ng-show="hasCustomUI && service.interfaceModel.inParams.inputFile" layout="column">
   <div layout="row" layout-align="space-between center" style="padding: 15px; margin: 0px 15px; border-bottom: solid 1px lightgrey;">
 
