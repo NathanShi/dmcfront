@@ -62,8 +62,8 @@ angular.module('dmc.company.onboarding', [
             });
         $urlRouterProvider.otherwise('/createuser');
     })
-    .service('companyOnboardingModel', ['ajax', 'dataFactory', '$stateParams', 'toastModel', 'DMCUserModel',
-         function (ajax, dataFactory, $stateParams, toastModel, DMCUserModel) {
+    .service('companyOnboardingModel', ['$cacheFactory',
+         function ($cacheFactory) {
 
             var company = {};
 
@@ -75,6 +75,19 @@ angular.module('dmc.company.onboarding', [
             this.get_companyInfo = function(){
                 return company;
             }
+    }])
+    .factory('storageService', ['$rootScope', function($rootScope) {
+        return {
+            get: function(key) {
+                return localStorage.getItem(key);
+            },
+            set: function(key, data) {
+                localStorage.setItem(key, data);
+            },
+            remove: function(key){
+                localStorage.removeItem(key);
+            }
+        };
     }])
     .controller('TermsConditionsController',
     	['$scope', '$mdDialog','$window', "toastModel", 'ajax', 'dataFactory',
