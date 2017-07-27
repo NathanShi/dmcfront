@@ -612,6 +612,12 @@ return {
           delete: localhost + 'dmdiiquicklink/' + id
         };
       },
+      payment: function(){
+        return {
+          pay: localhost + 'payment',
+          organizations: localhost + 'organizations/user'
+        };
+      },
       getDMDIIDocuments: function(id) {
         return {
           all: localhost + 'dmdiidocuments',
@@ -1068,6 +1074,9 @@ return {
       },
       getOnboardingBasicInfoUrl: function() {
         return localhost + 'user-basic-information'
+      },
+      getUserAcceptTermsAndConditionsUrl: function() {
+        return localhost + 'user-accept-terms-and-conditions'
       },
       getAccountNotificationCategoryItems: function() {
         return localhost + 'account-notification-category-items';

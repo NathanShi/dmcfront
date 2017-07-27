@@ -1,0 +1,128 @@
+.margin-top-25 {
+  margin-top: 25px;
+}
+
+.nav-row {
+  margin-bottom: 0px;
+}
+
+.transform-title {
+  color: $brand-accent;
+  margin-top: 0px;
+  border-bottom: none;
+}
+
+.help-title {
+  margin-top: 0px;
+  display: inline-block;
+  border-bottom: solid $brand-accent 1px;
+}
+
+.nav-back {
+  margin-left: 12px;
+  margin-bottom: 0px;
+}
+
+.nav-back svg {
+  background-color: $brand-accent;
+  border-radius: 12px;
+}
+
+.top svg {
+  transform: rotate(90deg);
+}
+
+.nav-home {
+  margin-bottom: 0px;
+  margin-right: 25px;
+}
+
+.nav-home svg {
+  background-color: lightgrey;
+  border-radius: 12px;
+}
+
+.transform-main {
+  width: 80%;
+  margin: 0px auto;
+}
+
+.transform-content {
+  width: 80%;
+  margin: 100px auto 0px auto;
+
+}
+
+.bottom-border {
+  border-bottom: solid $brand-accent 1px;
+}
+
+.path-link {
+  padding: 0px;
+  margin-top: 30px;
+  font-size: 1.5em;
+  display: inline;
+  margin-left: 15px;
+}
+
+.path-link a, .path-link a:hover, .path-link a:focus, .path-link a:active {
+  text-decoration: none;
+  color: inherit;
+  display: inline;
+}
+
+.image-container {
+  margin-right: 0px;
+}
+
+.bullet-image {
+  margin-left: 20px;
+  display: inline;
+  float: left;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+
+.main-section {
+  margin-bottom: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+}
+
+.transform-section {
+  min-height: 90vh;
+}
+
+.margin-right-3 {
+  margin-right: 3px;
+}
+
+.green-button {
+  background-color: $brand-accent;
+  color: white;
+}
+
+.border-bottom {
+  border-bottom: solid $brand-accent 1px;
+}
+
+.border-right {
+  border-right: solid $brand-accent 1px;
+}
+
+.video-column {
+  height: 140px;
+  margin-top: 23px;
+}
+
+.col-md-12 h3.transform-title  {
+  border-bottom: none;
+  margin-top: 0px;
+}
+
+.col-md-12 h3.help-title  {
+  margin-top: 0px;
+}

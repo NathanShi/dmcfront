@@ -82,7 +82,7 @@ server.use(jsonServer.rewriter({
     '/user/organization/:id': '/userByOrganization',
     '/services/:id/dome-interfaces': '/dome-interfaces',
     '/organizations/myVPC': '/myVPC',
-    '/searchworkspace/:id': '/searchworkspace'
+    '/searchworkspace/:id': '/searchworkspace',
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
 }));
 
@@ -266,6 +266,10 @@ server.post('/service_runs/cancel_run/:id', function(req, res){
   res.jsonp({serviceId: "444",accountId: "0",runBy: "179",status: 2,percentCompleted: 100,startDate: "2017-03-09",startTime: null,project: {id: "87",title: "MRA01"},id: "539",stopDate: "2017-03-09",stopTime: null,interface: {inParams: {Alpha: {type: "Real",name: "Alpha",unit: "no unit",category: "no unit",value: "4",parameterid: "d9f30f56-d800-1004-8f53-704dbfababa8",instancename: null}},outParams: {BetaFactor: {type: "Real",name: "BetaFactor",unit: "no unit",category: "no unit",value: "1370.3879999999997",parameterid: "d9f30f59-d800-1004-8f53-704dbfababa8",instancename: "BetaFactor"}}}})
   // res.sendStatus(500)
   // res.status(403).send("Not authorized to cancel run")
+});
+
+server.post('/user-accept-terms-and-conditions', function(req, res){
+  res.json({"id": -99999})
 });
 
 // Returns an Express router

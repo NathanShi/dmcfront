@@ -4,12 +4,15 @@
 *
 * Dashboard
 */
-angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 'md.data.table', 'dmc.common.header', 'dmc.common.footer', 'dmc.model.user', 'dmc.home.dmc-recent-updates', 'ngtweet', 'ngYoutubeEmbed'])
+angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 'md.data.table', 'dmc.common.header', 'dmc.common.footer', 'dmc.model.user', 'dmc.home.dmc-recent-updates', 'ngtweet', 'ngYoutubeEmbed', 'ngCookies'])
 .run(['$rootScope', function($rootScope){
       $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
             if (error == 'User not created') {
                 event.preventDefault();
                 window.location = '/onboarding.php#/home';
+            } else if (error == 'New user from DMDII Signup') {
+                event.preventDefault();
+                window.location = '/company-onboarding.php#/companyinfo';
             }
       });
 }])
@@ -26,7 +29,7 @@ angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 
       controller: 'HomeCtr'
     });
   $urlRouterProvider.otherwise('/');
-}).controller('HomeCtr',['$scope', 'userData', function($scope, userData){
+}).controller('HomeCtr',['$scope', 'userData', '$cookies', function($scope, userData, $cookies){
     $scope.pages = [
         // {
         //     name : "Dashboard",
@@ -59,4 +62,5 @@ angular.module('dmc.home', ['dmc.configs.ngmaterial', 'ngMdIcons', 'ui.router', 
     $scope.cancel = function(index){
         $scope.pages[index].show = true;
     }
+
 }]);
