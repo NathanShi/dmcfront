@@ -5,8 +5,9 @@ angular.module('dmc.widgets.content', [
     'dmc.data',
     'dmc.socket',
     'ng-showdown',
-    'ngYoutubeEmbed'
-]).directive('uiWidgetContent', ['$parse', function ($parse) {
+    'ngYoutubeEmbed',
+    'dataFactory'
+]).directive('uiWidgetContent', ['$parse', function ($parse, dataFactory) {
     return {
         restrict: 'A',
         templateUrl: '/templates/components/ui-widgets/content-card.html',
@@ -23,6 +24,10 @@ angular.module('dmc.widgets.content', [
     
     function UiWidgetContentCardController($http) {
         var vm = this;
+
+        vm.downloadFile = function(id) {
+            window.location = dataFactory.documentsUrl(id).download;
+        }
     }
     
 }]);

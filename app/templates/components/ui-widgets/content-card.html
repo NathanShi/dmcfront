@@ -4,15 +4,42 @@
         <h3 ng-if="$ctrl.category" class="help-title">{{$ctrl.category}}</h3>
     </div>
 </div>
-<div class="row margin-bottom-10" ng-repeat="item in $ctrl.contentItems">
-    <div class="col-sm-3 col-md-3 video-column border-right">
-        <ng-youtube-embed video="item.videoLink" width="100%" height="100%"></ng-youtube-embed>
+<div ng-if="$ctrl.contentType === 'video' || $ctrl.contentType === 'img'" class="row margin-bottom-10" ng-repeat="item in $ctrl.contentItems">
+    <div class="col-sm-3 col-md-3 media-column border-right">
+        <ng-youtube-embed ng-if="$ctrl.contentType === 'video'" video="item.videoSource" width="100%" height="100%"></ng-youtube-embed>
+        <img ng-if="$ctrl.contentType === 'img'" ng-src="{{item.imgSource}}" width="100%" height="100%">
     </div>
     <div class="col-sm-9 col-md-9 description-column">
         <h3 class="border-bottom">{{item.contentTitle}}</h3>
         <p>
             {{item.description}}
         </p>
-        <button ng-if="item.buttonText" class="btn green-button bottom-button">{{item.buttonText}}</button>
+        <a href="{{item.buttonLink}}">
+            <button ng-if="item.buttonText" class="btn green-button bottom-button">{{item.buttonText}}</button>
+        </a>
+    </div>
+</div>
+<div ng-if="$ctrl.contentType === 'document'" class="row margin-bottom-10" ng-repeat="document in $ctrl.contentItems">
+    <div class="col-sm-3 col-md-3 media-column border-right">
+        Document Photo Here
+    </div>
+    <div class="col-sm-9 col-md-9 description-column">
+        <h3 class="border-bottom">{{document.documentName}}</h3>
+        <p>
+            {{document.description}}
+        </p>
+        <button ng-click="downloadFile(document.id)" class="btn green-button bottom-button">Download</button>
+    </div>
+</div>
+<div ng-if="$ctrl.contentType === 'app'" class="row margin-bottom-10" ng-repeat="item in $ctrl.contentItems">
+    <div class="col-sm-3 col-md-3 media-column border-right">
+        Document Photo Here
+    </div>
+    <div class="col-sm-9 col-md-9 description-column">
+        <h3 class="border-bottom">{{document.documentName}}</h3>
+        <p>
+            {{document.description}}
+        </p>
+        <button ng-click="downloadFile(document.id)" class="btn green-button bottom-button">Download</button>
     </div>
 </div>
