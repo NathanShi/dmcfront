@@ -129,8 +129,8 @@ angular.module('dmc.project')
 
                 // Add the compiled html to the page
                 $('.content-placeholder').html(compiledHtml);
+                checkForExistingAttachments();
                 $scope.hasCustomUI = true;
-                updateScopeIfAttachments();
 
               }else{
                 $scope.hasCustomUI = false;
@@ -594,10 +594,37 @@ angular.module('dmc.project')
             };
 
             var uploadFileListId = 'attachedFileList';
+            $scope.appAttachments = [];
 
             var addAttachmentToApp = function(attachment) {
-              addAttachmentToList(attachment);
-              updateAttachmentsDOMEInput();
+              checkForExistingAttachments();
+              $scope.appAttachments.push(attachment);
+              updateAppAttachmentInput();
+            }
+
+            var updateAppAttachmentInput = function() {
+              var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
+              uploadFileList.value = JSON.stringify($scope.appAttachments);
+            }
+
+            var checkForExistingAttachments = function() {
+              var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
+              var existingFiles = JSON.parse(uploadFileList.value);
+              if (existingFiles.length > 0 && $scope.appAttachments.length == 0) {
+                $scope.appAttachments = existingFiles;
+              }
+            }
+
+            $scope.$watch(function() {return $scope.isRunning()}, function(isRunning) {
+              // if service was running and now is not, check attachments
+              if (!isRunning) {
+                checkForExistingAttachments();
+              }
+            });
+
+            $scope.removeAppAttachmentFromList = function(index) {
+              $scope.appAttachments.splice(index,1)
+              updateAppAttachmentInput();
             }
 
             var createAttachmentDOMElement = function() {
@@ -607,28 +634,6 @@ angular.module('dmc.project')
               attachmentDOMElement.value = JSON.stringify([]);
               $('.content-placeholder').append(attachmentDOMElement);
               return attachmentDOMElement;
-            }
-
-            var addAttachmentToList = function(attachment) {
-              $scope.appAttachments = $scope.appAttachments || [];
-              $scope.appAttachments.push(attachment)
-            }
-
-            var updateAttachmentsDOMEInput = function() {
-              var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
-              uploadFileList.value = JSON.stringify($scope.appAttachments)
-            }
-
-            var updateScopeIfAttachments = function() {
-              var uploadFileList = document.getElementById(uploadFileListId)
-              if (uploadFileList.value && uploadFileList.value.length > 0) {
-                $scope.appAttachments = JSON.parse(uploadFileList.value);
-              }
-            }
-
-            $scope.removeAppAttachmentFromList = function(index) {
-              $scope.appAttachments.splice(index, 1);
-              updateAttachmentsDOMEInput();
             }
 
             $scope.cancelServiceRun = function(event,item){
