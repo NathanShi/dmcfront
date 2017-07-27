@@ -599,7 +599,7 @@ angular.module('dmc.project')
 
             var addAttachmentToApp = function(attachment) {
               checkForExistingAttachments();
-              $scope.appAttachments.push(attachment);
+              $scope.appAttachments.push({id: attachment.id, documentName: attachment.documentName});
               updateAppAttachmentInput();
             }
 
