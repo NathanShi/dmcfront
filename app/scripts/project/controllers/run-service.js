@@ -344,6 +344,9 @@ angular.module('dmc.project')
                         if(domeValue){
                           console.log('found value: ', domeValue)
                           $scope.service.interfaceModel.inParams[key].value = domeValue;
+                        }else{
+                          console.log('Not found value: ')
+                          $scope.service.interfaceModel.inParams[key].value = $scope.service.interfaceModel.inParams[key].defaultValue;
                         }
                       }else{
                         console.log('Not found element id: ', domeName)
