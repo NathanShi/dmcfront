@@ -152,11 +152,11 @@ angular.module('dmc.project')
                 }
               }
               for (var outKey in $scope.service.interfaceModel.outParams){
-		try{
-	             context[outKey] = JSON.parse($scope.service.interfaceModel.outParams[outKey].value);
-		}catch(e){
-		  context[outKey] = $scope.service.interfaceModel.outParams[outKey].value;
-		}
+            		try{
+            	             context[outKey] = JSON.parse($scope.service.interfaceModel.outParams[outKey].value);
+            		}catch(e){
+            		  context[outKey] = $scope.service.interfaceModel.outParams[outKey].value;
+            		}
               }
 
               if($scope.service.interfaceModel.outParams['outputTemplate'].value){
@@ -646,6 +646,10 @@ angular.module('dmc.project')
               attachmentDOMElement.value = JSON.stringify([]);
               $('.content-placeholder').append(attachmentDOMElement);
               return attachmentDOMElement;
+            }
+
+            var downloadAppAttachment = function(docId) {
+              console.log('downloadAppAttachment', docId)
             }
 
             $scope.cancelServiceRun = function(event,item){
