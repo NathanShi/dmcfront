@@ -611,7 +611,7 @@ angular.module('dmc.project')
               // updateAppAttachmentInput();
               var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
               attachFileInput.value = JSON.stringify(attachments)
-              // $scope.run();
+              $scope.run();
             }
 
             // var updateAppAttachmentInput = function() {
