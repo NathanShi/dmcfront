@@ -339,11 +339,14 @@ angular.module('dmc.project')
                     for (var key in $scope.service.interfaceModel.inParams){
                       var domeName = $scope.service.interfaceModel.inParams[key].name;
                       if(document.getElementById(domeName)){
+                        console.log('found element id: ', domeName)
                         var domeValue = document.getElementById(domeName).value;
                         if(domeValue){
+                          console.log('found value: ', domeValue)
                           $scope.service.interfaceModel.inParams[key].value = domeValue;
                         }
                       }else{
+                        console.log('Not found element id: ', domeName)
                         $scope.service.interfaceModel.inParams[key].value = $scope.service.interfaceModel.inParams[key].defaultValue;
                       }
                     }
