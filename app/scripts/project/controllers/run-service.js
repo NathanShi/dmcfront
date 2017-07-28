@@ -338,18 +338,18 @@ angular.module('dmc.project')
                   if($scope.hasCustomUI){
                     for (var key in $scope.service.interfaceModel.inParams){
                       var domeName = $scope.service.interfaceModel.inParams[key].name;
-                      if(document.getElementById(domeName)){
+                      if(document.getElementById(domeName) && document.getElementById(domeName).value){
                         console.log('found element id: ', domeName)
-                        var domeValue = document.getElementById(domeName).value;
-                        if(domeValue){
-                          console.log('found value: ', domeValue)
-                          $scope.service.interfaceModel.inParams[key].value = domeValue;
-                        }else{
-                          console.log('Not found value: ')
-                          $scope.service.interfaceModel.inParams[key].value = $scope.service.interfaceModel.inParams[key].defaultValue;
-                        }
+                        console.log('setting to: ', document.getElementById(domeName).value)
+                        // var domeValue = document.getElementById(domeName).value;
+                        // if(domeValue){
+                        //   console.log('found value: ', domeValue)
+                        //   $scope.service.interfaceModel.inParams[key].value = domeValue;
+                        // }
+                        $scope.service.interfaceModel.inParams[key].value = document.getElementById(domeName).value;
                       }else{
                         console.log('Not found element id: ', domeName)
+                        console.log('setting to: ', $scope.service.interfaceModel.inParams[key].defaultValue);
                         $scope.service.interfaceModel.inParams[key].value = $scope.service.interfaceModel.inParams[key].defaultValue;
                       }
                     }
@@ -360,6 +360,7 @@ angular.module('dmc.project')
                           $scope.service.interfaceModel.inParams[key].value = $scope.service.interfaceModel.inParams[key].value.replace(/"/g, '\\"');
                       }
                   }
+
                     domeModel.runModel({
                         serviceId : $scope.service.id.toString(),
                         inParams: $scope.service.interfaceModel.inParams,
