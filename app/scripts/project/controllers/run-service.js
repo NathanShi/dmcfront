@@ -648,8 +648,8 @@ angular.module('dmc.project')
               return attachmentDOMElement;
             }
 
-            var downloadAppAttachment = function(docId) {
-              console.log('downloadAppAttachment', docId)
+            $scope.downloadAppAttachment = function(docId) {
+              window.location = dataFactory.documentsUrl(docId).download;
             }
 
             $scope.cancelServiceRun = function(event,item){
