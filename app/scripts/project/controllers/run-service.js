@@ -532,9 +532,18 @@ angular.module('dmc.project')
                 })(documents[i]);
               }
 
-              $q.all(promises).then(function(doc) {
-                addAttachmentToApp(doc[Object.keys(doc)[0]]);
+              $q.all(promises).then(function(docs) {
+                addAttachmentsToApp(makeAttachmentsCollection(docs));
               });
+            }
+
+            var makeAttachmentsCollection = function(promiseReturn) {
+              var docs = [];
+              var keys = Object.keys(promiseReturn);
+              for (var i=0; i<keys.length; i++ ) {
+                docs.push(promiseReturn[keys[i]])
+              }
+              return docs;
             }
 
             var getOrCreateDirectory = function(app, documents, callback) {
@@ -596,13 +605,13 @@ angular.module('dmc.project')
             var attachFileInputId = 'attachedFileList';
             // $scope.appAttachments = [];
 
-            var addAttachmentToApp = function(attachment) {
+            var addAttachmentsToApp = function(attachments) {
               // checkForExistingAttachments();
               // $scope.appAttachments.push({id: attachment.id, documentName: attachment.documentName});
               // updateAppAttachmentInput();
               var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
-              attachFileInput.value = JSON.stringify(attachment)
-              $scope.run();
+              attachFileInput.value = JSON.stringify(attachments)
+              // $scope.run();
             }
 
             // var updateAppAttachmentInput = function() {
