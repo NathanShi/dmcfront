@@ -6,8 +6,9 @@ angular.module('dmc.widgets.content', [
     'dmc.socket',
     'ng-showdown',
     'ngYoutubeEmbed',
-    'dataFactory'
-]).directive('uiWidgetContent', ['$parse', function ($parse, dataFactory) {
+    'dmc.widgets.rich-text',
+    'dmc.component.product-card-buttons'
+]).directive('uiWidgetContent', ['$parse', 'dataFactory', function ($parse, dataFactory) {
     return {
         restrict: 'A',
         templateUrl: '/templates/components/ui-widgets/content-card.html',
@@ -24,10 +25,12 @@ angular.module('dmc.widgets.content', [
     
     function UiWidgetContentCardController($http) {
         var vm = this;
-
+        
+        console.log(vm.contentItems);
+        
         vm.downloadFile = function(id) {
             window.location = dataFactory.documentsUrl(id).download;
-        }
+        };
     }
     
 }]);
