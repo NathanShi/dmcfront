@@ -338,18 +338,15 @@ angular.module('dmc.project')
                   if($scope.hasCustomUI){
                     for (var key in $scope.service.interfaceModel.inParams){
                       var domeName = $scope.service.interfaceModel.inParams[key].name;
-                      if(document.getElementById(domeName) && document.getElementById(domeName).value){
+                      if(document.getElementById(domeName)){
                         console.log('found element id: ', domeName)
-                        console.log('setting to: ', document.getElementById(domeName).value)
-                        // var domeValue = document.getElementById(domeName).value;
-                        // if(domeValue){
-                        //   console.log('found value: ', domeValue)
-                        //   $scope.service.interfaceModel.inParams[key].value = domeValue;
-                        // }
-                        $scope.service.interfaceModel.inParams[key].value = document.getElementById(domeName).value;
+                        var domeValue = document.getElementById(domeName).value;
+                        if(domeValue){
+                          console.log('found value: ', domeValue)
+                          $scope.service.interfaceModel.inParams[key].value = domeValue;
+                        }
                       }else{
                         console.log('Not found element id: ', domeName)
-                        console.log('setting to: ', $scope.service.interfaceModel.inParams[key].defaultValue);
                         $scope.service.interfaceModel.inParams[key].value = $scope.service.interfaceModel.inParams[key].defaultValue;
                       }
                     }
