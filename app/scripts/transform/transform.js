@@ -23,15 +23,24 @@ angular.module('dmc.transform', [
         templateUrl: 'templates/transform/transform.html'
     });
     $urlRouterProvider.otherwise('/');
-}).controller('TransformController', function ($scope, $element, $location, scrollService) {
+}).controller('TransformController', function ($scope, $element, $location, scrollService, $timeout) {
     $scope.gotoElement = function (eID) {
         // set the location.hash to the id of
         // the element you wish to scroll to.
         $location.hash(eID);
-    
+
         // call scrollTo
         scrollService.scrollTo(eID);
     };
+
+    // $timeout(function(){
+    //   var url = $location.url()
+    //   if (url && url != '/') {
+    //     url = url.replace('/#','');
+    //     $scope.gotoElement(url)
+    //   }
+    // })
+
     
     $scope.estimateContentItems = [{
         contentTitle: 'ANA',
