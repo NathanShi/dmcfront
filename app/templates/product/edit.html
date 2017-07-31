@@ -40,9 +40,9 @@
 				<div layout="row" layout-margin>
 					<!--product image-->
 					<div class="product-image" layout="column">
-						<md-button 
+						<md-button
 							class="md-fab md-mini md-warn md-raised delete-image"
-							ng-if="product.service_images.length" 
+							ng-if="product.service_images.length"
 							ng-click="carouselFunctions.deleteImage(indexImages,$event)"
 							aria-label="delete">
 							<ng-md-icon icon="delete" style="fill: #fff" size="18"></ng-md-icon>
@@ -55,14 +55,14 @@
 							<ng-md-icon icon="camera_alt" style="fill: #65AF3F;" size="25"></ng-md-icon>
 							Manage photos
 						</md-button>
-						<div dmc-carousel 
-								functions="carouselFunctions" 
-								name-carousel="'carouselImages'" 
-								type-carousel="'images'" 
-								carouselSource="product.service_images" 
-								max-items="10" 
-								show-items="4" 
-								carousel-source="product.service_images" 
+						<div dmc-carousel
+								functions="carouselFunctions"
+								name-carousel="'carouselImages'"
+								type-carousel="'images'"
+								carouselSource="product.service_images"
+								max-items="10"
+								show-items="4"
+								carousel-source="product.service_images"
 								edit="true">
 						</div>
 					</div>
@@ -72,13 +72,13 @@
 							<div layout="row">
 								<md-input-container>
 									<label>Title</label>
-									<input id="editTitleProduct" 
-									       ng-change="change()" 
+									<input id="editTitleProduct"
+									       ng-change="change()"
 									       ng-init="changes.title = product.title"
 									       ng-model="product.title">
 								</md-input-container>
 								<span flex></span>
-								
+
 								<md-button ng-click="cancelEdit()" class="md-raised dmc-button margin-left20">Cancel</md-button>
 								<md-button ng-click="saveEdit()" class="md-raised dmc-button md-primary margin-left20">Save</md-button>
 							</div>
@@ -88,10 +88,10 @@
 						<div>
 							<md-input-container>
 								<label>Description</label>
-								<textarea ng-model="product.description" 
-								          ng-change="change()" 
+								<textarea ng-model="product.description"
+								          ng-change="change()"
 								          ng-init="changes.description = product.description"
-								          columns="1" 
+								          columns="1"
 								          md-maxlength="1000"></textarea>
 							</md-input-container>
 						</div>
@@ -130,8 +130,8 @@
 								<p>Successful Runs: {{product.specifications[0].runStats.fail}}/{{product.specifications[0].runStats.success}}</p>
 								<p>Inputs: {{product.specifications[0].input}}</p>
 								<p>Outputs: {{product.specifications[0].output}}</p>
-								
-								
+
+
 								<div layout="row" ng-repeat="item in product.specifications[0].special track by $index">
 									<md-button aria-label="close" ng-click="deleteSpecifications($index,$event)" class="md-raised deleteSpecifications">
 										<ng-md-icon icon="close" style="fill: 'grey'" size="12"></ng-md-icon>
@@ -146,7 +146,7 @@
 									</md-input-container>
 								</div>
 								<div layout="row" ng-repeat="item in arrAddSpecifications track by $index" layout-align="start center">
-									
+
 									<md-input-container>
 										<label>Specifications</label>
 										<input id="{{'sipecification'+$index}}" ng-model="item.specification"/>
@@ -220,7 +220,7 @@
 									No matches found for "{{searchText}}".
 								</md-not-found>
 							</md-autocomplete>
-							
+
 							<div layout="row" class="tabs-content" layout-wrap>
 								<div flex="25" ng-repeat="oneProdut in includedServices track by $index" class="included">
 
@@ -261,7 +261,7 @@
 									No matches found for "{{searchText}}".
 								</md-not-found>
 							</md-autocomplete>
-							
+
 							<div layout="row" class="tabs-content" layout-wrap>
 								<div flex="25" ng-repeat="oneProdut in product.service_authors track by $index" class="included">
 

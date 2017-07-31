@@ -260,6 +260,24 @@
 							</div>
 						</md-content>
 					</md-tab>
+
+          <md-tab label="Support">
+						<md-content class="md-padding">
+              <md-input-container>
+                <div ng-init="changes.support = product.support"
+                    ui-widget-rich-text
+                    field-name="support"
+                    model="product.support"
+                    ng-model="product.support"
+                    limit="1000"
+                    placeholder="Support Description"
+                    is-saved="isSaved"
+                    is-valid="isValid">
+                </div>
+              </md-input-container>
+						</md-content>
+					</md-tab>
+
 				</md-tabs>
 			</md-content>
 		</div>
