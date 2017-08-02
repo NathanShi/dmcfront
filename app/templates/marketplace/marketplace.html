@@ -50,7 +50,7 @@
                             <a ng-click="gotoElement('improved-estimates')">
                                 <img class="bullet-image" ng-src="images/calc.png" type="image/png" height="80px">
                             </a>
-                            <div class="col-sm-7 col-md-10 bottom-border path-link">
+                            <div class="col-sm-7 co l-md-10 bottom-border path-link">
                                 <a ng-click="gotoElement('improved-estimates')">I want to improve estimates.</a>
                             </div>
                         </div>
@@ -273,7 +273,7 @@
 
 
 
-              <div role="tabpanel" class="tab-pane fade " id="viewall">
+              <section role="tabpanel" class="tab-pane fade " id="viewall">
 
                 <section class="container">
 
@@ -313,34 +313,13 @@
                     </div>
                   </div>
 
-
-
-                <div ng-repeat="item in mockContent" class="row" style="margin-bottom: 30px;">
-                    <div class="col-sm-2 col-md-2 video-column border-right" style="text-align: center;">
-                        <img ng-src="{{item.icon}}" type="image/png" style="max-width: 100%; max-height: 100%;">
+                    <div ui-widget-content
+                         content-type="'app'"
+                         title=""
+                         category=""
+                         content-items="marketplaceItems">
                     </div>
-                    <div class="col-sm-10 col-md-10">
-                        <h3 class="border-bottom">{{item.title}}</h3>
-                        <p>
-                            {{item.description}}
-                        </p>
-                        <button class="btn green-button">BOOK NOW</button>
-                    </div>
-                </div>
-              </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+              </section>
 
           <!-- ACADEMIA PANEL -->
             <div role="tabpanel" class="tab-pane fade " id="academia">
@@ -455,7 +434,6 @@
                         <!-- </div> -->
                         <!-- <div class="col-xs-1">
                         </div> -->
-                      </div>
                   </div>
               </section>
 
@@ -1936,31 +1914,6 @@
                 </div>
             </section>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
     </div>
 

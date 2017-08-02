@@ -5,9 +5,7 @@ angular.module('dmc.widgets.content', [
     'dmc.data',
     'dmc.socket',
     'ng-showdown',
-    'ngYoutubeEmbed',
-    'dmc.widgets.rich-text',
-    'dmc.component.product-card-buttons'
+    'ngYoutubeEmbed'
 ]).directive('uiWidgetContent', ['$parse', 'dataFactory', function ($parse, dataFactory) {
     return {
         restrict: 'A',

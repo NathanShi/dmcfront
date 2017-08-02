@@ -31,3 +31,14 @@
 .border-left {
   border-left: solid $brand-accent 1px;
 }
+
+.spacing-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 118px;
+  justify-content: space-between;
+}
+
+.content-button {
+  align-self: flex-start;
+}
