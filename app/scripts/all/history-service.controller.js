@@ -29,12 +29,12 @@ angular.module('dmc.view-all')
 
             $("title").text("View All History");
 
-
+            
             $scope.history = [];
             $scope.type = $stateParams.type;
             $scope.order = "DESC";
             $scope.sort = "text";
-
+/*
             $scope.getHistory = function () {
                 ajax.get(dataFactory.profiles($stateParams.profileId).history,
 	                {
@@ -57,16 +57,16 @@ angular.module('dmc.view-all')
                                     break;
                                 case "worked":
                                     response.data[i].icon = "images/icon_project.svg";
-                                    break;
+                                    break;  
                                 case "favorited":
                                     response.data[i].icon = "images/ic_favorite_black_24px.svg";
-                                    break;
+                                    break;   
                                 case "shared":
                                     response.data[i].icon = "images/ic_done_all_black_24px.svg";
-                                    break;
+                                    break;   
                                 case "discussion":
                                     response.data[i].icon = "images/ic_forum_black_24px.svg";
-                                    break;
+                                    break;                                  
                             }
 		                }
 		                $scope.history = response.data;
@@ -74,6 +74,7 @@ angular.module('dmc.view-all')
 	            )
             };
             $scope.getHistory();
+*/
 
             $scope.onOrderChange = function (order) {
                 $scope.sort = order;
