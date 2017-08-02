@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Favorties</title>
+    <title>My Favorites</title>
 
 </head>
 <body ng-app="dmc.myfavorites-arsalan">
