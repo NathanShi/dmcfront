@@ -1,27 +1,4 @@
-<main>
-	<section class="container">
-    <div class="row">
-      <div class="col-xs-8">
-        <h2><a ui-sref="project.services-detail({ServiceId: ServiceId})" >{{service.title}}</a></h2>
-      </div>
-      <div class="col-xs-4">
-        <md-button ng-disabled="isRunning()" ng-click="run()" class="md-raised md-primary pull-right">
-          Run
-        </md-button>
-        <md-button ng-disabled="!isRunning()" ng-click="cancelServiceRun($event,service)" class="md-raised md-warn pull-right">
-          Cancel
-        </md-button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12">
-        <a ng-href="{{'project.php#/' + projectData.id + '/services/' + service.id + '/run/run-history'}}" class="link margin-top8">
-          Run History
-        </a>
-      </div>
-    </div>
-  </section>
-</main>
+<workspace-header class="workspace-header" ng-init="currentPage='7'"></workspace-header>
 
 <div class="project-run-services" ng-if="!runHistory" ng-show="hasCustomUI && service.interfaceModel.inParams.inputFile" layout="column">
   <div layout="row" layout-align="space-between center" style="padding: 15px; margin: 0px 15px; border-bottom: solid 1px lightgrey;">
