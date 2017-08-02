@@ -1,10 +1,19 @@
 <main>
+  <!-- Service Run 'Header' -->
 	<section class="container">
-    <div class="row">
+    <div class="row vertical-align-center">
       <div class="col-xs-8">
         <h2><a ui-sref="project.services-detail({ServiceId: ServiceId})" >{{service.title}}</a></h2>
       </div>
-      <div class="col-xs-4">
+    </div>
+    <div class="row">
+      <div class="col-xs-6">
+        <h6 class="last-run-status">Last Run Status: {{lastStatus}}</h6>
+        <a ng-href="{{'project.php#/' + projectData.id + '/services/' + service.id + '/run/run-history'}}" class="link margin-top8">
+          Run History
+        </a>
+      </div>
+      <div class="col-xs-6">
         <md-button ng-disabled="isRunning()" ng-click="run()" class="md-raised md-primary pull-right">
           Run
         </md-button>
@@ -13,17 +22,60 @@
         </md-button>
       </div>
     </div>
+  </section>
+
+  <!-- Inputs/Outputs for Custom UIs -->
+  <section class="container" ng-show="hasCustomUI">
+    <div style="position: relative;">
+      <div class="greyout" ng-show="isRunning()">
+        <div class="loader"></div>
+      </div>
+
+      <div ng-show="service.interfaceModel.inParams.inputFile" layout="row" layout-align="space-between center" style="padding: 0px 40px; margin: 0px; background: white;">
+        <h3 flex>Input File From Workspace:</h3>
+        <div flex="40" style="margin: 0px 8px">
+          <md-select placeholder="Select Project" ng-model="inputFile.projectModel" md-on-open="loadProjects()" ng-change="updateFileList(inputFile)">
+            <md-option ng-repeat="p in projects" ng-value="{{p}}">{{p.title}}</md-option>
+          </md-select>
+        </div>
+        <div flex="40">
+          <md-select ng-show="inputFile.projectModel" placeholder="Select File" ng-model="inputFile.projectModelFile" ng-change="setinputFileValue(inputFile.projectModelFile)">
+            <md-option ng-repeat="f in projectFiles" ng-value="{{f}}">{{f.documentName}}</md-option>
+          </md-select>
+        </div>
+      </div>
+      <div class="container" style="width: 100%;">
+          <!--Custom UI Content will be displayed here-->
+          <div class="content-placeholder">
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
     <div class="row">
-      <div class="col-xs-12">
-        <a ng-href="{{'project.php#/' + projectData.id + '/services/' + service.id + '/run/run-history'}}" class="link margin-top8">
-          Run History
-        </a>
+      <div class="col-xs-6">
+
+        <label class="section">Inputs</label>
+        <div class="form-group">
+            <div class="sublabels">{{item.name}}</div>
+            <input name="orgFirstLine1" ng-model="item.value">
+        </div>
+
+
+
+
+        <h4>Inputs</h4>
+        <div ng-repeat="item in service.interfaceModel.inputs">
+          <label>{{item.name}}</label>
+          <input maxlength="600" ng-change="changedValue()" ng-model="item.value" ng-if="item.type != 'File'">
+        </div>
       </div>
     </div>
   </section>
 </main>
 
-<div class="project-run-services" ng-if="!runHistory" ng-show="hasCustomUI && service.interfaceModel.inParams.inputFile" layout="column">
+<!-- <div class="project-run-services" ng-if="!runHistory" ng-show="hasCustomUI && service.interfaceModel.inParams.inputFile" layout="column">
   <div layout="row" layout-align="space-between center" style="padding: 15px; margin: 0px 15px; border-bottom: solid 1px lightgrey;">
 
     <div layout="column">
@@ -43,9 +95,9 @@
     </md-button>
 
   </div>
-</div>
+</div> -->
 
-<div ng-show="hasCustomUI" layout = "column" style="position: relative;">
+<!-- <div ng-show="hasCustomUI" layout = "column" style="position: relative;">
   <div class="greyout" ng-show="isRunning()">
     <div class="loader"></div>
   </div>
@@ -64,13 +116,10 @@
     </div>
   </div>
   <div class="container" style="width: 100%;">
-      <!--Custom UI Content will be displayed here-->
-
-
-      <div class="content-placeholder">
+          <div class="content-placeholder">
       </div>
   </div>
-</div>
+</div> -->
 <div ng-if="!service.id" class="project-details-services" layout="column">
 	<div layout="row" layout-align="space-between start">
 		<div layout="column" class="header">
