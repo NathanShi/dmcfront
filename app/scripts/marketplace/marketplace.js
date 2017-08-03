@@ -32,15 +32,59 @@ angular.module('dmc.marketplace', [
         // call scrollTo
         scrollService.scrollTo(eID);
     };
-    console.log(dataFactory.getServices());
+    
     $http.get(dataFactory.getMarketServices(), {
         params: {
-            _start: 0,
+            start: 0,
             published: true
         }
     }).success(function(response) {
         console.log(response);
         $scope.marketplaceItems = response;
+    });
+    
+    $http.get(dataFactory.getMarketServices(), {
+        params: {
+            start: 0,
+            limit: 5,
+            published: true
+        }
+    }).success(function(response) {
+        console.log(response);
+        $scope.estimateItems = response;
+    });
+    
+    $http.get(dataFactory.getMarketServices(), {
+        params: {
+            start: 5,
+            limit: 5,
+            published: true
+        }
+    }).success(function(response) {
+        console.log(response);
+        $scope.cncOperationItems = response;
+    });
+    
+    $http.get(dataFactory.getMarketServices(), {
+        params: {
+            start: 10,
+            limit: 5,
+            published: true
+        }
+    }).success(function(response) {
+        console.log(response);
+        $scope.cmmOperationItems = response;
+    });
+    
+    $http.get(dataFactory.getMarketServices(), {
+        params: {
+            start: 15,
+            limit: 5,
+            published: true
+        }
+    }).success(function(response) {
+        console.log(response);
+        $scope.getLeanItems = response;
     });
 
 }]);
