@@ -38,6 +38,27 @@
                 </md-input-container>
             </div>
             <md-divider></md-divider>
+						<div layout="row" flex layout-align="start end" class="service-tags">
+								<div layout="column" flex="100">
+										<div flex>
+												<h3>Support</h3>
+										</div>
+										<md-input-container>
+											<div
+													ui-widget-rich-text
+													field-name="support"
+													model="publishService.support"
+													ng-model="publishService.support"
+													limit="1000"
+													placeholder="Support Description"
+													is-saved="isSaved"
+													is-valid="isValid"
+													ng-change="changedInput()">
+											</div>
+										</md-input-container>
+								</div>
+						</div>
+						<md-divider></md-divider>
             <div layout="row" flex layout-align="start end" class="service-specifications">
                 <div layout="column" flex="100">
                     <div flex>
@@ -132,26 +153,8 @@
                     </md-button>
                 </div>
             </div>
-						<md-divider></md-divider>
-            <div layout="row" flex layout-align="start end" class="service-tags">
-                <div layout="column" flex="100">
-                    <div flex>
-                        <h3>Support</h3>
-                    </div>
-										<md-input-container>
-			                <div ng-init="changes.support = product.support"
-			                    ui-widget-rich-text
-			                    field-name="support"
-			                    model="product.support"
-			                    ng-model="product.support"
-			                    limit="1000"
-			                    placeholder="Support Description"
-			                    is-saved="isSaved"
-			                    is-valid="isValid">
-			                </div>
-										</md-input-container>
-                </div>
-            </div>
+
+
             <div layout="row" flex>
                 <span flex></span>
                 <md-button class="md-raised md-primary next-page"

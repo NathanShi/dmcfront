@@ -222,11 +222,10 @@
 
           <md-tab label="SUPPORT">
 						<md-content class="md-padding">
-							<ui-widget-documents-folder
-                                documents-type="'service'"
-                                source="documents"
-                                type-id="product.id">
-                            </ui-widget-documents-folder>
+              <div class="product-description" ng-if ="product.support" markdown-to-html="product.support">
+  						</div>
+              <div class="product-description" ng-if ="!product.support" >No Support Information Provided.
+              </div>
 						</md-content>
 					</md-tab>
 

@@ -52,7 +52,8 @@ angular.module('dmc.project')
                 inputs : $scope.serviceData.specifications ? $scope.serviceData.specifications.input : 0,
                 outputs : $scope.serviceData.specifications ? $scope.serviceData.specifications.output : 0,
                 specifications : $scope.serviceData.specifications ? $scope.serviceData.specifications.special : [],
-                tags : $scope.serviceData.service_tags
+                tags : $scope.serviceData.service_tags,
+                support: $scope.serviceData.support
             };
 
             $scope.newSpecification = {};
@@ -117,7 +118,7 @@ angular.module('dmc.project')
             };
 
             $scope.changedInput = function(){
-                $scope.isDisabledFirstPage = ($scope.publishService.name && $scope.publishService.description && $scope.publishService.serviceType ? false : true);
+                $scope.isDisabledFirstPage = ($scope.publishService.name && $scope.publishService.description && $scope.publishService.serviceType  ? false : true);
             };
             $scope.changedInput();
 
