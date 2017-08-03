@@ -176,7 +176,9 @@ angular.module('dmc.component.productcard', [
                   updatedItem.from = 'marketplace';
                   updatedItem.published = false;
                   updatedItem.parent = updatedItem.id;
+                  delete updatedItem.projectId
                   delete updatedItem.tags;
+                  
                   ajax.create(dataFactory.services().add, updatedItem, function (response) {
                       var id = response.data.id;
                       var projectId = response.data.projectId;
