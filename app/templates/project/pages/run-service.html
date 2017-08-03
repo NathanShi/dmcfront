@@ -58,9 +58,18 @@
     </div>
   </section>
 
-
   <!-- Inputs/Outputs for Stock UI -->
   <section class="container" ng-show="!hasCustomUI">
+		<div class="row">
+			<select
+				 md-on-open="loadProjects()"
+				 ng-change="updateFileList(inputFile)"
+				 ng-model="inputFile.projectModel"
+				 ng-options="project.title for project in projects"
+				 required>
+				 <option value="">Please Select</option>
+			 </select>
+		</div>
     <div class="row">
       <div class="col-xs-6">
         <label class="section">Inputs</label>
