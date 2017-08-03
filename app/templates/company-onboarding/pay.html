@@ -38,26 +38,36 @@
           <div class="row">
             <div class="col-lg-12 col-md-12">
               <label class="pay_section">Main Point of Contact : </label>
-              <span class="_show" style="color: #75bc52; font-size:24px;">    {{company.main.fname}} {{company.main.lname}}</span>
-              <span class="_show">    :    {{company.main.phone}} | {{company.main.email}} | {{company.main.mailAddress}}</span>
+              <span class="_show" style="color: #75bc52; font-size:20px;">{{company.main.fname}} {{company.main.lname}}</span>
+              <span class="_show"> : {{company.main.phone}} | {{company.main.email}} | {{company.main.mailAddress}}</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12 col-md-12" ng-show="company.tech">
+              <label class="pay_section">Technical Point of Contact : </label>
+              <span class="_show" style="color: #75bc52; font-size:20px;"> {{company.tech.fname}} {{company.tech.lname}}</span>
+              <span class="_show"> : {{company.tech.phone}} | {{company.tech.email}} | {{company.tech.mailAddress}}</span>
             </div>
           </div>
 
           <div class="row">
             <div class="col-lg-12 col-md-12" ng-show="company.finance">
               <label class="pay_section">Financial Point of Contact : </label>
-              <span class="_show"> {{company.finance.fname}} {{company.finance.lname}}</span>
-              <span class="_show">    :    {{company.finance.phone}} | {{company.finance.email}} | {{company.finance.mailAddress}}</span>
+              <span class="_show" style="color: #75bc52; font-size:20px;"> {{company.finance.fname}} {{company.finance.lname}}</span>
+              <span class="_show"> : {{company.finance.phone}} | {{company.finance.email}} | {{company.finance.mailAddress}}</span>
             </div>
           </div>
 
           <div class="row">
             <div class="col-lg-12 col-md-12" ng-show="company.legal">
               <label class="pay_section">Legal Point of Contact : </label>
-              <span class="_show"> {{company.legal.fname}} {{company.legal.lname}}</span>
-              <span class="_show">    :    {{company.legal.phone}} | {{company.legal.email}} | {{company.legal.mail}}</span>
+              <span class="_show" style="color: #75bc52; font-size:20px;"> {{company.legal.fname}} {{company.legal.lname}}</span>
+              <span class="_show"> : {{company.legal.phone}} | {{company.legal.email}} | {{company.legal.mail}}</span>
             </div>
           </div>
+
+
       </div>
 
         <div class="col-lg-12 col-md-12">
@@ -65,12 +75,18 @@
 
           <div class="row">
             <div class="col-lg-12 col-md-12">
-                <label class="pay_section">Corporation/Organization type : </label>
+                <label class="pay_section">Applicant is a : </label>
                 <span ng-repeat="type in company.type" class="_show_type label label-success">{{type}}</span>
             </div>
           </div>
 
           <div class="row">
+
+            <div class="col-lg-4 col-md-4">
+                <label class="pay_section">Company/Organization Type : </label>
+                <span ng-bind="company.TYPE" class="_show"></span>
+            </div>
+
             <div class="col-lg-4 col-md-4">
                 <label class="pay_section">Number of employees : </label>
                 <span ng-bind="company.selectedEmployeeSize" class="_show"></span>
@@ -81,23 +97,32 @@
                 <span ng-bind="company.selectedAnnualRevenue" class="_show"></span>
             </div>
 
+          </div>
+
+          <div class="row">
+
             <div class="col-lg-4 col-md-4">
                 <label class="pay_section">StartUp Organization : </label>
                 <span ng-bind="company.startUp == 1 ? 'Yes' : 'No' " class="_show"></span>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-4 col-md-4">
                 <label class="pay_section">Primary NAICS Code : </label>
                 <span ng-bind="company.naicsCode" class="_show"></span>
             </div>
 
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-4 col-md-4">
                 <label class="pay_section">DUNS Number (or EIN) : </label>
                 <span ng-bind="company.duns" class="_show"></span>
             </div>
-          </div>
+         </div>
+
+         <div class="row">
+           <div class="col-lg-12 col-md-12">
+               <label class="pay_section">Website : </label>
+               <a class="_show" target="_blank">{{company.website}}</a>
+           </div>
+         </div>
 
         </div>
 

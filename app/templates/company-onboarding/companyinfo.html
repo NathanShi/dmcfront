@@ -221,7 +221,74 @@
 
           <div class="row">
             <div class="col-lg-8 col-md-8">
-              <input type="checkbox" name="financialContact" id="financialContact" ng-checked="company.finance" ng-model="company.financialContact"/>
+              <input type="checkbox" name="techContact" id="techContact" ng-checked="company.techContact" ng-model="company.techContact"/>
+              <label for="techContact" class="labelForOp selection" style="font-weight:bold">Technical Contact</label>
+              <span>Check if different for Technical Point of Contact</span>
+            </div>
+          </div>
+
+          <div ng-show="company.techContact">
+            <div class="row">
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgTechFName.$invalid && companyGeneralForm.orgTechFName.$touched && company.techContact}">
+                    <div class="sublabels">
+                      First Name
+                    </div>
+                    <input name="orgTechFName" ng-value="company.tech.fname" ng-model="company.tech.fname" class="form-control" type="text" ng-required="company.techContact">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgTechLName.$invalid && companyGeneralForm.orgTechLName.$touched && company.techContact}">
+                    <div class="sublabels">
+                      Last Name
+                    </div>
+                    <input name="orgTechLName" ng-value="company.tech.lname" ng-model="company.tech.lname" class="form-control" type="text" ng-required="company.techContact">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgTechPhone.$invalid && companyGeneralForm.orgTechPhone.$touched && company.techContact}">
+                    <div class="sublabels">
+                      Phone Number
+                    </div>
+                    <input name="orgTechPhone" ng-value="company.tech.phone" ng-model="company.tech.phone" class="form-control" type="tel" pattern="^\d{10}$" ng-required="company.techContact">
+                    <span class="help-block" ng-show="!companyGeneralForm.orgTechPhone.$dirty || companyGeneralForm.orgTechPhone.$valid && companyGeneralForm.orgTechPhone.$touched || !(companyGeneralForm.orgTechPhone.$invalid && companyGeneralForm.orgTechPhone.$dirty)">Required</span>
+                    <span class="help-block" ng-show="companyGeneralForm.orgTechPhone.$invalid && companyGeneralForm.orgTechPhone.$dirty"> Phone number should be 10 digits</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3">
+                <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgTechEmail.$invalid && companyGeneralForm.orgTechEmail.$touched && company.techContact}">
+                    <div class="sublabels">
+                      Email
+                    </div>
+                    <input name="orgTechEmail" ng-value="company.tech.email" ng-model="company.tech.email" class="form-control" type="email" ng-required="company.techContact">
+                    <span class="help-block" ng-show="!companyGeneralForm.orgTechEmail.$dirty || companyGeneralForm.orgTechEmail.$valid && companyGeneralForm.orgTechEmail.$dirty">Required</span>
+                    <span class="help-block" ng-show="companyGeneralForm.orgTechEmail.$invalid && companyGeneralForm.orgTechEmail.$dirty">Invaild Email Address</span>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgTechMail.$invalid && companyGeneralForm.orgTechMail.$touched && company.techContact}">
+                    <div class="sublabels">
+                      Mailing Address
+                    </div>
+                    <input name="orgTechMail" ng-value="company.tech.mailAddress" ng-model="company.tech.mailAddress" class="form-control" type="text" ng-required="company.techContact">
+                    <p class="help-block">Required</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-8 col-md-8">
+              <input type="checkbox" name="financialContact" id="financialContact" ng-checked="company.financialContact" ng-model="company.financialContact"/>
               <label for="financialContact" class="labelForOp selection" style="font-weight:bold">Financial Contact</label>
               <span>Check if different for Financial Point of Contact</span>
             </div>
@@ -288,7 +355,7 @@
 
           <div class="row">
             <div class="col-lg-8 col-md-8">
-              <input type="checkbox" name="legalContact" id="legalContact" ng-checked="company.legal" ng-model="company.legalContact"/>
+              <input type="checkbox" name="legalContact" id="legalContact" ng-checked="company.legalContact" ng-model="company.legalContact"/>
               <label for="legalContact" class="labelForOp selection" style="font-weight:bold">Legal Contact</label>
               <span>Check if different for Legal Point of Contact</span>
             </div>
@@ -360,9 +427,9 @@
         <div class="col-lg-12 col-md-12">
           <h3>Company Information</h3>
 
-          <div>
-            <label class="section">Corporation/Organization type  </label>
-            <div class="row col-lg-12 col-md-12">
+          <div class="row">
+            <div class="col-lg-12 col-md-12">
+            <label class="section">Applicant is a (Check all that apply)  </label>
 
               <div class="form-group" ng-class="{'has-error': companyGeneralForm.coType.$invalid}">
                 <span ng-repeat="type in orgType">
@@ -372,13 +439,27 @@
                 <p class="help-block">Required</p>
               </div>
             </div>
-
           </div>
 
           <hr>
 
           <div class="row">
-            <div class="col-lg-4 col-md-4">
+
+            <div class="col-lg-3 col-md-3">
+              <label class="section">Company/Organization Type  </label>
+              <div class="form-group" ng-class="{'has-error': companyGeneralForm.orgTYPE.$error.required}">
+                <select
+                   ng-model="company.TYPE"
+                   name="orgTYPE"
+                   ng-options="option.name for option in orgTYPEs"
+                   required>
+                   <option value="">Please Select</option>
+                 </select>
+                <p class="help-block">Required</p>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3">
               <label class="section">Number of employees  </label>
               <div class="form-group" ng-class="{'has-error': companyGeneralForm.orgEmployeeSize.$error.required}">
                 <select
@@ -392,7 +473,7 @@
               </div>
             </div>
 
-            <div class="col-lg-4 col-md-4">
+            <div class="col-lg-3 col-md-3">
               <label class="section">Annual Revenue  </label>
               <div class="form-group" ng-class="{'has-error': companyGeneralForm.orgAnnualRevenue.$error.required}">
                 <select
@@ -406,7 +487,11 @@
               </div>
             </div>
 
-            <div class="col-lg-4 col-md-4">
+
+          <!-- </div> -->
+
+          <!-- <div class="row"> -->
+            <div class="col-lg-3 col-md-3">
               <label class="section">Is your organization a start-up?  </label>
               <div class="form-group" ng-class="{'has-error':companyGeneralForm.startUp.$invalid}">
                 <input type="radio" name="startUp" ng-model="company.startUp" value=1 id="startUp1" required/>
@@ -421,7 +506,16 @@
           <hr>
 
           <div class="row">
-            <div class="col-lg-6 col-md-6">
+
+            <div class="col-lg-4 col-md-4">
+              <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgWebsite.$invalid && companyGeneralForm.orgWebsite.$touched}">
+                  <label class="section">Website</label>
+                  <input name="orgWebsite" ng-value="company.website" ng-model="company.website" class="form-control" type="text" required>
+                  <p class="help-block">Required</p>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4">
               <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgNAICScode.$invalid && companyGeneralForm.orgNAICScode.$touched}">
                   <label class="section">Primary NAICS Code  </label>
                   <input name="orgNAICScode" ng-value="company.naicsCode" ng-model="company.naicsCode" class="form-control" type="text" required>
@@ -429,14 +523,32 @@
               </div>
             </div>
 
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-4 col-md-4">
               <div class="form-group" ng-class="{'has-error':companyGeneralForm.orgDUNSnumber.$invalid && companyGeneralForm.orgDUNSnumber.$touched}">
                   <label class="section">DUNS Number (or EIN)  </label>
                   <input name="orgDUNSnumber" ng-value="company.duns" ng-model="company.duns" class="form-control" type="text" required>
                   <p class="help-block">Required, Enter if known or look up <a href="http://www.dnb.com/duns-number/lookup.html" target="_blank">dnb</a></p>
               </div>
             </div>
+
           </div>
+
+          <hr>
+
+          <!-- <div class="row">
+            <div class="col-lg-12 col-md-12">
+            <label class="section">Corporation/Organization type  </label>
+
+              <div class="form-group">
+                <span ng-repeat="inType in industryType">
+                  <input type="checkbox" name="coIndustry" data-ng-model="inType.select" id="coIndustry{{$index}}"/>
+                  <label for="coIndustry{{$index}}" class="labelForOp">{{inType.inType}}</label>
+                </span>
+                <p class="help-block">Optional</p>
+              </div>
+            </div>
+          </div> -->
+
 
 
 
@@ -446,12 +558,12 @@
           <h3>Membership Agreement</h3>
 
           <div>
-            <label class="membershipAgreement">Please sign the <a href="https://www.smartwaiver.com/v/uilab" class="section" target="_blank"><strong>MEMBERSHIP AGREEMENT</strong></a></label>
-            <div class="form-group" ng-class="{'has-error':companyGeneralForm.agreement.$invalid && companyGeneralForm.agreement.$touched}">
-              <input type="checkbox" name="agreement" data-ng-model="company.agreement" id="agreement" required/>
+            <!-- <label class="membershipAgreement">Please sign the <a href="https://www.smartwaiver.com/v/uilab" class="section" target="_blank"><strong>MEMBERSHIP AGREEMENT</strong></a></label> -->
+            <link rel="stylesheet" type="text/css" href="https://www.pdffiller.com/css_v2/link2fill-0.1.min.css">
+              <a href="https://pdf.ac/7Frfnj" target="_blank" title="PDFfiller.com: " style="color:#ffffff;background:#64bf44" class="pdffiller-fill-form-btn pdffiller-fill-form-btn--large"><i class="pdffiller-fill-form-btn__icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full" height="17px" width="17px"><path fill="#ffffff" d="M16 17 C16 17 6 17 6 17 C5.44799999999998 17 5 16.6 5 16 C5 16 5 9 5 9 C5 9 7 11 7 11 C7 11 7 15 7 15 C7 15 15 15 15 15 C15 15 15 6 15 6 C15 6 12 6 12 6 C12 6 12 3 12 3 C12 3 7 3 7 3 C7 3 7 3 7 3 C7 3 5.3 1.3 5.3 1.3 C5.47400000000005 1.1 5.7 1 6 1 C6 1 13 1 13 1 C13 1 17 5 17 5 C17 5 17 16 17 16 C17 16.6 16.6 17 16 17 ZM12.197 10.1 C12.197 10.1 13 13 13 13 C13 13 10.1 12.2 10.1 12.2 C10.071 12.2 3.2 5.3 3.2 5.3 C3.19100000000003 5.3 5.3 3.2 5.3 3.2 C5.34299999999996 3.2 12.2 10.1 12.2 10.1 ZM1.41700000000003 3.6 C0.83000000000004 3 0.8 2 1.4 1.4 C2.00400000000002 0.8 3 0.8 3.5 1.4 C3.54200000000003 1.4 4.7 2.6 4.7 2.6 C4.69399999999996 2.6 2.5 4.7 2.5 4.7 C2.53599999999994 4.7 1.4 3.6 1.4 3.6 Z "/></svg></i>Sign the Agreement</a><div class="pdffiller-clr"></div>
+              <!-- <input type="checkbox" name="agreement" data-ng-model="company.agreement" id="agreement" required/>
               <label for="agreement" class="labelForOp">I have <strong>signed</strong> the Membership Agreement document</label>
-              <!-- <script src="https://www.smartwaiver.com/m/webpl/f.js?webpl_waiver=5977adb88a4d6&webpl_title=Sign%20the%20Membership%20Agreement&webpl_align=Right&webpl_fontsize=14&webpl_background=%2375bc52&webpl_fontcolor=%23ffffff&webpl_font=Trebuchet%20MS" type="text/javascript"></script> -->
-            </div>
+            </div> -->
           </div>
         </div>
       </form>

@@ -69,7 +69,7 @@ angular.module('dmc.company.onboarding', [
 
             this.save_companyInfo = function(companyinfo){
                 company = angular.copy(companyinfo);
-                // console.log(company);
+                console.log(company);
             }
 
             this.get_companyInfo = function(){

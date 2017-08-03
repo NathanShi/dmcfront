@@ -63,6 +63,10 @@ angular.module('dmc.company.onboarding')
         // console.log(jsonType);
         $scope.company.main = jsonType.mainPointContact;
         $scope.company.finance = jsonType.financePointContact;
+        $scope.company.tech = jsonType.techPointContact;
+        $scope.company.legal = jsonType.legalPointContact;
+        if ($scope.company.tech != null)
+          $scope.company.techContact = true;
         if ($scope.company.finance != null)
           $scope.company.financialContact = true;
         $scope.company.legal = jsonType.legalPointContact;
@@ -75,25 +79,28 @@ angular.module('dmc.company.onboarding')
         $scope.company.selectedEmployeeSize = null;
         $scope.company.agreement = null;
         $scope.company.type = null;
+        $scope.company.website = jsonType.website;
         $scope.company.startUp = jsonType.startUp;
         $scope.company.duns = jsonType.dunsCode;
       }
 
       $scope.company.selectedEmployeeSize = null;
       $scope.company.selectedAnnualRevenue = null;
-      $scope.company.agreement = null;
+      $scope.company.TYPE = null;
+      // $scope.company.agreement = null;
 
       $scope.orgType = [
-        { selection : 'Public Company', selected : false },
-        { selection : 'Educational', selected : false },
-        { selection : 'Self Employed', selected : false },
-        { selection : 'Government Agency', selected : false },
-        { selection : 'Non Profit', selected : false },
-        { selection : 'Self Owned', selected : false },
-        { selection : 'Privately Held', selected : false },
-        { selection : 'Partnership', selected : false }
+        { selection : 'Parent Consortium', selected : false },
+        { selection : 'Subsidiary', selected : false },
+        { selection : 'Minority Owned Business', selected : false },
+        { selection : 'Non-Profit', selected : false },
+        { selection : 'US Owned', selected : false },
+        { selection : 'Under an SSA', selected : false },
+        { selection : 'Academic Institution', selected : false },
+        { selection : 'Foreign Firm', selected : false },
+        { selection : 'Division', selected : false },
+        { selection : 'Woman Owned Business', selected : false }
       ];
-
 
       $scope.employeeSize = [
         {
@@ -165,6 +172,41 @@ angular.module('dmc.company.onboarding')
         }
       ];
 
+      $scope.orgTYPEs = [
+        {
+          name: 'Manufacturer',
+          value: 'Manufacturer'
+        },
+        {
+          name: 'Technology Provider',
+          value: 'Technology Provider'
+        },
+        {
+          name: 'Consultant',
+          value: 'Consultant'
+        }
+      ];
+
+      $scope.industryType = [
+        { inType : '3D Printing', select : false },
+        { inType : 'Aerospace', select : false },
+        { inType : 'Agricultural', select : false },
+        { inType : 'Automation', select : false },
+        { inType : 'Die Casting', select : false },
+        { inType : 'Electrical', select : false },
+        { inType : 'Electronics', select : false },
+        { inType : 'Furniture', select : false },
+        { inType : 'Grinding Machines', select : false },
+        { inType : 'Machine', select : false },
+        { inType : 'Materials', select : false },
+        { inType : 'Marine engines', select : false },
+        { inType : 'Measurement', select : false },
+        { inType : 'Metal', select : false },
+        { inType : 'Medical', select : false },
+        { inType : 'Nuclear Power', select : false },
+        { inType : 'Science', select : false },
+      ];
+
       $scope.isOptionsRequired = function(){
         return !$scope.orgType.some(function(options){
           return options.selected;
@@ -187,6 +229,10 @@ angular.module('dmc.company.onboarding')
             company.secondAddress = null;
         }
 
+        if (!company.techContact){
+            company.tech = null;
+        }
+
         if (!company.financialContact){
             company.finance = null;
         }
@@ -197,6 +243,7 @@ angular.module('dmc.company.onboarding')
 
         company.selectedEmployeeSize = company.selectedEmployeeSize.value;
         company.selectedAnnualRevenue = company.selectedAnnualRevenue.value;
+        company.TYPE = company.TYPE.value;
         $scope.companyinfo = angular.copy(company);
         $scope.companyinfo.type = type;
         if ($scope.company.id)
@@ -361,11 +408,13 @@ angular.module('dmc.company.onboarding')
               // console.log("jsoninfo", jsoninfo.organizationModel.id);
               if (!jsoninfo.organizationModel.id)
                 jsoninfo.organizationModel.id = null;
-              $scope.submitOrgPayment(jsoninfo);
+                console.log("jsoninfo", jsoninfo);
+              // $scope.submitOrgPayment(jsoninfo);
             });
           }
           else {
-              $scope.submitOrgPayment(jsoninfo);
+              console.log("jsoninfo", jsoninfo);
+              // $scope.submitOrgPayment(jsoninfo);
           }
 
       }
@@ -416,11 +465,14 @@ angular.module('dmc.company.onboarding')
             mainPointContact: $scope.company.main,
             financePointContact: $scope.company.finance,
             legalPointContact: $scope.company.legal,
+            techPointContact: $scope.company.tech,
             secondAddress: $scope.company.secondAddress,
             annualRevenue: $scope.company.selectedAnnualRevenue,
             employeeSize: $scope.company.selectedEmployeeSize,
             startUp: $scope.company.startUp,
-            dunsCode: $scope.company.duns
+            dunsCode: $scope.company.duns,
+            applicantType: $scope.company.type,
+            orgType: $scope.company.TYPE,
           };
 
           var MembershipInfo = JSON.stringify($scope.dmdiiMembershipInfo);
@@ -437,7 +489,7 @@ angular.module('dmc.company.onboarding')
               naicsCode:$scope.company.naicsCode,
               email:null,
               phone:null,
-              website:null,
+              website:$scope.company.website,
               socialMediaLinkedin:null,
               socialMediaTwitter:null,
               socialMediaInthenews:null,
