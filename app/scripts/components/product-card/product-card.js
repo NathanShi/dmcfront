@@ -188,7 +188,7 @@ angular.module('dmc.component.productcard', [
                               ajax.create(dataFactory.services(id).add_tags, tag);
                           });
                           tagsAdded = true;
-                          redirectToService(tagsAdded, interfacesAdded);
+                          redirectToService(tagsAdded, interfacesAdded, projectId, id);
                       });
                       ajax.get(dataFactory.services($scope.cardSource.id).get_interface, {}, function(response) {
                           angular.forEach(response.data, function(newDomeInterface) {
@@ -197,16 +197,16 @@ angular.module('dmc.component.productcard', [
                               ajax.create(dataFactory.services().add_interface, newDomeInterface);
                           });
                           interfacesAdded = true;
-                          redirectToService(tagsAdded, interfacesAdded);
+                          redirectToService(tagsAdded, interfacesAdded, projectId, id);
                       });
                   });
 
 
           };
 
-          var redirectToService = function(tagsAdded, interfacesAdded) {
+          var redirectToService = function(tagsAdded, interfacesAdded, projectId, serviceId) {
             if (tagsAdded && interfacesAdded) {
-              $window.location.href = '/project.php#/231/services/497/run';
+              $window.location.href = '/project.php#/'+projectId+'/services/'+serviceId+'/run';
             }
           }
 
