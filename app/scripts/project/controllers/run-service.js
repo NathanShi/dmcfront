@@ -522,7 +522,7 @@ angular.module('dmc.project')
 
             };
 
-            $scope.uploadInputFile = function() {
+            $scope.uploadInputFile = function(ev) {
               console.log();
             }
 
