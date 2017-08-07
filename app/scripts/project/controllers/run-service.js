@@ -581,18 +581,25 @@ angular.module('dmc.project')
             }
 
             $scope.uploadAppFile = function(ev) {
+              openDocModelAndExecCallback(ev, uploadDocs);
+            };
+
+            var openDocModelAndExecCallback = function(ev, callbackFunc) {
               $mdDialog.show({
                 controller: 'DocumentsUploadCtrl as projectCtrl',
                 templateUrl: 'templates/project/pages/documents-upload.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
-                clickOutsideToClose: false
+                clickOutsideToClose: false,
+                locals: {
+                  hideEdit: true
+                }
               }).then(function(documents) {
                 if (documents.length > 0) {
-                  getOrCreateDirectory($scope.service, documents, uploadDocs);
+                  getOrCreateDirectory($scope.service, documents, callbackFunc);
                 }
               });
-            };
+            }
 
             var createAppDirectory = function(homeDir, appName, documents, callback) {
               ajax.create(dataFactory.directoriesUrl().save, {

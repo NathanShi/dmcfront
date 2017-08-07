@@ -19,7 +19,7 @@
       </md-content>
     </div>
     <!-- <div layout='row' class="md-padding upload-documents" ng-if="source.length > 0" flex="{{widgetType == 'row' ? 100 : 50}}"> -->
-    <div layout='column' flex="99" class="md-padding upload-documents" ng-if="source.length > 0">
+    <div layout='column' flex="99" class="md-padding upload-documents" ng-if="source.length > 0" ng-hide="hideEdit">
 
       <!-- wrapping div for repeat-->
       <div class="upload-list" ng-repeat="item in source | limitTo: maxFiles" ng-show="!item.deleted">
