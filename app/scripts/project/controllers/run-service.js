@@ -605,38 +605,13 @@ angular.module('dmc.project')
 
             };
 
-            // var uploadFileListId = 'attachedFileList';
             var attachFileInputId = 'attachedFileList';
-            // $scope.appAttachments = [];
 
             var addAttachmentsToApp = function(attachments) {
-              // checkForExistingAttachments();
-              // $scope.appAttachments.push({id: attachment.id, documentName: attachment.documentName});
-              // updateAppAttachmentInput();
               var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
               attachFileInput.value = JSON.stringify(attachments)
               $scope.run();
             }
-
-            // var updateAppAttachmentInput = function() {
-            //   var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
-            //   uploadFileList.value = JSON.stringify($scope.appAttachments);
-            // }
-            //
-            // var checkForExistingAttachments = function() {
-            //   var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
-            //   if (uploadFileList.value.length>0) {
-            //     var existingFiles = JSON.parse(uploadFileList.value);
-            //     if (existingFiles.length > 0 && $scope.appAttachments.length == 0) {
-            //       $scope.appAttachments = existingFiles;
-            //     }
-            //   }
-            // }
-            //
-            // $scope.removeAppAttachmentFromList = function(index) {
-            //   $scope.appAttachments.splice(index,1)
-            //   updateAppAttachmentInput();
-            // }
 
             var createAttachmentDOMElement = function() {
               var attachmentDOMElement = document.createElement("input");
