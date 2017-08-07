@@ -189,6 +189,8 @@ angular.module('dmc.project')
                 var promises = [];
                 var updateService = $scope.serviceData.__serviceData;
                 updateService.title = $scope.publishService.name;
+                //syeda edit
+                updateService.support = $scope.publishService.support;
                 updateService.description = $scope.publishService.description;
                 updateService.serviceType = $scope.publishService.serviceType;
                 updateService.published = true;
