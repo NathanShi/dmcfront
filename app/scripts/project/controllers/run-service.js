@@ -14,7 +14,10 @@ angular.module('dmc.project')
         'domeModel',
         '$state',
         '$compile',
+        '$mdDialog',
         'questionToastModel',
+        '$q',
+        'fileUpload',
         function ($scope,
                   $stateParams,
                   projectData,
@@ -29,8 +32,10 @@ angular.module('dmc.project')
                   domeModel,
                   $state,
                   $compile,
-                  questionToastModel) {
-
+                  $mdDialog,
+                  questionToastModel,
+                  $q,
+                  fileUpload) {
             $scope.ServiceId = $stateParams.ServiceId;
             $scope.rerun = (angular.isDefined($stateParams.rerun) ? $stateParams.rerun : null);
             $scope.projectData = projectData;
@@ -125,6 +130,7 @@ angular.module('dmc.project')
                 // Add the compiled html to the page
                 $('.content-placeholder').html(compiledHtml);
                 $scope.hasCustomUI = true;
+
               }else{
                 $scope.hasCustomUI = false;
               }
@@ -146,11 +152,11 @@ angular.module('dmc.project')
                 }
               }
               for (var outKey in $scope.service.interfaceModel.outParams){
-		try{
-	             context[outKey] = JSON.parse($scope.service.interfaceModel.outParams[outKey].value);
-		}catch(e){
-		  context[outKey] = $scope.service.interfaceModel.outParams[outKey].value;
-		}
+            		try{
+            	             context[outKey] = JSON.parse($scope.service.interfaceModel.outParams[outKey].value);
+            		}catch(e){
+            		  context[outKey] = $scope.service.interfaceModel.outParams[outKey].value;
+            		}
               }
 
               if($scope.service.interfaceModel.outParams['outputTemplate'].value){
@@ -333,11 +339,14 @@ angular.module('dmc.project')
                     for (var key in $scope.service.interfaceModel.inParams){
                       var domeName = $scope.service.interfaceModel.inParams[key].name;
                       if(document.getElementById(domeName)){
+                        console.log('found element id: ', domeName)
                         var domeValue = document.getElementById(domeName).value;
                         if(domeValue){
+                          console.log('found value: ', domeValue)
                           $scope.service.interfaceModel.inParams[key].value = domeValue;
                         }
                       }else{
+                        console.log('Not found element id: ', domeName)
                         $scope.service.interfaceModel.inParams[key].value = $scope.service.interfaceModel.inParams[key].defaultValue;
                       }
                     }
@@ -348,6 +357,7 @@ angular.module('dmc.project')
                           $scope.service.interfaceModel.inParams[key].value = $scope.service.interfaceModel.inParams[key].value.replace(/"/g, '\\"');
                       }
                   }
+
                     domeModel.runModel({
                         serviceId : $scope.service.id.toString(),
                         inParams: $scope.service.interfaceModel.inParams,
@@ -503,6 +513,145 @@ angular.module('dmc.project')
               });
             }
 
+
+            var uploadDocs = function(documents, directoryId) {
+              var promises = {};
+
+              for (var i in documents) {
+                (function(doc) {
+                  promises[doc.title] = fileUpload.uploadFileToUrl(doc.file, {}, doc.title + doc.type).then(function(response) {
+                    var docData = {
+                      parentId: $scope.projectData.id,
+                      parentType: "PROJECT",
+                      documentUrl: response.file.name,
+                      documentName: doc.title + doc.type,
+                      ownerId: $rootScope.userData.accountId,
+                      docClass: 'SUPPORT',
+                      accessLevel: doc.accessLevel || "MEMBER",
+                      directoryId: directoryId
+                    };
+
+                    return ajax.create(dataFactory.documentsUrl().save, docData, function(resp) { return resp.data });
+                  });
+                })(documents[i]);
+              }
+
+              $q.all(promises).then(function(docs) {
+                addAttachmentsToApp(makeAttachmentsCollection(docs));
+              });
+            }
+
+            var makeAttachmentsCollection = function(promiseReturn) {
+              var docs = [];
+              var keys = Object.keys(promiseReturn);
+              for (var i=0; i<keys.length; i++ ) {
+                docs.push(promiseReturn[keys[i]])
+              }
+              return docs;
+            }
+
+            var getOrCreateDirectory = function(app, documents, callback) {
+              // var directoryId = 9999;
+              var directoryId;
+              var appName = app.title;
+              var appId = app.id;
+              var directoryName = appName+" ("+appId+")"
+
+              ajax.get(dataFactory.directoriesUrl($scope.projectData.directoryId).get, {}, function(response) {
+                var directories = response.data;
+                // see if app directory already exists
+                for (var i=0; i<directories.children.length; i++) {
+                  if (directories.children[i].name == directoryName) {
+                    directoryId = directories.children[i].id
+                    break;
+                  }
+                }
+                // if the previous loop didn't 'find' the app directory, create it
+                if (!directoryId) {
+                  createAppDirectory(directories.id, directoryName, documents, callback)
+                } else {
+                  callback(documents, directoryId);
+                }
+
+
+              },
+              function() {
+                console.log('Error getting directories')
+              });
+            }
+
+            $scope.uploadAppFile = function(ev) {
+              $mdDialog.show({
+                controller: 'DocumentsUploadCtrl as projectCtrl',
+                templateUrl: 'templates/project/pages/documents-upload.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false
+              }).then(function(documents) {
+                if (documents.length > 0) {
+                  getOrCreateDirectory($scope.service, documents, uploadDocs);
+                }
+              });
+            };
+
+            var createAppDirectory = function(homeDir, appName, documents, callback) {
+              ajax.create(dataFactory.directoriesUrl().save, {
+                name: appName,
+                parent: homeDir,
+                children: []
+              }, function(resp) {
+                callback(documents, resp.data.id);
+              });
+
+            };
+
+            // var uploadFileListId = 'attachedFileList';
+            var attachFileInputId = 'attachedFileList';
+            // $scope.appAttachments = [];
+
+            var addAttachmentsToApp = function(attachments) {
+              // checkForExistingAttachments();
+              // $scope.appAttachments.push({id: attachment.id, documentName: attachment.documentName});
+              // updateAppAttachmentInput();
+              var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
+              attachFileInput.value = JSON.stringify(attachments)
+              $scope.run();
+            }
+
+            // var updateAppAttachmentInput = function() {
+            //   var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
+            //   uploadFileList.value = JSON.stringify($scope.appAttachments);
+            // }
+            //
+            // var checkForExistingAttachments = function() {
+            //   var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
+            //   if (uploadFileList.value.length>0) {
+            //     var existingFiles = JSON.parse(uploadFileList.value);
+            //     if (existingFiles.length > 0 && $scope.appAttachments.length == 0) {
+            //       $scope.appAttachments = existingFiles;
+            //     }
+            //   }
+            // }
+            //
+            // $scope.removeAppAttachmentFromList = function(index) {
+            //   $scope.appAttachments.splice(index,1)
+            //   updateAppAttachmentInput();
+            // }
+
+            var createAttachmentDOMElement = function() {
+              var attachmentDOMElement = document.createElement("input");
+              attachmentDOMElement.style.display = "none";
+              // attachmentDOMElement.id = uploadFileListId;
+              attachmentDOMElement.id = attachFileInputId;
+              attachmentDOMElement.value = JSON.stringify([]);
+              $('.content-placeholder').append(attachmentDOMElement);
+              return attachmentDOMElement;
+            }
+
+            $scope.downloadAppAttachment = function(docId) {
+              window.location = dataFactory.documentsUrl(docId).download;
+            }
+
             $scope.cancelServiceRun = function(event,item){
                 questionToastModel.show({
                     question: "Are you sure you want to cancel this service run?",
@@ -512,7 +661,6 @@ angular.module('dmc.project')
                               updateServiceStatus(item, response.data);
                               toastModel.showToast("success", "Service run cancelled");
                           }, function(response){
-                            console.log(response)
                             toastModel.showToast("error", response.data ? response.data : response.statusText)
                           });
                         },
@@ -523,9 +671,17 @@ angular.module('dmc.project')
             };
 
             $scope.uploadInputFile = function(ev) {
-              console.log();
+              console.log("upload file!");
             }
-
         }
     ]
-);
+)
+.controller('uploadAppFileController',function($scope,$mdDialog,ajax,dataFactory,$compile,project,$http,toastModel){
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    }
+
+    $scope.uploadDocuments = function() {
+      $mdDialog.hide($scope.documents);
+    }
+});
