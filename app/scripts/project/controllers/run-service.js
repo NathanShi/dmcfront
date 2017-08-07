@@ -522,6 +522,10 @@ angular.module('dmc.project')
 
             };
 
+            $scope.uploadInputFile = function() {
+              console.log();
+            }
+
         }
     ]
 );
