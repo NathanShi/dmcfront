@@ -509,7 +509,7 @@ angular.module('dmc.project')
             }
 
             $scope.unsetInputFile = function() {
-              // $scope.setinputFileValue();
+              $scope.setinputFileValue();
               $scope.currentInputFile = null;
             }
 
