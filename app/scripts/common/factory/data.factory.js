@@ -1178,11 +1178,19 @@ return {
 
       //END RESOURCES
 
-      searchMarketplace: function(text) {
+      searchMarketplace: function(query) {
         if ($window.apiUrl) {
-          return localhost + 'searchServices/' + text;
+          return localhost + 'searchServices/' + query;
         } else {
           return localhost + 'searchServices';
+        }
+      },
+
+      searchMarketplaceItems: function(query) {
+        if ($window.apiUrl) {
+          return localhost + 'searchMarketplace/' + query;
+        } else {
+          return localhost + 'searchMarketplace';
         }
       },
 

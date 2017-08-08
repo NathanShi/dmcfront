@@ -5,7 +5,7 @@
     <div class="row">
     <ul class="nav nav-tabs" role="tablist">
       <li style="float: right;" role="presentation" class="hidden-xs"><a data-target="#viewall" aria-controls="viewall" role="tab" data-toggle="tab">View All</a></li>
-      <li style="float: right;" role="presentation" class="hidden-xs"><a data-target="#academia" aria-controls="academia" role="tab" data-toggle="tab">Academia</a></li>
+      <!-- <li style="float: right;" role="presentation" class="hidden-xs"><a data-target="#academia" aria-controls="academia" role="tab" data-toggle="tab">Academia</a></li> -->
       <li style="float: right;" role="presentation" class="active hidden-xs"><a data-target="#forsmms" aria-controls="forsmms" role="tab" data-toggle="tab">SMMs</a></li>
     </ul>
     <h1 class="col-xs-12">DMC Marketplace</h1>
@@ -183,13 +183,16 @@
 
                   <div class="row">
                     <div class="col-xs-12">
+                      <form ng-submit="search(text)">
                         <div class="search-input-div col-xs-10">
                             <input class="search-input" type="text" ng-model="searchTerm" placeholder="Search">
                             <ng-md-icon icon="clear" size="15" class="pull-right clear-icon" ng-click="clearSearch()"></ng-md-icon>
                         </div>
-                        <button class="btn search-button no-click-border col-xs-2" ng-click="search()">
+                        <button class="btn search-button no-click-border col-xs-2" type="submit">
+                        <!-- <button class="btn search-button no-click-border col-xs-2" ng-click="search()"> -->
                           <ng-md-icon icon="search" size="20"></ng-md-icon>
                         </button>
+                      </form>
                     </div>
                   </div>
 
