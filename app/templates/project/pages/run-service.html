@@ -62,7 +62,8 @@
     <div class="row">
       <div class="col-xs-12">
 				<md-button ng-click="uploadInputFile()" style="margin-left: 0px;" class="md-raised md-primary">Upload Input File</md-button>
-				<span ng-show="inputFile.projectModelFile.documentName">Input File:{{inputFile.projectModelFile.documentName}}</span>
+				<span ng-show="currentInputFile">Current Input File: {{currentInputFile.documentName}}</span>
+				<span ng-show="currentInputFile" ng-click="unsetInputFile()" style="color: red;">X</span>
 			</div>
 		</div>
 	</section>

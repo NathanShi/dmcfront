@@ -500,11 +500,17 @@ angular.module('dmc.project')
             }
 
             $scope.setinputFileValue = function(file) {
+              file = file || {documentUrl: ""};
               if (document.getElementById('inputFile')) {
                 document.getElementById('inputFile').value = file.documentUrl;
               } else {
                 $scope.service.interfaceModel.inParams["inputFile"].value = file.documentUrl;
               }
+            }
+
+            $scope.unsetInputFile = function() {
+              // $scope.setinputFileValue();
+              $scope.currentInputFile = null;
             }
 
             function setVPCData(fieldId){
@@ -568,7 +574,10 @@ angular.module('dmc.project')
             var pollForScannedFile = function(fileId) {
               ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}, function(resp) {
                 if (resp.data.documentUrl.match(/dmcupfinal/i)) {
-                  inputFile.projectModelFile = resp.data;
+                  // $scope.setinputFileValue(resp.data);
+                  $scope.currentInputFile = resp.data;
+                  console.log("$scope.currentInputFile")
+                  console.log($scope.currentInputFile)
                 } else {
                   if (pollScanFileLimit > 0) {
                     pollScanFileLimit--;
