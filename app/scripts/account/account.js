@@ -43,11 +43,11 @@ angular.module('dmc.account', [
         url: '/:accountId',
         controller: 'AccountIdLocatorCtrl',
         template: '<ui-view />'
-    }).state('account.basics', {
-        url: '/basics',
-        controller: 'BasicsAccountCtr',
-        templateUrl: 'templates/account/basics.html',
-        resolve: resolve
+      // }).state('account.basics', {
+      //     url: '/basics',
+      //     controller: 'BasicsAccountCtr',
+      //     templateUrl: 'templates/account/basics.html',
+      //     resolve: resolve
     }).state('account.profile', {
         url: '/profile',
         controller: 'ProfileAccountCtr',
@@ -144,7 +144,8 @@ angular.module('dmc.account', [
         }
         var hash = window.location.hash;
         if (hash.lastIndexOf('/') == hash.indexOf('/')) {
-            $state.go('account.basics', {accountId: accountId})
+            //change to account.profile
+            $state.go('account.profile', {accountId: accountId})
         }
 }])
 

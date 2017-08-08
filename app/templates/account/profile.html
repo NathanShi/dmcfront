@@ -39,13 +39,19 @@
 
                               <div class="profile-header" flex="70" layout="row">
                                   <div flex="50" layout="column">
-                                      <md-input-container>
-                                          <label>Display Name </label>
-                                          <input ng-model="profile.realname"
-                                                 id="editFirstName"
-                                                 ng-blur="blurInput()"
-                                                 ng-disabled="isVerified">
-                                      </md-input-container>
+                                    <md-input-container flex="30">
+                                        <label>First name</label>
+                                        <input ng-model="profile.firstName"
+                                               id="editFirstName"
+                                               ng-blur="blurInput()"
+                                               ng-disabled="isVerified">
+                                    </md-input-container>
+                                    <md-input-container flex="30">
+                                        <label>Last Name</label>
+                                        <input ng-model="profile.lastName"
+                                               ng-blur="blurInput()"
+                                               ng-disabled="isVerified">
+                                    </md-input-container>
                                       <md-input-container>
                                           <label>Job Title</label>
                                           <input ng-model="profile.title"
