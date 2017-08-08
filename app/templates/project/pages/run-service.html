@@ -58,7 +58,7 @@
     </div>
   </section>
 
-	<section class="container" ng-show="!hasCustomUI">
+	<section class="container" ng-show="!hasCustomUI && service.interfaceModel.inParams.inputFile">
     <div class="row">
       <div class="col-xs-12">
 				<md-button ng-click="uploadInputFile()" style="margin-left: 0px;" class="md-raised md-primary">Upload Input File</md-button>

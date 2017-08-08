@@ -574,10 +574,8 @@ angular.module('dmc.project')
             var pollForScannedFile = function(fileId) {
               ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}, function(resp) {
                 if (resp.data.documentUrl.match(/dmcupfinal/i)) {
-                  // $scope.setinputFileValue(resp.data);
                   $scope.currentInputFile = resp.data;
-                  console.log("$scope.currentInputFile")
-                  console.log($scope.currentInputFile)
+                  $scope.setinputFileValue($scope.currentInputFile);
                 } else {
                   if (pollScanFileLimit > 0) {
                     pollScanFileLimit--;
