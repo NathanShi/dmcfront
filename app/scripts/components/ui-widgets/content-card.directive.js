@@ -50,7 +50,7 @@ angular.module('dmc.widgets.content', [
      * app - array of apps/services
      *
      */
-    function UiWidgetContentCardController($http) {
+    function UiWidgetContentCardController($http, DMCUserModel, $window, ajax) {
         var vm = this;
 
         vm.downloadFile = function(id) {
@@ -58,8 +58,6 @@ angular.module('dmc.widgets.content', [
         };
 
         vm.saveToDefaultProject = function(app){
-          console.log("saveToDefaultProject")
-          console.log(app)
 
           var updatedItem = $.extend(true, {}, app);
           if (updatedItem.hasOwnProperty('$$hashKey')) {
@@ -68,7 +66,7 @@ angular.module('dmc.widgets.content', [
           var tagsAdded = false;
           var interfacesAdded = false;
 
-          updatedItem.owner = userData.accountId;
+          // updatedItem.owner = userData.accountId;
           updatedItem.from = 'marketplace';
           updatedItem.published = false;
           updatedItem.parent = updatedItem.id;
@@ -98,8 +96,6 @@ angular.module('dmc.widgets.content', [
               redirectToService(tagsAdded, interfacesAdded, projectId, id);
             });
           });
-
-
         };
 
         var redirectToService = function(tagsAdded, interfacesAdded, projectId, serviceId) {
