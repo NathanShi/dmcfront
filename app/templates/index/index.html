@@ -1,5 +1,6 @@
 <main>
     <section class="container" ng-if="(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))">
+    <!-- <section class="container" ng-if="!(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))"> -->
 
     <div class="row welcome margin-bottom-30">
       <h2 class="col-xs-12">WELCOME TO THE</h2>
@@ -49,6 +50,7 @@
     </section>
 
     <section class="container" ng-if="!(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))">
+    <!-- <section class="container" ng-if="(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))"> -->
 
     <div class="row welcome">
       <h2 class="col-xs-12">WELCOME TO THE</h2>
@@ -102,22 +104,31 @@
         </div>
       </div>
 
+
       <div class="row icons">
-        <div class="col-xs-4">
-          <a href="/educate.php">
-            <img src="https://dev-web2.opendmc.org/images/Icons_Distribute.svg"></img>
-            <h4>EDUCATE</h4>
-          </a>
-        </div>
-        <div class="col-xs-4">
+        <div class="col-xs-3">
           <a href="/transform.php">
-            <img src="https://dev-web2.opendmc.org/images/Icons_Analyze.svg"></img>
-            <h4>TRANSFORM</h4>
+            <img ng-src="images/calc.png"></img>
+            <h4>IMPROVE ESTIMATES</h4>
           </a>
         </div>
-        <div class="col-xs-4">
-          <img src="https://dev-web2.opendmc.org/images/Icons_Connect.svg"></img>
-          <h4>CONNECT</h4>
+        <div class="col-xs-3">
+          <a href="/transform.php">
+            <img ng-src="images/computer.png"></img>
+            <h4>IMPROVE CNC OPERATIONS</h4>
+          </a>
+        </div>
+        <div class="col-xs-3">
+          <a href="/transform.php">
+            <img ng-src="images/ruler.png"></img>
+            <h4>IMPROVE CMM OPERATIONS</h4>
+          </a>
+        </div>
+        <div class="col-xs-3">
+          <a href="/transform.php">
+            <img ng-src="images/meter.png" ></img>
+            <h4>GET LEAN</h4>
+          </a>
         </div>
       </div>
 
@@ -191,4 +202,3 @@
 
     </section>
 </main>
-
