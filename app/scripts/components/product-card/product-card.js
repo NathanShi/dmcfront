@@ -178,7 +178,7 @@ angular.module('dmc.component.productcard', [
                   updatedItem.parent = updatedItem.id;
                   delete updatedItem.projectId
                   delete updatedItem.tags;
-                  
+
                   ajax.create(dataFactory.services().add, updatedItem, function (response) {
                       var id = response.data.id;
                       var projectId = response.data.projectId;
@@ -208,7 +208,7 @@ angular.module('dmc.component.productcard', [
 
           var redirectToService = function(tagsAdded, interfacesAdded, projectId, serviceId) {
             if (tagsAdded && interfacesAdded) {
-              $window.location.href = '/project.php#/'+projectId+'/services/'+serviceId+'/run';
+              $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run';
             }
           }
 
