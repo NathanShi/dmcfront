@@ -377,7 +377,7 @@ angular.module('dmc.service-marketplace')
                     }
                 );
             };
-////
+
             $scope.addReply = function(NewReview){
                 var review = this.review;
                 serviceModel.add_service_reviews(
@@ -533,7 +533,7 @@ angular.module('dmc.service-marketplace')
                 }
                 $scope.SortingReviews($scope.sortList[0].val);
             };
-///
+
             $scope.$watchCollection('names', function(newNames, oldNames) {
             });
 
