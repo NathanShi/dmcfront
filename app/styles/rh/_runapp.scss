@@ -25,19 +25,28 @@
   overflow: hidden;
   h3{
     margin: 0;
+    font-size: 18px;
+  }
+  .md-icon-button{
+    height: 18px;
+    line-height: 18px;
+    width: 24px;
   }
   .md-button.md-raised{
-    margin: 24px 0;
+    margin: 18px 0;
   }
   .preview{
     height: 100%;
     h2 {
-      margin: 8px;
+      padding: 18px 0px;
+      margin: 0px;
     }
     md-content{
       height: 350px;
+      padding: 10px 0px;
     }
     md-list-item{
+      padding: 10px 0px;
       height: 36px;
       min-height: 36px;
       &.selected{
@@ -46,6 +55,16 @@
       .md-list-item-inner{
         min-height: 36px;
       }
+    }
+  }
+}
+
+.service-run-items{
+  a{
+    color: inherit;
+    &:hover{
+      text-decoration: none;
+      color: inherit;
     }
   }
 }

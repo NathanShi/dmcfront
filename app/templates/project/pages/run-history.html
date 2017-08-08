@@ -8,7 +8,7 @@
 		</div>
 		<div layout="row" layout-align="space-between center">
 			<h3>Run History</h3>
-			<md-button ng-href="{{'run-app.php#/' + projectData.id + '/services/' + service.id + '/run'}}" class="md-raised md-primary pull-right">
+			<md-button ng-href="{{'run-app.php#/' + service.projectId + '/services/' + service.id + '/run'}}" class="md-raised md-primary pull-right">
 				Run
 			</md-button>
 		</div>
@@ -26,24 +26,24 @@
             <thead md-order="sort" md-trigger="onOrderChange">
             <tr>
                 <th name="Run Date" order-by="startDate"></th>
-                <th name="Run By" order-by="runBy"></th>
+                <!-- <th name="Run By" order-by="runBy"></th> -->
                 <!-- <th name="Run Time" order-by="runTime"></th> -->
-                <th name="Results" order-by="status"></th>
+                <th name="Status" order-by="status"></th>
             </tr>
             </thead>
-            <tbody>
-            <tr ng-repeat="item in history">
+            <tbody class="service-run-items">
+            <tr ng-click="openResults(item)" ng-repeat="item in history">
                 <td>
                     {{item.startDate}}
                 </td>
-                <td>
+                <!-- <td>
                     <a href="/profile.php#/{{item.runBy}}" >{{item.runByUserName}}</a>
-                </td>
+                </td> -->
                 <!-- <td>
                     {{item.runTime}}s.
                 </td> -->
                 <td ng-style="{color: (item.status == '1' ? '#65AF3F': (item.status == '-1' ? 'red' : 'orange'))}">
-                    <a ng-click="openResults(item)">{{(item.status == 1 ? 'Success' : (item.status == -1 ? 'Error' : 'Running' ))}}</a>
+                    <a>{{(item.status == 1 ? 'Success' : (item.status == -1 ? 'Error' : 'Running' ))}}</a>
                 </td>
             </tr>
             <tr ng-if="history.length == 0">
