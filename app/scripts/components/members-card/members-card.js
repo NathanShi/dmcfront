@@ -25,7 +25,6 @@ angular.module('dmc.component.members-card', [
 							);
 						};
 
-						console.log("cardsource",$scope.cardSource);
 
 			$scope.userData = null;
 			DMCUserModel.getUserData().then(function(res){
