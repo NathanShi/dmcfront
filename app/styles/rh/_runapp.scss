@@ -14,3 +14,38 @@
     width: 100%;
   }
 }
+
+.modal-result{
+  padding: 50px;
+
+  md-dialog{
+    padding: 100px;
+  }
+
+  overflow: hidden;
+  h3{
+    margin: 0;
+  }
+  .md-button.md-raised{
+    margin: 24px 0;
+  }
+  .preview{
+    height: 100%;
+    h2 {
+      margin: 8px;
+    }
+    md-content{
+      height: 350px;
+    }
+    md-list-item{
+      height: 36px;
+      min-height: 36px;
+      &.selected{
+        background-color: #65AF3F;
+      }
+      .md-list-item-inner{
+        min-height: 36px;
+      }
+    }
+  }
+}

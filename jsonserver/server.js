@@ -7,7 +7,7 @@ var server = jsonServer.create();
 // Set default middlewares (logger, static, cors and no-cache)
 //server.use(jsonServer.defaults());
 server.use(jsonServer.defaults());
-// 
+//
 server.use(jsonServer.bodyParser)
 // Add this before server.use(router)
 server.use(jsonServer.rewriter({
@@ -84,6 +84,7 @@ server.use(jsonServer.rewriter({
     '/organizations/myVPC': '/myVPC',
     '/searchworkspace/:id': '/searchworkspace',
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
+    'service_runs?serviceId=:id': '/service_runs'
 }));
 
 server.post('/dmdiidocument', function(req,res) {
