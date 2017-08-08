@@ -547,8 +547,10 @@ angular.module('dmc.project')
               });
             }
 
+            $scope.fileUploadInProgress = false;
             var uploadInputFile = function(documents, directoryId) {
               var doc = documents[0];
+              $scope.fileUploadInProgress = true;
 
               fileUpload.uploadFileToUrl(doc.file, {}, doc.title + doc.type).then(function(response) {
                 var docData = {
@@ -574,10 +576,9 @@ angular.module('dmc.project')
             var pollForScannedFile = function(fileId) {
               ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}, function(resp) {
                 if (resp.data.documentUrl.match(/dmcupfinal/i)) {
-                  // $scope.setinputFileValue(resp.data);
+                  $scope.fileUploadInProgress = false;
                   $scope.currentInputFile = resp.data;
-                  console.log("$scope.currentInputFile")
-                  console.log($scope.currentInputFile)
+                  $scope.setinputFileValue($scope.currentInputFile);
                 } else {
                   if (pollScanFileLimit > 0) {
                     pollScanFileLimit--;

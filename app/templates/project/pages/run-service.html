@@ -50,7 +50,7 @@
           </md-select>
         </div>
       </div>
-      <div class="container" style="width: 100%;">
+      <div class="container" style="width: 100%; padding: 0px;">
           <!--Custom UI Content will be displayed here-->
           <div class="content-placeholder">
           </div>
@@ -58,18 +58,21 @@
     </div>
   </section>
 
-	<section class="container" ng-show="!hasCustomUI">
-    <div class="row">
-      <div class="col-xs-12">
-				<md-button ng-click="uploadInputFile()" style="margin-left: 0px;" class="md-raised md-primary">Upload Input File</md-button>
-				<span ng-show="currentInputFile">Current Input File: {{currentInputFile.documentName}}</span>
-				<span ng-show="currentInputFile" ng-click="unsetInputFile()" style="color: red;">X</span>
-			</div>
-		</div>
-	</section>
-
   <!-- Inputs/Outputs for Stock UI -->
   <section class="container" ng-show="!hasCustomUI">
+		<div style="position: relative;">
+			<div class="greyout" ng-show="isRunning()">
+				<div class="loader"></div>
+			</div>
+
+			<div class="row" ng-show="service.interfaceModel.inParams.inputFile">
+	      <div class="col-xs-12">
+					<md-button ng-disabled="fileUploadInProgress" ng-click="uploadInputFile()" style="margin-left: 0px;" class="md-raised md-primary">Upload Input File</md-button>
+					<div ng-show="fileUploadInProgress" class="file-loader"></div>
+					<span ng-show="currentInputFile">Current Input File: {{currentInputFile.documentName}}</span>
+					<span ng-show="currentInputFile" ng-click="unsetInputFile()" style="color: red;">X</span>
+				</div>
+			</div>
 
     <div class="row">
       <div class="col-xs-6">
@@ -89,5 +92,6 @@
       </div>
 
     </div>
+	</div>
   </section>
 </main>
