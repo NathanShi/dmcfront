@@ -1,3 +1,5 @@
+@import "variables";
+
 .last-run-status {
   margin-top: 0px;
   font-weight: lighter;
@@ -57,6 +59,10 @@
       }
     }
   }
+}
+
+.app-profile {
+  color: map-get($colors, secondary);
 }
 
 .service-run-items{

@@ -1,18 +1,15 @@
 <main>
 
 	<section class="container">
-		<div class="row">
-			<div class="col-xs-8">
-				<h2><a ui-sref="project.services-detail({ServiceId: service.id})" >{{service.title}}</a></h2>
-			</div>
-		</div>
-		<div layout="row" layout-align="space-between center">
-			<h3>Run History</h3>
-			<md-button ng-href="{{'run-app.php#/' + service.projectId + '/services/' + service.id + '/run'}}" class="md-raised md-primary pull-right">
-				Run
-			</md-button>
-		</div>
-	</section>
+    <div class="row" layout="space-between center">
+      <div class="col-xs-8">
+        <h2><a ui-sref="project.services-detail({ServiceId: service.id})" >{{service.title}}</a></h2>
+				<a ng-href="{{'run-app.php#/' + service.projectId + '/services/' + service.id + '/run'}}" class="link margin-top8">
+					Run Again
+				</a>
+      </div>
+    </div>
+  </section>
 
 	<div class="container">
     <div class="row">
@@ -21,6 +18,7 @@
   </div>
 
 	<section class="container">
+		<h3 class="app-profile" style="margin-top:0px">Run History</h3>
 		<md-data-table-container style="padding-bottom:20px">
         <table md-data-table>
             <thead md-order="sort" md-trigger="onOrderChange">
