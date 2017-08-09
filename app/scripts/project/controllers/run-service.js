@@ -537,7 +537,32 @@ angular.module('dmc.project')
               }
 
               $q.all(promises).then(function(docs) {
-                addAttachmentsToApp(makeAttachmentsCollection(docs));
+                pollForScannedFiles(makeAttachmentsCollection(docs));
+                // addAttachmentsToApp(makeAttachmentsCollection(docs));
+              });
+            }
+
+            var pollForScannedFiles = function(files) {
+              for (var i=0; i<files.length; i++) {
+                pollForScannedFile(files[i].id)
+              }
+            }
+
+            // Limit the number of polls we'll do
+            var pollScanFileLimit=100;
+            var pollForScannedFile = function(fileId) {
+              console.log('polling for scanned file')
+              ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}, function(resp) {
+                if (resp.data.documentUrl.match(/dmcupfinal/i)) {
+                  $scope.fileUploadInProgress = false;
+                  $scope.currentInputFile = resp.data;
+                  $scope.setinputFileValue($scope.currentInputFile);
+                } else {
+                  if (pollScanFileLimit > 0) {
+                    pollScanFileLimit--;
+                    setTimeout(function(){ pollForScannedFile(fileId) },500);
+                  }
+                }
               });
             }
 
