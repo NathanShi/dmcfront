@@ -551,12 +551,9 @@ angular.module('dmc.project')
             // Limit the number of polls we'll do
             var pollScanFileLimit=100;
             var pollForScannedFile = function(fileId) {
-              console.log('polling for scanned file')
               ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}, function(resp) {
                 if (resp.data.documentUrl.match(/dmcupfinal/i)) {
-                  $scope.fileUploadInProgress = false;
-                  $scope.currentInputFile = resp.data;
-                  $scope.setinputFileValue($scope.currentInputFile);
+                  updateInputFileValue(resp.data)
                 } else {
                   if (pollScanFileLimit > 0) {
                     pollScanFileLimit--;
@@ -564,6 +561,12 @@ angular.module('dmc.project')
                   }
                 }
               });
+            }
+
+            var updateInputFileValue = function(response) {
+              $scope.fileUploadInProgress = false;
+              $scope.currentInputFile = response;
+              $scope.setinputFileValue($scope.currentInputFile);
             }
 
             var makeAttachmentsCollection = function(promiseReturn) {
