@@ -303,6 +303,7 @@ angular.module('dmc.service-marketplace', [
                         component['title'] = params['title'];
                         component['description'] = params['description'];
                         component['serviceType'] = params['serviceType'];
+                        component['support'] = params['support'];
 
                         return ajax.update(dataFactory.services($stateParams.serviceId).update,
                             component,

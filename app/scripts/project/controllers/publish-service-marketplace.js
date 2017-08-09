@@ -52,8 +52,6 @@ angular.module('dmc.project')
                 inputs : $scope.serviceData.specifications ? $scope.serviceData.specifications.input : 0,
                 outputs : $scope.serviceData.specifications ? $scope.serviceData.specifications.output : 0,
                 specifications : $scope.serviceData.specifications ? $scope.serviceData.specifications.special : [],
-                //syeda edit
-                support: $scope.serviceData.support,
                 tags : $scope.serviceData.service_tags,
                 support: $scope.serviceData.support
             };
@@ -120,11 +118,12 @@ angular.module('dmc.project')
             };
 
             $scope.changedInput = function(){
-                $scope.isDisabledFirstPage = ($scope.publishService.name && $scope.publishService.description && $scope.publishService.serviceType  ? false : true);
+                $scope.isDisabledFirstPage = ($scope.publishService.name && $scope.publishService.support && $scope.publishService.description && $scope.publishService.serviceType  ? false : true);
             };
-            $scope.changedInput();
 
+            $scope.changedInput();
             $scope.nextPage = function(){
+
                 $scope.currentPublishPage++;
             };
             // Second Page

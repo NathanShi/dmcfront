@@ -36,8 +36,6 @@ angular.module('dmc.service-marketplace')
             $scope.not_found = false;  //product not fount
             $scope.products_card = [];  //products card
             $scope.allServices = [];
-
-            $scope.removeSupport = [];
             $scope.removeTags =[];
             $scope.addTags =[];
             $scope.removeAuthors = [];
@@ -300,7 +298,7 @@ angular.module('dmc.service-marketplace')
                     }
                 },ev);
             };
-            
+
             //add bew sepecifications to system
             $scope.addNewSpecifications = function(text){
                 this.$$childHead.$mdAutocompleteCtrl.clear();
