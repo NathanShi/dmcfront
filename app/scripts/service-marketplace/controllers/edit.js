@@ -37,6 +37,7 @@ angular.module('dmc.service-marketplace')
             $scope.products_card = [];  //products card
             $scope.allServices = [];
 
+            $scope.removeSupport = [];
             $scope.removeTags =[];
             $scope.addTags =[];
             $scope.removeAuthors = [];
@@ -299,7 +300,7 @@ angular.module('dmc.service-marketplace')
                     }
                 },ev);
             };
-
+            
             //add bew sepecifications to system
             $scope.addNewSpecifications = function(text){
                 this.$$childHead.$mdAutocompleteCtrl.clear();
@@ -440,7 +441,9 @@ angular.module('dmc.service-marketplace')
                 var service = {
                     title: $scope.product.title,
                     description: $scope.product.description,
-                    serviceType: $scope.product.serviceType
+                    serviceType: $scope.product.serviceType,
+                    support: $scope.product.support
+
                 }
 
                 if ($scope.product.specifications && $scope.product.specifications.length) {

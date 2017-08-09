@@ -908,6 +908,7 @@ angular.module('dmc.project', [
                             component['parent'] = params['parent'];
                             component['description'] = params['description'];
                             component['serviceType'] = params['serviceType'];
+                            component['support'] = params['support'];
 
                             return ajax.update(dataFactory.services($stateParams.ServiceId).update,
                                 component,

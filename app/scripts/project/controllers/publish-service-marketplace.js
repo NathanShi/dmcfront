@@ -1,3 +1,4 @@
+
 angular.module('dmc.project')
     .controller('PublishServiceMarketplaceCtrl',[
         '$rootScope',
@@ -39,7 +40,6 @@ angular.module('dmc.project')
             var getServiceTypes = function() {
                 ajax.get(dataFactory.getStaticJSON('serviceTypes.json'), {}, function(response){
                     $scope.serviceTypes = response.data;
-
                 });
             }
             getServiceTypes();
@@ -52,6 +52,8 @@ angular.module('dmc.project')
                 inputs : $scope.serviceData.specifications ? $scope.serviceData.specifications.input : 0,
                 outputs : $scope.serviceData.specifications ? $scope.serviceData.specifications.output : 0,
                 specifications : $scope.serviceData.specifications ? $scope.serviceData.specifications.special : [],
+                //syeda edit
+                support: $scope.serviceData.support,
                 tags : $scope.serviceData.service_tags,
                 support: $scope.serviceData.support
             };
@@ -61,7 +63,7 @@ angular.module('dmc.project')
             $scope.newSpecification.querySearch = querySearch;
 
             function querySearch (query) {
-                return query ? specifications.filter( createFilterFor(query) ) : specifications;
+                return query ? specifications.filter(createFilterFor(query)) : specifications;
             }
 
             function loadAllSpecifications() {
@@ -125,7 +127,6 @@ angular.module('dmc.project')
             $scope.nextPage = function(){
                 $scope.currentPublishPage++;
             };
-
             // Second Page
 
             $scope.publishService2 = {
