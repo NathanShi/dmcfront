@@ -565,7 +565,7 @@ angular.module('dmc.project')
                 };
 
                 ajax.create(dataFactory.documentsUrl().save, docData, function(resp) {
-                  pollForScannedFile(resp.data.id);
+                  pollForScannedFile(resp.data.id, updateInputFileValue);
                 });
               });
 
@@ -573,12 +573,10 @@ angular.module('dmc.project')
 
             // Limit the number of polls we'll do
             var pollScanFileLimit=100;
-            var pollForScannedFile = function(fileId) {
+            var pollForScannedFile = function(fileId, callback) {
               ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}, function(resp) {
                 if (resp.data.documentUrl.match(/dmcupfinal/i)) {
-                  $scope.fileUploadInProgress = false;
-                  $scope.currentInputFile = resp.data;
-                  $scope.setinputFileValue($scope.currentInputFile);
+                  callback(resp.data);
                 } else {
                   if (pollScanFileLimit > 0) {
                     pollScanFileLimit--;
@@ -586,6 +584,12 @@ angular.module('dmc.project')
                   }
                 }
               });
+            }
+
+            var updateInputFileValue = function(fileData) {
+              $scope.fileUploadInProgress = false;
+              $scope.currentInputFile = fileData;
+              $scope.setinputFileValue($scope.currentInputFile);
             }
 
             var makeAttachmentsCollection = function(promiseReturn) {

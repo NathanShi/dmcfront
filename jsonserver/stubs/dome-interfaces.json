@@ -26,6 +26,15 @@
             "value": "1",
             "parameterid": "d9f30f37-d800-1004-8f53-704dbfababa8",
             "instancename": null
+        },
+        "inputFile": {
+            "type": "String",
+            "name": "Input File",
+            "unit": "",
+            "category": "",
+            "value": "",
+            "parameterid": "d9g30f37-d800-1004-8f53-704dbfababa8",
+            "instancename": null
         }
     },
     "outParams": {
