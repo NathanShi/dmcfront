@@ -580,7 +580,7 @@ angular.module('dmc.project')
                 } else {
                   if (pollScanFileLimit > 0) {
                     pollScanFileLimit--;
-                    setTimeout(function(){ pollForScannedFile(fileId) },500);
+                    setTimeout(function(){ pollForScannedFile(fileId, callback) },500);
                   }
                 }
               });
