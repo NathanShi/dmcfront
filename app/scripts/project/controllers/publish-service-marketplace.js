@@ -121,6 +121,10 @@ angular.module('dmc.project')
                 $scope.isDisabledFirstPage = ($scope.publishService.name && $scope.publishService.support && $scope.publishService.description && $scope.publishService.serviceType  ? false : true);
             };
 
+            $scope.$watch('publishService.support', function() {
+                $scope.changedInput();
+            });
+
             $scope.changedInput();
             $scope.nextPage = function(){
 
