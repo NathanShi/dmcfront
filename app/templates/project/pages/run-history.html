@@ -1,12 +1,12 @@
 <main class="app-profile">
 	<section class="container">
-    <div class="row" layout="space-between center">
-      <div class="col-xs-8">
+    <div layout="row" layout-align="space-between center">
+			<div layout="column">
         <h2><a ui-sref="project.services-detail({ServiceId: service.id})" >{{service.title}}</a></h2>
 				<a ng-href="{{'run-app.php#/' + service.projectId + '/services/' + service.id + '/run'}}" class="link margin-top8">
-					Run Again
-				</a>
-      </div>
+          Run Again
+        </a>
+			</div>
     </div>
   </section>
 
@@ -22,10 +22,10 @@
         <table md-data-table>
             <thead md-order="sort" md-trigger="onOrderChange">
             <tr>
-                <th name="Run Date" order-by="startDate"></th>
+                <th name="Run Date"></th>
                 <!-- <th name="Run By" order-by="runBy"></th> -->
                 <!-- <th name="Run Time" order-by="runTime"></th> -->
-                <th name="Status" order-by="status"></th>
+                <th name="Status"></th>
             </tr>
             </thead>
             <tbody class="service-run-items">

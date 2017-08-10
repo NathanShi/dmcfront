@@ -67,6 +67,10 @@
     font-size: 18px;
     //margin-left: 24px;
   }
+
+  .md-button.md-primary{
+    background-color: map-get($colors, secondary);
+  }
 }
 
 .service-run-items{
