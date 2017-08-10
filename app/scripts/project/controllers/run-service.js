@@ -277,6 +277,7 @@ angular.module('dmc.project')
             }
 
             var pollingInterval;
+            $scope.attachmentUploadInProgress;
 
             function startPolling(data) {
                 // if internal is already running don't start another
@@ -522,6 +523,7 @@ angular.module('dmc.project')
 
             var uploadDocs = function(documents, directoryId) {
               var promises = {};
+              $scope.attachmentUploadInProgress = true;
 
               for (var i in documents) {
                 (function(doc) {
@@ -556,8 +558,8 @@ angular.module('dmc.project')
               }
 
               $q.all(promises).then(function(scannnedDocs) {
-                console.log("all resolved")
                 addAttachmentsToApp(scannnedDocs)
+                $scope.attachmentUploadInProgress = false;
               });
 
             }
@@ -606,20 +608,11 @@ angular.module('dmc.project')
             }
 
             var pollForScannedFilePromise = function(fileId) {
-              // return ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}).then(function(resp){
-              //   if (resp.data.documentUrl.match(/dmcupfinal/i)) {
-              //     return resp.data;
-              //   } else {
-              //     pollForScannedFilePromise(fileId);
-              //     // return pollForScannedFilePromise(fileId);
-              //   }
-              // });
               return $timeout(function() {
                 return ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}).then(function(resp){
                   if (resp.data.documentUrl.match(/dmcupfinal/i)) {
                     return resp.data;
                   } else {
-                    // pollForScannedFilePromise(fileId);
                     return pollForScannedFilePromise(fileId);
                   }
                 });
