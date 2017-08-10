@@ -543,8 +543,23 @@ angular.module('dmc.project')
               }
 
               $q.all(promises).then(function(docs) {
-                addAttachmentsToApp(makeAttachmentsCollection(docs));
+                // addAttachmentsToApp(makeAttachmentsCollection(docs));
+                resolveAllAttachmentScans(makeAttachmentsCollection(docs));
               });
+            }
+
+            var resolveAllAttachmentScans = function(docs) {
+              var promises = [];
+
+              for (var i=0; i<docs.length; i++) {
+                promises.push(pollForScannedFilePromise(docs[i].id))
+              }
+
+              $q.all(promises).then(function(scannnedDocs) {
+                console.log("all resolved")
+                addAttachmentsToApp(scannnedDocs)
+              });
+
             }
 
             $scope.fileUploadInProgress = false;
@@ -573,9 +588,13 @@ angular.module('dmc.project')
 
             // Limit the number of polls we'll do
             var pollScanFileLimit=100;
+
+
+
             var pollForScannedFile = function(fileId, callback) {
               ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}, function(resp) {
                 if (resp.data.documentUrl.match(/dmcupfinal/i)) {
+                  console.log('file has been scanned')
                   callback(resp.data);
                 } else {
                   if (pollScanFileLimit > 0) {
@@ -585,6 +604,28 @@ angular.module('dmc.project')
                 }
               });
             }
+
+            var pollForScannedFilePromise = function(fileId) {
+              // return ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}).then(function(resp){
+              //   if (resp.data.documentUrl.match(/dmcupfinal/i)) {
+              //     return resp.data;
+              //   } else {
+              //     pollForScannedFilePromise(fileId);
+              //     // return pollForScannedFilePromise(fileId);
+              //   }
+              // });
+              return $timeout(function() {
+                return ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}).then(function(resp){
+                  if (resp.data.documentUrl.match(/dmcupfinal/i)) {
+                    return resp.data;
+                  } else {
+                    // pollForScannedFilePromise(fileId);
+                    return pollForScannedFilePromise(fileId);
+                  }
+                });
+              }, 500)
+            }
+
 
             var updateInputFileValue = function(fileData) {
               $scope.fileUploadInProgress = false;
@@ -670,9 +711,11 @@ angular.module('dmc.project')
             var attachFileInputId = 'attachedFileList';
 
             var addAttachmentsToApp = function(attachments) {
+              console.log('addAttachmentsToApp')
+              console.log(attachments)
               var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
               attachFileInput.value = JSON.stringify(attachments)
-              $scope.run();
+              // $scope.run();
             }
 
             var createAttachmentDOMElement = function() {
