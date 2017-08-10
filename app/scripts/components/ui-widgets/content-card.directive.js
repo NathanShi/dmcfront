@@ -12,7 +12,6 @@ angular.module('dmc.widgets.content', [
         templateUrl: '/templates/components/ui-widgets/content-card.html',
         scope: true,
         bindToController: {
-            contentType: '=',
             title: '=',
             category: '=',
             contentItems: '='
