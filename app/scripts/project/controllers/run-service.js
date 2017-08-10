@@ -277,6 +277,7 @@ angular.module('dmc.project')
             }
 
             var pollingInterval;
+            $scope.attachmentUploadInProgress;
 
             function startPolling(data) {
                 // if internal is already running don't start another
@@ -500,11 +501,17 @@ angular.module('dmc.project')
             }
 
             $scope.setinputFileValue = function(file) {
+              file = file || {documentUrl: ""};
               if (document.getElementById('inputFile')) {
                 document.getElementById('inputFile').value = file.documentUrl;
               } else {
                 $scope.service.interfaceModel.inParams["inputFile"].value = file.documentUrl;
               }
+            }
+
+            $scope.unsetInputFile = function() {
+              $scope.setinputFileValue();
+              $scope.currentInputFile = null;
             }
 
             function setVPCData(fieldId){
@@ -516,6 +523,7 @@ angular.module('dmc.project')
 
             var uploadDocs = function(documents, directoryId) {
               var promises = {};
+              $scope.attachmentUploadInProgress = true;
 
               for (var i in documents) {
                 (function(doc) {
@@ -537,35 +545,84 @@ angular.module('dmc.project')
               }
 
               $q.all(promises).then(function(docs) {
-                pollForScannedFiles(makeAttachmentsCollection(docs));
                 // addAttachmentsToApp(makeAttachmentsCollection(docs));
+                resolveAllAttachmentScans(makeAttachmentsCollection(docs));
               });
             }
 
-            var pollForScannedFiles = function(files) {
-              for (var i=0; i<files.length; i++) {
-                pollForScannedFile(files[i].id)
+            var resolveAllAttachmentScans = function(docs) {
+              var promises = [];
+
+              for (var i=0; i<docs.length; i++) {
+                promises.push(pollForScannedFilePromise(docs[i].id))
               }
+
+              $q.all(promises).then(function(scannnedDocs) {
+                addAttachmentsToApp(scannnedDocs)
+                $scope.attachmentUploadInProgress = false;
+              });
+
+            }
+
+            $scope.fileUploadInProgress = false;
+            var uploadInputFile = function(documents, directoryId) {
+              var doc = documents[0];
+              $scope.fileUploadInProgress = true;
+
+              fileUpload.uploadFileToUrl(doc.file, {}, doc.title + doc.type).then(function(response) {
+                var docData = {
+                  parentId: $scope.projectData.id,
+                  parentType: "PROJECT",
+                  documentUrl: response.file.name,
+                  documentName: doc.title + doc.type,
+                  ownerId: $rootScope.userData.accountId,
+                  docClass: 'SUPPORT',
+                  accessLevel: doc.accessLevel || "MEMBER",
+                  directoryId: directoryId
+                };
+
+                ajax.create(dataFactory.documentsUrl().save, docData, function(resp) {
+                  pollForScannedFile(resp.data.id, updateInputFileValue);
+                });
+              });
+
             }
 
             // Limit the number of polls we'll do
             var pollScanFileLimit=100;
-            var pollForScannedFile = function(fileId) {
+
+
+
+            var pollForScannedFile = function(fileId, callback) {
               ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}, function(resp) {
                 if (resp.data.documentUrl.match(/dmcupfinal/i)) {
-                  updateInputFileValue(resp.data)
+                  console.log('file has been scanned')
+                  callback(resp.data);
                 } else {
                   if (pollScanFileLimit > 0) {
                     pollScanFileLimit--;
-                    setTimeout(function(){ pollForScannedFile(fileId) },500);
+                    setTimeout(function(){ pollForScannedFile(fileId, callback) },500);
                   }
                 }
               });
             }
 
-            var updateInputFileValue = function(response) {
+            var pollForScannedFilePromise = function(fileId) {
+              return $timeout(function() {
+                return ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}).then(function(resp){
+                  if (resp.data.documentUrl.match(/dmcupfinal/i)) {
+                    return resp.data;
+                  } else {
+                    return pollForScannedFilePromise(fileId);
+                  }
+                });
+              }, 500)
+            }
+
+
+            var updateInputFileValue = function(fileData) {
               $scope.fileUploadInProgress = false;
-              $scope.currentInputFile = response;
+              $scope.currentInputFile = fileData;
               $scope.setinputFileValue($scope.currentInputFile);
             }
 
@@ -609,18 +666,29 @@ angular.module('dmc.project')
             }
 
             $scope.uploadAppFile = function(ev) {
+              openDocModelAndExecCallback(ev, uploadDocs);
+            };
+
+            $scope.uploadInputFile = function(ev) {
+              openDocModelAndExecCallback(ev, uploadInputFile);
+            }
+
+            var openDocModelAndExecCallback = function(ev, callbackFunc) {
               $mdDialog.show({
                 controller: 'DocumentsUploadCtrl as projectCtrl',
                 templateUrl: 'templates/project/pages/documents-upload.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
-                clickOutsideToClose: false
+                clickOutsideToClose: false,
+                locals: {
+                  hideEdit: true
+                }
               }).then(function(documents) {
                 if (documents.length > 0) {
-                  getOrCreateDirectory($scope.service, documents, uploadDocs);
+                  getOrCreateDirectory($scope.service, documents, callbackFunc);
                 }
               });
-            };
+            }
 
             var createAppDirectory = function(homeDir, appName, documents, callback) {
               ajax.create(dataFactory.directoriesUrl().save, {
@@ -633,38 +701,15 @@ angular.module('dmc.project')
 
             };
 
-            // var uploadFileListId = 'attachedFileList';
             var attachFileInputId = 'attachedFileList';
-            // $scope.appAttachments = [];
 
             var addAttachmentsToApp = function(attachments) {
-              // checkForExistingAttachments();
-              // $scope.appAttachments.push({id: attachment.id, documentName: attachment.documentName});
-              // updateAppAttachmentInput();
+              console.log('addAttachmentsToApp')
+              console.log(attachments)
               var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
               attachFileInput.value = JSON.stringify(attachments)
               $scope.run();
             }
-
-            // var updateAppAttachmentInput = function() {
-            //   var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
-            //   uploadFileList.value = JSON.stringify($scope.appAttachments);
-            // }
-            //
-            // var checkForExistingAttachments = function() {
-            //   var uploadFileList = document.getElementById(uploadFileListId) || createAttachmentDOMElement();
-            //   if (uploadFileList.value.length>0) {
-            //     var existingFiles = JSON.parse(uploadFileList.value);
-            //     if (existingFiles.length > 0 && $scope.appAttachments.length == 0) {
-            //       $scope.appAttachments = existingFiles;
-            //     }
-            //   }
-            // }
-            //
-            // $scope.removeAppAttachmentFromList = function(index) {
-            //   $scope.appAttachments.splice(index,1)
-            //   updateAppAttachmentInput();
-            // }
 
             var createAttachmentDOMElement = function() {
               var attachmentDOMElement = document.createElement("input");
@@ -697,6 +742,7 @@ angular.module('dmc.project')
                 }, event);
 
             };
+
         }
     ]
 )
