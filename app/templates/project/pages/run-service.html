@@ -1,4 +1,4 @@
-<main>
+<main class="app-profile">
   <!-- Service Run 'Header' -->
 	<section class="container">
     <div class="row" layout="space-between center">
@@ -71,7 +71,7 @@
 
     <div class="row">
       <div class="col-xs-6">
-        <label class="section">Inputs</label>
+        <h3 class="section">Inputs</h3>
         <div class="form-group" ng-repeat="item in service.interfaceModel.inputs">
             <div ng-if="item.type != 'File'" class="sublabels">{{item.name}}</div>
             <input ng-if="item.type != 'File'" ng-model="item.value">
@@ -79,7 +79,7 @@
       </div>
 
       <div class="col-xs-6">
-        <label class="section">Outputs</label>
+        <h3 class="section">Outputs</h3>
         <div class="form-group" ng-repeat="item in service.interfaceModel.outParams">
             <div class="sublabels">{{item.name}}</div>
             <input ng-disabled="true" ng-model="item.value">

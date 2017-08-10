@@ -62,7 +62,11 @@
 }
 
 .app-profile {
-  color: map-get($colors, secondary);
+  h3{
+    color: map-get($colors, secondary);
+    font-size: 18px;
+    //margin-left: 24px;
+  }
 }
 
 .service-run-items{
