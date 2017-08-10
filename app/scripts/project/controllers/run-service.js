@@ -590,13 +590,9 @@ angular.module('dmc.project')
 
             // Limit the number of polls we'll do
             var pollScanFileLimit=100;
-
-
-
             var pollForScannedFile = function(fileId, callback) {
               ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}, function(resp) {
                 if (resp.data.documentUrl.match(/dmcupfinal/i)) {
-                  console.log('file has been scanned')
                   callback(resp.data);
                 } else {
                   if (pollScanFileLimit > 0) {
