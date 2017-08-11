@@ -556,6 +556,13 @@ angular.module('dmc.project')
               }
 
               $q.all(promises).then(function(scannnedDocs) {
+                // filter out any nulls in the colleciton
+                //  as a result of files be quarantined
+                var origLen = scannnedDocs.length;
+                scannnedDocs = scannnedDocs.filter(x => x);
+                if (scannnedDocs.length != origLen) {
+                  alert("Error: One or more file quarantined by virus scan and can not be used");
+                }
                 docProcessingCallback(scannnedDocs)
               });
 
@@ -566,6 +573,8 @@ angular.module('dmc.project')
                 return ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}).then(function(resp){
                   if (resp.data.documentUrl.match(/dmcupfinal/i)) {
                     return resp.data;
+                  } else if (resp.data.documentUrl.match(/fileQuarantined/i)) {
+                    return null;
                   } else {
                     return pollForScannedFilePromise(fileId);
                   }
@@ -575,10 +584,12 @@ angular.module('dmc.project')
 
 
             var setInputFile = function(file) {
-              file = file[0]
-              $scope.fileUploadInProgress = false;
-              $scope.currentInputFile = file;
-              $scope.setinputFileValue($scope.currentInputFile);
+              if (file.length > 0) {
+                file = file[0]
+                $scope.fileUploadInProgress = false;
+                $scope.currentInputFile = file;
+                $scope.setinputFileValue($scope.currentInputFile);
+              }
             }
 
             var makeAttachmentsCollection = function(promiseReturn) {
@@ -681,9 +692,11 @@ angular.module('dmc.project')
 
             var addAttachmentsToApp = function(attachments) {
               $scope.attachmentUploadInProgress = false;
-              var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
-              attachFileInput.value = JSON.stringify(attachments)
-              // $scope.run();
+              if (attachments.length > 0) {
+                var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
+                attachFileInput.value = JSON.stringify(attachments)
+                $scope.run();
+              }
             }
 
             var createAttachmentDOMElement = function() {
