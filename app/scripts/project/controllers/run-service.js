@@ -249,7 +249,6 @@ angular.module('dmc.project')
 
             // run Service
             $scope.run = function(){
-              console.log('run called!')
                 runModel();
             };
 
@@ -688,7 +687,6 @@ angular.module('dmc.project')
 
             var addAttachmentsToApp = function(attachments) {
               $scope.attachmentUploadInProgress = false;
-              console.log('attachments', attachments)
               if (attachments.length > 0) {
                 var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
                 attachFileInput.value = JSON.stringify(attachments)
