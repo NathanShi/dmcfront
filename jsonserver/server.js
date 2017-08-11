@@ -84,7 +84,8 @@ server.use(jsonServer.rewriter({
     '/organizations/myVPC': '/myVPC',
     '/searchworkspace/:id': '/searchworkspace',
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
-    'service_runs?serviceId=:id': '/service_runs'
+    'service_runs?serviceId=:id': '/service_runs',
+    '/defaultServices': '/default-services'
 }));
 
 server.post('/dmdiidocument', function(req,res) {

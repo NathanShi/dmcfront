@@ -15,7 +15,8 @@ angular.module('dmc.widgets.content', [
             contentType: '=',
             title: '=',
             category: '=',
-            contentItems: '='
+            contentItems: '=',
+            serviceMap: '='
         },
         controller: UiWidgetContentCardController,
         controllerAs: '$ctrl'
@@ -102,6 +103,12 @@ angular.module('dmc.widgets.content', [
           if (tagsAdded && interfacesAdded) {
             $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run';
           }
+        }
+
+        vm.redirectToServiceHistory = function(projectId, serviceId) {
+            console.log(projectId);
+            console.log(serviceId);
+            $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/run-history';
         }
     }
 
