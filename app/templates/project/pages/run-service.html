@@ -14,7 +14,7 @@
         </a>
       </div>
       <div class="col-xs-6">
-        <md-button ng-show="!hasCustomUI" ng-disabled="isRunning()" ng-click="run()" class="md-raised md-primary pull-right">
+        <md-button ng-show="!hasCustomUI" ng-disabled="isRunning() || fileUploadInProgress" ng-click="run()" class="md-raised md-primary pull-right">
           Run
         </md-button>
         <md-button ng-disabled="!isRunning()" ng-click="cancelServiceRun($event,service)" class="md-raised md-warn pull-right">
@@ -33,23 +33,19 @@
   <!-- Inputs/Outputs for Custom UIs -->
   <section class="container" ng-show="hasCustomUI">
     <div style="position: relative;">
-      <div class="greyout" ng-show="isRunning()">
+      <div class="greyout" ng-show="isRunning() || attachmentUploadInProgress">
         <div class="loader"></div>
       </div>
 
-      <div ng-show="service.interfaceModel.inParams.inputFile" layout="row" layout-align="space-between center" style="padding: 0px 40px; margin: 0px; background: white;">
-        <h3 flex>Input File From Workspace:</h3>
-        <div flex="40" style="margin: 0px 8px">
-          <md-select placeholder="Select Project" ng-model="inputFile.projectModel" md-on-open="loadProjects()" ng-change="updateFileList(inputFile)">
-            <md-option ng-repeat="p in projects" ng-value="{{p}}">{{p.title}}</md-option>
-          </md-select>
-        </div>
-        <div flex="40">
-          <md-select ng-show="inputFile.projectModel" placeholder="Select File" ng-model="inputFile.projectModelFile" ng-change="setinputFileValue(inputFile.projectModelFile)">
-            <md-option ng-repeat="f in projectFiles" ng-value="{{f}}">{{f.documentName}}</md-option>
-          </md-select>
-        </div>
-      </div>
+      <div class="row" ng-show="service.interfaceModel.inParams.inputFile">
+	      <div class="col-xs-12">
+					<md-button ng-disabled="fileUploadInProgress" ng-click="uploadInputFile()" style="margin-left: 0px;" class="md-raised md-primary">Upload Input File</md-button>
+					<div ng-show="fileUploadInProgress" class="file-loader"></div>
+					<span ng-show="currentInputFile">Current Input File: {{currentInputFile.documentName}}</span>
+					<span ng-show="currentInputFile" ng-click="unsetInputFile()" style="color: red;">x</span>
+				</div>
+			</div>
+
       <div class="container" style="width: 100%; padding: 0px;">
           <!--Custom UI Content will be displayed here-->
           <div class="content-placeholder">
@@ -70,7 +66,7 @@
 					<md-button ng-disabled="fileUploadInProgress" ng-click="uploadInputFile()" style="margin-left: 0px;" class="md-raised md-primary">Upload Input File</md-button>
 					<div ng-show="fileUploadInProgress" class="file-loader"></div>
 					<span ng-show="currentInputFile">Current Input File: {{currentInputFile.documentName}}</span>
-					<span ng-show="currentInputFile" ng-click="unsetInputFile()" style="color: red;">X</span>
+					<span ng-show="currentInputFile" ng-click="unsetInputFile()" style="color: red;">x</span>
 				</div>
 			</div>
 

@@ -180,7 +180,7 @@ server.post('/directories', function (req, res) {
 var docGetCount = 0;
 server.get('/documents/:id', function (req, res) {
   docGetCount++
-  if (docGetCount > 50) {
+  if (docGetCount > 5) {
     docGetCount = 0
     var docShape = {"id":1167,"documentName":"dmcLogo.png","documentUrl":"https://dmcupfinal.s3.amazonaws.com/PROJECT/111819928277794120148%40google.com/Documents/1500471698--922752-sanitized-dmcLogo.png?AWSAccessKeyId=AKIAIZPP46XXRK6PBF6A&Expires=1503150099&Signature=JWWiTPiTFGLNkLRncYferdn0L%2B8%3D","parentType":"PROJECT","parentId":249,"ownerId":171,"ownerDisplayName":"Joseph Mazrimas","tags":[],"modified":1500471690366,"expires":1503063690366,"docClass":"SUPPORT","accessLevel":"MEMBER","vips":[],"version":0,"directoryId":284,"baseDocId":1167,"hasVersions":false,"sha256":"70811c4ca36cc9268d4b173a10f99047478a8f0d6da8de9a2c8251f524308036","isAccepted":true}
     res.jsonp(docShape)
