@@ -9,6 +9,15 @@
     "serviceId": 1515,
     "domeServer": "114",
     "inParams": {
+        "inputFile": {
+            "type": "String",
+            "name": "inputFile",
+            "unit": "",
+            "category": "",
+            "value": "",
+            "parameterid": "d9f31f3a-d800-1004-8f53-704dbfababa8",
+            "instancename": null
+        },
         "SpecimenWidth": {
             "type": "Real",
             "name": "SpecimenWidth",
