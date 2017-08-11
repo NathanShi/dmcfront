@@ -14,11 +14,10 @@ angular.module('dmc.jtViewer', [
     "dmc.data"
 ]).config(function($stateProvider, $urlRouterProvider, $httpProvider){
     $stateProvider.state('jtViewer', {
-        template: '<ui-view />'
-      }).state('jtViewer.view', {
+        template: '<ui-view></ui-view>'
+      }).state('jtViewer.home', {
         url: '/',
-        controller: 'AboutController',
-        templateUrl: 'templates/about/about.html'
+        controller: 'jtViewerController',
+        templateUrl: 'templates/jtViewer/index.html'
     });
-    $urlRouterProvider.otherwise('/');
-});
+  })
