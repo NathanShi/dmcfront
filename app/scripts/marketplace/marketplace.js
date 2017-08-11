@@ -33,7 +33,7 @@ angular.module('dmc.marketplace', [
         scrollService.scrollTo(eID);
     };
 
-    $scope.getLeanItems=[]
+    // $scope.getLeanItems=[]
 
 
     // $scope.getContentStatic = function() {
@@ -50,40 +50,57 @@ angular.module('dmc.marketplace', [
             $scope.marketplaceItems=response.data;
             $scope.marketplaceItemsCopy =response.data;
             callbackFunction();
-            // $scope.categorizeContent($scope.marketplaceItems);
         });
     }
 
 
-    // $scope.categorizeContent = function(content){
-    //   for (var i = 0; i < content.length; i++) {
-    //
-    //     if (content[i].content_category=='GET LEAN'){
-    //       $scope.getLeanItems = content[i]
-    //     }
-    //
-    //     // else if (content[i].content_category=='IMPROVE ESTIMATES'){
-    //     //   $scope.estimateItems = content[i]
-    //     // }
-    //     //
-    //     // else if (content[i].content_category=='IMPROVE CNC OPERATIONS'){
-    //     //   $scope.cncOperationItems = content[i]
-    //     // }
-    //     //
-    //     // else{
-    //     //   $scope.cmmOperationItems = content[i]
-    //     // }
-    //
-    //   }
-    // }
+    $scope.categorizeContent = function(content){
+      for (var i = 0; i < content.length; i++) {
+
+        if (content[i].content_category=='GET LEAN'){
+          $scope.getLeanItems = content[i]
+        }
+
+        else if (content[i].content_category=='IMPROVE ESTIMATES'){
+          $scope.estimateItems = content[i]
+        }
+
+        else if (content[i].content_category=='IMPROVE CNC OPERATIONS'){
+          $scope.cncOperationItems = content[i]
+        }
+
+        else{
+          $scope.cmmOperationItems = content[i]
+        }
+
+      }
+    }
 
     getContentStatic(function(){
+      $scope.getLeanItems=[]
+      $scope.estimateItems=[]
+      $scope.cncOperationItems=[]
+      $scope.cmmOperationItems=[]
+
       for (var i = 0; i < $scope.marketplaceItems.length; i++) {
         if ($scope.marketplaceItems[i].content_category=='GET LEAN'){
-          $scope.getLeanItems = $scope.marketplaceItems[i]
+          $scope.getLeanItems.push($scope.marketplaceItems[i])
+        }
+        else if ($scope.marketplaceItems[i].content_category=='IMPROVE ESTIMATES'){
+          $scope.estimateItems.push($scope.marketplaceItems[i])
+        }
+
+        else if ($scope.marketplaceItems[i].content_category=='IMPROVE CNC OPERATIONS'){
+          $scope.cncOperationItems.push($scope.marketplaceItems[i])
+        }
+
+        else{
+          $scope.cmmOperationItems.push($scope.marketplaceItems[i])
         }
       }
     });
+
+
 
 
     $scope.search=function(text){
@@ -104,6 +121,7 @@ angular.module('dmc.marketplace', [
     $scope.clearSearch = function(){
       $scope.searchTerm='';
     }
+
 
 
 
