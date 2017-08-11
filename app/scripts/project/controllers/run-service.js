@@ -226,8 +226,6 @@ angular.module('dmc.project')
             // get run Time
             $scope.runTime = 0;
             $scope.calcRunTime = function(status){
-                console.log(new Date(status.stopDate+' '+status.stopTime));
-                console.log(new Date(status.startDate+' '+status.startTime));
                 var runTime = (status.stopTime ? new Date(status.stopDate+' '+status.stopTime) - new Date(status.startDate+' '+status.startTime) : new Date() - new Date(status.startDate+' '+status.startTime));
                 return (runTime/1000).toFixed(2);
             };
@@ -251,6 +249,7 @@ angular.module('dmc.project')
 
             // run Service
             $scope.run = function(){
+              console.log('run called!')
                 runModel();
             };
 
@@ -339,14 +338,11 @@ angular.module('dmc.project')
                     for (var key in $scope.service.interfaceModel.inParams){
                       var domeName = $scope.service.interfaceModel.inParams[key].name;
                       if(document.getElementById(domeName)){
-                        console.log('found element id: ', domeName)
                         var domeValue = document.getElementById(domeName).value;
                         if(domeValue){
-                          console.log('found value: ', domeValue)
                           $scope.service.interfaceModel.inParams[key].value = domeValue;
                         }
                       }else{
-                        console.log('Not found element id: ', domeName)
                         $scope.service.interfaceModel.inParams[key].value = $scope.service.interfaceModel.inParams[key].defaultValue;
                       }
                     }
@@ -559,7 +555,7 @@ angular.module('dmc.project')
                 // filter out any nulls in the colleciton
                 //  as a result of files be quarantined
                 var origLen = scannnedDocs.length;
-                scannnedDocs = scannnedDocs.filter(x => x);
+                scannnedDocs = scannnedDocs.filter(function(doc){ return !!doc });
                 if (scannnedDocs.length != origLen) {
                   alert("Error: One or more file quarantined by virus scan and can not be used");
                 }
@@ -692,6 +688,7 @@ angular.module('dmc.project')
 
             var addAttachmentsToApp = function(attachments) {
               $scope.attachmentUploadInProgress = false;
+              console.log('attachments', attachments)
               if (attachments.length > 0) {
                 var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
                 attachFileInput.value = JSON.stringify(attachments)
