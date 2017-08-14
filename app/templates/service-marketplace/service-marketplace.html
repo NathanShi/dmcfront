@@ -151,63 +151,40 @@
 
             </div>
 
-            <div layout="row" class="preview" layout-align="center center" ng-if="product.interfaceModel">
+            <!-- <div layout="row" class="preview" layout-align="center center" ng-if="product.interfaceModel">
               <div layout-padding layout-margin flex="76">
                   <h2>{{product.interfaceModel.name}}, Version {{product.interfaceModel.version}}</h2>
               </div>
-            </div>
+            </div> -->
 
-            <div layout="row" class="preview" layout-align="center center" ng-if="product.interfaceModel">
-              <div flex="33">
-                <h2>Inputs</h2>
+            <div layout="row" class="iotab" layout-align="space-between center" ng-if="product.interfaceModel">
+              <div flex="45" layout="column" style="margin-bottom:auto">
+                <div layout="row" layout-align="space-between center">
+                  <h3 flex="65">Inputs</h3>
+                  <h3 flex="35">Type</h3>
+                </div>
+
                 <md-divider></md-divider>
-                <md-content layout-margin>
-                  <md-list>
-                    <md-list-item ng-repeat="(key,item) in product.interfaceModel.inParams track by $index">
-                      {{item.name}}
-                    </md-list-item>
-                  </md-list>
-                </md-content>
+
+                <div layout="row" ng-repeat="item in product.interfaceModel.inParams track by $index">
+                  <b flex="65">{{item.name}}</b>
+                  <b flex="35">{{item.type}}</b>
+                </div>
               </div>
 
-              <div>
-                <h2>Type</h2>
+              <div flex="45" layout="column" style="margin-bottom:auto">
+                <div layout="row" layout-align="space-between center">
+                  <h3 flex="65">Outputs</h3>
+                  <h3 flex="35">Type</h3>
+                </div>
+
                 <md-divider></md-divider>
-                <md-content layout-margin>
-                  <md-list>
-                    <md-list-item ng-repeat="(key,item) in product.interfaceModel.inParams track by $index">
-                      {{item.type}}
-                    </md-list-item>
-                  </md-list>
-                </md-content>
+
+                <div layout="row" ng-repeat="item in product.interfaceModel.outParams track by $index">
+                  <b flex="65">{{item.name}}</b>
+                  <b flex="35">{{item.type}}</b>
+                </div>
               </div>
-
-              <div flex="10"></div>
-
-              <div flex="33">
-                <h2>Outputs</h2>
-                <md-divider></md-divider>
-                <md-content layout-margin>
-                  <md-list>
-                    <md-list-item ng-repeat="(key,item) in product.interfaceModel.outParams track by $index">
-                      {{item.name}}
-                    </md-list-item>
-                  </md-list>
-                </md-content>
-              </div>
-
-              <div>
-                <h2>Type</h2>
-                <md-divider></md-divider>
-                <md-content layout-margin>
-                  <md-list>
-                    <md-list-item ng-repeat="(key,item) in product.interfaceModel.outParams track by $index">
-                      {{item.type}}
-                    </md-list-item>
-                  </md-list>
-                </md-content>
-              </div>
-
             </div>
           </md-tab>
 
