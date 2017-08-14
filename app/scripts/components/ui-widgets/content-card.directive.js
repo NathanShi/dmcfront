@@ -23,35 +23,37 @@ angular.module('dmc.widgets.content', [
     /**
      * Controller for the uiWidgetContent directive.
      *
-     * This directive contains 4 properties or objects:
-     * contentType: String (required) - 'app', 'video', 'img', or 'document'
+     * This directive contains 3 properties or objects:
      * title: String (optional) - any string to be displayed
      * category: String (optional) - any string to be displayed
      * contentItems: Array of objects
      *
      * This directive can display 4 categories of content for the contentItems array:
      *
-     * document - array of documents
-     * video - [{
-     *          videoSource: String (link to video)
-     *          contentTitle: String (video title)
-     *          description: String (description of video)
-     *          buttonText: String (text to be displayed on button)
-     *          buttonLink: String (link to new page)
-     *         }]
-     * img - [{
-     *         imgSource: String (link to img)
-     *         contentTitle: String (video title)
-     *         description: String (description of video)
-     *         buttonText: String (text to be displayed on button)
-     *         buttonLink: String (link to new page)
-     *       }]
-     * app - array of apps/services
-     *
+     * document, video, img, app
      */
     function UiWidgetContentCardController($http, DMCUserModel, $window, ajax) {
         var vm = this;
+        
+        var categorizeContent = function(contentItems) {
+            if (contentItems) {
+                for (var i = 0; i < contentItems.length; i++) {
+                    if (contentItems[i].documentName) {
+                        contentItems[i].contentType = 'document';
+                    } else if (contentItems[i].videoSource) {
+                        contentItems[i].contentType = 'video';
+                    } else if (contentItems[i].imgSource) {
+                        contentItems[i].contentType = 'img';
+                    } else if (contentItems[i].serviceType || contentItems[i].type === 'service') {
+                        contentItems[i].contentType = 'app';
+                    }
+                }
+            }
+            return contentItems;
+        };
 
+        vm.categorizedContent = categorizeContent(vm.contentItems);
+        
         vm.downloadFile = function(id) {
             window.location = dataFactory.documentsUrl(id).download;
         };
@@ -101,7 +103,8 @@ angular.module('dmc.widgets.content', [
           if (tagsAdded && interfacesAdded) {
             $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run';
           }
-        }
+        };
+        
     }
 
 
