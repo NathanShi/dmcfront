@@ -592,6 +592,13 @@ angular.module('dmc.service-marketplace')
 
             };
 
+            $scope.addToCompare = function(){
+                CompareModel.add('services',{
+                    profileId : $scope.userData.profileId,
+                    serviceId : $scope.product.id
+                });
+            };
+
         }
     ]
 );

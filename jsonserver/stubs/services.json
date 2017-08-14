@@ -21,7 +21,7 @@
     "projectId": "147",
     "from": "marketplace",
     "type": "service",
-    "parent": null,
+    "parent": 906,
     "published": true,
     "averageRun": ""
 }, {
