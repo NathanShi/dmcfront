@@ -74,6 +74,10 @@ angular.module('dmc.service-marketplace')
                 $scope.owner_name = response.data.displayName
             });
 
+            ajax.get(dataFactory.getDefaultService($scope.product.parent), {}, function(response) {
+                $scope.defaultService = response.data;
+            });
+
             // check if service is favorite for current user
             isFavorite.check([$scope.product]);
 
@@ -592,12 +596,16 @@ angular.module('dmc.service-marketplace')
 
             };
 
-            $scope.addToCompare = function(){
-                CompareModel.add('services',{
-                    profileId : $scope.userData.profileId,
-                    serviceId : $scope.product.id
-                });
+            $scope.redirectToServiceHistory = function(projectId, serviceId) {
+              window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/run-history';
             };
+
+            // $scope.addToCompare = function(){
+            //     CompareModel.add('services',{
+            //         profileId : $scope.userData.profileId,
+            //         serviceId : $scope.product.id
+            //     });
+            // };
 
         }
     ]

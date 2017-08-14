@@ -29,12 +29,12 @@
 				    </div>
 				</form> -->
 
-				<div class="marketplace-search-button" layout="row" layout-align="center center">
+				<!-- <div class="marketplace-search-button" layout="row" layout-align="center center"> -->
 					<!-- <md-button href="/favorites.php" class="link-button">
 						<ng-md-icon icon="favorite" size="14"></ng-md-icon>
 						Favorites ({{favoritesCount}})
 					</md-button> -->
-          <md-button
+          <!-- <md-button
               ng-click="addToCompare()"
               class="btn green-button content-button">
               Add to Compare
@@ -45,7 +45,7 @@
                      compare-button>
               Compare ({{$root.comparedServices && $root.comparedServices.services ? $root.comparedServices.services.length : 0}})
           </md-button>
-				</div>
+				</div> -->
 			</md-content>
 			<!--product-->
 			<md-content class="product">
@@ -104,8 +104,8 @@
                 <span flex></span>
 
                 <div>
-                    <button class="btn green-button content-button" ng-click="$ctrl.saveToDefaultProject(app)">Run</button>
-                    <button class="btn green-button content-button margin-left-20" ng-disabled="!serviceMap[app.id]" ng-click="$ctrl.redirectToServiceHistory(serviceMap[app.id]['workspaceId'], serviceMap[app.id]['serviceId'])">Run History</button>
+                    <button run-default-button class="btn green-button content-button" ng-click="saveToDefaultProject(product)">Run</button>
+                    <button class="btn green-button content-button margin-left-20" ng-disabled="!defaultService" ng-click="redirectToServiceHistory(defaultService.projectId, defaultService.id)">Run History</button>
                 </div>
 
                 <!-- <product-card-buttons-profile card-source = "product"

@@ -36,6 +36,7 @@
 <script src="scripts/marketplace/marketplace.controller.js"></script>
 <script src="scripts/utilities/scroll.service.js"></script>
 <script src="scripts/components/ui-widgets/content-card.directive.js"></script>
+<script src="scripts/components/run-default-button/run-default-button.js"></script>
 
 <!-- endbuild -->
 

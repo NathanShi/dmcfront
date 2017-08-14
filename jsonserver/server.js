@@ -85,7 +85,8 @@ server.use(jsonServer.rewriter({
     '/searchworkspace/:id': '/searchworkspace',
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
     'service_runs?serviceId=:id': '/service_runs',
-    '/defaultServices': '/default-services'
+    '/defaultServices': '/default-services',
+    '/defaultService/:id': '/default-services/:id'
 }));
 
 server.post('/dmdiidocument', function(req,res) {

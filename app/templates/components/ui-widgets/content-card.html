@@ -40,7 +40,7 @@
         <img ng-src="{{app.featureImage.large}}" width="100%" height="100%">
     </div>
     <div class="col-sm-9 col-md-9 description-column border-left">
-        <h3 class="border-bottom">{{app.title}}</h3>
+        <h3 class="border-bottom"><a ng-href="{{'/service-marketplace.php#/' + app.id}}">{{app.title}}</a></h3>
         <div class="spacing-container">
             <p>
                 {{app.description}}
@@ -54,7 +54,7 @@
                      <!--is-valid="isValid">-->
                 <!--</div>-->
             <div>
-                <button class="btn green-button content-button" ng-click="$ctrl.saveToDefaultProject(app)">Run</button>
+                <button run-default-button class="btn green-button content-button" ng-click="saveToDefaultProject(app)">Run</button>
                 <button class="btn green-button content-button margin-left-20" ng-disabled="!serviceMap[app.id]" ng-click="$ctrl.redirectToServiceHistory(serviceMap[app.id]['workspaceId'], serviceMap[app.id]['serviceId'])">Run History</button>
             </div>
         </div>
