@@ -16,6 +16,16 @@ angular.module('dmc.company.onboarding')
     function($scope, companyOnboardingModel, $window, $location, $anchorScroll, ajax, dataFactory, storageService, $rootScope, $mdDialog){
       $anchorScroll();
 
+      $scope.isDisabled = false;
+
+      $scope.enableButton = function(){
+        $scope.isDisabled = false;
+      }
+
+      $scope.disableButton = function(){
+        $scope.isDisabled = true;
+      }
+
       $scope.company = {};
 
       ajax.get(dataFactory.payment().organizations, {}, function(response){
@@ -40,7 +50,7 @@ angular.module('dmc.company.onboarding')
 
       if (angular.equals($scope.company, {})){
           var haveStored = storageService.get('companyinfoCache');
-          if (haveStored){
+          if (haveStored && angular.isUndefined(haveStored)){
             $scope.company = JSON.parse(haveStored);
             storageService.remove('companyinfoCache');
           }
@@ -71,6 +81,8 @@ angular.module('dmc.company.onboarding')
       $scope.companyinfo = {};
 
       $scope.save = function(company) {
+        $scope.disableButton();
+
         var type = [];
 
         $scope.orgType.forEach(function(element) {
@@ -103,7 +115,7 @@ angular.module('dmc.company.onboarding')
           $scope.companyinfo.docuSigned = $scope.company.docuSigned;
         }
         else{
-          $scope.companyinfo.docuSigned = false;
+          $scope.companyinfo.docuSigned = "Requested";
         }
 
         if ($scope.company.id){
@@ -111,51 +123,45 @@ angular.module('dmc.company.onboarding')
         }
 
         var postDocInfo = companyOnboardingModel.populateField($scope.companyinfo);
-        var docInfoJsonString = JSON.parse(angular.toJson(postDocInfo));
-        console.log("docInfoJsonString", docInfoJsonString);
+        var responseErrorReason = "Oops, we had a problem when generating Membership Agreement, please try again later. " +
+        "\nIf you kept having this problem, please contact us.";
 
         ajax.create(dataFactory.esignOnline().docuSign, postDocInfo, function successCallback(response) {
-            console.log("response.data.status", response.data.status);
             if (response.data.status == "eSignature Successful!"){
                 var generatedForm = JSON.parse(response.data.reason);
                 console.log(generatedForm);
-                if (!generatedForm.template_id || !generatedForm.url){
+                if (generatedForm.template_id && generatedForm.url){
                   $mdDialog.show(
                     $mdDialog.alert()
                       .clickOutsideToClose(false)
-                      .title('Error')
-                      .content('Oops, we had a problem when generating Membership Agreement, pleas try again.')
+                      .title('Successfully generate Membership Agreement')
+                      .content('Redirecting, if this not work please open this link: ' + $scope.companyinfo.formURL)
                       .ok('OK')
                   )
-                }
-                else{
                   $scope.companyinfo.templateID = generatedForm.template_id;
                   $scope.companyinfo.formURL = generatedForm.url;
                 }
             }
             else{
-              $mdDialog.show(
-                $mdDialog.alert()
-                  .clickOutsideToClose(false)
-                  .title('Error')
-                  .content(response.data.reason)
-                  .ok('OK')
-              )
+              responseErrorReason = response.data.reason
             }
         }, function errorCallback(response) {
-          $mdDialog.show(
-            $mdDialog.alert()
-              .clickOutsideToClose(false)
-              .title('Error')
-              .content('Oops, we had a problem when generating Membership Agreement, please try again later. If you kept having this problem, please contact us.')
-              .ok('OK')
-          );
+           responseErrorReason = "Error when calling for e-sign API. \nIf you kept having this problem, please contact us.";
         }).then(function(){
           if ($scope.companyinfo.templateID && $scope.companyinfo.formURL){
             storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));
-            $window.open($scope.companyinfo.formURL);
+            $scope.enableButton();
+            $window.location.href = $scope.companyinfo.formURL;
           }
-
+          else{
+            $mdDialog.show(
+              $mdDialog.alert()
+                .clickOutsideToClose(false)
+                .title('Error')
+                .content(responseErrorReason)
+                .ok('OK')
+            );
+          }
         });
       };
 
@@ -183,17 +189,57 @@ angular.module('dmc.company.onboarding')
       $scope.isDisabled = false;
 
       var haveStored = storageService.get('companyinfoCache');
-      if (haveStored){
+      if (haveStored && angular.isUndefined(haveStored)){
         $scope.company = JSON.parse(haveStored);
-      }
-      else{
-        $location.path('/companyinfo');
       }
 
       console.log($scope.company);
 
+      if (!$scope.company){
+        console.log("/companyinfo");
+        // $location.path('/companyinfo');
+      }
+      else{
+        var errorReason = "null";
+        if ($scope.company.docuSigned != "Signed"){
+          ajax.get(dataFactory.esignOnline($scope.company.templateID).checkSignature, {}, function(response){
+              console.log("eSignCheck", response.data);
+              if (response.data.status == "eSignCheck Successful!"){
+                  if (response.data.reason != "0"){
+                      $scope.company.docuSigned = "Signed";
+                  }
+                  else{
+                      errorReason = "You haven\'t sign the Membership Agreement yet, please go back and sign it!"
+                  }
+              }
+              else {
+                  $scope.company.docuSigned = "Unable to Check"
+                  errorReason = "Oops, something went wrong, please try again later. If you kept having this problem, please contact us."
+              }
+          }).then(function(){
+            console.log("called");
+            if (errorReason != "null"){
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Error')
+                  .content(errorReason)
+                  .ok('OK')
+              );
+            }
+          }).then(function(){
+              console.log("called again");
+              if ($scope.company.docuSigned == "Requested"){
+                $scope.back();
+              }
+          });
+        }
+      }
+
       $scope.back = function(){
-        storageService.set('companyinfoCache', JSON.stringify($scope.company));
+        if ($scope.company){
+          storageService.set('companyinfoCache', JSON.stringify($scope.company));
+        }
         $location.path('/companyinfo');
       }
 
@@ -287,8 +333,6 @@ angular.module('dmc.company.onboarding')
                 }
 
                 else{
-                  // alert("You already have a Tier3 Membership organization database, will redirect to dashboard");
-                  // $window.location.href = '/onboarding.php';
                   $mdDialog.show(
                     $mdDialog.alert()
                       .clickOutsideToClose(false)
@@ -301,12 +345,8 @@ angular.module('dmc.company.onboarding')
                 }
               }
             }).then(function(){
-              // console.log("jsoninfo", jsoninfo.organizationModel.id);
               if (!jsoninfo.organizationModel.id)
                 jsoninfo.organizationModel.id = null;
-                // console.log("jsoninfo", jsoninfo);
-
-
             });
           }
 
@@ -314,6 +354,7 @@ angular.module('dmc.company.onboarding')
               console.log("eSignCheck", response.data);
               if (response.data.status == "eSignCheck Successful!"){
                 if (response.data.reason != "0"){
+                    jsoninfo.dmdiiMembershipInfo.docuSigned = "Signed";
                     $scope.submitOrgPayment(jsoninfo);
                 }
                 else{
@@ -351,7 +392,8 @@ angular.module('dmc.company.onboarding')
                   .content('Successful payment! Redirect to dashboard.')
                   .ok('OK')
               ).then(function(){
-                $window.location.href = '/onboarding.php';
+                alert("Beta Test Version, should redirect in release version");
+                // $window.location.href = '/onboarding.php';
               });
             }
             else if (response.data.status == "failed"){
@@ -437,8 +479,6 @@ angular.module('dmc.company.onboarding')
             }
           };
 
-          // var jsoninfo = angular.toJson($scope.payment);
-          // // console.log(jsoninfo);
           return $scope.payment;
 
       }
