@@ -39,8 +39,8 @@
                 <!-- <td>
                     {{item.runTime}}s.
                 </td> -->
-                <td ng-style="{color: (item.status == '1' ? '#65AF3F': (item.status == '-1' ? 'red' : 'orange'))}">
-                    <a>{{(item.status == 1 ? 'Success' : (item.status == -1 ? 'Error' : 'Running' ))}}</a>
+                <td ng-style="{color: (item.status == '1' ? '#65AF3F': (item.status == '-1' ? 'red' : (item.status == '2' ? 'red' : 'orange')))}">
+                    <a>{{(item.status == 1 ? 'Success' : (item.status == -1 ? 'Error' : (item.status == '2' ? 'Canceled' : 'Running')))}}</a>
                 </td>
             </tr>
             <tr ng-if="history.length == 0">

@@ -36,7 +36,6 @@
 <script src="/bower_components/topojson/topojson.min.js"></script>
 <script src="/bower_components/datamaps/dist/datamaps.all.min.js"></script>
 <script src="/bower_components/angular-datamaps/dist/angular-datamaps.min.js"></script>
-<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/bower_components/angular-carousel/angular-carousel.js"></script>
 <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="/bower_components/moment/moment.js"></script>
@@ -57,6 +56,7 @@
 <script src="/bower_components/angular-touch/angular-touch.js"></script>
 <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="/bower_components/angular-websocket/angular-websocket.min.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/bower_components/angularUtils-pagination/dirPagination.js"></script>
 <script src="/bower_components/dropzone/dist/min/dropzone.min.js"></script>
 <script src="/bower_components/jquery-ui/jquery-ui.js"></script>

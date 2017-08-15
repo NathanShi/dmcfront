@@ -6,8 +6,6 @@ angular.module('dmc.component.run-default-button', ['dmc.ajax'])
         link: function(scope, element, attr){
           scope.saveToDefaultProject = function(app){
 
-            console.log("hello!");
-
             var updatedItem = $.extend(true, {}, app);
             if (updatedItem.hasOwnProperty('$$hashKey')) {
               delete updatedItem['$$hashKey'];

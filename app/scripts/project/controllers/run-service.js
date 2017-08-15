@@ -703,6 +703,10 @@ angular.module('dmc.project')
 
             };
 
+            function updateServiceStatus(service, currentStatus) {
+              return service.currentStatus ? $.extend(true,service.currentStatus,currentStatus) : currentStatus;
+            }
+
         }
     ]
 )
