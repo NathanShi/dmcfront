@@ -618,6 +618,13 @@ return {
           organizations: localhost + 'organizations/user'
         };
       },
+      esignOnline: function(id){
+        return {
+          docuSign: localhost + 'esignDoc',
+          checkSignature: localhost + 'esignCheck/' + id,
+          callbackSignature: localhost + 'esignCallback'
+        };
+      },
       getDMDIIDocuments: function(id) {
         return {
           all: localhost + 'dmdiidocuments',

@@ -12,208 +12,61 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$window', '$location', '$anchorScroll', 'ajax', 'dataFactory', '$rootScope', '$mdDialog',
-    function($scope, companyOnboardingModel, $window, $location, $anchorScroll, ajax, dataFactory, $rootScope, $mdDialog){
+.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$window', '$location', '$anchorScroll', 'ajax', 'dataFactory', 'storageService', '$rootScope', '$mdDialog',
+    function($scope, companyOnboardingModel, $window, $location, $anchorScroll, ajax, dataFactory, storageService, $rootScope, $mdDialog){
       $anchorScroll();
 
-      $scope.linkToPage = function(){
-        $window.location.href = '/onboarding.php';
-      }
+      $scope.company = {};
 
-      $scope.company = companyOnboardingModel.get_companyInfo();
+      ajax.get(dataFactory.payment().organizations, {}, function(response){
+        if (response.data.id != null){
+          if (response.data.isPaid == false){
+            $scope.company = companyOnboardingModel.transResponse(response.data);
+            storageService.set('companyinfoCache', JSON.stringify($scope.company));
+          }
+          else{
+            $mdDialog.show(
+              $mdDialog.alert()
+                .clickOutsideToClose(false)
+                .title('Alert')
+                .content('You already have a Tier3 Membership organization database, will redirect to dashboard.')
+                .ok('Got it!')
+            ).then(function(){
+              $window.location.href = '/onboarding.php';
+            });
+          }
+        }
+      });
+
       if (angular.equals($scope.company, {})){
-          ajax.get(dataFactory.payment().organizations, {}, function(response){
-            if (response.data.id != null){
-              if (response.data.isPaid == false){
-                transResponse(response.data);
-                // console.log($scope.company);
-                companyOnboardingModel.save_companyInfo($scope.company);
-                // $location.path('/pay');
-              }
-
-              else{
-                // alert("You already have a Tier3 Membership organization database, will redirect to dashboard");
-                // $window.location.href = '/onboarding.php';
-                $mdDialog.show(
-                  $mdDialog.alert()
-                    .clickOutsideToClose(false)
-                    .title('Alert')
-                    .content('You already have a Tier3 Membership organization database, will redirect to dashboard.')
-                    .ok('Got it!')
-                ).then(function(){
-                  $window.location.href = '/onboarding.php';
-                });
-              }
-            }
-          });
-      }
-
-      function transResponse(data){
-        $scope.company.name = data.name;
-        $scope.company.id = data.id;
-        $scope.company.naicsCode = data.naicsCode;
-        $scope.company.firstAddress = {};
-        $scope.company.firstAddress.line1 = data.address.streetAddress1;
-        $scope.company.firstAddress.line2 = data.address.streetAddress2;
-        $scope.company.firstAddress.city = data.address.city;
-        $scope.company.firstAddress.state = data.address.state;
-        $scope.company.firstAddress.zipcode = data.address.zip;
-
-        var jsonType = angular.fromJson(data.dmdiiMembershipInfo);
-        // console.log(jsonType);
-        $scope.company.main = jsonType.mainPointContact;
-        $scope.company.finance = jsonType.financePointContact;
-        $scope.company.tech = jsonType.techPointContact;
-        $scope.company.legal = jsonType.legalPointContact;
-        if ($scope.company.tech != null)
-          $scope.company.techContact = true;
-        if ($scope.company.finance != null)
-          $scope.company.financialContact = true;
-        $scope.company.legal = jsonType.legalPointContact;
-        if ($scope.company.legal != null)
-          $scope.company.legalContact = true;
-        $scope.company.secondAddress = jsonType.secondAddress;
-        if ($scope.company.secondAddress != null)
-          $scope.company.subCompany = true;
-        $scope.company.selectedAnnualRevenue = null;
-        $scope.company.selectedEmployeeSize = null;
-        $scope.company.agreement = null;
-        $scope.company.type = null;
-        $scope.company.website = jsonType.website;
-        $scope.company.startUp = jsonType.startUp;
-        $scope.company.duns = jsonType.dunsCode;
+          var haveStored = storageService.get('companyinfoCache');
+          if (haveStored){
+            $scope.company = JSON.parse(haveStored);
+            storageService.remove('companyinfoCache');
+          }
+          else
+            $scope.company = {};
       }
 
       $scope.company.selectedEmployeeSize = null;
       $scope.company.selectedAnnualRevenue = null;
-      $scope.company.TYPE = null;
-      // $scope.company.agreement = null;
+      $scope.company.orgTYPEs = null;
 
-      $scope.orgType = [
-        { selection : 'Parent Consortium', selected : false },
-        { selection : 'Subsidiary', selected : false },
-        { selection : 'Minority Owned Business', selected : false },
-        { selection : 'Non-Profit', selected : false },
-        { selection : 'US Owned', selected : false },
-        { selection : 'Under an SSA', selected : false },
-        { selection : 'Academic Institution', selected : false },
-        { selection : 'Foreign Firm', selected : false },
-        { selection : 'Division', selected : false },
-        { selection : 'Woman Owned Business', selected : false }
-      ];
+      $scope.orgType = companyOnboardingModel.initialOrgType();
 
-      $scope.employeeSize = [
-        {
-          name: 'Self-employed',
-          value: 'Self-employed'
-        },
-        {
-          name: '1-10 employees',
-          value: '1-10 employees'
-        },
-        {
-          name: '11-50 employees',
-          value: '11-50 employees'
-        },
-        {
-          name: '51-200 employees',
-          value: '51-200 employees'
-        },
-        {
-          name: '501-1000 employees',
-          value: '501-1000 employees'
-        },
-        {
-          name: '1001-5000 employees',
-          value: '1001-5000 employees'
-        },
-        {
-          name: '5001-10,000 employees',
-          value: '5001-10,000 employees'
-        },
-        {
-          name: '10,000+ employees',
-          value: '10,000+ employees'
-        }
-      ];
+      $scope.employeeSize = companyOnboardingModel.initialEmployeeSize();
 
-      $scope.annualRevenue = [
-        {
-          name: '0-25M',
-          value: '0-25M'
-        },
-        {
-          name: '26M-50M',
-          value: '26M-50M'
-        },
-        {
-          name: '51M-100M',
-          value: '51M-100M'
-        },
-        {
-          name: '101M-250M',
-          value: '101M-250M'
-        },
-        {
-          name: '251M-500M',
-          value: '251M-500M'
-        },
-        {
-          name: '501M-1B',
-          value: '501M-1B'
-        },
-        {
-          name: '2B-10B',
-          value: '2B-10B'
-        },
-        {
-          name: '11B+',
-          value: '11B+'
-        }
-      ];
+      $scope.annualRevenue = companyOnboardingModel.initialAnnualRevenue();
 
-      $scope.orgTYPEs = [
-        {
-          name: 'Manufacturer',
-          value: 'Manufacturer'
-        },
-        {
-          name: 'Technology Provider',
-          value: 'Technology Provider'
-        },
-        {
-          name: 'Consultant',
-          value: 'Consultant'
-        }
-      ];
+      $scope.orgTYPEs = companyOnboardingModel.initialOrgTYPEs();
 
-      $scope.industryType = [
-        { inType : '3D Printing', select : false },
-        { inType : 'Aerospace', select : false },
-        { inType : 'Agricultural', select : false },
-        { inType : 'Automation', select : false },
-        { inType : 'Die Casting', select : false },
-        { inType : 'Electrical', select : false },
-        { inType : 'Electronics', select : false },
-        { inType : 'Furniture', select : false },
-        { inType : 'Grinding Machines', select : false },
-        { inType : 'Machine', select : false },
-        { inType : 'Materials', select : false },
-        { inType : 'Marine engines', select : false },
-        { inType : 'Measurement', select : false },
-        { inType : 'Metal', select : false },
-        { inType : 'Medical', select : false },
-        { inType : 'Nuclear Power', select : false },
-        { inType : 'Science', select : false },
-      ];
+      $scope.industryType = companyOnboardingModel.initialIndustryType();
 
       $scope.isOptionsRequired = function(){
         return !$scope.orgType.some(function(options){
           return options.selected;
         });
       };
-
-
 
       $scope.companyinfo = {};
 
@@ -243,14 +96,67 @@ angular.module('dmc.company.onboarding')
 
         company.selectedEmployeeSize = company.selectedEmployeeSize.value;
         company.selectedAnnualRevenue = company.selectedAnnualRevenue.value;
-        company.TYPE = company.TYPE.value;
+        company.orgTYPEs = company.orgTYPEs.value;
         $scope.companyinfo = angular.copy(company);
         $scope.companyinfo.type = type;
-        if ($scope.company.id)
-          $scope.companyinfo.id = $scope.company.id;
+        if ($scope.company.docuSigned){
+          $scope.companyinfo.docuSigned = $scope.company.docuSigned;
+        }
+        else{
+          $scope.companyinfo.docuSigned = false;
+        }
 
-        companyOnboardingModel.save_companyInfo($scope.companyinfo);
-        $location.path('/pay');
+        if ($scope.company.id){
+          $scope.companyinfo.id = $scope.company.id;
+        }
+
+        var postDocInfo = companyOnboardingModel.populateField($scope.companyinfo);
+        var docInfoJsonString = JSON.parse(angular.toJson(postDocInfo));
+        console.log("docInfoJsonString", docInfoJsonString);
+
+        ajax.create(dataFactory.esignOnline().docuSign, postDocInfo, function successCallback(response) {
+            console.log("response.data.status", response.data.status);
+            if (response.data.status == "eSignature Successful!"){
+                var generatedForm = JSON.parse(response.data.reason);
+                console.log(generatedForm);
+                if (!generatedForm.template_id || !generatedForm.url){
+                  $mdDialog.show(
+                    $mdDialog.alert()
+                      .clickOutsideToClose(false)
+                      .title('Error')
+                      .content('Oops, we had a problem when generating Membership Agreement, pleas try again.')
+                      .ok('OK')
+                  )
+                }
+                else{
+                  $scope.companyinfo.templateID = generatedForm.template_id;
+                  $scope.companyinfo.formURL = generatedForm.url;
+                }
+            }
+            else{
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Error')
+                  .content(response.data.reason)
+                  .ok('OK')
+              )
+            }
+        }, function errorCallback(response) {
+          $mdDialog.show(
+            $mdDialog.alert()
+              .clickOutsideToClose(false)
+              .title('Error')
+              .content('Oops, we had a problem when generating Membership Agreement, please try again later. If you kept having this problem, please contact us.')
+              .ok('OK')
+          );
+        }).then(function(){
+          if ($scope.companyinfo.templateID && $scope.companyinfo.formURL){
+            storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));
+            $window.open($scope.companyinfo.formURL);
+          }
+
+        });
       };
 
       $scope.showModalTermsConditions = function(){
@@ -276,27 +182,18 @@ angular.module('dmc.company.onboarding')
       $anchorScroll();
       $scope.isDisabled = false;
 
-      $scope.company = companyOnboardingModel.get_companyInfo();
-      if(angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
-          var haveStored = storageService.get('companyinfoCache');
-          if (haveStored){
-              $scope.company = JSON.parse(haveStored);
-          }
-
-          else{
-              $location.path('/companyinfo');
-          }
+      var haveStored = storageService.get('companyinfoCache');
+      if (haveStored){
+        $scope.company = JSON.parse(haveStored);
       }
       else{
-          storageService.set('companyinfoCache', JSON.stringify($scope.company));
+        $location.path('/companyinfo');
       }
 
-      // if (angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
-      //         $location.path('/companyinfo');
-      // }
+      console.log($scope.company);
 
       $scope.back = function(){
-        companyOnboardingModel.save_companyInfo($scope.company);
+        storageService.set('companyinfoCache', JSON.stringify($scope.company));
         $location.path('/companyinfo');
       }
 
@@ -380,7 +277,6 @@ angular.module('dmc.company.onboarding')
       function stripeTokenHandler(token) {
 
           var jsoninfo = companyInfotoJson(token);
-          storageService.remove('companyinfoCache');
 
           if (!jsoninfo.id){
             ajax.get(dataFactory.payment().organizations, {}, function(response){
@@ -408,18 +304,44 @@ angular.module('dmc.company.onboarding')
               // console.log("jsoninfo", jsoninfo.organizationModel.id);
               if (!jsoninfo.organizationModel.id)
                 jsoninfo.organizationModel.id = null;
-                console.log("jsoninfo", jsoninfo);
-              // $scope.submitOrgPayment(jsoninfo);
+                // console.log("jsoninfo", jsoninfo);
+
+
             });
           }
-          else {
-              console.log("jsoninfo", jsoninfo);
-              // $scope.submitOrgPayment(jsoninfo);
-          }
+
+          ajax.get(dataFactory.esignOnline(jsoninfo.templateId).checkSignature, {}, function(response){
+              console.log("eSignCheck", response.data);
+              if (response.data.status == "eSignCheck Successful!"){
+                if (response.data.reason != "0"){
+                    $scope.submitOrgPayment(jsoninfo);
+                }
+                else{
+                    $mdDialog.show(
+                      $mdDialog.alert()
+                        .clickOutsideToClose(false)
+                        .title('Alert')
+                        .content('You haven\'t sign the Membership Agreement yet, please go back and sign it!')
+                        .ok('OK')
+                    );
+                    $scope.back();
+                }
+             }
+             else {
+               $mdDialog.show(
+                 $mdDialog.alert()
+                   .clickOutsideToClose(false)
+                   .title('Alert')
+                   .content('Oops, something went wrong, please try again later. If you kept having this problem, please contact us.')
+                   .ok('OK')
+               );
+             }
+          });
 
       }
 
       $scope.submitOrgPayment = function(info){
+          storageService.remove('companyinfoCache');
           ajax.create(dataFactory.payment().pay, info, function successCallback(response) {
             if (response.data.status == "succeeded"){
               $mdDialog.show(
@@ -455,10 +377,6 @@ angular.module('dmc.company.onboarding')
           });
       }
 
-      $scope.linkToPage = function(){
-        $window.location.href = '/onboarding.php';
-      }
-
       function companyInfotoJson(token){
 
           $scope.dmdiiMembershipInfo = {
@@ -472,7 +390,10 @@ angular.module('dmc.company.onboarding')
             startUp: $scope.company.startUp,
             dunsCode: $scope.company.duns,
             applicantType: $scope.company.type,
-            orgType: $scope.company.TYPE,
+            orgTYPEs: $scope.company.orgTYPEs,
+            docuSigned: $scope.company.docuSigned,
+            templateID: $scope.company.templateID,
+            formURL: $scope.company.formURL
           };
 
           var MembershipInfo = JSON.stringify($scope.dmdiiMembershipInfo);
