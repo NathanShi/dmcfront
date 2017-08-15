@@ -150,7 +150,8 @@
                             <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
                         </div>
-                        <div ui-widget-content
+                        <div
+                        ui-widget-content
                              content-type="'app'"
                              title="'TRANSFORM:'"
                              category="'GET LEAN'"
@@ -168,13 +169,16 @@
 
                   <div class="row">
                     <div class="col-xs-12">
+                      <form ng-submit="search(searchTerm)">
                         <div class="search-input-div col-xs-10">
                             <input class="search-input" type="text" ng-model="searchTerm" placeholder="Search">
                             <ng-md-icon icon="clear" size="15" class="pull-right clear-icon" ng-click="clearSearch()"></ng-md-icon>
                         </div>
-                        <button class="btn search-button no-click-border col-xs-2" ng-click="search()">
+                        <button class="btn search-button no-click-border col-xs-2" type="submit">
+                        <!-- <button class="btn search-button no-click-border col-xs-2" ng-click="search()"> -->
                           <ng-md-icon icon="search" size="20"></ng-md-icon>
                         </button>
+                      </form>
                     </div>
                   </div>
 
