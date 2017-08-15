@@ -344,6 +344,7 @@ angular.module('dmc.company.onboarding')
           storageService.remove('companyinfoCache');
           ajax.create(dataFactory.payment().pay, info, function successCallback(response) {
             if (response.data.status == "succeeded"){
+<<<<<<< HEAD
               $mdDialog.show(
                 $mdDialog.alert()
                   .clickOutsideToClose(false)
@@ -353,6 +354,13 @@ angular.module('dmc.company.onboarding')
               ).then(function(){
                 $window.location.href = '/onboarding.php';
               });
+=======
+              alert("Successful payment! Redirect to dashboard");
+              // $window.location.href = '/onboarding.php';
+              $window.location.href = '/marketplace.php';
+              // $('#successPay').modal('show');
+              // console.log("success");
+>>>>>>> origin/maz-add-doc-upload-for-docent-II
             }
             else if (response.data.status == "failed"){
               $mdDialog.show(
