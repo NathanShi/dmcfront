@@ -4,58 +4,28 @@
         <h3 ng-if="$ctrl.category" class="help-title">{{$ctrl.category}}</h3>
     </div>
 </div>
-<div ng-if="$ctrl.contentType === 'video' || $ctrl.contentType === 'img'" class="row margin-bottom-10" ng-repeat="item in $ctrl.contentItems">
-    <div class="col-sm-3 col-md-3 media-column">
-        <ng-youtube-embed ng-if="$ctrl.contentType === 'video'" video="item.videoSource" width="100%" height="100%"></ng-youtube-embed>
-        <img ng-if="$ctrl.contentType === 'img'" ng-src="{{item.imgSource}}" width="100%" height="100%">
-    </div>
-    <div class="col-sm-9 col-md-9 description-column border-left">
-        <h3 class="border-bottom">{{item.contentTitle}}</h3>
-        <div class="spacing-container">
-            <p>
-                {{item.description}}
-            </p>
-            <a href="{{item.buttonLink}}">
-                <button ng-if="item.buttonText" class="btn green-button content-button">{{item.buttonText}}</button>
-            </a>
+<div class="row margin-bottom-10" ng-repeat="item in $ctrl.categorizedContent">
+    <div ng-if="item.contentType">
+        <div class="col-sm-3 col-md-3 media-column">
+            <ng-youtube-embed ng-if="item.contentType === 'video'" video="item.videoSource" width="100%" height="100%"></ng-youtube-embed>
+            <img ng-if="item.contentType === 'img'" ng-src="{{item.imgSource}}" width="100%" height="100%">
+            <img ng-if="item.contentType === ''" ng-src="{{app.featureImage.large}}" width="100%" height="100%">
         </div>
-    </div>
-</div>
-<div ng-if="$ctrl.contentType === 'document'" class="row margin-bottom-10" ng-repeat="document in $ctrl.contentItems">
-    <div class="col-sm-3 col-md-3 media-column">
-        Document Photo Here
-    </div>
-    <div class="col-sm-9 col-md-9 description-column border-left">
-        <h3 class="border-bottom">{{document.documentName}}</h3>
-        <div class="spacing-container">
-            <p>
-                {{document.description}}
-            </p>
-            <button ng-click="downloadFile(document.id)" class="btn green-button content-button">Download</button>
-        </div>
-    </div>
-</div>
-<div ng-if="$ctrl.contentType === 'app'" class="row margin-bottom-10" ng-repeat="app in $ctrl.contentItems">
-    <div class="col-sm-3 col-md-3 media-column">
-        <img ng-src="{{app.featureImage.large}}" width="100%" height="100%">
-    </div>
-    <div class="col-sm-9 col-md-9 description-column border-left">
-        <h3 class="border-bottom"><a ng-href="{{'/service-marketplace.php#/' + app.id}}">{{app.title}}</a></h3>
-        <div class="spacing-container">
-            <p>
-                {{app.description}}
-            </p>
-            <!--<div ui-widget-rich-text-->
-                     <!--field-name="Description"-->
-                     <!--model="app.description"-->
-                     <!--limit="1000"-->
-                     <!--placeholder="Description"-->
-                     <!--is-saved="isSaved"-->
-                     <!--is-valid="isValid">-->
-                <!--</div>-->
-            <div>
-                <button run-default-button class="btn green-button content-button" ng-click="saveToDefaultProject(app)">Run</button>
-                <button class="btn green-button content-button margin-left-20" ng-disabled="!serviceMap[app.id]" ng-click="$ctrl.redirectToServiceHistory(serviceMap[app.id]['workspaceId'], serviceMap[app.id]['serviceId'])">Run History</button>
+
+        <div class="col-sm-9 col-md-9 description-column border-left">
+            <h3 ng-if="item.contentType != 'document' && item.contentType != 'app'" class="border-bottom">{{item.contentTitle}}</h3>
+            <h3 ng-if="item.contentType === 'document'" class="border-bottom">{{item.documentName}}</h3>
+            <h3 ng-if="item.contentType === 'app'" class="border-bottom"><a ng-href="{{'/service-marketplace.php#/' + item.id}}">{{item.title}}</a></h3>
+            <div class="spacing-container">
+                <p>{{item.description}}</p>
+                <a ng-if="item.buttonText && item.contentType != 'document' && item.contentType != 'app'" href="{{item.buttonLink}}">
+                    <button class="btn green-button content-button">{{item.buttonText}}</button>
+                </a>
+                <button ng-if="item.contentType === 'document'" ng-click="downloadFile(document.id)" class="btn green-button content-button">Download</button>
+                <div ng-if="item.contentType === 'app'">
+                  <button run-default-button class="btn green-button content-button" ng-click="saveToDefaultProject(item)">Run</button>
+                  <button class="btn green-button content-button margin-left-20" ng-disabled="!serviceMap[item.id]" ng-click="$ctrl.redirectToServiceHistory(serviceMap[item.id]['workspaceId'], serviceMap[item.id]['serviceId'])">Run History</button>
+                </div>
             </div>
         </div>
     </div>
