@@ -559,7 +559,9 @@ angular.module('dmc.project')
                 // filter out any nulls in the colleciton
                 //  as a result of files be quarantined
                 var origLen = scannnedDocs.length;
-                scannnedDocs = scannnedDocs.filter(x => x);
+                scannnedDocs = scannnedDocs.filter(function(x){
+                  return !!x;
+                });
                 if (scannnedDocs.length != origLen) {
                   alert("Error: One or more file quarantined by virus scan and can not be used");
                 }
