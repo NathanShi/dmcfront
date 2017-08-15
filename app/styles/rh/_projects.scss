@@ -449,3 +449,13 @@ h3.row {
     margin-right: 0px;
 }
 
+.product-header {
+  margin-bottom: 15px;
+  md-input-container {
+    &.serviceType,
+    &.titleInput {
+      max-width: 489px;
+      width: 100%;
+    }
+  }
+}
