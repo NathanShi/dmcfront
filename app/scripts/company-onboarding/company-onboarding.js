@@ -281,6 +281,68 @@ angular.module('dmc.company.onboarding', [
 
                 return populateCompany;
             }
+
+            this.matchOrgType = function(data, tokenID){
+
+                var dmdiiMembershipInfoObj = {
+                  mainPointContact: data.main,
+                  financePointContact: data.finance,
+                  legalPointContact: data.legal,
+                  techPointContact: data.tech,
+                  secondAddress: data.secondAddress,
+                  annualRevenue: data.selectedAnnualRevenue,
+                  employeeSize: data.selectedEmployeeSize,
+                  startUp: data.startUp,
+                  dunsCode: data.duns,
+                  applicantType: data.type,
+                  orgTYPEs: data.orgTYPEs,
+                  docuSigned: data.docuSigned,
+                  templateID: data.templateID,
+                  formURL: data.formURL
+                };
+
+                var MembershipInfoString = JSON.stringify(dmdiiMembershipInfoObj);
+
+                var orgPayEsign = {
+                  stripeToken: tokenID,
+                  organizationModel:{
+                    name:data.name,
+                    id: data.id ? data.id : null,
+                    location:null,
+                    description:null,
+                    division:null,
+                    industry:null,
+                    naicsCode:data.naicsCode,
+                    email:null,
+                    phone:null,
+                    website:data.website,
+                    socialMediaLinkedin:null,
+                    socialMediaTwitter:null,
+                    socialMediaInthenews:null,
+                    perferedCommMethod:null,
+                    productionCapabilities:null,
+                    address:{
+                      streetAddress1:data.firstAddress.line1,
+                      streetAddress2:(data.firstAddress.line2?data.firstAddress.line2:null),
+                      city:data.firstAddress.city,
+                      state:data.firstAddress.state,
+                      country:"US",
+                      zip:data.firstAddress.zipcode,
+                    },
+                    reasonJoining:null,
+                    featureImage:null,
+                    dmdiiMembershipInfo:MembershipInfoString,
+                    awards:null,
+                    contacts:null,
+                    areasOfExpertise:null,
+                    desiredAreasOfExpertise:null,
+                    postCollaboration:null,
+                    upcomingProjectInterests:null,
+                    pastProjects:null
+                  }
+                };
+                return orgPayEsign;
+            }
     }])
     .factory('storageService', ['$rootScope', function($rootScope) {
         return {

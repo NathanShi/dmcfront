@@ -389,13 +389,11 @@ angular.module('dmc.company.onboarding')
 
       function stripeTokenHandler(token) {
 
-          var jsoninfo = companyInfotoJson(token);
-
-          if (!jsoninfo.id){
+          if (!$scope.company.id || angular.isUndefined($scope.company.id)){
             ajax.get(dataFactory.payment().organizations, {}, function(response){
               if (response.data.name != null){
                 if (response.data.isPaid == false){
-                  jsoninfo.organizationModel.id = response.data.id;
+                  $scope.company.id = response.data.id;
                 }
 
                 else{
@@ -411,59 +409,125 @@ angular.module('dmc.company.onboarding')
                 }
               }
             }).then(function(){
-              if (!jsoninfo.organizationModel.id)
-                jsoninfo.organizationModel.id = null;
+              if (!$scope.company.id)
+                $scope.company.id = null;
+                ajax.get(dataFactory.esignOnline($scope.company.templateID).checkSignature, {}, function(response){;
+                    if (response.data.status == "eSignCheck Successful!"){
+                      if (response.data.reason == "null"){
+                        $mdDialog.show(
+                          $mdDialog.alert()
+                            .clickOutsideToClose(false)
+                            .title('Alert')
+                            .content('Oops, something went wrong, please try again later. If you kept having this problem, please contact us.')
+                            .ok('OK')
+                        );
+                      }
+                      else if (response.data.reason == "0"){
+                          $mdDialog.show(
+                            $mdDialog.alert()
+                              .clickOutsideToClose(false)
+                              .title('Alert')
+                              .content('You haven\'t sign the Membership Agreement yet, please go back and sign it!')
+                              .ok('OK')
+                          );
+                          $scope.back();
+                      }
+                      else{
+                          $scope.company.docuSigned = "Signed";
+                          $scope.submitOrgPayment($scope.company, token);
+                      }
+                   }
+                   else {
+                     $mdDialog.show(
+                       $mdDialog.alert()
+                         .clickOutsideToClose(false)
+                         .title('Alert')
+                         .content('Oops, something went wrong, please try again later. If you kept having this problem, please contact us.')
+                         .ok('OK')
+                     );
+                   }
+                });
             });
           }
 
-          ajax.get(dataFactory.esignOnline(jsoninfo.dmdiiMembershipInfo.templateId).checkSignature, {}, function(response){
-              console.log("jsoninfo", jsoninfo);
-              console.log("checkSignature when pay", response.data);
-              if (response.data.status == "eSignCheck Successful!"){
-                if (response.data.reason == "null"){
-                  $mdDialog.show(
-                    $mdDialog.alert()
-                      .clickOutsideToClose(false)
-                      .title('Alert')
-                      .content('Oops, something went wrong, please try again later. If you kept having this problem, please contact us.')
-                      .ok('OK')
-                  );
-                }
-                else if (response.data.reason == "0"){
-                    $mdDialog.show(
-                      $mdDialog.alert()
-                        .clickOutsideToClose(false)
-                        .title('Alert')
-                        .content('You haven\'t sign the Membership Agreement yet, please go back and sign it!')
-                        .ok('OK')
-                    );
-                    $scope.back();
-                }
-                else{
-                    jsoninfo.dmdiiMembershipInfo.docuSigned = "Signed";
-                    $scope.submitOrgPayment(jsoninfo);
-                }
-             }
-             else {
-               $mdDialog.show(
-                 $mdDialog.alert()
-                   .clickOutsideToClose(false)
-                   .title('Alert')
-                   .content('Oops, something went wrong, please try again later. If you kept having this problem, please contact us.')
-                   .ok('OK')
-               );
-             }
-          });
+          // var jsoninfo = companyInfotoJson(token);
+
+          //Retrieve organization id if already in database.
+          // if (!jsoninfo.id){
+          //   ajax.get(dataFactory.payment().organizations, {}, function(response){
+          //     if (response.data.name != null){
+          //       if (response.data.isPaid == false){
+          //         jsoninfo.organizationModel.id = response.data.id;
+          //       }
+          //
+          //       else{
+          //         $mdDialog.show(
+          //           $mdDialog.alert()
+          //             .clickOutsideToClose(false)
+          //             .title('Alert')
+          //             .content('You already have a Tier3 Membership organization database, will redirect to dashboard.')
+          //             .ok('Got it!')
+          //         ).then(function(){
+          //           $window.location.href = '/onboarding.php';
+          //         });
+          //       }
+          //     }
+          //   }).then(function(){
+          //     if (!jsoninfo.organizationModel.id)
+          //       jsoninfo.organizationModel.id = null;
+          //
+          //       console.log("jsoninfo", jsoninfo);
+          //       ajax.get(dataFactory.esignOnline(jsoninfo.dmdiiMembershipInfo.templateID).checkSignature, {}, function(response){;
+          //           console.log("checkSignature when pay", response.data);
+          //           if (response.data.status == "eSignCheck Successful!"){
+          //             if (response.data.reason == "null"){
+          //               $mdDialog.show(
+          //                 $mdDialog.alert()
+          //                   .clickOutsideToClose(false)
+          //                   .title('Alert')
+          //                   .content('Oops, something went wrong, please try again later. If you kept having this problem, please contact us.')
+          //                   .ok('OK')
+          //               );
+          //             }
+          //             else if (response.data.reason == "0"){
+          //                 $mdDialog.show(
+          //                   $mdDialog.alert()
+          //                     .clickOutsideToClose(false)
+          //                     .title('Alert')
+          //                     .content('You haven\'t sign the Membership Agreement yet, please go back and sign it!')
+          //                     .ok('OK')
+          //                 );
+          //                 $scope.back();
+          //             }
+          //             else{
+          //                 jsoninfo.dmdiiMembershipInfo.docuSigned = "Signed";
+          //                 $scope.submitOrgPayment(jsoninfo);
+          //             }
+          //          }
+          //          else {
+          //            $mdDialog.show(
+          //              $mdDialog.alert()
+          //                .clickOutsideToClose(false)
+          //                .title('Alert')
+          //                .content('Oops, something went wrong, please try again later. If you kept having this problem, please contact us.')
+          //                .ok('OK')
+          //            );
+          //          }
+          //       });
+          //
+          //   });
+          // }
+
 
       }
 
-      $scope.submitOrgPayment = function(info){
+      $scope.submitOrgPayment = function(info, token){
 
-          var MembershipInfo = JSON.stringify($scope.dmdiiMembershipInfo);
-          info.dmdiiMembershipInfo = MembershipInfo;
-          console.log("info.dmdiiMembershipInfo", info.dmdiiMembershipInfo);
+          var orgPayEsignOBJ = companyOnboardingModel.matchOrgType(info, token.id);
 
-          ajax.create(dataFactory.payment().pay, info, function successCallback(response) {
+          console.log("orgPayEsignOBJ", orgPayEsignOBJ);
+
+          ajax.create(dataFactory.payment().pay, orgPayEsignOBJ, function successCallback(response) {
             if (response.data.status == "succeeded"){
               storageService.remove('companyinfoCache');
               $mdDialog.show(
@@ -496,7 +560,6 @@ angular.module('dmc.company.onboarding')
             );
           }).then(function(){
               $scope.enableButton();
-              // $scope.flag = false;
           });
       }
 
