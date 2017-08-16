@@ -5,15 +5,17 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Favorites</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
-<body ng-app="dmc.myfavorites-arsalan">
+<body ng-app="dmc.myfavorites">
     <!--[if lt IE 10]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Top Header -->
-    <div dmc-top-header></div>
+    <div dmc-top-header active-page="myfavorites"></div>
 
     <div ui-view></div>
 
@@ -47,8 +49,8 @@
     <script src="scripts/common/models/previous-page.js"></script>
 
 
-    <script src="scripts/favorites-arsalan/myfavorites.js"></script>
-    <script src="scripts/favorites-arsalan/myfavorites-controller.js"></script>
+    <script src="scripts/myfavorites/myfavorites.js"></script>
+    <script src="scripts/myfavorites/myfavorites-controller.js"></script>
 
     <!-- endbuild -->
     <script type="text/javascript">

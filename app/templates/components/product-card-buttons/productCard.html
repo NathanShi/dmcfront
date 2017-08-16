@@ -1,4 +1,5 @@
 <div class="product-card-container product-card__footer" ng-if="cardStyle != 'included' && !removeFeatured && !addFeatured">
+
     <div class="adding-to-project" ng-show="addingToProject">
         <div layout="row" layout-align="center center" class="inner-add-to-project" flex>
             <md-button aria-label="Cancel" layout="column" class="workspaceclose" ng-click="cancelAddToProject()">
@@ -30,6 +31,7 @@
                        class="workspaceclose"
                        ng-click="saveToProject(projectModel.id)">Add
             </md-button>
+
         </div>
     </div>
 

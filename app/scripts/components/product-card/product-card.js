@@ -14,7 +14,7 @@ angular.module('dmc.component.productcard', [
     'dmc.compare',
     'dmc.component.members-card',
     'ng-showdown',
-    'dmc.component.product-card-buttons'
+    'dmc.component.product-card-buttons','dmc.widgets.favButton'
 
 ])
 .run(function(ajax){
