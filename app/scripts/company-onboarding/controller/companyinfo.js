@@ -79,7 +79,7 @@ angular.module('dmc.company.onboarding')
 
       if (angular.equals($scope.company, {})){
           var haveStored = storageService.get('companyinfoCache');
-          if (haveStored && angular.isUndefined(haveStored)){
+          if (haveStored && !angular.isUndefined(haveStored)){
             $scope.company = JSON.parse(haveStored);
             storageService.remove('companyinfoCache');
           }
@@ -174,18 +174,19 @@ angular.module('dmc.company.onboarding')
         }).then(function(){
           if ($scope.companyinfo.templateID && $scope.companyinfo.formURL){
           // if (true){//Testing
+            storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo))
             $mdDialog.show(
               $mdDialog.alert()
                 .clickOutsideToClose(false)
                 .title('Generating Membership Agreement')
                 .content('Redirecting in 5 seconds, if this not work please open this link: ' + $scope.companyinfo.formURL)
                 .ok('OK')
-            )
-            storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));
-            $timeout( function(){
-                alert("redirecting : " + $scope.companyinfo.formURL);
-                // $window.location.href = $scope.companyinfo.formURL;
-            }, 5000);
+            ).then(function(){
+              $timeout( function(){
+                // alert("redirecting : " + $scope.companyinfo.formURL);
+                $window.location.href = $scope.companyinfo.formURL;
+              }, 1000);
+            });
           }
           else{
           // if (true){//Testing
@@ -245,15 +246,15 @@ angular.module('dmc.company.onboarding')
       $scope.isDisabled = false;
 
       var haveStored = storageService.get('companyinfoCache');
-      if (haveStored && angular.isUndefined(haveStored)){
+      if (haveStored && !angular.isUndefined(haveStored)){
         $scope.company = JSON.parse(haveStored);
       }
 
       console.log($scope.company);
 
       if (!$scope.company){
-        alert("back to /companyinfo");
-        // $location.path('/companyinfo');
+        // alert("back to /companyinfo");
+        $location.path('/companyinfo');
       }
       else{
         var errorReason = "null";
@@ -273,7 +274,6 @@ angular.module('dmc.company.onboarding')
                   errorReason = "Oops, something went wrong, please try again later. If you kept having this problem, please contact us."
               }
           }).then(function(){
-            console.log("called");
             if (errorReason != "null"){
               $mdDialog.show(
                 $mdDialog.alert()
@@ -284,15 +284,14 @@ angular.module('dmc.company.onboarding')
               );
             }
           }).then(function(){
-              console.log("called again");
               if ($scope.company.docuSigned == "Requested"){
                   if ($scope.company.templateID){
                     storageService.set('companyinfoCache', JSON.stringify($scope.company));
-                    $timeout(function(){
-                      alert("redirecting : " + $scope.companyinfo.formURL);
-                      // $window.location.href = $scope.companyinfo.formURL;
-                    }, 5000);
-                  }
+                      $timeout(function(){
+                        // alert("redirecting : " + $scope.companyinfo.formURL); //TEsting
+                        $window.location.href = $scope.companyinfo.formURL;
+                      }, 1000);
+                    }
                   else{
                     $timeout(function(){
                       alert("redirecting : back");
@@ -397,7 +396,6 @@ angular.module('dmc.company.onboarding')
               if (response.data.name != null){
                 if (response.data.isPaid == false){
                   jsoninfo.organizationModel.id = response.data.id;
-                  // console.log("jsoninfo.id", jsoninfo.organizationModel.id);
                 }
 
                 else{
@@ -418,14 +416,20 @@ angular.module('dmc.company.onboarding')
             });
           }
 
-          ajax.get(dataFactory.esignOnline(jsoninfo.templateId).checkSignature, {}, function(response){
-              console.log("eSignCheck", response.data);
+          ajax.get(dataFactory.esignOnline(jsoninfo.dmdiiMembershipInfo.templateId).checkSignature, {}, function(response){
+              console.log("jsoninfo", jsoninfo);
+              console.log("checkSignature when pay", response.data);
               if (response.data.status == "eSignCheck Successful!"){
-                if (response.data.reason != "0"){
-                    jsoninfo.dmdiiMembershipInfo.docuSigned = "Signed";
-                    $scope.submitOrgPayment(jsoninfo);
+                if (response.data.reason == "null"){
+                  $mdDialog.show(
+                    $mdDialog.alert()
+                      .clickOutsideToClose(false)
+                      .title('Alert')
+                      .content('Oops, something went wrong, please try again later. If you kept having this problem, please contact us.')
+                      .ok('OK')
+                  );
                 }
-                else{
+                else if (response.data.reason == "0"){
                     $mdDialog.show(
                       $mdDialog.alert()
                         .clickOutsideToClose(false)
@@ -434,6 +438,10 @@ angular.module('dmc.company.onboarding')
                         .ok('OK')
                     );
                     $scope.back();
+                }
+                else{
+                    jsoninfo.dmdiiMembershipInfo.docuSigned = "Signed";
+                    $scope.submitOrgPayment(jsoninfo);
                 }
              }
              else {
@@ -450,9 +458,14 @@ angular.module('dmc.company.onboarding')
       }
 
       $scope.submitOrgPayment = function(info){
-          storageService.remove('companyinfoCache');
+
+          var MembershipInfo = JSON.stringify($scope.dmdiiMembershipInfo);
+          info.dmdiiMembershipInfo = MembershipInfo;
+          console.log("info.dmdiiMembershipInfo", info.dmdiiMembershipInfo);
+
           ajax.create(dataFactory.payment().pay, info, function successCallback(response) {
             if (response.data.status == "succeeded"){
+              storageService.remove('companyinfoCache');
               $mdDialog.show(
                 $mdDialog.alert()
                   .clickOutsideToClose(false)
@@ -506,8 +519,6 @@ angular.module('dmc.company.onboarding')
             formURL: $scope.company.formURL
           };
 
-          var MembershipInfo = JSON.stringify($scope.dmdiiMembershipInfo);
-
           $scope.payment = {
             stripeToken: token.id,
             organizationModel:{
@@ -536,7 +547,7 @@ angular.module('dmc.company.onboarding')
               },
               reasonJoining:null,
               featureImage:null,
-              dmdiiMembershipInfo:MembershipInfo,
+              dmdiiMembershipInfo:$scope.dmdiiMembershipInfo,
               awards:null,
               contacts:null,
               areasOfExpertise:null,
@@ -546,9 +557,7 @@ angular.module('dmc.company.onboarding')
               pastProjects:null
             }
           };
-
           return $scope.payment;
-
       }
 
 }])
