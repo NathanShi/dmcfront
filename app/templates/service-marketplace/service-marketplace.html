@@ -49,7 +49,7 @@
 			</md-content>
 			<!--product-->
 			<md-content class="product">
-				<div layout="row" layout-margin>
+				<div layout="row" layout-margin class="product-box">
 					<!--product image-->
 					<div class="product-image" layout="column">
 						<img class="main-image" ng-if="service_images.length" ng-src="{{service_images[indexImages].documentUrl}}">
@@ -68,12 +68,12 @@
 								edit="false">
 						</div> -->
 					</div>
-					<div flex>
+					<div flex style="padding-left:30px; margin-top:0px; height:auto;">
 						<!--product header-->
 						<div class="product-header">
 							<div layout="row">
 								<h2>{{product.title}}</h2>
-                <md-button ui-sref="service-marketplace-edit({serviceId: product.id})" ng-if="userData.isDmdiiAdmin" class="btn green-button content-button"  style="margin-top:20px">Edit Service</md-button>
+                <md-button ui-sref="service-marketplace-edit({serviceId: product.id})" ng-if="userData.isDmdiiAdmin" class="btn green-button content-button"  style="margin-bottom:10px; margin-top:0px">Edit Service</md-button>
                 <span flex></span>
               </div>
               <div layout="row">
@@ -90,7 +90,7 @@
 								</md-button> -->
 							</div>
               <div layout="row">
-                <span>Service Type: {{product.serviceType}}</span>
+                <!-- <span>Service Type: {{product.serviceType}}</span> -->
 								<!-- <md-button aria-label="favorite" ng-click="addToFavorite()" class="md-icon-button header-icon">
                                     <ng-md-icon icon="favorite_outline" style="fill: grey" size="25" ng-show="!product.favorite"></ng-md-icon>
                                     <ng-md-icon icon="favorite" style="fill: #65AF3F;" size="25" ng-show="product.favorite"></ng-md-icon>
