@@ -39,14 +39,6 @@ angular.module('dmc.company.onboarding')
 
       $scope.isDisabled = false;
 
-      // $scope.shouldDisable = function(formValid){
-      //     if ($scope.isDisabled)
-      //       return true;
-      //     else{
-      //       return formValid;
-      //     }
-      // }
-
       $scope.enableButton = function(){
         $scope.isDisabled = false;
       }
@@ -112,7 +104,6 @@ angular.module('dmc.company.onboarding')
       $scope.save = function(company) {
 
         $scope.disableButton();
-        console.log($scope.isDisabled);
 
         var type = [];
 
@@ -160,7 +151,6 @@ angular.module('dmc.company.onboarding')
         ajax.create(dataFactory.esignOnline().docuSign, postDocInfo, function successCallback(response) {
             if (response.data.status == "eSignature Successful!"){
                 var generatedForm = JSON.parse(response.data.reason);
-                console.log(generatedForm);
                 if (generatedForm.template_id && generatedForm.url){
                   $scope.companyinfo.templateID = generatedForm.template_id;
                   $scope.companyinfo.formURL = generatedForm.url;
@@ -250,8 +240,6 @@ angular.module('dmc.company.onboarding')
         $scope.company = JSON.parse(haveStored);
       }
 
-      console.log($scope.company);
-
       if (!$scope.company){
         // alert("back to /companyinfo");
         $location.path('/companyinfo');
@@ -260,7 +248,6 @@ angular.module('dmc.company.onboarding')
         var errorReason = "null";
         if ($scope.company.docuSigned != "Signed"){
           ajax.get(dataFactory.esignOnline($scope.company.templateID).checkSignature, {}, function(response){
-              console.log("eSignCheck", response.data);
               if (response.data.status == "eSignCheck Successful!"){
                   if (response.data.reason != "0"){
                       $scope.company.docuSigned = "Signed";
@@ -289,7 +276,7 @@ angular.module('dmc.company.onboarding')
                     storageService.set('companyinfoCache', JSON.stringify($scope.company));
                       $timeout(function(){
                         // alert("redirecting : " + $scope.companyinfo.formURL); //TEsting
-                        $window.location.href = $scope.companyinfo.formURL;
+                        $window.location.href = $scope.company.formURL;
                       }, 1000);
                     }
                   else{
@@ -449,83 +436,11 @@ angular.module('dmc.company.onboarding')
                 });
             });
           }
-
-          // var jsoninfo = companyInfotoJson(token);
-
-          //Retrieve organization id if already in database.
-          // if (!jsoninfo.id){
-          //   ajax.get(dataFactory.payment().organizations, {}, function(response){
-          //     if (response.data.name != null){
-          //       if (response.data.isPaid == false){
-          //         jsoninfo.organizationModel.id = response.data.id;
-          //       }
-          //
-          //       else{
-          //         $mdDialog.show(
-          //           $mdDialog.alert()
-          //             .clickOutsideToClose(false)
-          //             .title('Alert')
-          //             .content('You already have a Tier3 Membership organization database, will redirect to dashboard.')
-          //             .ok('Got it!')
-          //         ).then(function(){
-          //           $window.location.href = '/onboarding.php';
-          //         });
-          //       }
-          //     }
-          //   }).then(function(){
-          //     if (!jsoninfo.organizationModel.id)
-          //       jsoninfo.organizationModel.id = null;
-          //
-          //       console.log("jsoninfo", jsoninfo);
-          //       ajax.get(dataFactory.esignOnline(jsoninfo.dmdiiMembershipInfo.templateID).checkSignature, {}, function(response){;
-          //           console.log("checkSignature when pay", response.data);
-          //           if (response.data.status == "eSignCheck Successful!"){
-          //             if (response.data.reason == "null"){
-          //               $mdDialog.show(
-          //                 $mdDialog.alert()
-          //                   .clickOutsideToClose(false)
-          //                   .title('Alert')
-          //                   .content('Oops, something went wrong, please try again later. If you kept having this problem, please contact us.')
-          //                   .ok('OK')
-          //               );
-          //             }
-          //             else if (response.data.reason == "0"){
-          //                 $mdDialog.show(
-          //                   $mdDialog.alert()
-          //                     .clickOutsideToClose(false)
-          //                     .title('Alert')
-          //                     .content('You haven\'t sign the Membership Agreement yet, please go back and sign it!')
-          //                     .ok('OK')
-          //                 );
-          //                 $scope.back();
-          //             }
-          //             else{
-          //                 jsoninfo.dmdiiMembershipInfo.docuSigned = "Signed";
-          //                 $scope.submitOrgPayment(jsoninfo);
-          //             }
-          //          }
-          //          else {
-          //            $mdDialog.show(
-          //              $mdDialog.alert()
-          //                .clickOutsideToClose(false)
-          //                .title('Alert')
-          //                .content('Oops, something went wrong, please try again later. If you kept having this problem, please contact us.')
-          //                .ok('OK')
-          //            );
-          //          }
-          //       });
-          //
-          //   });
-          // }
-
-
       }
 
       $scope.submitOrgPayment = function(info, token){
 
           var orgPayEsignOBJ = companyOnboardingModel.matchOrgType(info, token.id);
-
-          console.log("orgPayEsignOBJ", orgPayEsignOBJ);
 
           ajax.create(dataFactory.payment().pay, orgPayEsignOBJ, function successCallback(response) {
             if (response.data.status == "succeeded"){
@@ -562,65 +477,5 @@ angular.module('dmc.company.onboarding')
               $scope.enableButton();
           });
       }
-
-      // function companyInfotoJson(token){
-      //
-      //     $scope.dmdiiMembershipInfo = {
-      //       mainPointContact: $scope.company.main,
-      //       financePointContact: $scope.company.finance,
-      //       legalPointContact: $scope.company.legal,
-      //       techPointContact: $scope.company.tech,
-      //       secondAddress: $scope.company.secondAddress,
-      //       annualRevenue: $scope.company.selectedAnnualRevenue,
-      //       employeeSize: $scope.company.selectedEmployeeSize,
-      //       startUp: $scope.company.startUp,
-      //       dunsCode: $scope.company.duns,
-      //       applicantType: $scope.company.type,
-      //       orgTYPEs: $scope.company.orgTYPEs,
-      //       docuSigned: $scope.company.docuSigned,
-      //       templateID: $scope.company.templateID,
-      //       formURL: $scope.company.formURL
-      //     };
-      //
-      //     $scope.payment = {
-      //       stripeToken: token.id,
-      //       organizationModel:{
-      //         name:$scope.company.name,
-      //         id: $scope.company.id ? $scope.company.id : null,
-      //         location:null,
-      //         description:null,
-      //         division:null,
-      //         industry:null,
-      //         naicsCode:$scope.company.naicsCode,
-      //         email:null,
-      //         phone:null,
-      //         website:$scope.company.website,
-      //         socialMediaLinkedin:null,
-      //         socialMediaTwitter:null,
-      //         socialMediaInthenews:null,
-      //         perferedCommMethod:null,
-      //         productionCapabilities:null,
-      //         address:{
-      //           streetAddress1:$scope.company.firstAddress.line1,
-      //           streetAddress2:($scope.company.firstAddress.line2?$scope.company.firstAddress.line2:null),
-      //           city:$scope.company.firstAddress.city,
-      //           state:$scope.company.firstAddress.state,
-      //           country:"US",
-      //           zip:$scope.company.firstAddress.zipcode,
-      //         },
-      //         reasonJoining:null,
-      //         featureImage:null,
-      //         dmdiiMembershipInfo:$scope.dmdiiMembershipInfo,
-      //         awards:null,
-      //         contacts:null,
-      //         areasOfExpertise:null,
-      //         desiredAreasOfExpertise:null,
-      //         postCollaboration:null,
-      //         upcomingProjectInterests:null,
-      //         pastProjects:null
-      //       }
-      //     };
-      //     return $scope.payment;
-      // }
 
 }])
