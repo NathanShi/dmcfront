@@ -537,8 +537,8 @@ angular.module('dmc.company.onboarding')
                   .content('Successful payment! Redirect to dashboard.')
                   .ok('OK')
               ).then(function(){
-                alert("Beta Test Version, should redirect in release version");
-                // $window.location.href = '/onboarding.php';
+                // alert("Beta Test Version, should redirect in release version");
+                $window.location.href = '/onboarding.php';
               });
             }
             else if (response.data.status == "failed"){
@@ -563,64 +563,64 @@ angular.module('dmc.company.onboarding')
           });
       }
 
-      function companyInfotoJson(token){
-
-          $scope.dmdiiMembershipInfo = {
-            mainPointContact: $scope.company.main,
-            financePointContact: $scope.company.finance,
-            legalPointContact: $scope.company.legal,
-            techPointContact: $scope.company.tech,
-            secondAddress: $scope.company.secondAddress,
-            annualRevenue: $scope.company.selectedAnnualRevenue,
-            employeeSize: $scope.company.selectedEmployeeSize,
-            startUp: $scope.company.startUp,
-            dunsCode: $scope.company.duns,
-            applicantType: $scope.company.type,
-            orgTYPEs: $scope.company.orgTYPEs,
-            docuSigned: $scope.company.docuSigned,
-            templateID: $scope.company.templateID,
-            formURL: $scope.company.formURL
-          };
-
-          $scope.payment = {
-            stripeToken: token.id,
-            organizationModel:{
-              name:$scope.company.name,
-              id: $scope.company.id ? $scope.company.id : null,
-              location:null,
-              description:null,
-              division:null,
-              industry:null,
-              naicsCode:$scope.company.naicsCode,
-              email:null,
-              phone:null,
-              website:$scope.company.website,
-              socialMediaLinkedin:null,
-              socialMediaTwitter:null,
-              socialMediaInthenews:null,
-              perferedCommMethod:null,
-              productionCapabilities:null,
-              address:{
-                streetAddress1:$scope.company.firstAddress.line1,
-                streetAddress2:($scope.company.firstAddress.line2?$scope.company.firstAddress.line2:null),
-                city:$scope.company.firstAddress.city,
-                state:$scope.company.firstAddress.state,
-                country:"US",
-                zip:$scope.company.firstAddress.zipcode,
-              },
-              reasonJoining:null,
-              featureImage:null,
-              dmdiiMembershipInfo:$scope.dmdiiMembershipInfo,
-              awards:null,
-              contacts:null,
-              areasOfExpertise:null,
-              desiredAreasOfExpertise:null,
-              postCollaboration:null,
-              upcomingProjectInterests:null,
-              pastProjects:null
-            }
-          };
-          return $scope.payment;
-      }
+      // function companyInfotoJson(token){
+      //
+      //     $scope.dmdiiMembershipInfo = {
+      //       mainPointContact: $scope.company.main,
+      //       financePointContact: $scope.company.finance,
+      //       legalPointContact: $scope.company.legal,
+      //       techPointContact: $scope.company.tech,
+      //       secondAddress: $scope.company.secondAddress,
+      //       annualRevenue: $scope.company.selectedAnnualRevenue,
+      //       employeeSize: $scope.company.selectedEmployeeSize,
+      //       startUp: $scope.company.startUp,
+      //       dunsCode: $scope.company.duns,
+      //       applicantType: $scope.company.type,
+      //       orgTYPEs: $scope.company.orgTYPEs,
+      //       docuSigned: $scope.company.docuSigned,
+      //       templateID: $scope.company.templateID,
+      //       formURL: $scope.company.formURL
+      //     };
+      //
+      //     $scope.payment = {
+      //       stripeToken: token.id,
+      //       organizationModel:{
+      //         name:$scope.company.name,
+      //         id: $scope.company.id ? $scope.company.id : null,
+      //         location:null,
+      //         description:null,
+      //         division:null,
+      //         industry:null,
+      //         naicsCode:$scope.company.naicsCode,
+      //         email:null,
+      //         phone:null,
+      //         website:$scope.company.website,
+      //         socialMediaLinkedin:null,
+      //         socialMediaTwitter:null,
+      //         socialMediaInthenews:null,
+      //         perferedCommMethod:null,
+      //         productionCapabilities:null,
+      //         address:{
+      //           streetAddress1:$scope.company.firstAddress.line1,
+      //           streetAddress2:($scope.company.firstAddress.line2?$scope.company.firstAddress.line2:null),
+      //           city:$scope.company.firstAddress.city,
+      //           state:$scope.company.firstAddress.state,
+      //           country:"US",
+      //           zip:$scope.company.firstAddress.zipcode,
+      //         },
+      //         reasonJoining:null,
+      //         featureImage:null,
+      //         dmdiiMembershipInfo:$scope.dmdiiMembershipInfo,
+      //         awards:null,
+      //         contacts:null,
+      //         areasOfExpertise:null,
+      //         desiredAreasOfExpertise:null,
+      //         postCollaboration:null,
+      //         upcomingProjectInterests:null,
+      //         pastProjects:null
+      //       }
+      //     };
+      //     return $scope.payment;
+      // }
 
 }])
