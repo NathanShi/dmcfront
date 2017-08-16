@@ -561,7 +561,7 @@
 
 
 
-        <button ng-disabled="companyGeneralForm.$invalid" type="submit" ng-click="save(company)" class="btn btn-next pull-right" ng-disabled="isDisabled">
+        <button ng-disabled="isDisabled ? isDisabled : companyGeneralForm.$invalid" type="submit" ng-click="save(company)" class="btn btn-next pull-right">
     							CONTINUE TO SIGN AGREEMENT
     		</button>
 

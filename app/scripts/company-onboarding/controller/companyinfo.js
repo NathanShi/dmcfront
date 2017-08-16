@@ -12,11 +12,40 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$window', '$location', '$anchorScroll', 'ajax', 'dataFactory', 'storageService', '$rootScope', '$mdDialog',
-    function($scope, companyOnboardingModel, $window, $location, $anchorScroll, ajax, dataFactory, storageService, $rootScope, $mdDialog){
+.controller('co-companyinfoController', ['$scope',
+                                         'companyOnboardingModel',
+                                         '$window',
+                                         '$location',
+                                         '$anchorScroll',
+                                         'ajax',
+                                         'dataFactory',
+                                         'storageService',
+                                         '$rootScope',
+                                         '$timeout',
+                                         '$mdDialog',
+    function($scope,
+             companyOnboardingModel,
+             $window,
+             $location,
+             $anchorScroll,
+             ajax,
+             dataFactory,
+             storageService,
+             $rootScope,
+             $timeout,
+             $mdDialog){
+
       $anchorScroll();
 
       $scope.isDisabled = false;
+
+      // $scope.shouldDisable = function(formValid){
+      //     if ($scope.isDisabled)
+      //       return true;
+      //     else{
+      //       return formValid;
+      //     }
+      // }
 
       $scope.enableButton = function(){
         $scope.isDisabled = false;
@@ -81,7 +110,9 @@ angular.module('dmc.company.onboarding')
       $scope.companyinfo = {};
 
       $scope.save = function(company) {
+
         $scope.disableButton();
+        console.log($scope.isDisabled);
 
         var type = [];
 
@@ -131,13 +162,6 @@ angular.module('dmc.company.onboarding')
                 var generatedForm = JSON.parse(response.data.reason);
                 console.log(generatedForm);
                 if (generatedForm.template_id && generatedForm.url){
-                  $mdDialog.show(
-                    $mdDialog.alert()
-                      .clickOutsideToClose(false)
-                      .title('Successfully generate Membership Agreement')
-                      .content('Redirecting, if this not work please open this link: ' + $scope.companyinfo.formURL)
-                      .ok('OK')
-                  )
                   $scope.companyinfo.templateID = generatedForm.template_id;
                   $scope.companyinfo.formURL = generatedForm.url;
                 }
@@ -149,11 +173,22 @@ angular.module('dmc.company.onboarding')
            responseErrorReason = "Error when calling for e-sign API. \nIf you kept having this problem, please contact us.";
         }).then(function(){
           if ($scope.companyinfo.templateID && $scope.companyinfo.formURL){
+          // if (true){//Testing
+            $mdDialog.show(
+              $mdDialog.alert()
+                .clickOutsideToClose(false)
+                .title('Generating Membership Agreement')
+                .content('Redirecting in 5 seconds, if this not work please open this link: ' + $scope.companyinfo.formURL)
+                .ok('OK')
+            )
             storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));
-            $scope.enableButton();
-            $window.location.href = $scope.companyinfo.formURL;
+            $timeout( function(){
+                alert("redirecting : " + $scope.companyinfo.formURL);
+                // $window.location.href = $scope.companyinfo.formURL;
+            }, 5000);
           }
           else{
+          // if (true){//Testing
             $mdDialog.show(
               $mdDialog.alert()
                 .clickOutsideToClose(false)
@@ -162,6 +197,8 @@ angular.module('dmc.company.onboarding')
                 .ok('OK')
             );
           }
+
+          $scope.enableButton();
         });
       };
 
@@ -183,8 +220,27 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$window', 'dataFactory', 'ajax', 'storageService', '$mdDialog',
-    function($scope, companyOnboardingModel, $location, $anchorScroll, $window, dataFactory, ajax, storageService, $mdDialog){
+.controller('co-payController', ['$scope',
+                                 'companyOnboardingModel',
+                                 '$location',
+                                 '$anchorScroll',
+                                 '$window',
+                                 'dataFactory',
+                                 'ajax',
+                                 'storageService',
+                                 '$mdDialog',
+                                 '$timeout',
+    function($scope,
+             companyOnboardingModel,
+             $location,
+             $anchorScroll,
+             $window,
+             dataFactory,
+             ajax,
+             storageService,
+             $mdDialog,
+             $timeout){
+
       $anchorScroll();
       $scope.isDisabled = false;
 
@@ -196,7 +252,7 @@ angular.module('dmc.company.onboarding')
       console.log($scope.company);
 
       if (!$scope.company){
-        console.log("/companyinfo");
+        alert("back to /companyinfo");
         // $location.path('/companyinfo');
       }
       else{
@@ -230,7 +286,19 @@ angular.module('dmc.company.onboarding')
           }).then(function(){
               console.log("called again");
               if ($scope.company.docuSigned == "Requested"){
-                $scope.back();
+                  if ($scope.company.templateID){
+                    storageService.set('companyinfoCache', JSON.stringify($scope.company));
+                    $timeout(function(){
+                      alert("redirecting : " + $scope.companyinfo.formURL);
+                      // $window.location.href = $scope.companyinfo.formURL;
+                    }, 5000);
+                  }
+                  else{
+                    $timeout(function(){
+                      alert("redirecting : back");
+                      // $scope.back();
+                    }, 5000);
+                  }
               }
           });
         }
