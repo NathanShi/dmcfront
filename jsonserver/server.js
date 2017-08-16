@@ -80,8 +80,9 @@ server.use(jsonServer.rewriter({
     '/user/organization/:id': '/userByOrganization',
     '/services/:id/dome-interfaces': '/dome-interfaces',
     '/organizations/myVPC': '/myVPC',
-    '/searchworkspace/:id': '/searchworkspace'
+    '/searchworkspace/:id': '/searchworkspace',
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
+    '/users/:id/my_favorites': '/my-favorites'
 }));
 
 server.post('/dmdiidocument', function(req,res) {

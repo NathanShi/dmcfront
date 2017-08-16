@@ -1105,7 +1105,12 @@ return {
       getNotificationsStatisticPm: function() {
         return localhost + 'notifications-pm-statistic';
       },
-
+      addMyFavorite: function(id){
+        return localhost + 'users/' + id + '/my_favorites';
+      },
+      getMyFavorites: function(id){
+        return localhost + 'users/' + id + '/my_favorites';
+      },
 
       //RESOURCES
       getAllResourceLabs: function() {
