@@ -106,7 +106,7 @@ angular.module('dmc.company.onboarding', [
                   { selection : 'Parent Consortium', selected : false },
                   { selection : 'Subsidiary', selected : false },
                   { selection : 'Minority Owned Business', selected : false },
-                  { selection : 'Non-Profit', selected : false },
+                  { selection : 'Non Profit', selected : false },
                   { selection : 'US Owned', selected : false },
                   { selection : 'Under an SSA', selected : false },
                   { selection : 'Academic Institution', selected : false },
@@ -257,6 +257,19 @@ angular.module('dmc.company.onboarding', [
                 populateCompany.mainCSZ = data.main.mailAddress;
                 populateCompany.mainPhone = data.main.phone;
                 populateCompany.mainEmail = data.main.email;
+
+                var popType = {};
+
+                data.type.forEach(function(element) {
+                    var temp = element.replace(/\s/g, '');
+                    popType[temp] = "ON";
+                });
+
+                for(var key in popType) {
+                   if (popType.hasOwnProperty(key)) {
+                      populateCompany[key] = popType[key];
+                   }
+                }
 
                 if (data.tech != null){
                     populateCompany.techName = data.tech.fname + " " + data.tech.lname;

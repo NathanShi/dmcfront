@@ -64,7 +64,7 @@ angular.module('dmc.company.onboarding')
               $mdDialog.alert()
                 .clickOutsideToClose(false)
                 .title('Alert')
-                .content('You already have a Tier3 Membership organization database, will redirect to dashboard.')
+                .content('You already have a Tier3 Membership organization in database, will redirect to dashboard.')
                 .ok('Got it!')
             ).then(function(){
               $window.location.href = '/onboarding.php';
@@ -152,6 +152,7 @@ angular.module('dmc.company.onboarding')
 
         //Call service.populateField() to stream info for Membership Agreement
         var postDocInfo = companyOnboardingModel.populateField($scope.companyinfo);
+        console.log(postDocInfo);
         var responseErrorReason = "Oops, we had a problem when generating Membership Agreement, please try again later. " +
         "\nIf you kept having this problem, please contact us.";
 
@@ -401,7 +402,7 @@ angular.module('dmc.company.onboarding')
                     $mdDialog.alert()
                       .clickOutsideToClose(false)
                       .title('Alert')
-                      .content('You already have a Tier3 Membership organization database, will redirect to dashboard.')
+                      .content('You already have a Tier3 Membership organization in database, will redirect to dashboard.')
                       .ok('Got it!')
                   ).then(function(){
                     $window.location.href = '/onboarding.php';
