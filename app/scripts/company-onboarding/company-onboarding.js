@@ -3,25 +3,18 @@
 angular.module('dmc.company.onboarding', [
     'dmc.configs.ngmaterial',
     'ngMdIcons',
-    // 'ngtimeago',
     'ui.router',
     'dmc.widgets.companyonboardingTabs',
-    // 'md.data.table',
     'dmc.ajax',
     'dmc.data',
     'dmc.socket',
-    // 'dmc.widgets.stars',
-    // 'dmc.widgets.documents',
-    // 'dmc.widgets.review',
     'dmc.model.question-toast-model',
     'dmc.common.header',
     'dmc.common.footer',
     'dmc.location',
     'dmc.model.toast-model',
-    // 'dmc.model.fileUpload',
     'dmc.model.profile',
     'dmc.model.user',
-    // 'dmc.phone-format',
     'ngMaterial',
     'ngMessages',
     'ngCookies'
@@ -65,6 +58,7 @@ angular.module('dmc.company.onboarding', [
     .service('companyOnboardingModel', ['$cacheFactory',
          function ($cacheFactory) {
 
+            //Stream data retrieved from database
             this.transResponse = function(data){
               var company = {};
               company.name = data.name;
@@ -94,15 +88,19 @@ angular.module('dmc.company.onboarding', [
                 company.subCompany = true;
               company.selectedAnnualRevenue = null;
               company.selectedEmployeeSize = null;
-              company.agreement = null;
               company.type = null;
+              company.orgTYPEs = null;
               company.website = jsonType.website;
               company.startUp = jsonType.startUp;
               company.duns = jsonType.dunsCode;
+              company.docuSigned = jsonType.docuSigned;
+              company.templateID = jsonType.templateID;
+              company.formURL = jsonType.formURL;
 
               return company;
             }
 
+            //Initialize orgType
             this.initialOrgType = function(){
                 var orgType = [
                   { selection : 'Parent Consortium', selected : false },
@@ -120,6 +118,7 @@ angular.module('dmc.company.onboarding', [
                 return orgType;
             }
 
+            //Initialize EmployeeSize
             this.initialEmployeeSize = function(){
                 var employeeSize = [
                   {
@@ -159,6 +158,7 @@ angular.module('dmc.company.onboarding', [
                 return employeeSize;
             }
 
+            //Initialize AnnualRevenue
             this.initialAnnualRevenue = function(){
                 var AnnualRevenue = [
                   {
@@ -198,6 +198,7 @@ angular.module('dmc.company.onboarding', [
                 return AnnualRevenue;
             }
 
+            //Initialize OrgTYPEs
             this.initialOrgTYPEs = function(){
                 var OrgTYPEs = [
                   {
@@ -217,6 +218,7 @@ angular.module('dmc.company.onboarding', [
                 return OrgTYPEs;
             }
 
+            //Initialize IndustryType
             this.initialIndustryType = function(){
                 var industryType = [
                   { inType : '3D Printing', select : false },
@@ -241,6 +243,7 @@ angular.module('dmc.company.onboarding', [
                 return industryType;
             }
 
+            //Stream data for '/esignDoc' to populate Membership Agreement fields
             this.populateField = function(data){
                 var populateCompany = {};
 
@@ -282,6 +285,7 @@ angular.module('dmc.company.onboarding', [
                 return populateCompany;
             }
 
+            //Stream data for '/payment'
             this.matchOrgType = function(data, tokenID){
 
                 var dmdiiMembershipInfoObj = {
@@ -346,6 +350,7 @@ angular.module('dmc.company.onboarding', [
     }])
     .factory('storageService', ['$rootScope', function($rootScope) {
         return {
+            //localStorage set, get, remove
             get: function(key) {
                 return localStorage.getItem(key);
             },

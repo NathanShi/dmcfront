@@ -8,8 +8,9 @@ angular.module('dmc.company.onboarding')
 
 .controller('co-homeController', ['$scope', 'companyOnboardingModel', '$cookies', '$mdDialog',
     function($scope, companyOnboardingModel, $cookies, $mdDialog){
-      $cookies.put('fromDMDIISignup',true);
 
+      //Set up cookie for sign in process
+      $cookies.put('fromDMDIISignup',true);
 }])
 
 .controller('co-companyinfoController', ['$scope',
@@ -37,6 +38,7 @@ angular.module('dmc.company.onboarding')
 
       $anchorScroll();
 
+      //Next button control
       $scope.isDisabled = false;
 
       $scope.enableButton = function(){
@@ -49,9 +51,11 @@ angular.module('dmc.company.onboarding')
 
       $scope.company = {};
 
+      //Call '/organization/user' to retrieve organization info in database
       ajax.get(dataFactory.payment().organizations, {}, function(response){
         if (response.data.id != null){
           if (response.data.isPaid == false){
+            //Call service.transResponse() to stream data to form
             $scope.company = companyOnboardingModel.transResponse(response.data);
             storageService.set('companyinfoCache', JSON.stringify($scope.company));
           }
@@ -69,6 +73,8 @@ angular.module('dmc.company.onboarding')
         }
       });
 
+      //If no info in database, check if user is back from payment page
+      //Using localStorage
       if (angular.equals($scope.company, {})){
           var haveStored = storageService.get('companyinfoCache');
           if (haveStored && !angular.isUndefined(haveStored)){
@@ -79,6 +85,7 @@ angular.module('dmc.company.onboarding')
             $scope.company = {};
       }
 
+      //Initialize form to fill. function in '/company-onboarding.js'
       $scope.company.selectedEmployeeSize = null;
       $scope.company.selectedAnnualRevenue = null;
       $scope.company.orgTYPEs = null;
@@ -101,12 +108,14 @@ angular.module('dmc.company.onboarding')
 
       $scope.companyinfo = {};
 
+      //Form submission
       $scope.save = function(company) {
 
         $scope.disableButton();
 
         var type = [];
 
+        //Serialize form information to $scope.companyinfo
         $scope.orgType.forEach(function(element) {
             if (element.selected == true)
               type.push(element.selection);
@@ -133,24 +142,24 @@ angular.module('dmc.company.onboarding')
         company.orgTYPEs = company.orgTYPEs.value;
         $scope.companyinfo = angular.copy(company);
         $scope.companyinfo.type = type;
-        if ($scope.company.docuSigned){
-          $scope.companyinfo.docuSigned = $scope.company.docuSigned;
-        }
-        else{
-          $scope.companyinfo.docuSigned = "Requested";
-        }
+
+        //eSignature Requested
+        $scope.companyinfo.docuSigned = "Requested";
 
         if ($scope.company.id){
           $scope.companyinfo.id = $scope.company.id;
         }
 
+        //Call service.populateField() to stream info for Membership Agreement
         var postDocInfo = companyOnboardingModel.populateField($scope.companyinfo);
         var responseErrorReason = "Oops, we had a problem when generating Membership Agreement, please try again later. " +
         "\nIf you kept having this problem, please contact us.";
 
+        //Call 'esignDoc' to call PDFfiller API to generate Membership Agreement with populated fields
         ajax.create(dataFactory.esignOnline().docuSign, postDocInfo, function successCallback(response) {
             if (response.data.status == "eSignature Successful!"){
                 var generatedForm = JSON.parse(response.data.reason);
+                //Response will contain template_id & url
                 if (generatedForm.template_id && generatedForm.url){
                   $scope.companyinfo.templateID = generatedForm.template_id;
                   $scope.companyinfo.formURL = generatedForm.url;
@@ -163,23 +172,22 @@ angular.module('dmc.company.onboarding')
            responseErrorReason = "Error when calling for e-sign API. \nIf you kept having this problem, please contact us.";
         }).then(function(){
           if ($scope.companyinfo.templateID && $scope.companyinfo.formURL){
-          // if (true){//Testing
+            //localStorage the form together with template_id & url
             storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo))
             $mdDialog.show(
               $mdDialog.alert()
                 .clickOutsideToClose(false)
                 .title('Generating Membership Agreement')
-                .content('Redirecting in 5 seconds, if this not work please open this link: ' + $scope.companyinfo.formURL)
+                .content('Redirecting when click OK, if this doesn\'t work please contact us')
                 .ok('OK')
             ).then(function(){
               $timeout( function(){
-                // alert("redirecting : " + $scope.companyinfo.formURL);
+                //Go to the Membership Agreement URL
                 $window.location.href = $scope.companyinfo.formURL;
-              }, 1000);
+              }, 500);
             });
           }
           else{
-          // if (true){//Testing
             $mdDialog.show(
               $mdDialog.alert()
                 .clickOutsideToClose(false)
@@ -193,6 +201,7 @@ angular.module('dmc.company.onboarding')
         });
       };
 
+      //Show Modal
       $scope.showModalTermsConditions = function(){
   			$mdDialog.show({
   			    controller: 'TermsConditionsController',
@@ -235,18 +244,20 @@ angular.module('dmc.company.onboarding')
       $anchorScroll();
       $scope.isDisabled = false;
 
+      //Get data from localStorage
       var haveStored = storageService.get('companyinfoCache');
       if (haveStored && !angular.isUndefined(haveStored)){
         $scope.company = JSON.parse(haveStored);
       }
 
+      //Check if exists
       if (!$scope.company){
-        // alert("back to /companyinfo");
         $location.path('/companyinfo');
       }
       else{
         var errorReason = "null";
         if ($scope.company.docuSigned != "Signed"){
+          //Call 'esignCheck/template_id' to check if the Membership Agreement has signed
           ajax.get(dataFactory.esignOnline($scope.company.templateID).checkSignature, {}, function(response){
               if (response.data.status == "eSignCheck Successful!"){
                   if (response.data.reason != "0"){
@@ -273,16 +284,16 @@ angular.module('dmc.company.onboarding')
           }).then(function(){
               if ($scope.company.docuSigned == "Requested"){
                   if ($scope.company.templateID){
+                    //If not signed go to the url and sign it.
                     storageService.set('companyinfoCache', JSON.stringify($scope.company));
                       $timeout(function(){
-                        // alert("redirecting : " + $scope.companyinfo.formURL); //TEsting
                         $window.location.href = $scope.company.formURL;
                       }, 1000);
                     }
                   else{
+                    //If no template_id found, go back to companyinfo page
                     $timeout(function(){
-                      alert("redirecting : back");
-                      // $scope.back();
+                      $scope.back();
                     }, 5000);
                   }
               }
@@ -376,7 +387,9 @@ angular.module('dmc.company.onboarding')
 
       function stripeTokenHandler(token) {
 
+          //call to retrieve company id
           if (!$scope.company.id || angular.isUndefined($scope.company.id)){
+            //call '/organization/user' to retrieve organization id
             ajax.get(dataFactory.payment().organizations, {}, function(response){
               if (response.data.name != null){
                 if (response.data.isPaid == false){
@@ -398,6 +411,8 @@ angular.module('dmc.company.onboarding')
             }).then(function(){
               if (!$scope.company.id)
                 $scope.company.id = null;
+
+                //Call 'esignCheck/template_id' to check if the Membership Agreement has signed again
                 ajax.get(dataFactory.esignOnline($scope.company.templateID).checkSignature, {}, function(response){;
                     if (response.data.status == "eSignCheck Successful!"){
                       if (response.data.reason == "null"){
@@ -420,6 +435,7 @@ angular.module('dmc.company.onboarding')
                           $scope.back();
                       }
                       else{
+                          //Signed, go to payment
                           $scope.company.docuSigned = "Signed";
                           $scope.submitOrgPayment($scope.company, token);
                       }
@@ -440,8 +456,10 @@ angular.module('dmc.company.onboarding')
 
       $scope.submitOrgPayment = function(info, token){
 
+          //Call service.matchOrgType() to stream companyinfo to object
           var orgPayEsignOBJ = companyOnboardingModel.matchOrgType(info, token.id);
 
+          //Call '/payment' to submit Stripe token with companyinfo
           ajax.create(dataFactory.payment().pay, orgPayEsignOBJ, function successCallback(response) {
             if (response.data.status == "succeeded"){
               storageService.remove('companyinfoCache');
