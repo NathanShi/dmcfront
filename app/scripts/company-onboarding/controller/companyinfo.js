@@ -152,7 +152,7 @@ angular.module('dmc.company.onboarding')
 
         //Call service.populateField() to stream info for Membership Agreement
         var postDocInfo = companyOnboardingModel.populateField($scope.companyinfo);
-        console.log(postDocInfo);
+        // console.log(postDocInfo);
         var responseErrorReason = "Oops, we had a problem when generating Membership Agreement, please try again later. " +
         "\nIf you kept having this problem, please contact us.";
 
