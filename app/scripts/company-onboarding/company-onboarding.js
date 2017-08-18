@@ -96,6 +96,7 @@ angular.module('dmc.company.onboarding', [
               company.docuSigned = jsonType.docuSigned;
               company.templateID = jsonType.templateID;
               company.formURL = jsonType.formURL;
+              company.token = jsonType.token;
 
               return company;
             }
@@ -315,7 +316,8 @@ angular.module('dmc.company.onboarding', [
                   orgTYPEs: data.orgTYPEs,
                   docuSigned: data.docuSigned,
                   templateID: data.templateID,
-                  formURL: data.formURL
+                  formURL: data.formURL,
+                  Token: data.token
                 };
 
                 var MembershipInfoString = JSON.stringify(dmdiiMembershipInfoObj);
