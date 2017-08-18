@@ -158,9 +158,9 @@ angular.module('dmc.company.onboarding')
 
         ajax.get(dataFactory.esignOnline().esignToken, {}, function successCallback(response) {
               if (response.data.status == "eSignToken Successful!"){
-                  var generatedToken = JSON.parse(response.data.reason);
+                  var generatedToken = response.data.reason;
                   if (generatedToken.hash){
-                      $scope.companyinfo.token = generatedToken.hash;
+                      $scope.companyinfo.token = generatedToken;
                   }
               }
               else{
@@ -487,7 +487,7 @@ angular.module('dmc.company.onboarding')
                                 "<h3>If you notice any unrecognized information, please contact us immediately.</h3>" +
                                 "<table>" +
                                 "<tr ng-repeat=\"signature in Signature.items\">" +
-                                "<td class=\"signature.name == \"same\" ? table-success:table-danger\">{{ signature.name }}</td><td>{{ signature.email }}</td><td>{{ signature.ip }}</td><td>{{ signature.date + '000' | date: 'medium'}}</td>" + 
+                                "<td class=\"signature.name == \"same\" ? table-success:table-danger\">{{ signature.name }}</td><td>{{ signature.email }}</td><td>{{ signature.ip }}</td><td>{{ signature.date + '000' | date: 'medium'}}</td>" +
                                 "</tr>" +
                                 "</table>")
                                 .ok('OK')
