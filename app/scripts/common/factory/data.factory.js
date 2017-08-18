@@ -622,7 +622,8 @@ return {
         return {
           docuSign: localhost + 'esignDoc',
           checkSignature: localhost + 'esignCheck/' + id,
-          callbackSignature: localhost + 'esignCallback'
+          callbackSignature: localhost + 'esignCallback',
+          esignToken: localhost + 'esignToken',
         };
       },
       getDMDIIDocuments: function(id) {

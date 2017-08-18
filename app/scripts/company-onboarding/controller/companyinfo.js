@@ -261,7 +261,8 @@ angular.module('dmc.company.onboarding')
           //Call 'esignCheck/template_id' to check if the Membership Agreement has signed
           ajax.get(dataFactory.esignOnline($scope.company.templateID).checkSignature, {}, function(response){
               if (response.data.status == "eSignCheck Successful!"){
-                  if (response.data.reason != "0"){
+                  var Signature = JSON.parse(response.data.reason);
+                  if (Signature.total > 0){
                       $scope.company.docuSigned = "Signed";
                   }
                   else{
@@ -425,7 +426,9 @@ angular.module('dmc.company.onboarding')
                             .ok('OK')
                         );
                       }
-                      else if (response.data.reason == "0"){
+                      else{
+                        var Signature = JSON.parse(response.data.reason);
+                        if (Signature.total == 0){
                           $mdDialog.show(
                             $mdDialog.alert()
                               .clickOutsideToClose(false)
@@ -434,12 +437,14 @@ angular.module('dmc.company.onboarding')
                               .ok('OK')
                           );
                           $scope.back();
-                      }
-                      else{
-                          //Signed, go to payment
-                          $scope.company.docuSigned = "Signed";
-                          $scope.submitOrgPayment($scope.company, token);
-                      }
+                        }
+                        else{
+                            console.log("Signature", Signature);
+                            //Signed, go to payment
+                            $scope.company.docuSigned = "Signed";
+                            $scope.submitOrgPayment($scope.company, token);
+                        }
+                     }
                    }
                    else {
                      $mdDialog.show(
