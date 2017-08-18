@@ -594,6 +594,47 @@ angular.module('dmc.project')
               }
             }
 
+            $scope.fileUploadInProgress = false;
+            var uploadInputFile = function(documents, directoryId) {
+              var doc = documents[0];
+              $scope.fileUploadInProgress = true;
+
+              fileUpload.uploadFileToUrl(doc.file, {}, doc.title + doc.type).then(function(response) {
+                var docData = {
+                  parentId: $scope.projectData.id,
+                  parentType: "PROJECT",
+                  documentUrl: response.file.name,
+                  documentName: doc.title + doc.type,
+                  ownerId: $rootScope.userData.accountId,
+                  docClass: 'SUPPORT',
+                  accessLevel: doc.accessLevel || "MEMBER",
+                  directoryId: directoryId
+                };
+
+                ajax.create(dataFactory.documentsUrl().save, docData, function(resp) {
+                  pollForScannedFile(resp.data.id);
+                });
+              });
+
+            }
+
+            // Limit the number of polls we'll do
+            var pollScanFileLimit=100;
+            var pollForScannedFile = function(fileId) {
+              ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}, function(resp) {
+                if (resp.data.documentUrl.match(/dmcupfinal/i)) {
+                  $scope.fileUploadInProgress = false;
+                  $scope.currentInputFile = resp.data;
+                  $scope.setinputFileValue($scope.currentInputFile);
+                } else {
+                  if (pollScanFileLimit > 0) {
+                    pollScanFileLimit--;
+                    setTimeout(function(){ pollForScannedFile(fileId) },500);
+                  }
+                }
+              });
+            }
+
             var makeAttachmentsCollection = function(promiseReturn) {
               var docs = [];
               var keys = Object.keys(promiseReturn);
@@ -651,14 +692,14 @@ angular.module('dmc.project')
             }
 
             $scope.uploadAppFile = function(ev) {
-              openDocModelAndExecCallback(ev, false, addAttachmentsToApp, "appAttachment");
+              openDocModelAndExecCallback(ev, uploadDocs);
             };
 
             $scope.uploadInputFile = function(ev) {
-              openDocModelAndExecCallback(ev, true, setInputFile, "inputFile");
+              openDocModelAndExecCallback(ev, uploadInputFile);
             }
 
-            var openDocModelAndExecCallback = function(ev, onlyFirstFile, docProcessingCallback, inProgressVar) {
+            var openDocModelAndExecCallback = function(ev, callbackFunc) {
               $mdDialog.show({
                 controller: 'DocumentsUploadCtrl as projectCtrl',
                 templateUrl: 'templates/project/pages/documents-upload.html',
@@ -670,11 +711,7 @@ angular.module('dmc.project')
                 }
               }).then(function(documents) {
                 if (documents.length > 0) {
-                  setInprogressVar(inProgressVar);
-                  if (onlyFirstFile) {
-                    documents = [documents[0]]
-                  }
-                  getOrCreateDirectory($scope.service, documents, docProcessingCallback);
+                  getOrCreateDirectory($scope.service, documents, callbackFunc);
                 }
               });
             }
@@ -693,12 +730,9 @@ angular.module('dmc.project')
             var attachFileInputId = 'attachedFileList';
 
             var addAttachmentsToApp = function(attachments) {
-              $scope.attachmentUploadInProgress = false;
-              if (attachments.length > 0) {
-                var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
-                attachFileInput.value = JSON.stringify(attachments)
-                $scope.run();
-              }
+              var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
+              attachFileInput.value = JSON.stringify(attachments)
+              $scope.run();
             }
 
             var createAttachmentDOMElement = function() {

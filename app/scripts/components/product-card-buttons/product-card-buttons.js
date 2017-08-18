@@ -77,7 +77,8 @@ angular.module('dmc.component.product-card-buttons',[
 
 
       var addCardProjects = function(projects) {
-        var unfiltered_projects = projects;
+          console.log(projects);
+          var unfiltered_projects = projects;
         // $scope.projects=projects;
         // Filter projects for only projects that user is a member of
         ajax.get(dataFactory.getMembersToProject(),{

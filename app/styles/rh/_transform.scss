@@ -113,9 +113,10 @@
   border-right: solid $brand-accent 1px;
 }
 
-.video-column {
-  height: 140px;
+.media-column {
+  min-height: 155px;
   margin-top: 23px;
+  height: 90%
 }
 
 .col-md-12 h3.transform-title  {
@@ -124,5 +125,20 @@
 }
 
 .col-md-12 h3.help-title  {
+  margin-top: 0px;
+}
+
+.description-column {
+  min-height: 155px;
+  margin-top: 23px;
+}
+
+.bottom-button {
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+}
+
+.description-column h3 {
   margin-top: 0px;
 }
