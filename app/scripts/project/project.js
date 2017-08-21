@@ -206,7 +206,7 @@ angular.module('dmc.project', [
                     }]
                 }
             }).state('project.run-app', {
-                url: '/services/:ServiceId/runapp',
+                url: '/services/:ServiceId/runapp?rerun',
                 controller: 'projectRunServicesCtrl as projectCtrl',
                 templateUrl: 'templates/project/pages/run-app.html',
                 resolve: {
