@@ -158,10 +158,7 @@ angular.module('dmc.company.onboarding')
 
         ajax.get(dataFactory.esignOnline().esignToken, {}, function successCallback(response) {
               if (response.data.status == "eSignToken Successful!"){
-                  var generatedToken = response.data.reason;
-                  if (generatedToken.hash){
-                      $scope.companyinfo.token = generatedToken;
-                  }
+                  $scope.companyinfo.token = response.data.reason;
               }
               else{
                   $mdDialog.show(
@@ -480,7 +477,7 @@ angular.module('dmc.company.onboarding')
                                 }
                             });
                             $mdDialog.show(
-                              $mdDialog.alert()
+                              $mdDialog.confirm()
                                 .clickOutsideToClose(false)
                                 .title('Please Confirm the Signature')
                                 .htmlContent("<h3>We found following information of Membership Agreement</h3>" +
@@ -490,7 +487,8 @@ angular.module('dmc.company.onboarding')
                                 "<td class=\"signature.name == \"same\" ? table-success:table-danger\">{{ signature.name }}</td><td>{{ signature.email }}</td><td>{{ signature.ip }}</td><td>{{ signature.date + '000' | date: 'medium'}}</td>" +
                                 "</tr>" +
                                 "</table>")
-                                .ok('OK')
+                                .ok('Confirm')
+                                .cancel('Cancel');
                             ).then(function(){
                                 $scope.submitOrgPayment($scope.company, token);
                             });
