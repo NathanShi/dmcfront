@@ -238,7 +238,21 @@ angular.module('dmc.project', [
                     }]
                 }
             })
-
+            .state('project.services-app-history', {
+                url: '/services/:ServiceId/:from/app-history',
+                controller: 'projectServicesRunHistoryDetailCtrl as projectCtrl',
+                templateUrl: 'templates/project/pages/app-history.html',
+                resolve: {
+                    runHistory: ['serviceModel', '$stateParams', function (serviceModel, $stateParams) {
+                        return serviceModel.get_service_run_history($stateParams.ServiceId, {}, function (response) {
+                            return response;
+                        });
+                    }],
+                    serviceData: ['serviceModel', '$stateParams', function (serviceModel, $stateParams) {
+                        return serviceModel.get_service($stateParams.ServiceId);
+                    }]
+                }
+            })
             .state('project.publish-service-marketplace', {
                 url: '/services/:ServiceId/publish',
                 controller: 'PublishServiceMarketplaceCtrl as projectCtrl',

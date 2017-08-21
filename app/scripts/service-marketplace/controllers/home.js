@@ -71,11 +71,15 @@ angular.module('dmc.service-marketplace')
             });
 
             ajax.get(dataFactory.getUserName($scope.product.owner), {}, function(response) {
-                $scope.owner_name = response.data.displayName
+                $scope.owner_name = response.data.displayName;
+            });
+
+            ajax.get(dataFactory.getDefaultService($scope.product.id), {}, function(response) {
+                $scope.defaultService = response.data;
             });
 
             // check if service is favorite for current user
-            isFavorite.check([$scope.product]);
+            //isFavorite.check([$scope.product]);
 
             $scope.currentImage = 1;
             $scope.indexImages = 0;
@@ -232,7 +236,7 @@ angular.module('dmc.service-marketplace')
             DMCUserModel.getUserData().then(function(res){
                 userData = res;
                 CompareModel.get('services',userData);
-                getFavoriteCount();
+                //getFavoriteCount();
             });
 
             ///////// commenting out as part of pre-beta sprint
@@ -327,7 +331,7 @@ angular.module('dmc.service-marketplace')
             //get similar product
             serviceModel.get_all_service({'_limit': 4}, function(data){
                 $scope.products_card = data;
-                isFavorite.check($scope.products_card);
+                //isFavorite.check($scope.products_card);
                 apply();
             });
 
@@ -591,6 +595,17 @@ angular.module('dmc.service-marketplace')
               };
 
             };
+
+            $scope.redirectToServiceHistory = function(projectId, serviceId) {
+              window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/run-history';
+            };
+
+            // $scope.addToCompare = function(){
+            //     CompareModel.add('services',{
+            //         profileId : $scope.userData.profileId,
+            //         serviceId : $scope.product.id
+            //     });
+            // };
 
         }
     ]

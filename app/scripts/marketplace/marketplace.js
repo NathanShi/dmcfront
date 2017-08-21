@@ -32,7 +32,7 @@ angular.module('dmc.marketplace', [
         // call scrollTo
         scrollService.scrollTo(eID);
     };
-    
+
     $http.get(dataFactory.getMarketServices(), {
         params: {
             start: 0,
@@ -42,7 +42,7 @@ angular.module('dmc.marketplace', [
         console.log(response);
         $scope.marketplaceItems = response;
     });
-    
+
     $http.get(dataFactory.getMarketServices(), {
         params: {
             start: 0,
@@ -53,7 +53,7 @@ angular.module('dmc.marketplace', [
         console.log(response);
         $scope.estimateItems = response;
     });
-    
+
     $http.get(dataFactory.getMarketServices(), {
         params: {
             start: 5,
@@ -64,7 +64,7 @@ angular.module('dmc.marketplace', [
         console.log(response);
         $scope.cncOperationItems = response;
     });
-    
+
     $http.get(dataFactory.getMarketServices(), {
         params: {
             start: 10,
@@ -75,7 +75,7 @@ angular.module('dmc.marketplace', [
         console.log(response);
         $scope.cmmOperationItems = response;
     });
-    
+
     $http.get(dataFactory.getMarketServices(), {
         params: {
             start: 15,
@@ -85,6 +85,15 @@ angular.module('dmc.marketplace', [
     }).success(function(response) {
         console.log(response);
         $scope.getLeanItems = response;
+    });
+
+    $http.get(dataFactory.getDefaultServices(), {
+    }).success(function(response) {
+        $scope.serviceMap = {};
+        response.forEach(function (service){
+          $scope.serviceMap[service.parent] = {'serviceId': service.id, 'workspaceId': service.projectId};
+        });
+        console.log($scope.serviceMap);
     });
 
 }]);

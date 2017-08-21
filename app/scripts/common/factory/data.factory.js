@@ -766,6 +766,12 @@ return {
       getServicesTags: function() {
         return localhost + 'service_tags';
       },
+      getDefaultServices: function() {
+        return localhost + 'defaultServices';
+      },
+      getDefaultService: function(parentId) {
+        return localhost + 'defaultServices/' + parentId;
+      },
       /// profiles -----------------
       profiles: function(id) {
         var name = 'profiles';
