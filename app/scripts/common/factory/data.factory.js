@@ -612,10 +612,21 @@ return {
           delete: localhost + 'dmdiiquicklink/' + id
         };
       },
-      payment: function(){
+      payment: function(id){
         return {
-          pay: localhost + 'payment',
+          orgPayment: localhost + 'payment/organization',
+          addFunds: localhost + 'payment/account',
+          servicePaymentInternal: localhost + 'payment/plan/' + id,
+          servicePaymentStripe: localhost + 'payment/plan/stripe',
           organizations: localhost + 'organizations/user'
+        };
+      },
+      servicePermits: function(id) {
+          var prefix = localhost + 'service_permits/';
+          return {
+            get: prefix + id;
+            getByService: prefix + 'service/' + id;
+            getByOrganization: prefix + 'organization/' + id;
         };
       },
       getDMDIIDocuments: function(id) {
@@ -834,6 +845,8 @@ return {
           get_for_project: localhost + 'projects/' + id + '/' + name,
           update: localhost + name + '/' + id,
           all: localhost + name,
+          get_pay_plan: localhost + name + '/' + id + '/pay_plan',
+          get_pay_plans: localhost + name + '/pay_plan',
           getReply: localhost + 'product_reviews?reviewId=' + id,
           reviews: localhost + 'product/' + id + '/product_reviews?reviewId=0',
           get_review: localhost + 'product_reviews/' + id,

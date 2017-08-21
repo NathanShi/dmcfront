@@ -357,7 +357,7 @@ angular.module('dmc.company.onboarding')
       }
 
       $scope.submitOrgPayment = function(info){
-          ajax.create(dataFactory.payment().pay, info, function successCallback(response) {
+          ajax.create(dataFactory.payment().orgPayment, info, function successCallback(response) {
             if (response.data.status == "succeeded"){
               alert("Successful payment! Redirect to dashboard");
               // $window.location.href = '/onboarding.php';

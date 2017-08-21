@@ -1,0 +1,18 @@
+[
+    {
+        "id": 20,
+        "organizationId": 364,
+        "userId": 1,
+        "serviceId": 416,
+        "expirationDate": null,
+        "uses": 0
+    },
+    {
+        "id": 22,
+        "organizationId": 364,
+        "userId": 1,
+        "serviceId": 417,
+        "expirationDate": null,
+        "uses": 0
+    }
+]

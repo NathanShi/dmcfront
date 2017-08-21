@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "serviceId": 416,
+        "planType": "PAY_PER_USE",
+        "price": 500,
+        "uses": 0,
+        "userId": 1
+    }
+]
