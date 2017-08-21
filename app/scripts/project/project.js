@@ -205,6 +205,15 @@ angular.module('dmc.project', [
                         return serviceModel.get_service($stateParams.ServiceId);
                     }]
                 }
+            }).state('project.run-app', {
+                url: '/services/:ServiceId/runapp',
+                controller: 'projectRunServicesCtrl as projectCtrl',
+                templateUrl: 'templates/project/pages/run-app.html',
+                resolve: {
+                    serviceData: ['serviceModel', '$stateParams', function (serviceModel, $stateParams) {
+                        return serviceModel.get_service($stateParams.ServiceId);
+                    }]
+                }
             }).state('project.services-detail', {
                 url: '/services/:ServiceId/detail',
                 controller: 'projectServicesDetailCtrl as projectCtrl',
