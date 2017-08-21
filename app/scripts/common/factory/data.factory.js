@@ -760,6 +760,9 @@ return {
       getMarketComponents: function() {
         return localhost + 'market/components';
       },
+      getMarketPlaceServices: function() {
+          return localhost + 'market/services';
+      },
       getServicesTags: function() {
         return localhost + 'service_tags';
       },

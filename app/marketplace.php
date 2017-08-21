@@ -35,6 +35,7 @@
 <script src="scripts/marketplace/marketplace.js"></script>
 <script src="scripts/marketplace/marketplace.controller.js"></script>
 <script src="scripts/utilities/scroll.service.js"></script>
+<script src="scripts/components/ui-widgets/content-card.directive.js"></script>
 
 <!-- endbuild -->
 

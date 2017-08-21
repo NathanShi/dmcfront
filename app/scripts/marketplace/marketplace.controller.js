@@ -150,22 +150,23 @@ angular.module('dmc.marketplace')
             };
 
 
-            // $scope.marketplaceItems = {arr: data, count: data.length};
+            $scope.marketplaceItems = {arr: data, count: data.length};
+            console.log(marketplaceItems);
 
-            // $scope.featuredApp = function(){
-            //   ajax.get(dataFactory.getMarketNewServices(), responseDataForCarousel,
-            //       function(response){
-            //           $scope.carouselData.new = {arr : response.data, count : response.data.length};
-            //           isFavorite.check($scope.carouselData.new.arr);
-            //           var numberApps =$scope.carouselData.new.count;
-            //           var randId = Math.floor(Math.random()*numberApps);
-            //           $scope.randApp=$scope.carouselData.new.arr[randId];
-            //           // console.log($scope.randApp);
-            //           apply();
-            //       }
-            //   );
-            //
-            // };
+            $scope.featuredApp = function(){
+              ajax.get(dataFactory.getMarketNewServices(), responseDataForCarousel,
+                  function(response){
+                      $scope.carouselData.new = {arr : response.data, count : response.data.length};
+                      isFavorite.check($scope.carouselData.new.arr);
+                      var numberApps =$scope.carouselData.new.count;
+                      var randId = Math.floor(Math.random()*numberApps);
+                      $scope.randApp=$scope.carouselData.new.arr[randId];
+                      // console.log($scope.randApp);
+                      apply();
+                  }
+              );
+
+            };
 
 
 

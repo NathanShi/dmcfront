@@ -44,7 +44,10 @@
             <img ng-if="cardSource.images[0].documentUrl" ng-src="{{cardSource.images[0].documentUrl}}" alt="{{cardSource.title}}">
             <img ng-if="!cardSource.images[0].documentUrl" ng-src="images/DMCGear.png" alt="{{cardSource.title}}">
           </div>
+
       </div>
+
+      <md-button ng-click="saveToDefaultProject()">Run!</md-button>
 
 
     <!-- <div class="product-card__image_small">
