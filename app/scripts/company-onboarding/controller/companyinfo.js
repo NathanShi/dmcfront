@@ -208,7 +208,12 @@ angular.module('dmc.company.onboarding')
               ).then(function(){
                 $timeout( function(){
                   //Go to the Membership Agreement URL
-                  $window.location.href = $scope.companyinfo.formURL + "?token=" + $scope.companyinfo.token;
+                  if (!angular.isUndefined($scope.company.token)){
+                    $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                  }
+                  else {
+                    $window.location.href = $scope.company.formURL
+                  }
                 }, 500);
               });
             }
@@ -316,7 +321,12 @@ angular.module('dmc.company.onboarding')
                     //If not signed go to the url and sign it.
                     storageService.set('companyinfoCache', JSON.stringify($scope.company));
                       $timeout(function(){
-                        $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                          if (!angular.isUndefined($scope.company.token)){
+                            $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                          }
+                          else {
+                            $window.location.href = $scope.company.formURL
+                          }
                       }, 1000);
                     }
                   else{
@@ -464,7 +474,12 @@ angular.module('dmc.company.onboarding')
                                 .content('You haven\'t sign the Membership Agreement yet, please go back and sign it!')
                                 .ok('OK')
                             ).then(function(){
-                                $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                                if (!angular.isUndefined($scope.company.token)){
+                                  $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                                }
+                                else {
+                                  $window.location.href = $scope.company.formURL
+                                }
                             });
                         }
                         else{
@@ -480,17 +495,25 @@ angular.module('dmc.company.onboarding')
                               $mdDialog.confirm()
                                 .clickOutsideToClose(false)
                                 .title('Please Confirm the Signature')
-                                .htmlContent("<h3>We found following information of Membership Agreement</h3>" +
-                                "<h3>If you notice any unrecognized information, please contact us immediately.</h3>" +
+                                .htmlContent("<h3>We found following signature information of Membership Agreement</h3>" +
+                                "<h3>If you notice any unrecognized rows, please contact us immediately.</h3>" +
                                 "<table>" +
+                                "<th><td>Name</td><td>Name</td><td>Email</td><td>IP</td><td>Date</td></th>" +
                                 "<tr ng-repeat=\"signature in Signature.items\">" +
                                 "<td class=\"signature.name == \"same\" ? table-success:table-danger\">{{ signature.name }}</td><td>{{ signature.email }}</td><td>{{ signature.ip }}</td><td>{{ signature.date + '000' | date: 'medium'}}</td>" +
                                 "</tr>" +
                                 "</table>")
                                 .ok('Confirm')
-                                .cancel('Cancel');
+                                .cancel('Go Back to Sign')
                             ).then(function(){
                                 $scope.submitOrgPayment($scope.company, token);
+                            }, function(){
+                                if (!angular.isUndefined($scope.company.token)){
+                                  $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                                }
+                                else {
+                                  $window.location.href = $scope.company.formURL
+                                }
                             });
 
                         }
