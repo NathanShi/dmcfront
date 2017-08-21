@@ -9,6 +9,7 @@
         Run History
       </a>
     </div>
+
     <span flex></span>
     <md-button ng-disabled="!isRunning()" ng-click="cancelServiceRun($event,service)" class="md-raised md-warn">
       Cancel
@@ -112,7 +113,6 @@
 				</div>
 			</div>
 
-<<<<<<< HEAD
 			<md-content>
         <div ng-if="service.interfaceModel.inParams.inputFile" layout="row" layout-align="space-between center">
           <h3>Input File From Workspace:</h3>
@@ -124,17 +124,8 @@
                 <md-option ng-repeat="f in projectFiles" ng-value="{{f}}">{{f.documentName}}</md-option>
             </md-select>
           </div>
-=======
-    <div class="row">
-      <div class="col-xs-6">
-        <h3 class="section">Inputs</h3>
-        <div class="form-group" ng-repeat="item in service.interfaceModel.inputs">
-            <div ng-if="item.type != 'File'" class="sublabels">{{item.name}}</div>
-            <input ng-if="item.type != 'File'" ng-model="item.value">
->>>>>>> f1378f23079f7021f87a2da764a44207f0076e3e
         </div>
 
-<<<<<<< HEAD
 				<md-list class="list-inputs" ui-sortable="sortableOptions" ng-model="service.interfaceModel.inputs">
 					<md-list-item ng-repeat="item in service.interfaceModel.inputs" layout="row" layout-align="start end">
 						<div flex="50" class="left">
@@ -186,15 +177,6 @@
 				<!--</div>-->
 			</md-content>
 		</div>
-=======
-      <div class="col-xs-6">
-        <h3 class="section">Outputs</h3>
-        <div class="form-group" ng-repeat="item in service.interfaceModel.outParams">
-            <div class="sublabels">{{item.name}}</div>
-            <input ng-disabled="true" ng-model="item.value">
-        </div>
-      </div>
->>>>>>> f1378f23079f7021f87a2da764a44207f0076e3e
 
 	</div>
 </div>
