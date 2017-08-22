@@ -37,6 +37,7 @@
 <script src="/bower_components/datamaps/dist/datamaps.all.min.js"></script>
 <script src="/bower_components/angular-datamaps/dist/angular-datamaps.min.js"></script>
 <script src="/bower_components/angular-carousel/angular-carousel.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/bower_components/moment/moment.js"></script>
