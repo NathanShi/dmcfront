@@ -144,7 +144,9 @@ angular.module('dmc.company.onboarding')
         $scope.companyinfo.type = type;
 
         //eSignature Requested
-        $scope.companyinfo.docuSigned = "Requested";
+        $scope.companyinfo.docuSigned = "Signed"; //Test
+        $scope.companyinfo.templateID = "129999710"; //Test
+        // $scope.companyinfo.docuSigned = "Requested";
 
         if ($scope.company.id){
           $scope.companyinfo.id = $scope.company.id;
@@ -155,6 +157,7 @@ angular.module('dmc.company.onboarding')
         // console.log(postDocInfo);
         var responseErrorReason = "Oops, we had a problem when generating Membership Agreement, please try again later. " +
         "\nIf you kept having this problem, please contact us.";
+        storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo))
 
         ajax.get(dataFactory.esignOnline().esignToken, {}, function successCallback(response) {
               if (response.data.status == "eSignToken Successful!"){
@@ -452,7 +455,8 @@ angular.module('dmc.company.onboarding')
                 $scope.company.id = null;
 
                 //Call 'esignCheck/template_id' to check if the Membership Agreement has signed again
-                ajax.get(dataFactory.esignOnline($scope.company.templateID).checkSignature, {}, function(response){;
+                ajax.get(dataFactory.esignOnline($scope.company.templateID).checkSignature, {}, function(response){
+                    console.log("response",response);
                     if (response.data.status == "eSignCheck Successful!"){
                       if (response.data.reason == "Error when calling the API"){
                         $mdDialog.show(
@@ -464,8 +468,10 @@ angular.module('dmc.company.onboarding')
                         );
                       }
                       else{
-                        var Signature = JSON.parse(response.data.reason);
-                        console.log("Signature", Signature);
+                        // var Signature = JSON.parse(response.data.reason);
+                        var Signature = response.data.reason; //Test
+                        $scope.signedInfo = Signature.items;
+                        console.log("Signature", $scope.signedInfo);
                         if (Signature.total == 0){
                             $mdDialog.show(
                               $mdDialog.alert()
@@ -491,21 +497,55 @@ angular.module('dmc.company.onboarding')
                                   $scope.company.verifiedSignatures.push(element);
                                 }
                             });
-                            $mdDialog.show(
-                              $mdDialog.confirm()
-                                .clickOutsideToClose(false)
-                                .title('Please Confirm the Signature')
-                                .htmlContent("<h3>We found following signature information of Membership Agreement</h3>" +
-                                "<h3>If you notice any unrecognized rows, please contact us immediately.</h3>" +
-                                "<table>" +
-                                "<th><td>Name</td><td>Name</td><td>Email</td><td>IP</td><td>Date</td></th>" +
-                                "<tr ng-repeat=\"signature in Signature.items\">" +
-                                "<td class=\"signature.name == \"same\" ? table-success:table-danger\">{{ signature.name }}</td><td>{{ signature.email }}</td><td>{{ signature.ip }}</td><td>{{ signature.date + '000' | date: 'medium'}}</td>" +
-                                "</tr>" +
-                                "</table>")
-                                .ok('Confirm')
-                                .cancel('Go Back to Sign')
-                            ).then(function(){
+
+                            $mdDialog.show({
+                                scope: $scope,
+                                preserveScope: true,
+                                clickOutsideToClose: true,
+                                template: '<md-dialog>' +
+                                          ' <md-toolbar>' +
+                                          '     <div class="md-toolbar-tools">' +
+                                          '       <h2 style="color:white;">Please Confirm the Signature</h2>' +
+                                          '     </div>' +
+                                          ' </md-toolbar>' +
+                                          ' <md-dialog-content>' +
+                                          '   <h5>We found following signature information of Membership Agreement</h5>' +
+                                          '   <table class="table">' +
+                                          '     <thead>' +
+                                          '       <td>Name</td>' +
+                                          '       <td>Email</td>' +
+                                          '       <td>IP</td>' +
+                                          '       <td>Date</td>' +
+                                          '     </thead>' +
+                                          '     <tr ng-repeat="signature in signedInfo">' +
+                                          '       <td class="signature.name == \'same\' ? table-success:table-danger">{{ signature.name }}</td>' +
+                                          '       <td>{{ signature.email }}</td>' +
+                                          '       <td>{{ signature.ip }}</td>' +
+                                          '       <td>{{ signature.date + \'000\' | date: \'medium\'}}</td>' +
+                                          '     </tr>' +
+                                          '   </table>' +
+                                          '   <h5>If you notice any unrecognized rows, please contact us immediately.</h5>' +
+                                          ' </md-dialog-content>' +
+                                          '</md-dialog>',
+                                controller: function eSignDialogController($scope, $mdDialog) {
+                                  $scope.closeDialog = function() {
+                                    $mdDialog.hide();
+                                  }
+                                }
+                            })
+                            // var confirm = $mdDialog.confirm()
+                            //   .title('Please Confirm the Signature')
+                            //   .content("<h5>We found following signature information of Membership Agreement</h5>" +
+                            //   "<table>" +
+                            //   "<th><td>Name</td><td>Email</td><td>IP</td><td>Date</td></th>" +
+                            //   "<tr ng-repeat=\"signature in signedInfo\">" +
+                            //   "<td class=\"signature.name == \"same\" ? table-success:table-danger\">{{ signature.name }}</td><td>{{ signature.email }}</td><td>{{ signature.ip }}</td><td>{{ signature.date + '000' | date: 'medium'}}</td>" +
+                            //   "</tr>" +
+                            //   "</table>" +
+                            //   "<h5>If you notice any unrecognized rows, please contact us immediately.</h5>")
+                            //   .ok('Confirm')
+                            //   .cancel('Go Back to Sign');
+                            .then(function(){
                                 $scope.submitOrgPayment($scope.company, token);
                             }, function(){
                                 if (!angular.isUndefined($scope.company.token)){
@@ -567,7 +607,7 @@ angular.module('dmc.company.onboarding')
               $mdDialog.alert()
                 .clickOutsideToClose(false)
                 .title('Alert')
-                .content('Oops, something went wrong, please contact us.')
+                .content('Oops, payment went wrong, please contact us.')
                 .ok('OK')
             );
           }).then(function(){
