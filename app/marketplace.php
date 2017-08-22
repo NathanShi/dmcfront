@@ -35,6 +35,9 @@
 <script src="scripts/marketplace/marketplace.js"></script>
 <script src="scripts/marketplace/marketplace.controller.js"></script>
 <script src="scripts/utilities/scroll.service.js"></script>
+<script src="scripts/components/ui-widgets/content-card.directive.js"></script>
+<script src="scripts/components/run-default-button/run-default-button.js"></script>
+<script src="bower_components/ng-youtube-embed/build/ng-youtube-embed.min.js"></script>
 
 <!-- endbuild -->
 

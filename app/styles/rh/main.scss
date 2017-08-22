@@ -13,6 +13,8 @@
 @import 'workspaces';
 @import 'companyonboard';
 @import 'transform';
+@import 'runapp';
+@import 'content-card';
 
 body {
 	font-family:'Roboto', sans-serif;}
@@ -249,4 +251,15 @@ ng-md-icon {
 	.info{
 		padding-left: 15px;
 	}
+}
+
+md-toast.md-success-toast-theme {
+  background-color: #368739;
+}
+md-toast.md-error-toast-theme {
+  background-color: #AE2B2B;
+}
+md-toast{
+  position: fixed;
+  z-index: 150;
 }

@@ -100,7 +100,8 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
         fileLimit: '=',
         accessLevel: '=',
         isDmdii: '=',
-        allowVip: '='
+        allowVip: '=',
+        hideEdit: '='
       },
       controller: function($scope, $element, $attrs, dataFactory, ajax) {
         $scope.documentDropZone;
@@ -385,7 +386,7 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
     }
 
   }])
-  .controller('DocumentsUploadCtrl', ['$scope', '$mdDialog', function($scope, $mdDialog) {
+  .controller('DocumentsUploadCtrl', ['$scope', '$mdDialog', 'hideEdit', function($scope, $mdDialog, hideEdit) {
     $scope.cancel = function() {
       $mdDialog.cancel();
     }
@@ -393,6 +394,9 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
     $scope.uploadDocuments = function() {
       $mdDialog.hide($scope.documents);
     }
+
+    $scope.hideEdit = hideEdit;
+
   }])
   .controller('DocDlCtrl', ['$scope', '$mdDialog', 'file', 'ajax', 'dataFactory', '$http', function($scope, $mdDialog, file, ajax, dataFactory, $http) {
     $scope.file = file;
@@ -697,7 +701,10 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
             templateUrl: 'templates/project/pages/documents-upload.html',
             parent: angular.element(document.body),
             targetEvent: ev,
-            clickOutsideToClose: false
+            clickOutsideToClose: false,
+            locals: {
+              hideEdit: false
+            }
           }).then(function(documents) {
             var promises = {};
 

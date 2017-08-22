@@ -574,6 +574,7 @@ return {
         return {
           get: localhost + 'dmdiiProject/' + id,
           all: localhost + 'dmdiiprojects',
+          delete: localhost + 'dmdiiProjects/' + id,
           active: localhost + 'dmdiiprojects/member/active',
           contributors: localhost + 'dmdiiproject/contributingcompanies',
           search: localhost + 'dmdiiprojects/search'
@@ -768,8 +769,17 @@ return {
       getMarketComponents: function() {
         return localhost + 'market/components';
       },
+      getMarketPlaceServices: function() {
+          return localhost + 'market/services';
+      },
       getServicesTags: function() {
         return localhost + 'service_tags';
+      },
+      getDefaultServices: function() {
+        return localhost + 'defaultServices';
+      },
+      getDefaultService: function(parentId) {
+        return localhost + 'defaultServices/' + parentId;
       },
       /// profiles -----------------
       profiles: function(id) {
