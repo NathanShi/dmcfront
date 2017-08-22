@@ -47,7 +47,7 @@ angular.module('dmc.component.run-default-button', ['dmc.ajax'])
 
           var redirectToService = function(tagsAdded, interfacesAdded, projectId, serviceId) {
             if (tagsAdded && interfacesAdded) {
-              $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run';
+              $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/runapp';
             }
           }
         }

@@ -597,7 +597,7 @@ angular.module('dmc.service-marketplace')
             };
 
             $scope.redirectToServiceHistory = function(projectId, serviceId) {
-              window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/run-history';
+              window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/app-history';
             };
 
             // $scope.addToCompare = function(){

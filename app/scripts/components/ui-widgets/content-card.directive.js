@@ -61,7 +61,7 @@ angular.module('dmc.widgets.content', [
         };
 
         vm.redirectToServiceHistory = function(projectId, serviceId) {
-          $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/run-history';
+          $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/app-history';
         }
     }
 
