@@ -17,6 +17,7 @@ angular.module('dmc.service-marketplace', [
     'dmc.component.treemenu',
     'dmc.component.productcard',
     'dmc.component.members-card',
+    'dmc.component.run-default-button',
     'dmc.common.header',
     'dmc.common.footer',
     'dmc.component.carousel',

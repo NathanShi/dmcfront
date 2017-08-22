@@ -7,7 +7,7 @@ var server = jsonServer.create();
 // Set default middlewares (logger, static, cors and no-cache)
 //server.use(jsonServer.defaults());
 server.use(jsonServer.defaults());
-// 
+//
 server.use(jsonServer.bodyParser)
 // Add this before server.use(router)
 server.use(jsonServer.rewriter({
@@ -58,9 +58,11 @@ server.use(jsonServer.rewriter({
     '/projects/:projectId/accept/:memberId': '/projects_members/:memberId',
     '/projects/:projectId/reject/:memberId': '/projects_members/:memberId',
     '/dmdiiMember/events': '/dmdiiMemberEvents',
+    '/dmdiiMember/events/:id': '/dmdiiMemberEvents/:id',
     '/dmdiiMember/news': '/dmdiiMemberNews',
     '/dmdiiMember/mapEntry' : '/dmdiiMemberMap',
     '/dmdiiProject/events': '/dmdiiProjectEvents',
+    '/dmdiiProject/events/:id': '/dmdiiProjectEvents/:id',
     '/dmdiiProject/news': '/dmdiiProjectNews',
     '/dmdiiprojects/member/active': '/dmdiiprojectsmembersactive',
     '/dmdiiProject/:id': '/dmdiiProjects/:id',
@@ -84,6 +86,9 @@ server.use(jsonServer.rewriter({
     '/organizations/myVPC': '/myVPC',
     '/searchworkspace/:id': '/searchworkspace',
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
+    'service_runs?serviceId=:id': '/service_runs',
+    '/defaultServices': '/default-services',
+    '/defaultService/:id': '/default-services/:id'
 }));
 
 server.post('/dmdiidocument', function(req,res) {
@@ -152,7 +157,8 @@ server.get('/dmdiiprojects', function (req, res) {
   projectsOrig = {"count": projectsData.length ,"data" : projectsData }
 
   res.jsonp(projectsOrig)
-})
+});
+
 server.post('/services', function(req,res) {
  res.jsonp({"id":906,"companyId":"1","title":"K Max","description":"The formula used is Kmax = BetaFactor * AppliedLoad / (Thickness * math.sqrt(SpecimenWidth.getValue())). The four inputs are BetaFactor (no unit), AppliedLoad (Newton), SpecimenWidth (meter), and Thickness (meter). The output is Kmax (pascal square root meter).",
  "owner":"269","profileId":"269","releaseDate":"2017-01-21",
@@ -175,6 +181,20 @@ server.get('/directories/:dirId', function (req, res) {
 server.post('/directories', function (req, res) {
   console.log('req',req.body)
   res.jsonp({"id":286,"name":req.body.name,"parent":req.body.parent,"children":[]})
+})
+
+
+var docGetCount = 0;
+server.get('/documents/:id', function (req, res) {
+  docGetCount++
+  if (docGetCount > 5) {
+    docGetCount = 0
+    var docShape = {"id":1167,"documentName":"dmcLogo.png","documentUrl":"https://dmcupfinal.s3.amazonaws.com/PROJECT/111819928277794120148%40google.com/Documents/1500471698--922752-sanitized-dmcLogo.png?AWSAccessKeyId=AKIAIZPP46XXRK6PBF6A&Expires=1503150099&Signature=JWWiTPiTFGLNkLRncYferdn0L%2B8%3D","parentType":"PROJECT","parentId":249,"ownerId":171,"ownerDisplayName":"Joseph Mazrimas","tags":[],"modified":1500471690366,"expires":1503063690366,"docClass":"SUPPORT","accessLevel":"MEMBER","vips":[],"version":0,"directoryId":284,"baseDocId":1167,"hasVersions":false,"sha256":"70811c4ca36cc9268d4b173a10f99047478a8f0d6da8de9a2c8251f524308036","isAccepted":true}
+    res.jsonp(docShape)
+  } else {
+    var docShape = {"id":1167,"documentName":"dmcLogo.png","documentUrl":"https://dmcuptemp.s3.amazonaws.com/PROJECT/111819928277794120148%40google.com/Documents/1500471698--922752-sanitized-dmcLogo.png?AWSAccessKeyId=AKIAIZPP46XXRK6PBF6A&Expires=1503150099&Signature=JWWiTPiTFGLNkLRncYferdn0L%2B8%3D","parentType":"PROJECT","parentId":249,"ownerId":171,"ownerDisplayName":"Joseph Mazrimas","tags":[],"modified":1500471690366,"expires":1503063690366,"docClass":"SUPPORT","accessLevel":"MEMBER","vips":[],"version":0,"directoryId":284,"baseDocId":1167,"hasVersions":false,"sha256":"70811c4ca36cc9268d4b173a10f99047478a8f0d6da8de9a2c8251f524308036","isAccepted":true}
+    res.jsonp(docShape)
+  }
 })
 
 server.get('/getChildren', function (req, res) {

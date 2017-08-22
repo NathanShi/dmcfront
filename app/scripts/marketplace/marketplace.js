@@ -35,6 +35,7 @@ angular.module('dmc.marketplace', [
     };
 
 
+
     function getContentStatic(callbackFunction) {
         $scope.marketplaceItems=[]
         ajax.get(dataFactory.getStaticJSON('static-marketplace.json'), {}, function(response){
@@ -120,11 +121,10 @@ angular.module('dmc.marketplace', [
 
         else{
           $scope.cmmOperationItems.push($scope.marketplaceItems[i])
+
         }
       }
     });
-
-
 
 
 
@@ -150,62 +150,14 @@ angular.module('dmc.marketplace', [
 
 
 
+    $http.get(dataFactory.getDefaultServices(), {
+    }).success(function(response) {
+        $scope.serviceMap = {};
+        response.forEach(function (service){
+          $scope.serviceMap[service.parent] = {'serviceId': service.id, 'workspaceId': service.projectId};
+        });
+        console.log($scope.serviceMap);
+    });
 
-
-
-
-    // $http.get(dataFactory.getMarketServices(), {
-    //     params: {
-    //         start: 0,
-    //         published: true
-    //     }
-    // }).success(function(response) {
-    //     // console.log(response);
-    //     $scope.marketplaceItems = response;
-    // });
-
-    // $http.get(dataFactory.getMarketServices(), {
-    //     params: {
-    //         start: 0,
-    //         limit: 5,
-    //         published: true
-    //     }
-    // }).success(function(response) {
-    //     // console.log(response);
-    //     $scope.estimateItems = response;
-    // });
-
-    // $http.get(dataFactory.getMarketServices(), {
-    //     params: {
-    //         start: 5,
-    //         limit: 5,
-    //         published: true
-    //     }
-    // }).success(function(response) {
-    //     // console.log(response);
-    //     $scope.cncOperationItems = response;
-    // });
-    //
-    // $http.get(dataFactory.getMarketServices(), {
-    //     params: {
-    //         start: 10,
-    //         limit: 5,
-    //         published: true
-    //     }
-    // }).success(function(response) {
-    //     // console.log(response);
-    //     $scope.cmmOperationItems = response;
-    // });
-
-    // $http.get(dataFactory.getMarketServices(), {
-    //     params: {
-    //         start: 15,
-    //         limit: 5,
-    //         published: true
-    //     }
-    // }).success(function(response) {
-    //     // console.log(response);
-    //     $scope.getLeanItems = response;
-    // });
 
 }]);
