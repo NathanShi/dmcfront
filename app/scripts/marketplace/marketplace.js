@@ -71,7 +71,7 @@ angular.module('dmc.marketplace', [
         if(a.categoryQuestion > b.categoryQuestion) return 1;
         return 0;
       });
-      console.log(servicesGroupedByType)
+      // console.log(servicesGroupedByType)
       return servicesGroupedByType;
     };
 
