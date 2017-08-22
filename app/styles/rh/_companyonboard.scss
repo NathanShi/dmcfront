@@ -282,7 +282,6 @@ button[disabled]{
   ul {
     list-style: none;
     padding-left: 0px;
-    margin: 0px 10px;
     li {
       font-size: .8em;
     }
@@ -390,7 +389,10 @@ button[disabled]{
 
 .mem-tiers {
   h4 {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid lightgrey;
     margin-right: 10px;
+  }
+  ul {
+    margin: 0px 10px;
   }
 }
