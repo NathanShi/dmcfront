@@ -14,6 +14,10 @@
         "startDate": "",
         "startTime": ""
     },
+    "featureImage": {
+        "thumbnail": "",
+        "large": ""
+    },
     "projectId": "56",
     "from": "marketplace",
     "contentType": "service",
@@ -39,6 +43,10 @@
         "percentCompleted": "0",
         "startDate": "",
         "startTime": ""
+    },
+    "featureImage": {
+        "thumbnail": "",
+        "large": ""
     },
     "projectId": "56",
     "from": "marketplace",
@@ -90,7 +98,6 @@
     "owner": "179",
     "profileId": "179",
     "releaseDate": "2017-01-20",
-    "serviceType": "hello",
     "tags": ["video"],
     "projectId": "103",
     "from": "marketplace",
@@ -118,6 +125,10 @@
         "percentCompleted": "0",
         "startDate": "",
         "startTime": ""
+    },
+    "featureImage": {
+        "thumbnail": "",
+        "large": ""
     },
     "projectId": "103",
     "from": "marketplace",
