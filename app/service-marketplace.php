@@ -19,7 +19,7 @@
 <div ui-view></div>
 <dmc-footer></dmc-footer>
 
-<?php include 'build-vendor.php' ?>
+<?php include 'build-vendor-rh.php' ?>
 
 <!-- build:js scripts/service-marketplace/index.js -->
 <script src="scripts/socket/socket.io.js"></script>
@@ -47,6 +47,7 @@
 <script src="scripts/common/models/file-upload.js"></script>
 <script src="scripts/common/models/previous-page.js"></script>
 <script src="scripts/components/members-card/members-card.js"></script>
+<script src="scripts/components/run-default-button/run-default-button.js"></script>
 <script src="scripts/common/models/dome-model.js"></script>
 <script src="scripts/common/models/question-toast-model.js"></script>
 
