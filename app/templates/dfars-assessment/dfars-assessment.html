@@ -1,5 +1,16 @@
-<main class="dfarsAssessment">
+<main class="container dfarsAssessment">
+  <div layout="row">
+    <div layout="column" class="tableOfContents">
+      <a ng-repeat="module in states" ng-click="routePage(module.state)">{{module.name}}</a>
+    </div>
+    <div layout="column" class="moduleBody">
+      <h2>{{states[state].name}}</h2>
+      <md-divider></md-divider>
+    </div>
+  </div>
+
   <div layout="row" layout-align="center center">
-    <button>Next</button>
+    <md-button ng-hide="states[state].state == 'dfars-assessment.start'" ng-click="routePage('previous')">Previous</md-button>
+    <md-button ng-hide="states[state].state == 'dfars-assessment.finish'" ng-click="routePage('next')">Next</md-button>
   </div>
 </main>

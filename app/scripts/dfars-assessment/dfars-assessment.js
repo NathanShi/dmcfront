@@ -13,20 +13,32 @@ angular.module('dmc.dfars-assessment', [
     "dmc.ajax",
     "dmc.data"
 ]).config(function($stateProvider, $urlRouterProvider, $httpProvider){
+
+    var resolve = {
+      states: function() {
+        return [{'state': 'dfars-assessment.start', "name": "Introduction"},
+                {'state': 'dfars-assessment.access_control', "name": "Access Control"},
+                {'state': 'dfars-assessment.finish', "name": "Results"}];
+      }
+    };
+
     $stateProvider.state('dfars-assessment', {
         template: '<ui-view />'
       }).state('dfars-assessment.start', {
         url: '/',
         controller: 'DfarsController',
-        templateUrl: 'templates/dfars-assessment/dfars-assessment.html'
-      }).state('dfars-assessment.1', {
-        url: '/1',
+        templateUrl: 'templates/dfars-assessment/dfars-assessment.html',
+        resolve: resolve
+      }).state('dfars-assessment.access_control', {
+        url: '/access_control',
         controller: 'DfarsController',
-        templateUrl: 'templates/dfars-assessment/dfars-assessment.html'
+        templateUrl: 'templates/dfars-assessment/dfars-assessment.html',
+        resolve: resolve
       }).state('dfars-assessment.finish', {
         url: '/finish',
         controller: 'DfarsController',
-        templateUrl: 'templates/dfars-assessment/dfars-assessment.html'
+        templateUrl: 'templates/dfars-assessment/dfars-assessment.html',
+        resolve: resolve
       });
     $urlRouterProvider.otherwise('/');
 });
