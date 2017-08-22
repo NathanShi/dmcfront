@@ -34,10 +34,10 @@ angular.module('dmc.marketplace', [
         scrollService.scrollTo(eID);
     };
 
+    // console.log("ctrl initialize")
 
 
     function getContentStatic(callbackFunction) {
-        // $scope.marketplaceItems=[]
         ajax.get(dataFactory.getStaticJSON('static-marketplace.json'), {}, function(response){
             $scope.marketplaceItems=response.data;
             $scope.marketplaceItemsCopy =response.data;
@@ -99,7 +99,6 @@ angular.module('dmc.marketplace', [
 
         else{
           $scope.cmmOperationItems.push($scope.marketplaceItems[i])
-
         }
       }
     });
