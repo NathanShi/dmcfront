@@ -38,6 +38,7 @@ angular.module('dmc.widgets.content', [
         var vm = this;
 
         var categorizeContent = function(contentItems) {
+
             if (contentItems) {
                 for (var i = 0; i < contentItems.length; i++) {
                     if (contentItems[i].documentName) {

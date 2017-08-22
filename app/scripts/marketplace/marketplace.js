@@ -41,7 +41,6 @@ angular.module('dmc.marketplace', [
         ajax.get(dataFactory.getStaticJSON('static-marketplace.json'), {}, function(response){
             $scope.marketplaceItems=response.data;
             $scope.marketplaceItemsCopy =response.data;
-            console.log("comparisons",$scope.marketplaceItems==$scope.marketplaceItemsCopy);
             callbackFunction();
         });
     }
@@ -73,7 +72,6 @@ angular.module('dmc.marketplace', [
         if(a.categoryQuestion > b.categoryQuestion) return 1;
         return 0;
       });
-      // console.log(servicesGroupedByType)
       return servicesGroupedByType;
     };
 
@@ -87,7 +85,7 @@ angular.module('dmc.marketplace', [
       $scope.cmmOperationItems=[]
 
       for (var i = 0; i < $scope.marketplaceItems.length; i++) {
-        $scope.allMktItems.push($scope.marketplaceItems[i]);
+        // $scope.allMktItems.push($scope.marketplaceItems[i]);
         if ($scope.marketplaceItems[i].categoryContent=='GET LEAN'){
           $scope.getLeanItems.push($scope.marketplaceItems[i])
         }
