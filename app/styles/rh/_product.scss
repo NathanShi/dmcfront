@@ -1,9 +1,8 @@
 .product {
   padding: 16px 0;
   .product-box {
-    max-height: 400px;
+    max-height: 500px;
     padding-bottom: 20px;
-    overflow: hidden;
 
   .product-header {
     margin-bottom: 15px;
@@ -93,9 +92,10 @@
     text-align: center;
     //max-width: 425px;
     min-width: 150px;
+    //max-height: 500px;
     img{
-      width: auto;
-      height: 100%;
+      width: 100%;
+      height: auto;
     }
     .delete-image{
       color: white;
@@ -130,9 +130,8 @@
   }
 
   .product-description{
-    margin-top: 0px;
-    height: auto;
-    overflow: hidden;
+    max-height: 325px;
+    overflow-y: scroll;
   }
 
   .add-tags-form{
