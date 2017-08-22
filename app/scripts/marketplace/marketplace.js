@@ -37,10 +37,11 @@ angular.module('dmc.marketplace', [
 
 
     function getContentStatic(callbackFunction) {
-        $scope.marketplaceItems=[]
+        // $scope.marketplaceItems=[]
         ajax.get(dataFactory.getStaticJSON('static-marketplace.json'), {}, function(response){
             $scope.marketplaceItems=response.data;
             $scope.marketplaceItemsCopy =response.data;
+            console.log("comparisons",$scope.marketplaceItems==$scope.marketplaceItemsCopy);
             callbackFunction();
         });
     }
@@ -79,28 +80,6 @@ angular.module('dmc.marketplace', [
     $scope.contentArray = groupServicesByType($scope.marketplaceItems)
 
 
-    // $scope.categorizeContent = function(content){
-    //   for (var i = 0; i < content.length; i++) {
-    //
-    //     if (content[i].content_category=='GET LEAN'){
-    //       $scope.getLeanItems = content[i]
-    //     }
-    //
-    //     else if (content[i].content_category=='IMPROVE ESTIMATES'){
-    //       $scope.estimateItems = content[i]
-    //     }
-    //
-    //     else if (content[i].content_category=='IMPROVE CNC OPERATIONS'){
-    //       $scope.cncOperationItems = content[i]
-    //     }
-    //
-    //     else{
-    //       $scope.cmmOperationItems = content[i]
-    //     }
-    //
-    //   }
-    // }
-
     getContentStatic(function(){
       $scope.getLeanItems=[]
       $scope.estimateItems=[]
@@ -108,6 +87,7 @@ angular.module('dmc.marketplace', [
       $scope.cmmOperationItems=[]
 
       for (var i = 0; i < $scope.marketplaceItems.length; i++) {
+        $scope.allMktItems.push($scope.marketplaceItems[i]);
         if ($scope.marketplaceItems[i].categoryContent=='GET LEAN'){
           $scope.getLeanItems.push($scope.marketplaceItems[i])
         }
@@ -156,7 +136,6 @@ angular.module('dmc.marketplace', [
         response.forEach(function (service){
           $scope.serviceMap[service.parent] = {'serviceId': service.id, 'workspaceId': service.projectId};
         });
-        console.log($scope.serviceMap);
     });
 
 
