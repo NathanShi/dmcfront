@@ -9,10 +9,6 @@
     "serviceType": "Fundamental Calculations - Fracture Mechanics",
     "tags": ["app"],
     "specifications": "/services/3/specifications",
-    "featureImage": {
-        "thumbnail": "",
-        "large": ""
-    },
     "currentStatus": {
         "percentCompleted": "0",
         "startDate": "",
@@ -21,7 +17,10 @@
     "projectId": "56",
     "from": "marketplace",
     "contentType": "service",
-    "content_category": "IMPROVE ESTIMATES",
+    "categoryQuestion":"I want to improve estimates.",
+    "categoryImg":"images/calc.png",
+    "categoryContent": "IMPROVE ESTIMATES",
+    "categoryId":"improve-estimates",
     "parent": null,
     "published": true,
     "averageRun": ""
@@ -36,10 +35,6 @@
     "serviceType": "Fundamental Calculations - Fracture Mechanics",
     "tags": ["app"],
     "specifications": "/services/3/specifications",
-    "featureImage": {
-        "thumbnail": "",
-        "large": ""
-    },
     "currentStatus": {
         "percentCompleted": "0",
         "startDate": "",
@@ -48,7 +43,10 @@
     "projectId": "56",
     "from": "marketplace",
     "contentType": "service",
-    "content_category": "IMPROVE CNC OPERATIONS",
+    "categoryQuestion":"I want to improve my CNC operations.",
+    "categoryContent": "IMPROVE CNC OPERATIONS",
+    "categoryImg":"images/computer.png",
+    "categoryId":"improve-estimates",
     "parent": null,
     "published": true,
     "averageRun": ""
@@ -75,7 +73,10 @@
     "projectId": "103",
     "from": "marketplace",
     "contentType": "service",
-    "content_category": "IMPROVE CMM OPERATIONS",
+    "categoryQuestion":"I want to improve my CMM operations.",
+    "categoryContent": "IMPROVE CMM OPERATIONS",
+    "categoryImg":"images/ruler.png",
+    "categoryId":"improve-estimates",
     "parent": 465,
     "published": true,
     "averageRun": ""
@@ -84,21 +85,20 @@
     "id": 510,
     "companyId": "1",
     "title": "Shaun's Test Video",
-    "description": "This is a test video",
+    "description": "This is a test video. Just a placeholder",
     "videoSource":"https://www.youtube.com/watch?v=n0jM1cvmyEs",
     "owner": "179",
     "profileId": "179",
     "releaseDate": "2017-01-20",
-    "serviceType": "Fundamental Calculations - Fracture Mechanics",
+    "serviceType": "hello",
     "tags": ["video"],
-    "featureImage": {
-        "thumbnail": "",
-        "large": ""
-    },
     "projectId": "103",
     "from": "marketplace",
     "contentType": "video",
-    "content_category": "GET LEAN",
+    "categoryQuestion":"I want to get lean.",
+    "categoryContent": "GET LEAN",
+    "categoryImg":"images/meter.png",
+    "categoryId":"get-lean",
     "parent": 465,
     "published": true
 },
@@ -114,10 +114,6 @@
     "serviceType": "Fundamental Calculations - Fracture Mechanics",
     "tags": ["app"],
     "specifications": "/services/3/specifications",
-    "featureImage": {
-        "thumbnail": "",
-        "large": ""
-    },
     "currentStatus": {
         "percentCompleted": "0",
         "startDate": "",
@@ -126,7 +122,10 @@
     "projectId": "103",
     "from": "marketplace",
     "contentType": "service",
-    "content_category": "GET LEAN",
+    "categoryQuestion":"I want to get lean.",
+    "categoryContent": "GET LEAN",
+    "categoryImg":"images/meter_grey.png",
+    "categoryId":"get-lean",
     "parent": null,
     "published": true,
     "averageRun": ""

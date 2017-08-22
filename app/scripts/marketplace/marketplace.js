@@ -10,6 +10,7 @@ angular.module('dmc.marketplace', [
     'dmc.common.header',
     'dmc.common.footer',
     'dmc.model.toast-model',
+    'angularUtils.directives.dirPagination',
     "dmc.ajax",
     "dmc.data",
     "dmc.utilities",
@@ -33,16 +34,15 @@ angular.module('dmc.marketplace', [
         scrollService.scrollTo(eID);
     };
 
-    // $scope.getLeanItems=[]
 
+    //Google Analytics specifications
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-XXXXX-Y', 'auto');
+    ga('send', 'pageview');
 
-    // $scope.getContentStatic = function() {
-    //     $scope.marketplaceItems=[]
-    //     ajax.get(dataFactory.getStaticJSON('static-marketplace.json'), {}, function(response){
-    //         $scope.marketplaceItems=response.data;
-    //         $scope.categorizeContent($scope.marketplaceItems);
-    //     });
-    // }
 
     function getContentStatic(callbackFunction) {
         $scope.marketplaceItems=[]
@@ -54,27 +54,60 @@ angular.module('dmc.marketplace', [
     }
 
 
-    $scope.categorizeContent = function(content){
-      for (var i = 0; i < content.length; i++) {
-
-        if (content[i].content_category=='GET LEAN'){
-          $scope.getLeanItems = content[i]
+    var groupServicesByType = function(data) {
+      var serviceTypes = {};
+      var servicesGroupedByType = [];
+      for (var i in data) {
+        if (serviceTypes[data[i].categoryQuestion]) {
+            for (var j in servicesGroupedByType) {
+              if (servicesGroupedByType[j]["categoryQuestion"] == data[i].categoryQuestion) {
+                servicesGroupedByType[j]["content"].push(data[i])
+              }
+            }
+        } else {
+          servicesGroupedByType.push({
+            "categoryQuestion": data[i].categoryQuestion,
+            "categoryImage":data[i].categoryImg,
+            "categoryId":data[i].categoryId,
+            "content": [data[i]]
+          });
+          serviceTypes[data[i].categoryQuestion] = true
         }
+      };
 
-        else if (content[i].content_category=='IMPROVE ESTIMATES'){
-          $scope.estimateItems = content[i]
-        }
+     servicesGroupedByType.sort(function(a, b){
+        if(a.categoryQuestion < b.categoryQuestion) return -1;
+        if(a.categoryQuestion > b.categoryQuestion) return 1;
+        return 0;
+      });
+      console.log(servicesGroupedByType)
+      return servicesGroupedByType;
+    };
 
-        else if (content[i].content_category=='IMPROVE CNC OPERATIONS'){
-          $scope.cncOperationItems = content[i]
-        }
+    $scope.contentArray = groupServicesByType($scope.marketplaceItems)
 
-        else{
-          $scope.cmmOperationItems = content[i]
-        }
 
-      }
-    }
+    // $scope.categorizeContent = function(content){
+    //   for (var i = 0; i < content.length; i++) {
+    //
+    //     if (content[i].content_category=='GET LEAN'){
+    //       $scope.getLeanItems = content[i]
+    //     }
+    //
+    //     else if (content[i].content_category=='IMPROVE ESTIMATES'){
+    //       $scope.estimateItems = content[i]
+    //     }
+    //
+    //     else if (content[i].content_category=='IMPROVE CNC OPERATIONS'){
+    //       $scope.cncOperationItems = content[i]
+    //     }
+    //
+    //     else{
+    //       $scope.cmmOperationItems = content[i]
+    //     }
+    //
+    //   }
+    // }
 
     getContentStatic(function(){
       $scope.getLeanItems=[]
@@ -83,14 +116,14 @@ angular.module('dmc.marketplace', [
       $scope.cmmOperationItems=[]
 
       for (var i = 0; i < $scope.marketplaceItems.length; i++) {
-        if ($scope.marketplaceItems[i].content_category=='GET LEAN'){
+        if ($scope.marketplaceItems[i].categoryContent=='GET LEAN'){
           $scope.getLeanItems.push($scope.marketplaceItems[i])
         }
-        else if ($scope.marketplaceItems[i].content_category=='IMPROVE ESTIMATES'){
+        else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE ESTIMATES'){
           $scope.estimateItems.push($scope.marketplaceItems[i])
         }
 
-        else if ($scope.marketplaceItems[i].content_category=='IMPROVE CNC OPERATIONS'){
+        else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE CNC OPERATIONS'){
           $scope.cncOperationItems.push($scope.marketplaceItems[i])
         }
 
@@ -99,6 +132,8 @@ angular.module('dmc.marketplace', [
         }
       }
     });
+
+
 
 
 

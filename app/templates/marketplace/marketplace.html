@@ -11,17 +11,6 @@
     <h1 class="col-xs-12">DMC Marketplace</h1>
   </section>
 
-    <!-- <section class="container" ng-if="(($root.isLogged && userData.roles && userData.roles[userData.companyId]) || ($root.isLogged && userData.isDmdiiAdmin))"> -->
-    <!-- <section class="container">
-
-    <div class="row welcome margin-bottom-30">
-      <h2 class="col-xs-12">WELCOME TO THE</h2>
-      <h1 class="col-xs-12">DMC Marketplace</h1>
-      <h1 class="col-xs-4 small-underline"></h1>
-      <p class="col-xs-12 lighter">Your portal to digital transformation for increased productivity.</p>
-    </div>
-
-    </section> -->
 
 
     <div class="container">
@@ -36,16 +25,6 @@
               <section class="container">
                 <section id="main-section" class="main-section">
                     <div class="container transform-main">
-                        <!-- <div class="row nav-row">
-                            <a href="index.php"><ng-md-icon class="nav-back" style="fill: white" icon="navigate_before" size="25"></ng-md-icon></a>
-                            <a href="index.php"><ng-md-icon class="pull-right nav-home" icon="home" style="fill: white" size="25"></ng-md-icon></a>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3 class="transform-title">TRANSFORM:</h3>
-                                <h3 class="help-title">HOW CAN WE HELP YOU?</h3>
-                            </div>
-                        </div> -->
                         <div class="row margin-bottom-10">
                             <a ng-click="gotoElement('improved-estimates')">
                                 <img class="bullet-image" ng-src="images/calc.png" type="image/png" height="80px">
@@ -147,7 +126,7 @@
                             <a href="index.php"><ng-md-icon class="pull-right nav-home" icon="home" style="fill: white" size="25"></ng-md-icon></a>
                             <img ng-click="gotoElement('get-lean')" class="pull-right margin-right-3" ng-src="images/meter.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('cmm-operations')" class="pull-right margin-right-3" ng-src="images/ruler_grey.png" type="image/png" height="25px">
-                            <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
+                            <img ng-click="gotoElement('cnc-operations')" class="pull-right https://mail.google.com/mail/u/0/#inboxmargin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
                         </div>
                         <div
@@ -175,7 +154,6 @@
                             <ng-md-icon icon="clear" size="15" class="pull-right clear-icon" ng-click="clearSearch()"></ng-md-icon>
                         </div>
                         <button class="btn search-button no-click-border col-xs-2" type="submit">
-                        <!-- <button class="btn search-button no-click-border col-xs-2" ng-click="search()"> -->
                           <ng-md-icon icon="search" size="20"></ng-md-icon>
                         </button>
                       </form>
@@ -206,12 +184,70 @@
                     </div>
                   </div>
 
-                    <div ui-widget-content
+                    <!-- <div ui-widget-content
                          content-type="'app'"
                          title=""
                          category=""
                          content-items="marketplaceItems">
+                    </div> -->
+
+                    <div ng-repeat="contentGroup in contentArray">
+                      <div class="container transform-main">
+                        <div class = "row margin-bottom-10">
+
+                          <img class = "bullet-image" ng-src="{{contentGroup.categoryImage}}" type="image/png" height="80px">
+                            <div class="col-sm-7 co l-md-10 bottom-border path-link">
+                              <a ng-click="selectedIndex = $index">{{contentGroup.categoryQuestion}}</h2>
+                            </div>
+                        </div>
+                      </div>
+
                     </div>
+
+                    <div ng-repeat="contentGroup in categoryArray">
+                      <!-- <section id="{{contentGroup.categoryId}}" class="transform-section"> -->
+
+                        <div class="container transform-content">
+                            <div class="row nav-row">
+                                <a ng-click="gotoElement('main-section')"><ng-md-icon class="nav-back top" style="fill: white" icon="navigate_before" size="25"></ng-md-icon></a>
+                                <a href="index.php"><ng-md-icon class="pull-right nav-home" icon="home" style="fill: white" size="25"></ng-md-icon></a>
+                                <img ng-click="gotoElement('get-lean')" class="pull-right margin-right-3" ng-src="images/meter.png" type="image/png" height="25px">
+                                <img ng-click="gotoElement('cmm-operations')" class="pull-right margin-right-3" ng-src="images/ruler_grey.png" type="image/png" height="25px">
+                                <img ng-click="gotoElement('cnc-operations')" class="pull-right https://mail.google.com/mail/u/0/#inboxmargin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
+                                <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
+                            </div>
+                            <div
+                            ui-widget-content
+                                 content-items="contentGroup.content">
+                            </div>
+                        </div>
+                      <!-- </section> -->
+                    </div>
+<!--
+                    <section id="get-lean" class="transform-section">
+                        <div class="container transform-content">
+                            <div class="row nav-row">
+                                <a ng-click="gotoElement('main-section')"><ng-md-icon class="nav-back top" style="fill: white" icon="navigate_before" size="25"></ng-md-icon></a>
+                                <a href="index.php"><ng-md-icon class="pull-right nav-home" icon="home" style="fill: white" size="25"></ng-md-icon></a>
+                                <img ng-click="gotoElement('get-lean')" class="pull-right margin-right-3" ng-src="images/meter.png" type="image/png" height="25px">
+                                <img ng-click="gotoElement('cmm-operations')" class="pull-right margin-right-3" ng-src="images/ruler_grey.png" type="image/png" height="25px">
+                                <img ng-click="gotoElement('cnc-operations')" class="pull-right https://mail.google.com/mail/u/0/#inboxmargin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
+                                <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
+                            </div>
+                            <div
+                            ui-widget-content
+                                 content-type="'app'"
+                                 title="'TRANSFORM:'"
+                                 category="'GET LEAN'"
+                                 content-items="getLeanItems">
+                            </div>
+                        </div>
+                    </section> -->
+
+
+
+
+
               </section>
             </section>
           </div>
