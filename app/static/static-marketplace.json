@@ -140,4 +140,25 @@
     "parent": null,
     "published": true,
     "averageRun": ""
-}]
+},
+{
+  "contentType": "integration",
+  "title": "title",
+  "description": "description",
+  "link": "",
+  "tags": ["app"],
+  "featureImage": {
+      "thumbnail": "",
+      "large": ""
+  }
+},
+{
+  "contentType": "static-content",
+  "title": "title",
+  "description": "description",
+  "featureImage": {
+      "thumbnail": "",
+      "large": ""
+  }
+}
+]
