@@ -6,7 +6,9 @@
             <img ng-if="$ctrl.categorizedContent.contentType === ''" ng-src="{{app.featureImage.large}}" width="100%" height="100%">
             <img ng-if="$ctrl.categorizedContent.contentImage" ng-src="{{$ctrl.categorizedContent.contentImage}}" width="100%" height="100%"> -->
 
-            <img ng-if="!($ctrl.categorizedContent.contentType === 'video')" ng-src="{{$ctrl.contentImage($ctrl.categorizedContent)}}" width="100%" height="100%" style="max-height: 150px;">
+            <!-- <img ng-if="!($ctrl.categorizedContent.contentType === 'video')" ng-src="{{$ctrl.contentImage($ctrl.categorizedContent)}}" width="100%" height="100%" style="max-height: 150px;"> -->
+            <img ng-if="!($ctrl.categorizedContent.contentType === 'video')" ng-src="{{$ctrl.categorizedContent.imgLocation}}" width="100%" height="100%" style="max-height: 150px;">
+
         </div>
 
         <div class="col-sm-9 col-md-9 description-column border-left">

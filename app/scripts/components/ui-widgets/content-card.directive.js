@@ -43,6 +43,29 @@ angular.module('dmc.widgets.content', [
         //     }
         // }, true);
 
+
+        var contentImage = function(content) {
+          var imgLocation;
+
+          switch(content.contentType) {
+              case "document":
+                imgLocation = content.contentImage || "/images/Icons_Education.svg";
+                break;
+              case "app":
+                imgLocation = content.featureImage.large || "/images/Icons_Industry.svg";
+                break;
+              case "static-content":
+                imgLocation = content.contentImage || "/images/Icons_Distribute.svg";
+                break;
+              case "integration":
+                imgLocation = content.contentImage || "/images/Icons_Industry.svg";
+                break;
+              default:
+                imgLocation = content.contentImage || "/images/Icons_Globe.svg"
+          }
+          return imgLocation
+        }
+
         var categorizeContent = function(contentItem) {
 
             if (contentItem.documentName) {
@@ -54,6 +77,9 @@ angular.module('dmc.widgets.content', [
             } else if (contentItem.serviceType || contentItem.type === 'service') {
                 contentItem.contentType = 'app';
             }
+
+            contentItem.imgLocation = contentImage(contentItem);
+
             return contentItem;
         };
 
@@ -67,42 +93,6 @@ angular.module('dmc.widgets.content', [
         vm.goToIntegration = function ( path ) {
           window.location = path;
         };
-
-        vm.contentImage = function(content) {
-          // var imgLocation = "/images/Icons_Connect.svg"
-          var imgLocation;
-          //
-          // // app
-          // if (content.contentType === 'img') {
-          //   imgLocation = content.imgSource
-          // }
-          // // also app :\
-          // if (content.contentType === '') {
-          //   imgLocation = content.featureImage.large
-          // }
-          // // hard-coded content image
-          // if (content.contentImage) {
-          //   imgLocation = content.contentImage
-          // }
-
-          switch(content.contentType) {
-              case 'document':
-                imgLocation = '';
-                break;
-              case 'video':
-                imgLocation = '';
-                break;
-              case 'img':
-                imgLocation = '';
-                break;
-              case 'app':
-                imgLocation = '';
-                break;
-              default:
-                imgLocation = "/images/Icons_Connect.svg"
-          }
-          return imgLocation
-        }
 
         // vm.categorizedContent = categorizeContent(vm.contentItem);
         //
