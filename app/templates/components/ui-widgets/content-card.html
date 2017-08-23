@@ -13,7 +13,7 @@
             <h3 ng-if="$ctrl.categorizedContent.contentType === 'document'" class="border-bottom">{{$ctrl.categorizedContent.documentName}}</h3>
 
             <div class="spacing-container">
-                <p>{{$ctrl.categorizedContent.description}}</p>
+                <p ng-bind-html="$ctrl.categorizedContent.description"></p>
                 <a ng-if="$ctrl.categorizedContent.buttonText && $ctrl.categorizedContent.contentType != 'document' && $ctrl.categorizedContent.contentType != 'app'" href="{{$ctrl.categorizedContent.buttonLink}}">
                     <button class="btn green-button content-button">{{$ctrl.categorizedContent.buttonText}}</button>
                 </a>
