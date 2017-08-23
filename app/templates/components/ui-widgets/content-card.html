@@ -1,9 +1,3 @@
-<div ng-if="$ctrl.title || $ctrl.category" class="row">
-    <div class="col-md-12">
-        <h3 ng-if="$ctrl.title" class="content-card-title">{{$ctrl.title}}</h3>
-        <h3 ng-if="$ctrl.category" class="help-title">{{$ctrl.category}}</h3>
-    </div>
-</div>
 <div class="row margin-bottom-10" ng-repeat="item in $ctrl.categorizedContent">
     <div ng-if="item.contentType">
         <div class="col-sm-3 col-md-3 media-column">
