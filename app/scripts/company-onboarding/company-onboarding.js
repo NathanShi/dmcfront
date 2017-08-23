@@ -317,7 +317,8 @@ angular.module('dmc.company.onboarding', [
                   docuSigned: data.docuSigned,
                   templateID: data.templateID,
                   formURL: data.formURL,
-                  Token: data.token
+                  Token: data.token,
+                  verifiedSignatures: data.verifiedSignatures
                 };
 
                 var MembershipInfoString = JSON.stringify(dmdiiMembershipInfoObj);

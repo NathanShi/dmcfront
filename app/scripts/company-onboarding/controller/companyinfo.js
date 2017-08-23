@@ -144,9 +144,9 @@ angular.module('dmc.company.onboarding')
         $scope.companyinfo.type = type;
 
         //eSignature Requested
-        $scope.companyinfo.docuSigned = "Signed"; //Test
-        $scope.companyinfo.templateID = "129999710"; //Test
-        // $scope.companyinfo.docuSigned = "Requested";
+        // $scope.companyinfo.docuSigned = "Signed"; //Test
+        // $scope.companyinfo.templateID = "129999710"; //Test
+        $scope.companyinfo.docuSigned = "Requested";
 
         if ($scope.company.id){
           $scope.companyinfo.id = $scope.company.id;
@@ -456,7 +456,7 @@ angular.module('dmc.company.onboarding')
 
                 //Call 'esignCheck/template_id' to check if the Membership Agreement has signed again
                 ajax.get(dataFactory.esignOnline($scope.company.templateID).checkSignature, {}, function(response){
-                    console.log("response",response);
+                    // console.log("response",response);
                     if (response.data.status == "eSignCheck Successful!"){
                       if (response.data.reason == "Error when calling the API"){
                         $mdDialog.show(
@@ -471,7 +471,7 @@ angular.module('dmc.company.onboarding')
                         // var Signature = JSON.parse(response.data.reason);
                         var Signature = response.data.reason; //Test
                         $scope.signedInfo = Signature.items;
-                        console.log("Signature", $scope.signedInfo);
+                        // console.log("Signature", $scope.signedInfo);
                         if (Signature.total == 0){
                             $mdDialog.show(
                               $mdDialog.alert()
@@ -501,14 +501,16 @@ angular.module('dmc.company.onboarding')
                             $mdDialog.show({
                                 scope: $scope,
                                 preserveScope: true,
-                                clickOutsideToClose: true,
+                                clickOutsideToClose: false,
                                 template: '<md-dialog>' +
-                                          ' <md-toolbar>' +
-                                          '     <div class="md-toolbar-tools">' +
-                                          '       <h2 style="color:white;">Please Confirm the Signature</h2>' +
-                                          '     </div>' +
+                                          ' <md-toolbar class="md-toolbar-tools">' +
+                                          '     <h3 style="color:white;">Please Confirm the Signature</h3>' +
+                                          '     <span flex></span>' +
+                                          '     <md-button class="md-icon-button md-primary" style="padding-top:5px" ng-click="closeDialog()">' +
+                                          '        <ng-md-icon icon="close" style="fill:white"></ng-md-icon>' +
+                                          '     </md-button>' +
                                           ' </md-toolbar>' +
-                                          ' <md-dialog-content>' +
+                                          ' <md-dialog-content class="rows">' +
                                           '   <h5>We found following signature information of Membership Agreement</h5>' +
                                           '   <table class="table">' +
                                           '     <thead>' +
@@ -517,8 +519,8 @@ angular.module('dmc.company.onboarding')
                                           '       <td>IP</td>' +
                                           '       <td>Date</td>' +
                                           '     </thead>' +
-                                          '     <tr ng-repeat="signature in signedInfo">' +
-                                          '       <td class="signature.name == \'same\' ? table-success:table-danger">{{ signature.name }}</td>' +
+                                          '     <tr ng-repeat="signature in signedInfo" ng-class="(signature.user === \'same\') ? \'success\':\'danger\'">' +
+                                          '       <td>{{ signature.name }}</td>' +
                                           '       <td>{{ signature.email }}</td>' +
                                           '       <td>{{ signature.ip }}</td>' +
                                           '       <td>{{ signature.date + \'000\' | date: \'medium\'}}</td>' +
@@ -526,33 +528,43 @@ angular.module('dmc.company.onboarding')
                                           '   </table>' +
                                           '   <h5>If you notice any unrecognized rows, please contact us immediately.</h5>' +
                                           ' </md-dialog-content>' +
+                                          ' <md-dialog-actions align="end" style="order: 2;margin-bottom: 20px;">' +
+                                          '   <md-button class="md-raised md-warn" ng-click="answer(\'Back\')">' +
+                                          '     Go back and Sign' +
+                                          '   </md-button>' +
+                                          '   <md-button class="md-raised md-primary" style="color:white;" ng-click="answer(\'Confirm\')">' +
+                                          '     Confirm' +
+                                          '   </md-button>' +
+                                          ' </md-dialog-actions>' +
                                           '</md-dialog>',
                                 controller: function eSignDialogController($scope, $mdDialog) {
                                   $scope.closeDialog = function() {
                                     $mdDialog.hide();
-                                  }
+                                  };
+                                  //
+                                  $scope.answer = function(answer) {
+                                    $mdDialog.hide(answer);
+                                  };
                                 }
-                            })
-                            // var confirm = $mdDialog.confirm()
-                            //   .title('Please Confirm the Signature')
-                            //   .content("<h5>We found following signature information of Membership Agreement</h5>" +
-                            //   "<table>" +
-                            //   "<th><td>Name</td><td>Email</td><td>IP</td><td>Date</td></th>" +
-                            //   "<tr ng-repeat=\"signature in signedInfo\">" +
-                            //   "<td class=\"signature.name == \"same\" ? table-success:table-danger\">{{ signature.name }}</td><td>{{ signature.email }}</td><td>{{ signature.ip }}</td><td>{{ signature.date + '000' | date: 'medium'}}</td>" +
-                            //   "</tr>" +
-                            //   "</table>" +
-                            //   "<h5>If you notice any unrecognized rows, please contact us immediately.</h5>")
-                            //   .ok('Confirm')
-                            //   .cancel('Go Back to Sign');
-                            .then(function(){
-                                $scope.submitOrgPayment($scope.company, token);
-                            }, function(){
-                                if (!angular.isUndefined($scope.company.token)){
-                                  $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                            }).then(function(answer){
+                                if (answer == "Confirm"){
+                                    alert("Confirm");//Test
+                                    var orgPayEsignOBJ = companyOnboardingModel.matchOrgType($scope.company, token.id);//Test
+                                    console.log("orgPayEsignOBJ", orgPayEsignOBJ);//Test
+                                    // $scope.submitOrgPayment($scope.company, token);
                                 }
-                                else {
-                                  $window.location.href = $scope.company.formURL
+                                else if (answer == "Back"){
+                                    $scope.enableButton();
+                                    alert("Back");//Test
+                                    // if (!angular.isUndefined($scope.company.token)){
+                                    //   $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                                    // }
+                                    // else {
+                                    //   $window.location.href = $scope.company.formURL
+                                    // }
+                                }
+                                else{
+                                    $scope.enableButton();
                                 }
                             });
 
