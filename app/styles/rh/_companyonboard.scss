@@ -311,9 +311,15 @@ button[disabled]{
   color: white;
 }
 
-.tier1-title-container h2, .tier2-title-container h2, .tier3-title-container h2 {
+.tier1-title-container h2, .tier2-title-container h2, .tier3-title-container h2, .all-tier-title-container h2 {
   font-weight: 600;
   margin-bottom: 5px;
+}
+
+.all-tier-title-container {
+  background-color: darkgrey;
+  padding-bottom: 15px;
+  color: white;
 }
 
 .sub-title {
@@ -391,10 +397,11 @@ button[disabled]{
 
 .mem-tiers {
   h4 {
-    border-bottom: 1px solid lightgrey;
+    // border-bottom: 1px solid lightgrey;
     margin-right: 10px;
   }
   ul {
-    margin: 0px 10px;
+    margin: 0px 20px;
   }
+  margin-bottom: 30px;
 }
