@@ -17,7 +17,7 @@
                 <a ng-if="$ctrl.categorizedContent.buttonText && $ctrl.categorizedContent.contentType != 'document' && $ctrl.categorizedContent.contentType != 'app'" href="{{$ctrl.categorizedContent.buttonLink}}">
                     <button class="btn green-button content-button">{{$ctrl.categorizedContent.buttonText}}</button>
                 </a>
-                <button ng-if="$ctrl.categorizedContent.contentType === 'document'" ng-click="$ctrl.downloadFile(document.id)" class="btn green-button content-button">Download</button>
+                <button ng-if="$ctrl.categorizedContent.contentType === 'document'" ng-click="$ctrl.downloadFile($ctrl.categorizedContent.id)" class="btn green-button content-button">Download</button>
                 <div ng-if="$ctrl.categorizedContent.contentType === 'app'">
                   <button run-default-button class="btn green-button content-button" ng-click="saveToDefaultProject($ctrl.categorizedContent)">Run</button>
                   <button class="btn green-button content-button margin-left-20" ng-disabled="!serviceMap[$ctrl.categorizedContent.id]" ng-click="$ctrl.redirectToServiceHistory(serviceMap[$ctrl.categorizedContent.id]['workspaceId'], serviceMap[$ctrl.categorizedContent.id]['serviceId'])">Run History</button>
