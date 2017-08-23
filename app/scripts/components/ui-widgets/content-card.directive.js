@@ -38,6 +38,7 @@ angular.module('dmc.widgets.content', [
         var vm = this;
 
         var categorizeContent = function(contentItems) {
+
             if (contentItems) {
                 for (var i = 0; i < contentItems.length; i++) {
                     if (contentItems[i].documentName) {
@@ -60,9 +61,16 @@ angular.module('dmc.widgets.content', [
             window.location = dataFactory.documentsUrl(id).download;
         };
 
+        vm.categorizedContent = categorizeContent(vm.contentItems);
+
+        vm.downloadFile = function(id) {
+            window.location = dataFactory.documentsUrl(id).download;
+        };
+
         vm.redirectToServiceHistory = function(projectId, serviceId) {
           $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/app-history';
         }
+
     }
 
 

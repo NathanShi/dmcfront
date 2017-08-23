@@ -50,6 +50,7 @@
 <script src="scripts/components/run-default-button/run-default-button.js"></script>
 <script src="scripts/common/models/dome-model.js"></script>
 <script src="scripts/common/models/question-toast-model.js"></script>
+<script src="scripts/common/directive/more-less.directive.js"></script>
 
 <script src="scripts/service-marketplace/service-marketplace.js"></script>
 <script src="scripts/service-marketplace/controllers/home.js"></script>
