@@ -1,0 +1,51 @@
+[
+  {
+    "id": 0,
+    "moduleId": 0,
+    "sections": []
+  },
+  {
+  "id": 1,
+  "moduleId": 1,
+  "sections": [
+    {
+      "id": 0,
+      "name": "Definition",
+      "data": [
+        {
+          "type": "info",
+          "header": "What is it?",
+          "text": "Access control defines which users can access which systems and what data."
+        },
+        {
+          "type": "info",
+          "header": "Basic requirement:",
+          "text": "Limit information system access to authorized users, processes acting on behalf of authorized users, or devices (including other information systems)."
+        },
+        {
+          "type": "info",
+          "header": "Basic requirement:",
+          "text": "Limit information system access to the types of transactions and functions that authorized users are permitted to execute."
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Network Access"
+    },
+    {
+      "id": 2,
+      "name": "Data Encryption"
+    },
+    {
+      "id": 3,
+      "name": "Summary"
+    }
+  ]
+},
+{
+  "id": 2,
+  "moduleId": 2,
+  "sections": []
+ }
+]
