@@ -360,7 +360,8 @@ angular.module('dmc.company.onboarding')
           ajax.create(dataFactory.payment().pay, info, function successCallback(response) {
             if (response.data.status == "succeeded"){
               alert("Successful payment! Redirect to dashboard");
-              $window.location.href = '/onboarding.php';
+              // $window.location.href = '/onboarding.php';
+              $window.location.href = '/marketplace.php';
               // $('#successPay').modal('show');
               // console.log("success");
             }

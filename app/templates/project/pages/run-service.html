@@ -1,24 +1,11 @@
 <workspace-header class="workspace-header" ng-init="currentPage='7'"></workspace-header>
 
 <div class="project-run-services" ng-if="!runHistory" ng-show="hasCustomUI && service.interfaceModel.inParams.inputFile" layout="column">
-  <div layout="row" layout-align="space-between center" style="padding: 15px; margin: 0px 15px; border-bottom: solid 1px lightgrey;">
-
-    <div layout="column">
-      <h2><a ui-sref="project.services-detail({ServiceId: ServiceId})" >{{service.title}}</a></h2>
-      <a ng-href="{{'project.php#/' + projectData.id + '/services/' + service.id + '/run/run-history'}}" class="link margin-top8">
-        Run History
-      </a>
-    </div>
-
+  <div layout="row" layout-align="space-between center">
     <span flex></span>
     <md-button ng-disabled="!isRunning()" ng-click="cancelServiceRun($event,service)" class="md-raised md-warn">
       Cancel
     </md-button>
-
-    <md-button ng-disabled="isRunning()" ng-click="run()" class="md-raised md-primary">
-      Run
-    </md-button>
-
   </div>
 </div>
 
@@ -27,19 +14,6 @@
     <div class="loader"></div>
   </div>
 
-  <div ng-show="service.interfaceModel.inParams.inputFile" layout="row" layout-align="space-between center" style="padding: 0px 40px; margin: 0px; background: white;">
-    <h3 flex>Input File From Workspace:</h3>
-    <div flex="40" style="margin: 0px 8px">
-      <md-select placeholder="Select Project" ng-model="inputFile.projectModel" md-on-open="loadProjects()" ng-change="updateFileList(inputFile)">
-        <md-option ng-repeat="p in projects" ng-value="{{p}}">{{p.title}}</md-option>
-      </md-select>
-    </div>
-    <div flex="40">
-      <md-select ng-show="inputFile.projectModel" placeholder="Select File" ng-model="inputFile.projectModelFile" ng-change="setinputFileValue(inputFile.projectModelFile)">
-        <md-option ng-repeat="f in projectFiles" ng-value="{{f}}">{{f.documentName}}</md-option>
-      </md-select>
-    </div>
-  </div>
   <div class="container" style="width: 100%;">
       <!--Custom UI Content will be displayed here-->
 
@@ -112,7 +86,6 @@
 					</md-button>
 				</div>
 			</div>
-
 			<md-content>
         <div ng-if="service.interfaceModel.inParams.inputFile" layout="row" layout-align="space-between center">
           <h3>Input File From Workspace:</h3>
@@ -177,6 +150,5 @@
 				<!--</div>-->
 			</md-content>
 		</div>
-
 	</div>
 </div>

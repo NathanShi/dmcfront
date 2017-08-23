@@ -7,6 +7,8 @@ var server = jsonServer.create();
 // Set default middlewares (logger, static, cors and no-cache)
 //server.use(jsonServer.defaults());
 server.use(jsonServer.defaults());
+//
+server.use(jsonServer.bodyParser)
 // Add this before server.use(router)
 server.use(jsonServer.rewriter({
     '/documents/directories/26': '/documentsdirectories',
@@ -56,9 +58,11 @@ server.use(jsonServer.rewriter({
     '/projects/:projectId/accept/:memberId': '/projects_members/:memberId',
     '/projects/:projectId/reject/:memberId': '/projects_members/:memberId',
     '/dmdiiMember/events': '/dmdiiMemberEvents',
+    '/dmdiiMember/events/:id': '/dmdiiMemberEvents/:id',
     '/dmdiiMember/news': '/dmdiiMemberNews',
     '/dmdiiMember/mapEntry' : '/dmdiiMemberMap',
     '/dmdiiProject/events': '/dmdiiProjectEvents',
+    '/dmdiiProject/events/:id': '/dmdiiProjectEvents/:id',
     '/dmdiiProject/news': '/dmdiiProjectNews',
     '/dmdiiprojects/member/active': '/dmdiiprojectsmembersactive',
     '/dmdiiProject/:id': '/dmdiiProjects/:id',
@@ -82,6 +86,9 @@ server.use(jsonServer.rewriter({
     '/organizations/myVPC': '/myVPC',
     '/searchworkspace/:id': '/searchworkspace',
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
+    'service_runs?serviceId=:id': '/service_runs',
+    '/defaultServices': '/default-services',
+    '/defaultService/:id': '/default-services/:id'
 }));
 
 server.post('/dmdiidocument', function(req,res) {
@@ -95,12 +102,13 @@ server.post('/model_run', function(req,res) {
 
 var modelPollCount = 0
 server.get('/model_poll/:id', function(req,res) {
-  modelPollCount++
-  if (modelPollCount < 5) {
-    res.jsonp({"outParams":{},"status":0})
-  } else {
-    res.jsonp({"outParams":{"outputFile":{"type":"String","name":"outputFile","unit":"","category":null,"value":"https://psubucket01.s3.amazonaws.com/TDP_1496950468.zip?Signature=KcDIjOLmMxU9oVFcGOQbZxliEfs%3D&Expires=1498160069&AWSAccessKeyId=AKIAJAPMB5APBIC6STKQ","parameterid":"20984","instancename":null},"outputTemplate":{"type":"String","name":"outputTemplate","unit":"","category":null,"value":"<div class=\"project-run-services padding-10\" ng-if=\"!runHistory\" layout=\"column\">          <style>            #custom-dome-UI {             margin-top: -30px;           }          </style>            <div id=\"custom-dome-UI\">             <div layout=\"row\" layout-wrap style=\"padding: 0px 30px\">               <h2>Technical Data Package Created Successfully:</h2>               <p><a href=\"{{outputFile}}\">{{outputFile}}</a></p>             </div>           </div>        </div>   <script> </script>","parameterid":"20985","instancename":null}},"status":1})
-  }
+  // modelPollCount++
+  // if (modelPollCount < 5) {
+  //   res.jsonp({"outParams":{},"status":0})
+  // } else {
+  //   res.jsonp({"outParams":{"outputFile":{"type":"String","name":"outputFile","unit":"","category":null,"value":"https://psubucket01.s3.amazonaws.com/TDP_1496950468.zip?Signature=KcDIjOLmMxU9oVFcGOQbZxliEfs%3D&Expires=1498160069&AWSAccessKeyId=AKIAJAPMB5APBIC6STKQ","parameterid":"20984","instancename":null},"outputTemplate":{"type":"String","name":"outputTemplate","unit":"","category":null,"value":"<div class=\"project-run-services padding-10\" ng-if=\"!runHistory\" layout=\"column\">          <style>            #custom-dome-UI {             margin-top: -30px;           }          </style>            <div id=\"custom-dome-UI\">             <div layout=\"row\" layout-wrap style=\"padding: 0px 30px\">               <h2>Technical Data Package Created Successfully:</h2>               <p><a href=\"{{outputFile}}\">{{outputFile}}</a></p>             </div>           </div>        </div>   <script> </script>","parameterid":"20985","instancename":null}},"status":1})
+  // }
+  res.jsonp({"outParams":{"outputFile":{"type":"String","name":"outputFile","unit":"","category":null,"value":"https://psubucket01.s3.amazonaws.com/TDP_1496950468.zip?Signature=KcDIjOLmMxU9oVFcGOQbZxliEfs%3D&Expires=1498160069&AWSAccessKeyId=AKIAJAPMB5APBIC6STKQ","parameterid":"20984","instancename":null},"outputTemplate":{"type":"String","name":"outputTemplate","unit":"","category":null,"value":"<div class=\"project-run-services padding-10\" ng-if=\"!runHistory\" layout=\"column\">          <style>            #custom-dome-UI {             margin-top: -30px;           }          </style>            <div id=\"custom-dome-UI\">             <div layout=\"row\" layout-wrap style=\"padding: 0px 30px\">               <h2>Technical Data Package Created Successfully:</h2>               <p><a href=\"{{outputFile}}\">{{outputFile}}</a></p>             </div>           </div>        </div>   <script> </script>","parameterid":"20985","instancename":null}},"status":1})
 })
 
 server.get('/dmdiiMember', function (req, res) {
@@ -149,7 +157,8 @@ server.get('/dmdiiprojects', function (req, res) {
   projectsOrig = {"count": projectsData.length ,"data" : projectsData }
 
   res.jsonp(projectsOrig)
-})
+});
+
 server.post('/services', function(req,res) {
  res.jsonp({"id":906,"companyId":"1","title":"K Max","description":"The formula used is Kmax = BetaFactor * AppliedLoad / (Thickness * math.sqrt(SpecimenWidth.getValue())). The four inputs are BetaFactor (no unit), AppliedLoad (Newton), SpecimenWidth (meter), and Thickness (meter). The output is Kmax (pascal square root meter).",
  "owner":"269","profileId":"269","releaseDate":"2017-01-21",
@@ -163,6 +172,30 @@ server.post('/services', function(req,res) {
 server.patch('/documents/:id/accept', function(req, res) {
     res.jsonp({"result": "success"});
 });
+
+server.get('/directories/:dirId', function (req, res) {
+  var directories = JSON.parse(fs.readFileSync('stubs/directories.json'));
+  res.jsonp(directories)
+})
+
+server.post('/directories', function (req, res) {
+  console.log('req',req.body)
+  res.jsonp({"id":286,"name":req.body.name,"parent":req.body.parent,"children":[]})
+})
+
+
+var docGetCount = 0;
+server.get('/documents/:id', function (req, res) {
+  docGetCount++
+  if (docGetCount > 5) {
+    docGetCount = 0
+    var docShape = {"id":1167,"documentName":"dmcLogo.png","documentUrl":"https://dmcupfinal.s3.amazonaws.com/PROJECT/111819928277794120148%40google.com/Documents/1500471698--922752-sanitized-dmcLogo.png?AWSAccessKeyId=AKIAIZPP46XXRK6PBF6A&Expires=1503150099&Signature=JWWiTPiTFGLNkLRncYferdn0L%2B8%3D","parentType":"PROJECT","parentId":249,"ownerId":171,"ownerDisplayName":"Joseph Mazrimas","tags":[],"modified":1500471690366,"expires":1503063690366,"docClass":"SUPPORT","accessLevel":"MEMBER","vips":[],"version":0,"directoryId":284,"baseDocId":1167,"hasVersions":false,"sha256":"70811c4ca36cc9268d4b173a10f99047478a8f0d6da8de9a2c8251f524308036","isAccepted":true}
+    res.jsonp(docShape)
+  } else {
+    var docShape = {"id":1167,"documentName":"dmcLogo.png","documentUrl":"https://dmcuptemp.s3.amazonaws.com/PROJECT/111819928277794120148%40google.com/Documents/1500471698--922752-sanitized-dmcLogo.png?AWSAccessKeyId=AKIAIZPP46XXRK6PBF6A&Expires=1503150099&Signature=JWWiTPiTFGLNkLRncYferdn0L%2B8%3D","parentType":"PROJECT","parentId":249,"ownerId":171,"ownerDisplayName":"Joseph Mazrimas","tags":[],"modified":1500471690366,"expires":1503063690366,"docClass":"SUPPORT","accessLevel":"MEMBER","vips":[],"version":0,"directoryId":284,"baseDocId":1167,"hasVersions":false,"sha256":"70811c4ca36cc9268d4b173a10f99047478a8f0d6da8de9a2c8251f524308036","isAccepted":true}
+    res.jsonp(docShape)
+  }
+})
 
 server.get('/getChildren', function (req, res) {
 
