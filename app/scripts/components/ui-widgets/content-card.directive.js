@@ -13,9 +13,7 @@ angular.module('dmc.widgets.content', [
         templateUrl: '/templates/components/ui-widgets/content-card.html',
         scope: true,
         bindToController: {
-            title: '=',
-            category: '=',
-            contentItems: '=',
+            contentItem: '=',
             serviceMap: '='
         },
         controller: UiWidgetContentCardController,
@@ -37,35 +35,40 @@ angular.module('dmc.widgets.content', [
     function UiWidgetContentCardController($http, DMCUserModel, $window, ajax) {
         var vm = this;
 
-        var categorizeContent = function(contentItems) {
+        // $scope.$watch(function () {
+        //     return vm.contentItem;
+        // }, function (newValue, oldValue) {
+        //     if (newValue !== oldValue) {
+        //         vm.categorizedContent = categorizeContent(vm.contentItem);
+        //     }
+        // }, true);
 
-            if (contentItems) {
-                for (var i = 0; i < contentItems.length; i++) {
-                    if (contentItems[i].documentName) {
-                        contentItems[i].contentType = 'document';
-                    } else if (contentItems[i].videoSource) {
-                        contentItems[i].contentType = 'video';
-                    } else if (contentItems[i].imgSource) {
-                        contentItems[i].contentType = 'img';
-                    } else if (contentItems[i].serviceType || contentItems[i].type === 'service') {
-                        contentItems[i].contentType = 'app';
-                    }
-                }
+        var categorizeContent = function(contentItem) {
+
+            if (contentItem.documentName) {
+                contentItem.contentType = 'document';
+            } else if (contentItem.videoSource) {
+                contentItem.contentType = 'video';
+            } else if (contentItem.imgSource) {
+                contentItem.contentType = 'img';
+            } else if (contentItem.serviceType || contentItem.type === 'service') {
+                contentItem.contentType = 'app';
             }
-            return contentItems;
+            return contentItem;
         };
 
-        vm.categorizedContent = categorizeContent(vm.contentItems);
+        vm.categorizedContent = categorizeContent(vm.contentItem);
 
         vm.downloadFile = function(id) {
+          console.log("download called")
             window.location = dataFactory.documentsUrl(id).download;
         };
 
-        vm.categorizedContent = categorizeContent(vm.contentItems);
-
-        vm.downloadFile = function(id) {
-            window.location = dataFactory.documentsUrl(id).download;
-        };
+        // vm.categorizedContent = categorizeContent(vm.contentItem);
+        //
+        // vm.downloadFile = function(id) {
+        //     window.location = dataFactory.documentsUrl(id).download;
+        // };
 
         vm.redirectToServiceHistory = function(projectId, serviceId) {
           $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/app-history';
