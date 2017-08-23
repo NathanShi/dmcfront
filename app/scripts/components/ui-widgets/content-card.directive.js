@@ -64,6 +64,11 @@ angular.module('dmc.widgets.content', [
             window.location = dataFactory.documentsUrl(id).download;
         };
 
+
+        vm.goToIntegration = function ( path ) {
+          window.location = path;
+        };
+
         // vm.categorizedContent = categorizeContent(vm.contentItem);
         //
         // vm.downloadFile = function(id) {
