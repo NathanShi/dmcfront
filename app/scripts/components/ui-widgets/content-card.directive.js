@@ -34,17 +34,17 @@ angular.module('dmc.widgets.content', [
      */
     function UiWidgetContentCardController($http, DMCUserModel, $window, ajax) {
         var vm = this;
-    
-        $scope.$watch(function () {
-            return vm.contentItem;
-        }, function (newValue, oldValue) {
-            if (newValue !== oldValue) {
-                vm.categorizedContent = categorizeContent(vm.contentItem);
-            }
-        }, true);
+
+        // $scope.$watch(function () {
+        //     return vm.contentItem;
+        // }, function (newValue, oldValue) {
+        //     if (newValue !== oldValue) {
+        //         vm.categorizedContent = categorizeContent(vm.contentItem);
+        //     }
+        // }, true);
 
         var categorizeContent = function(contentItem) {
-            
+
             if (contentItem.documentName) {
                 contentItem.contentType = 'document';
             } else if (contentItem.videoSource) {
@@ -57,17 +57,18 @@ angular.module('dmc.widgets.content', [
             return contentItem;
         };
 
-        vm.categorizedContent = categorizeContent(vm.contentItems);
+        vm.categorizedContent = categorizeContent(vm.contentItem);
 
         vm.downloadFile = function(id) {
+          console.log("download called")
             window.location = dataFactory.documentsUrl(id).download;
         };
 
-        vm.categorizedContent = categorizeContent(vm.contentItems);
-
-        vm.downloadFile = function(id) {
-            window.location = dataFactory.documentsUrl(id).download;
-        };
+        // vm.categorizedContent = categorizeContent(vm.contentItem);
+        //
+        // vm.downloadFile = function(id) {
+        //     window.location = dataFactory.documentsUrl(id).download;
+        // };
 
         vm.redirectToServiceHistory = function(projectId, serviceId) {
           $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/app-history';
