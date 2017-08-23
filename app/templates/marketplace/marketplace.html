@@ -8,7 +8,7 @@
       <!-- <li style="float: right;" role="presentation" class="hidden-xs"><a data-target="#academia" aria-controls="academia" role="tab" data-toggle="tab">Academia</a></li> -->
       <li style="float: right;" role="presentation" class="active hidden-xs"><a data-target="#forsmms" aria-controls="forsmms" role="tab" data-toggle="tab">SMMs</a></li>
     </ul>
-    <h1 class="col-xs-12">DMC Marketplace</h1>
+    <h1 class="col-xs-12">Resource Center</h1>
   </section>
 
 
@@ -52,7 +52,7 @@
                           </div>
                           <div
                           ui-widget-content
-                               content-items="contentGroup.content">
+                               content-item="contentGroup.content">
                           </div>
                       </div>
                   </div> -->
@@ -107,14 +107,12 @@
                             <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc.png" type="image/png" height="25px">
                         </div>
-
+                        <div ng-repeat="estimateItem in estimateItems">
                         <div ui-widget-content
-                             content-type="'app'"
-                             title="'TRANSFORM:'"
-                             category="'IMPROVE ESTIMATES'"
-                             content-items="estimateItems"
+                             content-item="estimateItem"
                              serviceMap="serviceMap">
                         </div>
+                      </div>
 
                     </div>
                 </section>
@@ -129,13 +127,13 @@
                             <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
                         </div>
-                        <div ui-widget-content
-                             content-type="'app'"
-                             title="'TRANSFORM:'"
-                             category="'IMPROVE CNC OPERATIONS'"
-                             content-items="cncOperationItems"
-                             serviceMap="serviceMap">
+                        <div ng-repeat="cncItem in cncOperationItems">
+                          <div ui-widget-content
+                               content-item="cncItem"
+                               serviceMap="serviceMap">
+                          </div>
                         </div>
+
                     </div>
                 </section>
 
@@ -149,13 +147,14 @@
                             <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
                         </div>
-                        <div ui-widget-content
-                             content-type="'app'"
-                             title="'TRANSFORM:'"
-                             category="'IMPROVE CMM OPERATIONS'"
-                             content-items="cmmOperationItems"
-                             serviceMap="serviceMap">
+
+                        <div ng-repeat="cmmItem in cmmOperationItems">
+                          <div ui-widget-content
+                               content-item="cmmItem"
+                               serviceMap="serviceMap">
+                          </div>
                         </div>
+
                     </div>
                 </section>
 
@@ -169,14 +168,15 @@
                             <img ng-click="gotoElement('cnc-operations')" class="pull-right https://mail.google.com/mail/u/0/#inboxmargin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
                         </div>
-                        <div
-                        ui-widget-content
-                             content-type="'app'"
-                             title="'TRANSFORM:'"
-                             category="'GET LEAN'"
-                             content-items="getLeanItems"
-                             serviceMap="serviceMap">
+
+                        <div ng-repeat="leanItem in getLeanItems">
+                          <div
+                          ui-widget-content
+                               content-item="leanItem"
+                               serviceMap="serviceMap">
+                          </div>
                         </div>
+
                     </div>
                 </section>
               </section>
@@ -203,7 +203,7 @@
 
                 </section>
                 <section class="container">
-                  <div class="row ws-filters">
+                  <!-- <div class="row ws-filters">
                     <div class="col-xs-6" ng-init="filterModel='both'">
                       <h4>FILTER</h4>
                       <md-radio-group ng-model="filterModel">
@@ -223,16 +223,14 @@
                       </div>
 
                     </div>
-                  </div>
+                  </div> -->
 
-
+                  <div ng-repeat="item in marketplaceItems | filter:searchTerm">
                     <div ui-widget-content
-                         content-type="' '"
-                         title="' '"
-                         category="''"
-                         content-items="marketplaceItems"
+                         content-item="item"
                          serviceMap="serviceMap">
                     </div>
+                  </div>
 
               </section>
             </section>
@@ -269,7 +267,7 @@
         </div>
         <div
         ui-widget-content
-             content-items="contentGroup.content">
+             content-item="contentGroup.content">
         </div>
     </div>
 </div> -->
