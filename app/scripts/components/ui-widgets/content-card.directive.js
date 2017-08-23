@@ -34,6 +34,14 @@ angular.module('dmc.widgets.content', [
      */
     function UiWidgetContentCardController($http, DMCUserModel, $window, ajax) {
         var vm = this;
+    
+        $scope.$watch(function () {
+            return vm.contentItem;
+        }, function (newValue, oldValue) {
+            if (newValue !== oldValue) {
+                vm.categorizedContent = categorizeContent(vm.contentItem);
+            }
+        }, true);
 
         var categorizeContent = function(contentItem) {
             
