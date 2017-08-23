@@ -10,6 +10,7 @@
             <ng-youtube-embed ng-if="item.contentType === 'video'" video="item.videoSource" width="100%" height="100%"></ng-youtube-embed>
             <img ng-if="item.contentType === 'img'" ng-src="{{item.imgSource}}" width="100%" height="100%">
             <img ng-if="item.contentType === ''" ng-src="{{app.featureImage.large}}" width="100%" height="100%">
+            <img ng-if="item.contentImage" ng-src="{{item.contentImage}}" width="100%" height="100%">
         </div>
 
         <div class="col-sm-9 col-md-9 description-column border-left">
