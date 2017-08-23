@@ -339,8 +339,10 @@ button[disabled]{
   background-color: $brand-accent;
 }
 
-.content-row {
-  background-color: #F3F4F4;
+.landing-container {
+  .content-row {
+    background-color: #F3F4F4;
+  }
 }
 
 .margin-left-10 {
