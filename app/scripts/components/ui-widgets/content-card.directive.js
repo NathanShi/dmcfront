@@ -64,10 +64,45 @@ angular.module('dmc.widgets.content', [
             window.location = dataFactory.documentsUrl(id).download;
         };
 
-
         vm.goToIntegration = function ( path ) {
           window.location = path;
         };
+
+        vm.contentImage = function(content) {
+          // var imgLocation = "/images/Icons_Connect.svg"
+          var imgLocation;
+          //
+          // // app
+          // if (content.contentType === 'img') {
+          //   imgLocation = content.imgSource
+          // }
+          // // also app :\
+          // if (content.contentType === '') {
+          //   imgLocation = content.featureImage.large
+          // }
+          // // hard-coded content image
+          // if (content.contentImage) {
+          //   imgLocation = content.contentImage
+          // }
+
+          switch(content.contentType) {
+              case 'document':
+                imgLocation = '';
+                break;
+              case 'video':
+                imgLocation = '';
+                break;
+              case 'img':
+                imgLocation = '';
+                break;
+              case 'app':
+                imgLocation = '';
+                break;
+              default:
+                imgLocation = "/images/Icons_Connect.svg"
+          }
+          return imgLocation
+        }
 
         // vm.categorizedContent = categorizeContent(vm.contentItem);
         //
