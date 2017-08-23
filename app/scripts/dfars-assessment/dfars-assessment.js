@@ -15,11 +15,9 @@ angular.module('dmc.dfars-assessment', [
 ]).config(function($stateProvider, $urlRouterProvider, $httpProvider){
 
     var resolve = {
-      states: function() {
-        return [{'state': 'dfars-assessment.start', "name": "Introduction"},
-                {'state': 'dfars-assessment.access_control', "name": "Access Control"},
-                {'state': 'dfars-assessment.finish', "name": "Results"}];
-      }
+      dfarsModules: ['ajax', 'dataFactory', function (ajax, dataFactory) {
+          return ajax.get(dataFactory.dfarsAssessment().getModules, {}, function(response){return response.data;});
+      }]
     };
 
     $stateProvider.state('dfars-assessment', {

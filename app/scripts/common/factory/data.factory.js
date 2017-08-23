@@ -871,6 +871,16 @@ return {
       },
       // ---------------------------
 
+      /// profiles -----------------
+      dfarsAssessment: function(id) {
+        var name = 'dfars';
+        return {
+          getModules: localhost + name + '/modules',
+          getSections: localhost + name + '/sections/' + id
+        }
+      },
+      // ---------------------------
+
       uploadServiceImageUrl: function() {
         return baseServer + '/uploadServiceImage';
       },

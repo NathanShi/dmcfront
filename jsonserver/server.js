@@ -7,7 +7,7 @@ var server = jsonServer.create();
 // Set default middlewares (logger, static, cors and no-cache)
 //server.use(jsonServer.defaults());
 server.use(jsonServer.defaults());
-// 
+//
 server.use(jsonServer.bodyParser)
 // Add this before server.use(router)
 server.use(jsonServer.rewriter({
@@ -83,6 +83,8 @@ server.use(jsonServer.rewriter({
     '/services/:id/dome-interfaces': '/dome-interfaces',
     '/organizations/myVPC': '/myVPC',
     '/searchworkspace/:id': '/searchworkspace',
+    '/dfars/modules': '/dfars-modules',
+    '/dfars/sections': '/dfars-sections'
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
 }));
 

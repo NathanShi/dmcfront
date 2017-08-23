@@ -1,16 +1,80 @@
 <main class="container dfarsAssessment">
   <div flex layout="row">
-    <div flex="15" layout="column" class="tableOfContents">
-      <a ng-repeat="module in states" ng-click="routePage(module.state)">{{module.name}}</a>
-    </div>
-    <div flex="85" layout="column" class="moduleBody">
-      <h2>{{states[state].name}}</h2>
-      <md-divider></md-divider>
-    </div>
-  </div>
 
-  <div layout="row" layout-align="center center">
-    <md-button ng-hide="states[state].state == 'dfars-assessment.start'" ng-click="routePage('previous')">Previous</md-button>
-    <md-button ng-hide="states[state].state == 'dfars-assessment.finish'" ng-click="routePage('next')">Next</md-button>
+    <div flex="16" layout="column" class="tableOfContents">
+      <table>
+        <tr ng-repeat="module in modules">
+          <td valign="top">
+            <md-icon ng-if="module.id == state.moduleId">
+              <ng-md-icon icon="lens" size="8"></ng-md-icon>
+            </md-icon>
+          </td>
+          <td>
+            <a ng-click="routePage('direct', module.id, 0)">{{module.name}}</a>
+            <table ng-if="module.id == state.moduleId" class="subSections">
+              <tr ng-repeat="section in sections">
+                <td>
+                  <md-icon ng-if="section.id == state.sectionId">
+                    <ng-md-icon icon="lens" size="8"></ng-md-icon>
+                  </md-icon>
+                </td>
+                <td>
+                  <a ng-click="routePage('direct', module.id, section.id)">{{section.name}}</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div flex="80" layout="column" class="moduleBody">
+      <div layout="row">
+        <h2>{{modules[state.moduleId].name}}</h2>
+        <h2 ng-if="isRequirementModule()">: {{sections[state.sectionId].name}}</h2>
+      </div>
+
+      <md-divider></md-divider>
+
+      <div ng-if="isRequirementModule()" class="requirementModule">
+        <div ng-repeat="item in sections[state.sectionId].data">
+          <div ng-if="item.type == 'info'">
+            <h3>{{item.header}}</h3>
+            <p>{{item.text}}</p>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- RESULTS FOR FORMULATING REPORT -->
+      <div ng-if="isFinishModule()" class="report">
+        <div class="report-cover">
+          <h1>Organization</h1>
+          <h1>System</h1>
+          <h1>Information System Security Plan (ISSP)</h1>
+
+          <div class="report-cover-approvals">
+            <div ng-repeat="principal in principals">
+              <p>Approved by: {{principal.name}}, {{principal.title}}</p>
+              <p>Signature: _________________________ Date: __________</p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- END RESULTS -->
+
+
+      <div layout="column" class="navFooter">
+        <md-divider></md-divider>
+
+        <div layout="row" layout-align="center center">
+          <md-button ng-hide="isStartModule()" ng-click="routePage('previous')">Previous</md-button>
+          <md-button ng-hide="isFinishModule()" ng-click="routePage('next')">Next</md-button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </main>

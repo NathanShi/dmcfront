@@ -8,7 +8,7 @@ angular.module('dmc.dfars-assessment')
                                     "$location",
                                     "dataFactory",
                                     "toastModel",
-                                    'states',
+                                    'dfarsModules',
                                     function ($stateParams,
                                               $state,
                                               $scope,
@@ -16,30 +16,71 @@ angular.module('dmc.dfars-assessment')
                                               $location,
                                               dataFactory,
                                               toastModel,
-                                              states) {
+                                              dfarsModules) {
 
-        $scope.states = states;
-        //$scope.state = states.findIndex(function(mod){return mod.state == $state.current.name;});
-        $scope.state = 0;
+        $scope.modules = dfarsModules;
+        $scope.state = {moduleId: 0, sectionId: 0};
+        $scope.principals = [{"name": "John Doe", "title": "President"}, {"name": "Jane Doe", "title": "Information Technology Officer"}];
 
-        $scope.router = function(direction){
-          return direction == 'next' ? $scope.states[++$scope.state].state : $scope.states[--$scope.state].state;
+        var nextModule = function(){
+          ++$scope.state.moduleId;
+          $scope.state.sectionId = 0;
         }
 
-        // $scope.routePage = function(direction){
-        //   $state.go($scope.router(direction));
-        // }
-        $scope.routePage = function(destination){
-          switch (destination) {
+        var previousModule = function(){
+          --$scope.state.moduleId;
+          $scope.state.sectionId = 0;
+        }
+
+        $scope.routePage = function(direction, moduleId, sectionId){
+          switch (direction) {
             case 'next':
-              ++$scope.state;
+              if($scope.sections.length == 0){
+                nextModule();
+              }
+              else{
+                $scope.state.sectionId = ($scope.state.sectionId + 1) % $scope.sections.length;
+                if ($scope.state.sectionId == 0){
+                  nextModule();
+                }
+              }
               break;
             case 'previous':
-              --$scope.state;
+              if($scope.sections.length == 0){
+                previousModule();
+              }
+              else{
+                $scope.state.sectionId = ($scope.state.sectionId - 1) % $scope.sections.length;
+                if ($scope.state.sectionId == -1){
+                  previousModule();
+                }
+              }
               break;
             default:
-              $scope.state = states.findIndex(function(mod){return mod.state == destination;});
+              $scope.state.moduleId = moduleId;
+              $scope.state.sectionId = sectionId;
+              break;
           }
         }
+
+        $scope.isStartModule = function(){
+          return $scope.state.moduleId == 0;
+        }
+
+        $scope.isFinishModule = function(mod){
+          return $scope.state.moduleId == $scope.modules.length - 1;
+        }
+
+        $scope.isRequirementModule = function(mod){
+          return !$scope.isStartModule() && !$scope.isFinishModule();
+        }
+
+        $scope.getSections = function(){
+          return ajax.get(dataFactory.dfarsAssessment($scope.state.moduleId).getSections, {}, function(response){return response.data;});
+        }
+
+        $scope.$watch('state.moduleId', function() {
+    		    $scope.getSections().then(function(response){$scope.sections = response.sections;});
+    		});
     }]
 );
