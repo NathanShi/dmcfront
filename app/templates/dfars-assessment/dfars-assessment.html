@@ -1,9 +1,9 @@
 <main class="container dfarsAssessment">
-  <div layout="row">
-    <div layout="column" class="tableOfContents">
+  <div flex layout="row">
+    <div flex="15" layout="column" class="tableOfContents">
       <a ng-repeat="module in states" ng-click="routePage(module.state)">{{module.name}}</a>
     </div>
-    <div layout="column" class="moduleBody">
+    <div flex="85" layout="column" class="moduleBody">
       <h2>{{states[state].name}}</h2>
       <md-divider></md-divider>
     </div>
