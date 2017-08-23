@@ -40,13 +40,17 @@ angular.module('dmc.company.onboarding')
 
       //Next button control
       $scope.isDisabled = false;
+      $scope.submitted = false;
 
       $scope.enableButton = function(){
         $scope.isDisabled = false;
+        $scope.submitted = false;
       }
 
       $scope.disableButton = function(){
+        $anchorScroll();
         $scope.isDisabled = true;
+        $scope.submitted = true;
       }
 
       $scope.company = {};
@@ -112,6 +116,7 @@ angular.module('dmc.company.onboarding')
       $scope.save = function(company) {
 
         $scope.disableButton();
+        // $scope.submitted = true;
 
         var type = [];
 
@@ -244,6 +249,18 @@ angular.module('dmc.company.onboarding')
 
       $anchorScroll();
       $scope.isDisabled = false;
+      $scope.submitted = false;
+
+      $scope.enableButton = function(){
+        $scope.isDisabled = false;
+        $scope.submitted = false;
+      }
+
+      $scope.disableButton = function(){
+        $anchorScroll();
+        $scope.isDisabled = true;
+        $scope.submitted = true;
+      }
 
       //Get data from localStorage
       var haveStored = storageService.get('companyinfoCache');
@@ -377,14 +394,6 @@ angular.module('dmc.company.onboarding')
           }
         });
       });
-
-      $scope.enableButton = function(){
-        $scope.isDisabled = false;
-      }
-
-      $scope.disableButton = function(){
-        $scope.isDisabled = true;
-      }
 
       function stripeTokenHandler(token) {
 
