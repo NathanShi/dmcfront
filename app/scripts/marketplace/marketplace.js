@@ -101,20 +101,20 @@ angular.module('dmc.marketplace', [
     });
 
 
-    $scope.search=function(text){
-      if (text){
-        text=text.toLowerCase();
-        var item =$scope.marketplaceItemsCopy.filter(function (obj){
-          if ((obj.title.toLowerCase().includes(text)) || obj.tags.includes(text) ){
-            return obj;
-          }
-        });
-        $scope.marketplaceItems=item;
-      }
-      else{
-        $scope.marketplaceItems=$scope.marketplaceItemsCopy;
-      }
-    }
+    // $scope.search=function(text){
+    //   if (text){
+    //     text=text.toLowerCase();
+    //     var item =$scope.marketplaceItemsCopy.filter(function (obj){
+    //       if ((obj.title.toLowerCase().includes(text)) || obj.tags.includes(text) ){
+    //         return obj;
+    //       }
+    //     });
+    //     $scope.marketplaceItems=item;
+    //   }
+    //   else{
+    //     $scope.marketplaceItems=$scope.marketplaceItemsCopy;
+    //   }
+    // }
 
     $scope.clearSearch = function(){
       $scope.searchTerm='';
