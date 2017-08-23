@@ -36,6 +36,7 @@ angular.module('dmc.widgets.content', [
      */
     function UiWidgetContentCardController($http, DMCUserModel, $window, ajax) {
         var vm = this;
+
         var categorizeContent = function(contentItems) {
 
             if (contentItems) {
@@ -58,7 +59,6 @@ angular.module('dmc.widgets.content', [
 
         vm.downloadFile = function(id) {
             window.location = dataFactory.documentsUrl(id).download;
-
         };
 
         vm.categorizedContent = categorizeContent(vm.contentItems);
@@ -67,11 +67,9 @@ angular.module('dmc.widgets.content', [
             window.location = dataFactory.documentsUrl(id).download;
         };
 
-        var redirectToService = function(tagsAdded, interfacesAdded, projectId, serviceId) {
-          if (tagsAdded && interfacesAdded) {
-            $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run';
-          }
-        };
+        vm.redirectToServiceHistory = function(projectId, serviceId) {
+          $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/app-history';
+        }
 
     }
 

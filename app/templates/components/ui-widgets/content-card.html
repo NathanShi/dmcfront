@@ -13,7 +13,8 @@
         </div>
 
         <div class="col-sm-9 col-md-9 description-column border-left">
-            <h3 ng-if="item.contentType != 'document'" class="border-bottom">{{item.title}}</h3>
+            <h3 ng-if="item.contentType != 'document' && item.contentType != 'app'" class="border-bottom">{{item.title}}</h3>
+            <h3 ng-if="item.contentType === 'app'" class="border-bottom"><a ng-href="{{'/service-marketplace.php#/' + item.id}}">{{item.title}}</a></h3>
             <h3 ng-if="item.contentType === 'document'" class="border-bottom">{{item.documentName}}</h3>
 
             <div class="spacing-container">
@@ -23,10 +24,8 @@
                 </a>
                 <button ng-if="item.contentType === 'document'" ng-click="downloadFile(document.id)" class="btn green-button content-button">Download</button>
                 <div ng-if="item.contentType === 'app'">
-
-                    <button run-default-button class="btn green-button content-button" ng-click="saveToDefaultProject(item)">Run</button>
-                    <button class="btn green-button content-button margin-left-20">Run History</button>
-
+                  <button run-default-button class="btn green-button content-button" ng-click="saveToDefaultProject(item)">Run</button>
+                  <button class="btn green-button content-button margin-left-20" ng-disabled="!serviceMap[item.id]" ng-click="$ctrl.redirectToServiceHistory(serviceMap[item.id]['workspaceId'], serviceMap[item.id]['serviceId'])">Run History</button>
                 </div>
             </div>
         </div>

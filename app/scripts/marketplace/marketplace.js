@@ -34,9 +34,6 @@ angular.module('dmc.marketplace', [
         scrollService.scrollTo(eID);
     };
 
-    // console.log("ctrl initialize")
-
-
     function getContentStatic(callbackFunction) {
         ajax.get(dataFactory.getStaticJSON('static-marketplace.json'), {}, function(response){
             $scope.marketplaceItems=response.data;
@@ -104,8 +101,6 @@ angular.module('dmc.marketplace', [
     });
 
 
-
-
     $scope.search=function(text){
       if (text){
         text=text.toLowerCase();
@@ -135,5 +130,12 @@ angular.module('dmc.marketplace', [
         });
     });
 
+    $http.get(dataFactory.getDefaultServices(), {
+    }).success(function(response) {
+        $scope.serviceMap = {};
+        response.forEach(function (service){
+          $scope.serviceMap[service.parent] = {'serviceId': service.id, 'workspaceId': service.projectId};
+        });
+    });
 
 }]);
