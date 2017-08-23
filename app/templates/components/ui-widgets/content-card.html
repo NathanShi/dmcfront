@@ -24,7 +24,7 @@
                 <button ng-if="item.contentType === 'document'" ng-click="downloadFile(document.id)" class="btn green-button content-button">Download</button>
                 <div ng-if="item.contentType === 'app'">
 
-                    <button class="btn green-button content-button" ng-click="$ctrl.saveToDefaultProject(app)">Run</button>
+                    <button run-default-button class="btn green-button content-button" ng-click="saveToDefaultProject(item)">Run</button>
                     <button class="btn green-button content-button margin-left-20">Run History</button>
 
                 </div>
