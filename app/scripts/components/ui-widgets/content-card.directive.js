@@ -43,6 +43,29 @@ angular.module('dmc.widgets.content', [
         //     }
         // }, true);
 
+
+        var contentImage = function(content) {
+          var imgLocation;
+
+          switch(content.contentType) {
+              case "document":
+                imgLocation = content.contentImage || "/images/Icons_Education.svg";
+                break;
+              case "app":
+                imgLocation = content.featureImage.large || "/images/Icons_Industry.svg";
+                break;
+              case "static-content":
+                imgLocation = content.contentImage || "/images/Icons_Distribute.svg";
+                break;
+              case "integration":
+                imgLocation = content.contentImage || "/images/Icons_Industry.svg";
+                break;
+              default:
+                imgLocation = content.contentImage || "/images/Icons_Globe.svg"
+          }
+          return imgLocation
+        }
+
         var categorizeContent = function(contentItem) {
 
             if (contentItem.documentName) {
@@ -54,6 +77,9 @@ angular.module('dmc.widgets.content', [
             } else if (contentItem.serviceType || contentItem.type === 'service') {
                 contentItem.contentType = 'app';
             }
+
+            contentItem.imgLocation = contentImage(contentItem);
+
             return contentItem;
         };
 
@@ -62,6 +88,10 @@ angular.module('dmc.widgets.content', [
         vm.downloadFile = function(id) {
           console.log("download called")
             window.location = dataFactory.documentsUrl(id).download;
+        };
+
+        vm.goToIntegration = function ( path ) {
+          window.location = path;
         };
 
         // vm.categorizedContent = categorizeContent(vm.contentItem);
