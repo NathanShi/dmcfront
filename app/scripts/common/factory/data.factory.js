@@ -625,9 +625,9 @@ return {
       servicePermits: function(id) {
           var prefix = localhost + 'service_permits/';
           return {
-            get: prefix + id;
-            getByService: prefix + 'service/' + id;
-            getByOrganization: prefix + 'organization/' + id;
+            get: prefix + id,
+            getByService: prefix + 'service/' + id,
+            getByOrganization: prefix + 'organization/' + id
         };
       },
       getDMDIIDocuments: function(id) {
