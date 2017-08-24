@@ -17,7 +17,8 @@ angular.module('dmc.company.onboarding', [
     'dmc.model.user',
     'ngMaterial',
     'ngMessages',
-    'ngCookies'
+    'ngCookies',
+    'ui.mask'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
