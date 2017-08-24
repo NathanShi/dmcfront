@@ -1,7 +1,10 @@
 <div class="row margin-bottom-10">
     <div ng-if="$ctrl.categorizedContent.contentType">
         <div class="col-sm-3 col-md-3 media-column">
-            <ng-youtube-embed ng-if="$ctrl.categorizedContent.contentType === 'video'" video="$ctrl.categorizedContent.videoSource" width="100%" height="100%"></ng-youtube-embed>
+            <!-- <ng-youtube-embed ng-if="$ctrl.categorizedContent.contentType === 'video'" video="$ctrl.categorizedContent.videoSource" width="100%" height="100%"></ng-youtube-embed> -->
+            <video ng-if="$ctrl.categorizedContent.contentType === 'video'" controls style="width: 100%;">
+              <source ng-src="{{$ctrl.trustVideoSrc($ctrl.categorizedContent.videoSource)}}" type="video/mp4">
+            </video>
             <img ng-if="!($ctrl.categorizedContent.contentType === 'video')" ng-src="{{$ctrl.categorizedContent.imgLocation}}" width="100%" height="100%" style="max-height: 150px;">
         </div>
 
@@ -11,7 +14,8 @@
             <h3 ng-if="$ctrl.categorizedContent.contentType === 'document'" class="border-bottom">{{$ctrl.categorizedContent.documentName}}</h3>
 
             <div class="spacing-container">
-                <p ng-bind-html="$ctrl.categorizedContent.description"></p>
+                <iframe ng-if="$ctrl.categorizedContent.title == 'Integration with FireEye'" src="https://www.fireeye.com/cyber-map/threat-map.html" height="800px" width="1000px"></iframe>
+                <p ng-hide="$ctrl.categorizedContent.title == 'Integration with FireEye'" ng-bind-html="$ctrl.categorizedContent.description"></p>
                 <a ng-if="$ctrl.categorizedContent.buttonText && $ctrl.categorizedContent.contentType != 'document' && $ctrl.categorizedContent.contentType != 'app'" href="{{$ctrl.categorizedContent.buttonLink}}">
                     <button class="btn green-button content-button">{{$ctrl.categorizedContent.buttonText}}</button>
                 </a>
@@ -21,9 +25,9 @@
                   <button class="btn green-button content-button margin-left-20" ng-disabled="!serviceMap[$ctrl.categorizedContent.id]" ng-click="$ctrl.redirectToServiceHistory(serviceMap[$ctrl.categorizedContent.id]['workspaceId'], serviceMap[$ctrl.categorizedContent.id]['serviceId'])">Run History</button>
                 </div>
 
-                <div ng-if="$ctrl.categorizedContent.contentType === 'integration'">
+                <!-- <div ng-if="$ctrl.categorizedContent.contentType === 'integration'">
                   <button run-default-button class="btn green-button content-button" ng-click="$ctrl.goToIntegration($ctrl.categorizedContent.link)">Run</button>
-                </div>
+                </div> -->
 
             </div>
         </div>

@@ -80,6 +80,8 @@ angular.module('dmc.marketplace', [
       $scope.estimateItems=[]
       $scope.cncOperationItems=[]
       $scope.cmmOperationItems=[]
+      $scope.securityItems=[]
+      $scope.transformBusinessItems=[]
 
       for (var i = 0; i < $scope.marketplaceItems.length; i++) {
         // $scope.allMktItems.push($scope.marketplaceItems[i]);
@@ -94,9 +96,21 @@ angular.module('dmc.marketplace', [
           $scope.cncOperationItems.push($scope.marketplaceItems[i])
         }
 
-        else{
+        else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE CMM OPERATIONS'){
           $scope.cmmOperationItems.push($scope.marketplaceItems[i])
         }
+
+        else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE SECURITY'){
+          $scope.securityItems.push($scope.marketplaceItems[i])
+        }
+
+        else if ($scope.marketplaceItems[i].categoryContent=='TRANSFORM BUSINESS'){
+          $scope.transformBusinessItems.push($scope.marketplaceItems[i])
+        }
+
+        // else{
+        //   $scope.cmmOperationItems.push($scope.marketplaceItems[i])
+        // }
       }
     });
 

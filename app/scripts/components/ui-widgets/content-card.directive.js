@@ -32,7 +32,7 @@ angular.module('dmc.widgets.content', [
      *
      * document, video, img, app
      */
-    function UiWidgetContentCardController($http, DMCUserModel, $window, ajax) {
+    function UiWidgetContentCardController($http, DMCUserModel, $window, ajax, $sce) {
         var vm = this;
 
         // $scope.$watch(function () {
@@ -103,6 +103,10 @@ angular.module('dmc.widgets.content', [
         vm.redirectToServiceHistory = function(projectId, serviceId) {
           $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/app-history';
         }
+
+        vm.trustVideoSrc = function(src) {
+            return $sce.trustAsResourceUrl(src);
+        };
 
     }
 
