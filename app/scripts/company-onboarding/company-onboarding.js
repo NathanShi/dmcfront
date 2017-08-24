@@ -87,10 +87,10 @@ angular.module('dmc.company.onboarding', [
               company.secondAddress = jsonType.secondAddress;
               if (company.secondAddress != null)
                 company.subCompany = true;
-              company.selectedAnnualRevenue = null;
-              company.selectedEmployeeSize = null;
+              company.selectedAnnualRevenue = jsonType.annualRevenue;
+              company.selectedEmployeeSize = jsonType.employeeSize;
               company.type = null;
-              company.orgTYPEs = null;
+              company.orgTYPEs = jsonType.orgTYPEs;
               company.website = jsonType.website;
               company.startUp = jsonType.startUp;
               company.duns = jsonType.dunsCode;
@@ -99,6 +99,15 @@ angular.module('dmc.company.onboarding', [
               company.formURL = jsonType.formURL;
 
               return company;
+            }
+
+            this.getStates = function(){
+                var statesUSA = [ "AK","AL","AR","AZ","CA","CO","CT","DE","FL","GA","HI","IA","ID","IL","IN",
+                                  "KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH",
+                                  "NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA",
+                                  "VT","WA","WI","WV","WY"
+                                ];
+                return statesUSA;
             }
 
             //Initialize orgType
@@ -121,97 +130,20 @@ angular.module('dmc.company.onboarding', [
 
             //Initialize EmployeeSize
             this.initialEmployeeSize = function(){
-                var employeeSize = [
-                  {
-                    name: '1-10 employees',
-                    value: '1-10 employees'
-                  },
-                  {
-                    name: '11-50 employees',
-                    value: '11-50 employees'
-                  },
-                  {
-                    name: '51-200 employees',
-                    value: '51-200 employees'
-                  },
-                  {
-                    name: '501-1000 employees',
-                    value: '501-1000 employees'
-                  },
-                  {
-                    name: '1001-5000 employees',
-                    value: '1001-5000 employees'
-                  },
-                  {
-                    name: '5001-10,000 employees',
-                    value: '5001-10,000 employees'
-                  },
-                  {
-                    name: '10,000+ employees',
-                    value: '10,000+ employees'
-                  }
-                ];
-
+                var employeeSize = ["1-10 employees", "11-50 employees", "51-200 employees", "501-1000 employees",
+                                    "1001-5000 employees", "5001-10,000 employees", "10,000+ employees"];
                 return employeeSize;
             }
 
             //Initialize AnnualRevenue
             this.initialAnnualRevenue = function(){
-                var AnnualRevenue = [
-                  {
-                    name: '0-25M',
-                    value: '0-25M'
-                  },
-                  {
-                    name: '26M-50M',
-                    value: '26M-50M'
-                  },
-                  {
-                    name: '51M-100M',
-                    value: '51M-100M'
-                  },
-                  {
-                    name: '101M-250M',
-                    value: '101M-250M'
-                  },
-                  {
-                    name: '251M-500M',
-                    value: '251M-500M'
-                  },
-                  {
-                    name: '501M-1B',
-                    value: '501M-1B'
-                  },
-                  {
-                    name: '2B-10B',
-                    value: '2B-10B'
-                  },
-                  {
-                    name: '11B+',
-                    value: '11B+'
-                  }
-                ];
-
+                var AnnualRevenue = ["0-25M", "26M-50M", "51M-100M", "101M-250M", "251M-500M", "501M-1B", "2B-10B", "11B+"];
                 return AnnualRevenue;
             }
 
             //Initialize OrgTYPEs
             this.initialOrgTYPEs = function(){
-                var OrgTYPEs = [
-                  {
-                    name: 'Manufacturer',
-                    value: 'Manufacturer'
-                  },
-                  {
-                    name: 'Technology Provider',
-                    value: 'Technology Provider'
-                  },
-                  {
-                    name: 'Consultant',
-                    value: 'Consultant'
-                  }
-                ];
-
+                var OrgTYPEs = ["Manufacturer", "Technology Provider", "Consultant"];
                 return OrgTYPEs;
             }
 

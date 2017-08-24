@@ -94,6 +94,8 @@ angular.module('dmc.company.onboarding')
       $scope.company.selectedAnnualRevenue = null;
       $scope.company.orgTYPEs = null;
 
+      $scope.stateUSA = companyOnboardingModel.getStates();
+
       $scope.orgType = companyOnboardingModel.initialOrgType();
 
       $scope.employeeSize = companyOnboardingModel.initialEmployeeSize();
@@ -142,9 +144,9 @@ angular.module('dmc.company.onboarding')
             company.legal = null;
         }
 
-        company.selectedEmployeeSize = company.selectedEmployeeSize.value;
-        company.selectedAnnualRevenue = company.selectedAnnualRevenue.value;
-        company.orgTYPEs = company.orgTYPEs.value;
+        // company.selectedEmployeeSize = company.selectedEmployeeSize.value;
+        // company.selectedAnnualRevenue = company.selectedAnnualRevenue.value;
+        // company.orgTYPEs = company.orgTYPEs.value;
         $scope.companyinfo = angular.copy(company);
         $scope.companyinfo.type = type;
 
@@ -154,12 +156,14 @@ angular.module('dmc.company.onboarding')
         if ($scope.company.id){
           $scope.companyinfo.id = $scope.company.id;
         }
-
+        console.log($scope.companyinfo);
         //Call service.populateField() to stream info for Membership Agreement
         var postDocInfo = companyOnboardingModel.populateField($scope.companyinfo);
-        // console.log(postDocInfo);
+        console.log(postDocInfo);
         var responseErrorReason = "Oops, we had a problem when generating Membership Agreement, please try again later. " +
         "\nIf you kept having this problem, please contact us.";
+
+        // storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));
 
         //Call 'esignDoc' to call PDFfiller API to generate Membership Agreement with populated fields
         ajax.create(dataFactory.esignOnline().docuSign, postDocInfo, function successCallback(response) {
@@ -179,7 +183,7 @@ angular.module('dmc.company.onboarding')
         }).then(function(){
           if ($scope.companyinfo.templateID && $scope.companyinfo.formURL){
             //localStorage the form together with template_id & url
-            storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo))
+            storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));
             $mdDialog.show(
               $mdDialog.alert()
                 .clickOutsideToClose(false)

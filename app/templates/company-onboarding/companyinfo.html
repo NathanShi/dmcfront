@@ -58,7 +58,14 @@
                     <div class="sublabels">
                       State
                     </div>
-                    <input name="orgFirstState" ng-value="company.firstAddress.state" ng-model="company.firstAddress.state" class="form-control" type="text" required>
+                    <select
+                       ng-model="company.firstAddress.state"
+                       ng-value="company.firstAddress.state"
+                       name="orgFirstState"
+                       ng-options="state for state in stateUSA"
+                       required>
+                       <option value="">Please Select</option>
+                     </select>
                     <p class="help-block">Required</p>
                 </div>
               </div>
@@ -127,7 +134,14 @@
                     <div class="sublabels">
                       State
                     </div>
-                    <input name="orgSecondState" ng-value="company.secondAddress.state" ng-model="company.secondAddress.state" class="form-control" type="text" ng-required="company.subCompany">
+                    <select
+                       ng-model="company.secondAddress.state"
+                       ng-value="company.secondAddress.state"
+                       name="orgSecondState"
+                       ng-options="state for state in stateUSA"
+                       ng-required="company.subCompany">
+                       <option value="">Please Select</option>
+                    </select>
                     <p class="help-block">Required</p>
                 </div>
               </div>
@@ -455,7 +469,7 @@
                 <select
                    ng-model="company.orgTYPEs"
                    name="orgTYPEs"
-                   ng-options="option.name for option in orgTYPEs"
+                   ng-options="option for option in orgTYPEs"
                    required>
                    <option value="">Please Select</option>
                  </select>
@@ -469,7 +483,7 @@
                 <select
                    ng-model="company.selectedEmployeeSize"
                    name="orgEmployeeSize"
-                   ng-options="option.name for option in employeeSize"
+                   ng-options="option for option in employeeSize"
                    required>
                    <option value="">Please Select</option>
                  </select>
@@ -483,7 +497,7 @@
                 <select
                    ng-model="company.selectedAnnualRevenue"
                    name="orgAnnualRevenue"
-                   ng-options="option.name for option in annualRevenue"
+                   ng-options="option for option in annualRevenue"
                    required>
                    <option value="">Please Select</option>
                  </select>
