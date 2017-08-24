@@ -187,8 +187,8 @@ angular.module('dmc.company.onboarding')
             $mdDialog.show(
               $mdDialog.alert()
                 .clickOutsideToClose(false)
-                .title('Successfully Generate Membership Agreement')
-                .content('Please click OK to proceed, if this doesn\'t work please contact us')
+                .title('Successfully Generated Membership Agreement')
+                .content('Click OK to proceed')
                 .ok('OK')
             ).then(function(){
               $timeout( function(){
