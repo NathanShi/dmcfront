@@ -182,8 +182,13 @@ angular.module('dmc.company.onboarding', [
                 populateCompany.companyCSZ = data.firstAddress.city + "," + data.firstAddress.state + "," + data.firstAddress.zipcode;
 
                 populateCompany.mainName = data.main.fname + " " + data.main.lname;
-                populateCompany.mainAddress = data.main.mailAddress;
-                populateCompany.mainCSZ = data.main.mailAddress;
+                if (data.main.mailAddress.includes(",")){
+                    populateCompany.mainAddress = data.main.mailAddress.substring(0, data.main.mailAddress.indexOf(","));
+                    populateCompany.mainCSZ = data.main.mailAddress.substring(data.main.mailAddress.indexOf(",")+1);
+                }else{
+                    populateCompany.mainAddress = data.main.mailAddress;
+                    populateCompany.mainCSZ = data.main.mailAddress;
+                }
                 populateCompany.mainPhone = data.main.phone;
                 populateCompany.mainEmail = data.main.email;
 
@@ -202,24 +207,39 @@ angular.module('dmc.company.onboarding', [
 
                 if (data.tech != null){
                     populateCompany.techName = data.tech.fname + " " + data.tech.lname;
-                    populateCompany.techAddress = data.tech.mailAddress;
-                    populateCompany.techCSZ = data.tech.mailAddress;
+                    if (data.tech.mailAddress.includes(",")){
+                        populateCompany.techAddress = data.tech.mailAddress.substring(0, data.tech.mailAddress.indexOf(","));
+                        populateCompany.techCSZ = data.tech.mailAddress.substring(data.tech.mailAddress.indexOf(",")+1);
+                    }else{
+                        populateCompany.techAddress = data.tech.mailAddress;
+                        populateCompany.techCSZ = data.tech.mailAddress;
+                    }
                     populateCompany.techPhone = data.tech.phone;
                     populateCompany.techEmail = data.tech.email;
                 }
 
                 if (data.legal != null){
                     populateCompany.legalName = data.legal.fname + " " + data.legal.lname;
-                    populateCompany.legalAddress = data.legal.mail;
-                    populateCompany.legalCSZ = data.legal.mail;
+                    if (data.legal.mail.includes(",")){
+                        populateCompany.legalAddress = data.legal.mail.substring(0, data.legal.mail.indexOf(","));
+                        populateCompany.legalCSZ = data.legal.mail.substring(data.legal.mail.indexOf(",")+1);
+                    }else{
+                        populateCompany.legalAddress = data.legal.mail;
+                        populateCompany.legalCSZ = data.legal.mail;
+                    }
                     populateCompany.legalPhone = data.legal.phone;
                     populateCompany.legalEmail = data.legal.email;
                 }
 
                 if (data.finance != null){
                     populateCompany.financeName = data.finance.fname + " " + data.finance.lname;
-                    populateCompany.financeAddress = data.finance.mailAddress;
-                    populateCompany.financeCSZ = data.finance.mailAddress;
+                    if (data.finance.mailAddress.includes(",")){
+                        populateCompany.financeAddress = data.finance.mailAddress.substring(0, data.finance.mailAddress.indexOf(","));
+                        populateCompany.financeCSZ = data.finance.mailAddress.substring(data.finance.mailAddress.indexOf(",")+1);
+                    }else{
+                        populateCompany.financeAddress = data.finance.mailAddress;
+                        populateCompany.financeCSZ = data.finance.mailAddress;
+                    }
                     populateCompany.financePhone = data.finance.phone;
                     populateCompany.financeEmail = data.finance.email;
                 }
