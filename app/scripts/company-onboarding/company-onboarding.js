@@ -123,10 +123,6 @@ angular.module('dmc.company.onboarding', [
             this.initialEmployeeSize = function(){
                 var employeeSize = [
                   {
-                    name: 'Self-employed',
-                    value: 'Self-employed'
-                  },
-                  {
                     name: '1-10 employees',
                     value: '1-10 employees'
                   },
