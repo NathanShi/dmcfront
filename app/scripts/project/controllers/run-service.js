@@ -543,7 +543,6 @@ angular.module('dmc.project')
               }
 
               $q.all(promises).then(function(docs) {
-                // resolveAllAttachmentScans(makeAttachmentsCollection(docs), addAttachmentsToApp);
                 resolveAllAttachmentScans(makeAttachmentsCollection(docs), docProcessingCallback);
               });
             }
@@ -692,14 +691,14 @@ angular.module('dmc.project')
             }
 
             $scope.uploadAppFile = function(ev) {
-              openDocModelAndExecCallback(ev, uploadDocs);
+              openDocModelAndExecCallback(ev, false, addAttachmentsToApp, "appAttachment");
             };
 
             $scope.uploadInputFile = function(ev) {
-              openDocModelAndExecCallback(ev, uploadInputFile);
+              openDocModelAndExecCallback(ev, true, setInputFile, "inputFile");
             }
 
-            var openDocModelAndExecCallback = function(ev, callbackFunc) {
+            var openDocModelAndExecCallback = function(ev, onlyFirstFile, docProcessingCallback, inProgressVar) {
               $mdDialog.show({
                 controller: 'DocumentsUploadCtrl as projectCtrl',
                 templateUrl: 'templates/project/pages/documents-upload.html',
@@ -711,7 +710,11 @@ angular.module('dmc.project')
                 }
               }).then(function(documents) {
                 if (documents.length > 0) {
-                  getOrCreateDirectory($scope.service, documents, callbackFunc);
+                  setInprogressVar(inProgressVar);
+                  if (onlyFirstFile) {
+                    documents = [documents[0]]
+                  }
+                  getOrCreateDirectory($scope.service, documents, docProcessingCallback);
                 }
               });
             }
@@ -730,9 +733,12 @@ angular.module('dmc.project')
             var attachFileInputId = 'attachedFileList';
 
             var addAttachmentsToApp = function(attachments) {
-              var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
-              attachFileInput.value = JSON.stringify(attachments)
-              $scope.run();
+              $scope.attachmentUploadInProgress = false;
+              if (attachments.length > 0) {
+                var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
+                attachFileInput.value = JSON.stringify(attachments)
+                $scope.run();
+              }
             }
 
             var createAttachmentDOMElement = function() {
@@ -766,6 +772,10 @@ angular.module('dmc.project')
                 }, event);
 
             };
+
+            function updateServiceStatus(service, currentStatus) {
+              return service.currentStatus ? $.extend(true,service.currentStatus,currentStatus) : currentStatus;
+            }
 
         }
     ]
