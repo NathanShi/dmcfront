@@ -50,7 +50,7 @@
 <script src="scripts/components/ui-widgets/company-onboarding-tabs.directive.js"></script>
 <script src="scripts/company-onboarding/controller/companyinfo.js"></script>
 <script src="scripts/company-onboarding/controller/landing.js"></script>
-<script src="scripts/common/models/ui-mask.js">
+<script src="scripts/common/models/ui-mask.js"></script>
 
 <!-- endbuild -->
 
