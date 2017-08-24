@@ -92,6 +92,14 @@
                                 <a ng-click="gotoElement('get-lean')">I want to get lean.</a>
                             </div>
                         </div>
+                        <div class="row margin-bottom-10">
+                            <a ng-click="gotoElement('get-secure')">
+                                <img class="bullet-image" ng-src="images/meter.png" type="image/png" height="80px">
+                            </a>
+                            <div class="col-sm-7 col-md-10 bottom-border path-link">
+                                <a ng-click="gotoElement('get-secure')">I want to improve my security.</a>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -102,6 +110,7 @@
                         <div class="row nav-row">
                             <a ng-click="gotoElement('main-section')"><ng-md-icon class="nav-back top" style="fill: white" icon="navigate_before" size="25"></ng-md-icon></a>
                             <a href="index.php"><ng-md-icon class="pull-right nav-home" icon="home" style="fill: white" size="25"></ng-md-icon></a>
+                            <img ng-click="gotoElement('get-secure')" class="pull-right margin-right-3" ng-src="images/meter_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('get-lean')" class="pull-right margin-right-3" ng-src="images/meter_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('cmm-operations')" class="pull-right margin-right-3" ng-src="images/ruler_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
@@ -122,6 +131,7 @@
                         <div class="row nav-row">
                             <a ng-click="gotoElement('main-section')"><ng-md-icon class="nav-back top" style="fill: white" icon="navigate_before" size="25"></ng-md-icon></a>
                             <a href="index.php"><ng-md-icon class="pull-right nav-home" icon="home" style="fill: white" size="25"></ng-md-icon></a>
+                            <img ng-click="gotoElement('get-secure')" class="pull-right margin-right-3" ng-src="images/meter_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('get-lean')" class="pull-right margin-right-3" ng-src="images/meter_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('cmm-operations')" class="pull-right margin-right-3" ng-src="images/ruler_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer.png" type="image/png" height="25px">
@@ -142,6 +152,7 @@
                         <div class="row nav-row">
                             <a ng-click="gotoElement('main-section')"><ng-md-icon class="nav-back top" style="fill: white" icon="navigate_before" size="25"></ng-md-icon></a>
                             <a href="index.php"><ng-md-icon class="pull-right nav-home" icon="home" style="fill: white" size="25"></ng-md-icon></a>
+                            <img ng-click="gotoElement('get-secure')" class="pull-right margin-right-3" ng-src="images/meter_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('get-lean')" class="pull-right margin-right-3" ng-src="images/meter_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('cmm-operations')" class="pull-right margin-right-3" ng-src="images/ruler.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
@@ -163,6 +174,7 @@
                         <div class="row nav-row">
                             <a ng-click="gotoElement('main-section')"><ng-md-icon class="nav-back top" style="fill: white" icon="navigate_before" size="25"></ng-md-icon></a>
                             <a href="index.php"><ng-md-icon class="pull-right nav-home" icon="home" style="fill: white" size="25"></ng-md-icon></a>
+                            <img ng-click="gotoElement('get-secure')" class="pull-right margin-right-3" ng-src="images/meter_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('get-lean')" class="pull-right margin-right-3" ng-src="images/meter.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('cmm-operations')" class="pull-right margin-right-3" ng-src="images/ruler_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('cnc-operations')" class="pull-right https://mail.google.com/mail/u/0/#inboxmargin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
@@ -173,6 +185,27 @@
                           <div
                           ui-widget-content
                                content-item="leanItem"
+                               serviceMap="serviceMap">
+                          </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section id="get-secure" class="transform-section">
+                    <div class="container transform-content">
+                        <div class="row nav-row">
+                            <a ng-click="gotoElement('main-section')"><ng-md-icon class="nav-back top" style="fill: white" icon="navigate_before" size="25"></ng-md-icon></a>
+                            <a href="index.php"><ng-md-icon class="pull-right nav-home" icon="home" style="fill: white" size="25"></ng-md-icon></a>
+                            <img ng-click="gotoElement('get-secure')" class="pull-right margin-right-3" ng-src="images/meter.png" type="image/png" height="25px">
+                            <img ng-click="gotoElement('get-lean')" class="pull-right margin-right-3" ng-src="images/meter_grey.png" type="image/png" height="25px">
+                            <img ng-click="gotoElement('cmm-operations')" class="pull-right margin-right-3" ng-src="images/ruler_grey.png" type="image/png" height="25px">
+                            <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
+                            <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
+                        </div>
+                        <div ng-repeat="securityItem in securityItems">
+                          <div ui-widget-content
+                               content-item="securityItem"
                                serviceMap="serviceMap">
                           </div>
                         </div>
