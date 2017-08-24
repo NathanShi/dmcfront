@@ -1,5 +1,5 @@
 [{
-    "serviceId": "465",
+    "serviceId": "906",
     "accountId": "0",
     "runBy": "179",
     "status": 0,
@@ -23,6 +23,15 @@
                 "value": "4",
                 "parameterid": "d9f30f56-d800-1004-8f53-704dbfababa8",
                 "instancename": null
+            },
+            "Beta": {
+                "type": "Real",
+                "name": "Beta",
+                "unit": "no unit",
+                "category": "no unit",
+                "value": "4",
+                "parameterid": "d9f30f56-d800-1004-8f53-704dbfababa7",
+                "instancename": null
             }
         },
         "outParams": {
@@ -38,10 +47,10 @@
         }
     }
 }, {
-    "serviceId": "466",
+    "serviceId": "906",
     "accountId": "0",
     "runBy": "179",
-    "status": 0,
+    "status": 1,
     "percentCompleted": 100,
     "startDate": "2017-03-09",
     "startTime": null,
@@ -77,10 +86,10 @@
         }
     }
 }, {
-    "serviceId": "497",
+    "serviceId": "906",
     "accountId": "0",
     "runBy": "179",
-    "status": 2,
+    "status": -1,
     "percentCompleted": 0,
     "startDate": "2017-03-16",
     "startTime": null,
