@@ -616,7 +616,8 @@ return {
       payment: function(){
         return {
           pay: localhost + 'payment',
-          organizations: localhost + 'organizations/user'
+          organizations: localhost + 'organizations/user',
+          unverifyUser: localhost + 'user/unverified'
         };
       },
       esignOnline: function(id){
