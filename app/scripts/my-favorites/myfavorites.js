@@ -31,7 +31,7 @@ angular.module('dmc.myfavorites', [
                 abstract: true,
                 controller: 'myfavoritesCtrl',
                 template: '<ui-view></ui-view>',
-                // templateUrl: 'templates/favorites-arsalan/myfavorites.html'
+                // templateUrl: 'templates/favorites/myfavorites.html'
             })
            .state('myFavorites.my', {
                url: '/my',

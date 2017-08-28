@@ -49,8 +49,8 @@
     <script src="scripts/common/models/previous-page.js"></script>
 
 
-    <script src="scripts/myfavorites/myfavorites.js"></script>
-    <script src="scripts/myfavorites/myfavorites-controller.js"></script>
+    <script src="scripts/my-favorites/myfavorites.js"></script>
+    <script src="scripts/my-favorites/myfavorites-controller.js"></script>
 
     <!-- endbuild -->
     <script type="text/javascript">

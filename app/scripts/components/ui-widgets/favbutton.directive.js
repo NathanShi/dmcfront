@@ -21,7 +21,7 @@ angular.module('dmc.widgets.favButton',[
                 // Post new favorite
                 ajax.update(dataFactory.getMyFavorites(1),{"id": product_id},function(response){
                     // Do stuff on response
-
+                    
                 });
               }
             }
