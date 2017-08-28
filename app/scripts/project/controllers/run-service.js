@@ -882,6 +882,7 @@ angular.module('dmc.project')
     $scope.addFunds = false;
 
     $scope.closeDialog = function() {
+      $scope.addFunds = false;
       $mdDialog.hide();
     }
 
@@ -899,7 +900,7 @@ angular.module('dmc.project')
     });
 
     $scope.purchasePermit = function(planId){
-      ajax.update(dataFactory.payment(planId).servicePaymentInternal, {}, function (response) {
+      ajax.get(dataFactory.payment(planId).servicePaymentInternal, {}, function (response) {
           if(!response.data){
             return;
           }
@@ -912,6 +913,10 @@ angular.module('dmc.project')
             $scope.addFunds = true;
           }
       });
+    }
+
+    $scope.stripeTokenHandler = function(token){
+      console.log('hello');
     }
 
 }]);
