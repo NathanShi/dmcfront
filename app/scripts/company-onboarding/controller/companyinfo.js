@@ -117,7 +117,9 @@ angular.module('dmc.company.onboarding')
                   .content('You already have a Tier3 Membership organization in database, will redirect to dashboard.')
                   .ok('Got it!')
               ).then(function(){
-                $window.location.href = '/onboarding.php';
+                $timeout( function(){
+                  $window.location.href = '/onboarding.php';
+                }, 2000);
               });
             }
           }
