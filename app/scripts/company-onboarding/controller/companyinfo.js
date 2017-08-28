@@ -172,9 +172,9 @@ angular.module('dmc.company.onboarding')
         $scope.companyinfo.type = type;
 
         //eSignature Requested
-        $scope.companyinfo.docuSigned = "Signed"; //Test
-        $scope.companyinfo.templateID = "129999710"; //Test
-        // $scope.companyinfo.docuSigned = "Requested";
+        // $scope.companyinfo.docuSigned = "Signed"; //Test
+        // $scope.companyinfo.templateID = "129999710"; //Test
+        $scope.companyinfo.docuSigned = "Requested";
 
         if ($scope.company.id){
           $scope.companyinfo.id = $scope.company.id;
@@ -185,7 +185,7 @@ angular.module('dmc.company.onboarding')
         // console.log(postDocInfo);
         var responseErrorReason = "Oops, we had a problem when generating Membership Agreement, please try again later. " +
         "\nIf you kept having this problem, please contact us.";
-        storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));//Test
+        // storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));//Test
 
         ajax.get(dataFactory.esignOnline().esignToken, {}, function successCallback(response) {
               if (response.data.status == "eSignToken Successful!"){
@@ -496,10 +496,10 @@ angular.module('dmc.company.onboarding')
                         );
                       }
                       else{
-                        // var Signature = JSON.parse(response.data.reason);
-                        var Signature = response.data.reason; //Test
+                        var Signature = JSON.parse(response.data.reason);
+                        // var Signature = response.data.reason; //Test
                         $scope.signedInfo = Signature.items;
-                        // console.log("Signature", $scope.signedInfo);
+                        console.log("Signature", Signature);
                         if (Signature.total == 0){
                             $mdDialog.show(
                               $mdDialog.alert()
@@ -520,11 +520,13 @@ angular.module('dmc.company.onboarding')
                             //Signed, verify first then go to payment
                             $scope.company.docuSigned = "Signed";
                             $scope.company.verifiedSignatures = [];
-                            Signature.items.forEach(function(element){
-                                if (element.user == "same"){
-                                  $scope.company.verifiedSignatures.push(element);
-                                }
-                            });
+                            if (!angular.isUndefined(Signature.items)){
+                              Signature.items.forEach(function(element){
+                                  if (element.user == "same"){
+                                    $scope.company.verifiedSignatures.push(element);
+                                  }
+                              });
+                            }
 
                             $mdDialog.show({
                                 scope: $scope,
@@ -532,6 +534,7 @@ angular.module('dmc.company.onboarding')
                                 clickOutsideToClose: false,
                                 templateUrl: '/templates/company-onboarding/signatureVerifyDialog.html',
                                 controller: function eSignDialogController($scope, $mdDialog) {
+                                  console.log("$scope.signedInfo", $scope.signedInfo);
                                   $scope.closeDialog = function() {
                                     $mdDialog.hide();
                                   };

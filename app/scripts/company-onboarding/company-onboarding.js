@@ -258,6 +258,7 @@ angular.module('dmc.company.onboarding', [
                 populateCompany.mainCSZ = data.main.mailAddress;
                 populateCompany.mainPhone = data.main.phone;
                 populateCompany.mainEmail = data.main.email;
+                populateCompany.mainFax = "-";
 
                 var popType = {};
 
@@ -278,6 +279,14 @@ angular.module('dmc.company.onboarding', [
                     populateCompany.techCSZ = data.tech.mailAddress;
                     populateCompany.techPhone = data.tech.phone;
                     populateCompany.techEmail = data.tech.email;
+                    populateCompany.techFax = "-";
+                }else {
+                    populateCompany.techName = "-";
+                    populateCompany.techAddress = "-";
+                    populateCompany.techCSZ = "-";
+                    populateCompany.techPhone = "-";
+                    populateCompany.techEmail = "-";
+                    populateCompany.techFax = "-";
                 }
 
                 if (data.legal != null){
@@ -286,6 +295,14 @@ angular.module('dmc.company.onboarding', [
                     populateCompany.legalCSZ = data.legal.mail;
                     populateCompany.legalPhone = data.legal.phone;
                     populateCompany.legalEmail = data.legal.email;
+                    populateCompany.legalFax = "-";
+                }else {
+                    populateCompany.legalName = "-";
+                    populateCompany.legalAddress = "-";
+                    populateCompany.legalCSZ = "-";
+                    populateCompany.legalPhone = "-";
+                    populateCompany.legalEmail = "-";
+                    populateCompany.legalFax = "-";
                 }
 
                 if (data.finance != null){
@@ -294,6 +311,14 @@ angular.module('dmc.company.onboarding', [
                     populateCompany.financeCSZ = data.finance.mailAddress;
                     populateCompany.financePhone = data.finance.phone;
                     populateCompany.financeEmail = data.finance.email;
+                    populateCompany.financeFax = "-";
+                }else {
+                    populateCompany.financeName = "-";
+                    populateCompany.financeAddress = "-";
+                    populateCompany.financeCSZ = "-";
+                    populateCompany.financePhone = "-";
+                    populateCompany.financeEmail = "-";
+                    populateCompany.financeFax = "-";
                 }
 
                 return populateCompany;
