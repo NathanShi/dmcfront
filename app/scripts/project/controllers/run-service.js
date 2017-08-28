@@ -250,7 +250,7 @@ angular.module('dmc.project')
             $scope.averageRun = ($scope.service.averageRun ? $scope.service.averageRun.toFixed(2) : 0);
 
             // Service permit purchase modal
-            $scope.openPurchasePermitModal = function(service, ev){
+            $scope.openPurchasePermitModal = function(service, reason, ev){
                 $(window).scrollTop(0);
                 $mdDialog.show({
                     controller: "ModalPurachasePermitController",
@@ -258,7 +258,8 @@ angular.module('dmc.project')
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     locals: {
-                        service: service
+                        service: service,
+                        reason: reason
                     },
                     clickOutsideToClose:true
                 })
@@ -272,13 +273,11 @@ angular.module('dmc.project')
             $scope.run = function(){
                 // Check service permit
                 ajax.get(dataFactory.servicePermits($scope.userData.companyId).getByOrganization,{},function(response){
-                  console.log(response.data);
-
                   var servicePermit = null;
 
                   // If no valid permit for this service, bring up payment modal
                   if(!response.data){
-                    console.log('No valid permit');
+                    $scope.openPurchasePermitModal($scope.service, 'You do not have a valid permit for this service.');
                   }
 
                   // Get permit for this service
@@ -288,18 +287,25 @@ angular.module('dmc.project')
                     }
                   }
 
-                  console.log(servicePermit);
-
                   if(!servicePermit){
-                    console.log('No valid permit');
+                    $scope.openPurchasePermitModal($scope.service, 'You do not have a valid permit for this service.');
                   }
                   else if (servicePermit.uses == 0){
-                    console.log('No uses on permit');
-                    $scope.openPurchasePermitModal($scope.service);
+                    $scope.openPurchasePermitModal($scope.service, 'You do not have any uses left on your current permit for this service.');
+                  }
+                  else {
+                    questionToastModel.show({
+                        question: ('You have ' + servicePermit.uses + (servicePermit.uses > 1 ? ' uses' : ' use') + ' left for ' + $scope.service.title + '. Would you like to use one to run this service now?'),
+                        buttons: {
+                            ok: function() {runModel();},
+                            cancel: function(){}
+                        }
+                    }, null);
                   }
                 });
 
-                runModel();
+
+                //runModel();
             };
 
             // TODO add logic to get the most recent (prior) status
@@ -845,6 +851,7 @@ angular.module('dmc.project')
         '$stateParams',
         'dataFactory',
         'service',
+        'reason',
         'ajax',
         'toastModel',
         function (
@@ -855,10 +862,12 @@ angular.module('dmc.project')
             $stateParams,
             dataFactory,
             service,
+            reason,
             ajax,
             toastModel) {
 
     $scope.service = service;
+    $scope.reason = reason;
     $scope.pay_plans = {
       PAY_ONCE : 'PAY_ONCE',
       PAY_PER_USE : 'PAY_PER_USE',
@@ -870,9 +879,14 @@ angular.module('dmc.project')
       FAILURE : 'failed'
     };
     $scope.hasPaymentPlans = true;
+    $scope.addFunds = false;
 
     $scope.closeDialog = function() {
       $mdDialog.hide();
+    }
+
+    $scope.centsToDollars = function(cents){
+      return (cents/100).toFixed( 2 )
     }
 
     // Get payment plans for service
@@ -881,7 +895,7 @@ angular.module('dmc.project')
         $scope.hasPaymentPlans = false;
         return;
       }
-      $scope.paymentPlans = response.data
+      $scope.paymentPlans = response.data;
     });
 
     $scope.purchasePermit = function(planId){
@@ -892,7 +906,10 @@ angular.module('dmc.project')
           if(response.data.status == $scope.pay_status.SUCCESS){
             toastModel.showToast('success', 'One use for this service purchased!');
             $scope.closeDialog();
-            return;
+          }
+          else if(response.data.status == $scope.pay_status.FAILURE){
+            toastModel.showToast('error', 'Not enough funds!');
+            $scope.addFunds = true;
           }
       });
     }
