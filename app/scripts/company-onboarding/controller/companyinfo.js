@@ -243,12 +243,13 @@ angular.module('dmc.company.onboarding')
                   .ok('OK')
               ).then(function(){
                 $timeout( function(){
+                  console.log("url", $scope.companyinfo.formURL, "token", $scope.companyinfo.token);
                   //Go to the Membership Agreement URL
-                  if (!angular.isUndefined($scope.company.token)){
-                    $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                  if (!angular.isUndefined($scope.companyinfo.token)){
+                    $window.location.href = $scope.companyinfo.formURL + "?token=" +$scope.companyinfo.token;
                   }
                   else {
-                    $window.location.href = $scope.company.formURL
+                    $window.location.href = $scope.companyinfo.formURL
                   }
                 }, 500);
               });
