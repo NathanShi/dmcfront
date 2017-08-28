@@ -92,7 +92,8 @@ server.use(jsonServer.rewriter({
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
     'service_runs?serviceId=:id': '/service_runs',
     '/defaultServices': '/default-services',
-    '/defaultService/:id': '/default-services/:id'
+    '/defaultService/:id': '/default-services/:id',
+    '/user/unverified': '/userUnverified'
 }));
 
 server.post('/dmdiidocument', function(req,res) {

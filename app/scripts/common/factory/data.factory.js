@@ -619,7 +619,17 @@ return {
           addFunds: localhost + 'payment/account',
           servicePaymentInternal: localhost + 'payment/plan/' + id,
           servicePaymentStripe: localhost + 'payment/plan/stripe',
-          organizations: localhost + 'organizations/user'
+          pay: localhost + 'payment/organization',
+          organizations: localhost + 'organizations/user',
+          userUnverify: localhost + 'user/unverified'
+        };
+      },
+      esignOnline: function(id){
+        return {
+          docuSign: localhost + 'esignDoc',
+          checkSignature: localhost + 'esignCheck/' + id,
+          callbackSignature: localhost + 'esignCallback',
+          esignToken: localhost + 'esignToken',
         };
       },
       servicePermits: function(id) {

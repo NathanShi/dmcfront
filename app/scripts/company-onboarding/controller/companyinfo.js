@@ -6,158 +6,61 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-homeController', ['$scope', 'companyOnboardingModel', 'userData', 'DMCUserModel', '$location', '$rootScope', '$cookies', '$mdDialog',
-    function($scope, companyOnboardingModel, userData, DMCUserModel, $location, $rootScope, $cookies, $mdDialog){
-      $cookies.put('fromDMDIISignup',true);
+.controller('co-homeController', ['$scope', 'companyOnboardingModel', '$cookies', '$mdDialog',
+    function($scope, companyOnboardingModel, $cookies, $mdDialog){
 
+      //Set up cookie for sign in process
+      $cookies.put('fromDMDIISignup',true);
 }])
 
-.controller('co-companyinfoController', ['$scope', 'companyOnboardingModel', '$window', '$location', '$anchorScroll', 'ajax', 'dataFactory', '$rootScope', '$mdDialog',
-    function($scope, companyOnboardingModel, $window, $location, $anchorScroll, ajax, dataFactory, $rootScope, $mdDialog){
+.controller('co-companyinfoController', ['$scope',
+                                         'companyOnboardingModel',
+                                         '$window',
+                                         '$location',
+                                         '$anchorScroll',
+                                         'ajax',
+                                         'dataFactory',
+                                         'storageService',
+                                         '$rootScope',
+                                         '$timeout',
+                                         '$mdDialog',
+    function($scope,
+             companyOnboardingModel,
+             $window,
+             $location,
+             $anchorScroll,
+             ajax,
+             dataFactory,
+             storageService,
+             $rootScope,
+             $timeout,
+             $mdDialog){
+
       $anchorScroll();
 
-      $scope.linkToPage = function(){
-        $window.location.href = '/onboarding.php';
+      //Next button control
+      $scope.isDisabled = false;
+
+      $scope.enableButton = function(){
+        $scope.isDisabled = false;
       }
 
-      $scope.company = companyOnboardingModel.get_companyInfo();
-      if (angular.equals($scope.company, {})){
-          ajax.get(dataFactory.payment().organizations, {}, function(response){
-            if (response.data.id != null){
-              if (response.data.isPaid == false){
-                transResponse(response.data);
-                // console.log($scope.company);
-                companyOnboardingModel.save_companyInfo($scope.company);
-                // $location.path('/pay');
-              }
-
-              else{
-                alert("You already have a Tier3 Membership organization database, will redirect to dashboard");
-                $window.location.href = '/onboarding.php';
-                // $('#orgExist').modal('show').
-                // $('#orgExist').on('hidden.bs.modal', function (e) {
-                //   $window.location.href = '/onboarding.php';
-                // });
-
-              }
-            }
-          });
+      $scope.disableButton = function(){
+        $scope.isDisabled = true;
       }
 
-      function transResponse(data){
-        $scope.company.name = data.name;
-        $scope.company.id = data.id;
-        $scope.company.naicsCode = data.naicsCode;
-        $scope.company.firstAddress = {};
-        $scope.company.firstAddress.line1 = data.address.streetAddress1;
-        $scope.company.firstAddress.line2 = data.address.streetAddress2;
-        $scope.company.firstAddress.city = data.address.city;
-        $scope.company.firstAddress.state = data.address.state;
-        $scope.company.firstAddress.zipcode = data.address.zip;
+      //Initialize form to fill. function in '/company-onboarding.js'
+      $scope.company = {};
 
-        var jsonType = angular.fromJson(data.dmdiiMembershipInfo);
-        // console.log(jsonType);
-        $scope.company.main = jsonType.mainPointContact;
-        $scope.company.finance = jsonType.financePointContact;
-        if ($scope.company.finance != null)
-          $scope.company.financialContact = true;
-        $scope.company.legal = jsonType.legalPointContact;
-        if ($scope.company.legal != null)
-          $scope.company.legalContact = true;
-        $scope.company.secondAddress = jsonType.secondAddress;
-        if ($scope.company.secondAddress != null)
-          $scope.company.subCompany = true;
-        $scope.company.selectedAnnualRevenue = null;
-        $scope.company.selectedEmployeeSize = null;
-        $scope.company.type = null;
-        $scope.company.startUp = jsonType.startUp;
-        $scope.company.duns = jsonType.dunsCode;
-      }
+      $scope.orgType = companyOnboardingModel.initialOrgType();
 
-      $scope.company.selectedEmployeeSize = null;
-      $scope.company.selectedAnnualRevenue = null;
+      $scope.employeeSize = companyOnboardingModel.initialEmployeeSize();
 
-      $scope.orgType = [
-        { selection : 'Public Company', selected : false },
-        { selection : 'Educational', selected : false },
-        { selection : 'Self Employed', selected : false },
-        { selection : 'Government Agency', selected : false },
-        { selection : 'Non Profit', selected : false },
-        { selection : 'Self Owned', selected : false },
-        { selection : 'Privately Held', selected : false },
-        { selection : 'Partnership', selected : false }
-      ];
+      $scope.annualRevenue = companyOnboardingModel.initialAnnualRevenue();
 
+      $scope.orgTYPEs = companyOnboardingModel.initialOrgTYPEs();
 
-      $scope.employeeSize = [
-        {
-          name: 'Self-employed',
-          value: 'Self-employed'
-        },
-        {
-          name: '1-10 employees',
-          value: '1-10 employees'
-        },
-        {
-          name: '11-50 employees',
-          value: '11-50 employees'
-        },
-        {
-          name: '51-200 employees',
-          value: '51-200 employees'
-        },
-        {
-          name: '501-1000 employees',
-          value: '501-1000 employees'
-        },
-        {
-          name: '1001-5000 employees',
-          value: '1001-5000 employees'
-        },
-        {
-          name: '5001-10,000 employees',
-          value: '5001-10,000 employees'
-        },
-        {
-          name: '10,000+ employees',
-          value: '10,000+ employees'
-        }
-      ];
-
-      $scope.annualRevenue = [
-        {
-          name: '0-25M',
-          value: '0-25M'
-        },
-        {
-          name: '26M-50M',
-          value: '26M-50M'
-        },
-        {
-          name: '51M-100M',
-          value: '51M-100M'
-        },
-        {
-          name: '101M-250M',
-          value: '101M-250M'
-        },
-        {
-          name: '251M-500M',
-          value: '251M-500M'
-        },
-        {
-          name: '501M-1B',
-          value: '501M-1B'
-        },
-        {
-          name: '2B-10B',
-          value: '2B-10B'
-        },
-        {
-          name: '11B+',
-          value: '11B+'
-        }
-      ];
+      $scope.industryType = companyOnboardingModel.initialIndustryType();
 
       $scope.isOptionsRequired = function(){
         return !$scope.orgType.some(function(options){
@@ -165,13 +68,82 @@ angular.module('dmc.company.onboarding')
         });
       };
 
-
-
       $scope.companyinfo = {};
 
+      var checkUnVerified = function(callback){
+        ajax.get(dataFactory.payment().userUnverify, {}, function successCallback(response){
+            if (response.data != true){
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Alert')
+                  .content(response.data.message)
+                  .ok('Got it!')
+              ).then(function(){
+                $window.location.href = '/onboarding.php';
+              });
+            }
+        }, function errorCallback(response) {
+            $mdDialog.show(
+              $mdDialog.alert()
+                .clickOutsideToClose(false)
+                .title('Alert')
+                .content(response.data.message)
+                .ok('Got it!')
+            ).then(function(){
+              $window.location.href = '/onboarding.php';
+            });
+        }).then(function(){
+            callback();
+        });
+      }
+
+      var retrieveOrgInfo = function(){
+        //Call '/organization/user' to retrieve organization info in database
+        ajax.get(dataFactory.payment().organizations, {}, function(response){
+          if (response.data.id != null){
+            if (response.data.isPaid == false){
+              //Call service.transResponse() to stream data to form
+              $scope.company = companyOnboardingModel.transResponse(response.data);
+              storageService.set('companyinfoCache', JSON.stringify($scope.company));
+            }
+            else{
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Alert')
+                  .content('You already have a Tier3 Membership organization in database, will redirect to dashboard.')
+                  .ok('Got it!')
+              ).then(function(){
+                $window.location.href = '/onboarding.php';
+              });
+            }
+          }
+        });
+
+        //If no info in database, check if user is back from payment page
+        //Using localStorage
+        if (angular.equals($scope.company, {})){
+            var haveStored = storageService.get('companyinfoCache');
+            if (haveStored && !angular.isUndefined(haveStored)){
+              $scope.company = JSON.parse(haveStored);
+              storageService.remove('companyinfoCache');
+            }
+            else
+              $scope.company = {};
+        }
+      }
+
+      checkUnVerified(retrieveOrgInfo);
+
+      //Form submission
       $scope.save = function(company) {
+
+        $scope.disableButton();
+
         var type = [];
 
+        //Serialize form information to $scope.companyinfo
         $scope.orgType.forEach(function(element) {
             if (element.selected == true)
               type.push(element.selection);
@@ -179,6 +151,10 @@ angular.module('dmc.company.onboarding')
 
         if (!company.subCompany){
             company.secondAddress = null;
+        }
+
+        if (!company.techContact){
+            company.tech = null;
         }
 
         if (!company.financialContact){
@@ -191,15 +167,105 @@ angular.module('dmc.company.onboarding')
 
         company.selectedEmployeeSize = company.selectedEmployeeSize.value;
         company.selectedAnnualRevenue = company.selectedAnnualRevenue.value;
+        company.orgTYPEs = company.orgTYPEs.value;
         $scope.companyinfo = angular.copy(company);
         $scope.companyinfo.type = type;
-        if ($scope.company.id)
-          $scope.companyinfo.id = $scope.company.id;
 
-        companyOnboardingModel.save_companyInfo($scope.companyinfo);
-        $location.path('/pay');
+        //eSignature Requested
+        $scope.companyinfo.docuSigned = "Signed"; //Test
+        $scope.companyinfo.templateID = "129999710"; //Test
+        // $scope.companyinfo.docuSigned = "Requested";
+
+        if ($scope.company.id){
+          $scope.companyinfo.id = $scope.company.id;
+        }
+
+        //Call service.populateField() to stream info for Membership Agreement
+        var postDocInfo = companyOnboardingModel.populateField($scope.companyinfo);
+        // console.log(postDocInfo);
+        var responseErrorReason = "Oops, we had a problem when generating Membership Agreement, please try again later. " +
+        "\nIf you kept having this problem, please contact us.";
+        storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));//Test
+
+        ajax.get(dataFactory.esignOnline().esignToken, {}, function successCallback(response) {
+              if (response.data.status == "eSignToken Successful!"){
+                  $scope.companyinfo.token = response.data.reason;
+              }
+              else{
+                  $mdDialog.show(
+                    $mdDialog.alert()
+                      .clickOutsideToClose(false)
+                      .title('Error')
+                      .content(response.data.reason)
+                      .ok('OK')
+                  );
+              }
+        }, function errorCallback(response) {
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Error')
+                  .content(responseErrorReason)
+                  .ok('OK')
+              );
+        }).then(function(){
+
+          //Call 'esignDoc' to call PDFfiller API to generate Membership Agreement with populated fields
+          ajax.create(dataFactory.esignOnline().docuSign, postDocInfo, function successCallback(response) {
+              if (response.data.status == "eSignature Successful!"){
+                  var generatedForm = JSON.parse(response.data.reason);
+                  //Response will contain template_id & url
+                  if (generatedForm.template_id && generatedForm.url){
+                    $scope.companyinfo.templateID = generatedForm.template_id;
+                    $scope.companyinfo.formURL = generatedForm.url;
+                  }
+              }
+              else{
+                  responseErrorReason = response.data.reason
+              }
+          }, function errorCallback(response) {
+             responseErrorReason = "Error when calling for e-sign API. \nIf you kept having this problem, please contact us.";
+          }).then(function(){
+            if ($scope.companyinfo.templateID && $scope.companyinfo.formURL){
+              //localStorage the form together with template_id & url
+              storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo))
+              console.log($scope.companyinfo.formURL + "?token=" + $scope.companyinfo.token);
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Successfully Generate Membership Agreement')
+                  .content('Please click OK to proceed, if this doesn\'t work please contact us')
+                  .ok('OK')
+              ).then(function(){
+                $timeout( function(){
+                  //Go to the Membership Agreement URL
+                  if (!angular.isUndefined($scope.company.token)){
+                    $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                  }
+                  else {
+                    $window.location.href = $scope.company.formURL
+                  }
+                }, 500);
+              });
+            }
+            else{
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Error')
+                  .content(responseErrorReason)
+                  .ok('OK')
+              );
+            }
+
+            $scope.enableButton();
+          });
+
+        });
+
       };
 
+      //Show Modal
       $scope.showModalTermsConditions = function(){
   			$mdDialog.show({
   			    controller: 'TermsConditionsController',
@@ -218,32 +284,97 @@ angular.module('dmc.company.onboarding')
 
 }])
 
-.controller('co-payController', ['$scope', 'companyOnboardingModel', '$location', '$anchorScroll', '$window', 'dataFactory', 'ajax', 'storageService',
-    function($scope, companyOnboardingModel, $location, $anchorScroll, $window, dataFactory, ajax, storageService){
+.controller('co-payController', ['$scope',
+                                 'companyOnboardingModel',
+                                 '$location',
+                                 '$anchorScroll',
+                                 '$window',
+                                 'dataFactory',
+                                 'ajax',
+                                 'storageService',
+                                 '$mdDialog',
+                                 '$timeout',
+    function($scope,
+             companyOnboardingModel,
+             $location,
+             $anchorScroll,
+             $window,
+             dataFactory,
+             ajax,
+             storageService,
+             $mdDialog,
+             $timeout){
+
       $anchorScroll();
       $scope.isDisabled = false;
 
-      $scope.company = companyOnboardingModel.get_companyInfo();
-      if(angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
-          var haveStored = storageService.get('companyinfoCache');
-          if (haveStored){
-              $scope.company = JSON.parse(haveStored);
-          }
+      //Get data from localStorage
+      var haveStored = storageService.get('companyinfoCache');
+      if (haveStored && !angular.isUndefined(haveStored)){
+        $scope.company = JSON.parse(haveStored);
+      }
 
-          else{
-              $location.path('/companyinfo');
-          }
+      //Check if exists
+      if (!$scope.company){
+        $location.path('/companyinfo');
       }
       else{
-          storageService.set('companyinfoCache', JSON.stringify($scope.company));
+        var errorReason = "null";
+        if ($scope.company.docuSigned != "Signed"){
+          //Call 'esignCheck/template_id' to check if the Membership Agreement has signed
+          ajax.get(dataFactory.esignOnline($scope.company.templateID).checkSignature, {}, function(response){
+              if (response.data.status == "eSignCheck Successful!"){
+                  var Signature = JSON.parse(response.data.reason);
+                  if (Signature.total > 0){
+                      $scope.company.docuSigned = "Signed";
+                  }
+                  else{
+                      errorReason = "You haven\'t sign the Membership Agreement yet, please go back and sign it!"
+                  }
+              }
+              else {
+                  $scope.company.docuSigned = "Unable to Check"
+                  errorReason = "Oops, something went wrong, please try again later. If you kept having this problem, please contact us."
+              }
+          }).then(function(){
+            if (errorReason != "null"){
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Alert')
+                  .content(errorReason)
+                  .ok('OK')
+              );
+            }
+          }).then(function(){
+              if ($scope.company.docuSigned == "Requested"){
+                  if ($scope.company.templateID){
+                    //If not signed go to the url and sign it.
+                    storageService.set('companyinfoCache', JSON.stringify($scope.company));
+                      $timeout(function(){
+                          if (!angular.isUndefined($scope.company.token)){
+                            $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                          }
+                          else {
+                            $window.location.href = $scope.company.formURL
+                          }
+                      }, 1000);
+                    }
+                  else{
+                    //If no template_id found, go back to companyinfo page
+                    $timeout(function(){
+                      $scope.back();
+                    }, 5000);
+                  }
+              }
+          });
+        }
       }
 
-      // if (angular.equals($scope.company, {}) || $scope.company.selectedEmployeeSize == null){
-      //         $location.path('/companyinfo');
-      // }
-
       $scope.back = function(){
-        companyOnboardingModel.save_companyInfo($scope.company);
+        if ($scope.company){
+          storageService.set('companyinfoCache', JSON.stringify($scope.company));
+        }
         $location.path('/companyinfo');
       }
 
@@ -326,120 +457,168 @@ angular.module('dmc.company.onboarding')
 
       function stripeTokenHandler(token) {
 
-          var jsoninfo = companyInfotoJson(token);
-          storageService.remove('companyinfoCache');
-
-          if (!jsoninfo.id){
+          //call to retrieve company id
+          if (!$scope.company.id || angular.isUndefined($scope.company.id)){
+            //call '/organization/user' to retrieve organization id
             ajax.get(dataFactory.payment().organizations, {}, function(response){
               if (response.data.name != null){
                 if (response.data.isPaid == false){
-                  jsoninfo.organizationModel.id = response.data.id;
-                  // console.log("jsoninfo.id", jsoninfo.organizationModel.id);
+                  $scope.company.id = response.data.id;
                 }
 
                 else{
-                  alert("You already have a Tier3 Membership organization database, will redirect to dashboard");
-                  $window.location.href = '/onboarding.php';
-                  // $('#orgExist').modal('show');
+                  $mdDialog.show(
+                    $mdDialog.alert()
+                      .clickOutsideToClose(false)
+                      .title('Alert')
+                      .content('You already have a Tier3 Membership organization in database, will redirect to dashboard.')
+                      .ok('Got it!')
+                  ).then(function(){
+                    $window.location.href = '/onboarding.php';
+                  });
                 }
               }
             }).then(function(){
-              // console.log("jsoninfo", jsoninfo.organizationModel.id);
-              if (!jsoninfo.organizationModel.id)
-                jsoninfo.organizationModel.id = null;
-              $scope.submitOrgPayment(jsoninfo);
+              if (!$scope.company.id)
+                $scope.company.id = null;
+
+                //Call 'esignCheck/template_id' to check if the Membership Agreement has signed again
+                ajax.get(dataFactory.esignOnline($scope.company.templateID).checkSignature, {}, function(response){
+                    // console.log("response",response);
+                    if (response.data.status == "eSignCheck Successful!"){
+                      if (response.data.reason == "Error when calling the API"){
+                        $mdDialog.show(
+                          $mdDialog.alert()
+                            .clickOutsideToClose(false)
+                            .title('Alert')
+                            .content(response.data.reason + ', please try again later. If you kept having this problem, please contact us.')
+                            .ok('OK')
+                        );
+                      }
+                      else{
+                        // var Signature = JSON.parse(response.data.reason);
+                        var Signature = response.data.reason; //Test
+                        $scope.signedInfo = Signature.items;
+                        // console.log("Signature", $scope.signedInfo);
+                        if (Signature.total == 0){
+                            $mdDialog.show(
+                              $mdDialog.alert()
+                                .clickOutsideToClose(false)
+                                .title('Alert')
+                                .content('You haven\'t sign the Membership Agreement yet, please go back and sign it!')
+                                .ok('OK')
+                            ).then(function(){
+                                if (!angular.isUndefined($scope.company.token)){
+                                  $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                                }
+                                else {
+                                  $window.location.href = $scope.company.formURL
+                                }
+                            });
+                        }
+                        else{
+                            //Signed, verify first then go to payment
+                            $scope.company.docuSigned = "Signed";
+                            $scope.company.verifiedSignatures = [];
+                            Signature.items.forEach(function(element){
+                                if (element.user == "same"){
+                                  $scope.company.verifiedSignatures.push(element);
+                                }
+                            });
+
+                            $mdDialog.show({
+                                scope: $scope,
+                                preserveScope: true,
+                                clickOutsideToClose: false,
+                                templateUrl: '/templates/company-onboarding/signatureVerifyDialog.html',
+                                controller: function eSignDialogController($scope, $mdDialog) {
+                                  $scope.closeDialog = function() {
+                                    $mdDialog.hide();
+                                  };
+                                  //
+                                  $scope.answer = function(answer) {
+                                    $mdDialog.hide(answer);
+                                  };
+                                }
+                            }).then(function(answer){
+                                if (answer == "Confirm"){
+                                    // alert("Confirm");//Test
+                                    // var orgPayEsignOBJ = companyOnboardingModel.matchOrgType($scope.company, token.id);//Test
+                                    // console.log("orgPayEsignOBJ", orgPayEsignOBJ);//Test
+                                    $scope.submitOrgPayment($scope.company, token);
+                                }
+                                else if (answer == "Back"){
+                                    $scope.enableButton();
+                                    // alert("Back");//Test
+                                    if (!angular.isUndefined($scope.company.token)){
+                                      $window.location.href = $scope.company.formURL + "?token=" +$scope.company.token;
+                                    }
+                                    else {
+                                      $window.location.href = $scope.company.formURL
+                                    }
+                                }
+                                else{
+                                    $scope.enableButton();
+                                }
+                            });
+
+                        }
+                     }
+                   }
+                   else {
+                     $mdDialog.show(
+                       $mdDialog.alert()
+                         .clickOutsideToClose(false)
+                         .title('Alert')
+                         .content('Oops, something went wrong, please try again later. If you kept having this problem, please contact us.')
+                         .ok('OK')
+                     );
+                   }
+                });
             });
           }
-          else {
-              $scope.submitOrgPayment(jsoninfo);
-          }
-
       }
 
-      $scope.submitOrgPayment = function(info){
-          ajax.create(dataFactory.payment().orgPayment, info, function successCallback(response) {
+      $scope.submitOrgPayment = function(info, token){
+
+          //Call service.matchOrgType() to stream companyinfo to object
+          var orgPayEsignOBJ = companyOnboardingModel.matchOrgType(info, token.id);
+
+          //Call '/payment' to submit Stripe token with companyinfo
+          ajax.create(dataFactory.payment().pay, orgPayEsignOBJ, function successCallback(response) {
             if (response.data.status == "succeeded"){
-              alert("Successful payment! Redirect to dashboard");
-              // $window.location.href = '/onboarding.php';
-              $window.location.href = '/marketplace.php';
-              // $('#successPay').modal('show');
-              // console.log("success");
+              storageService.remove('companyinfoCache');
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Great')
+                  .content('Successful payment! Redirect to dashboard.')
+                  .ok('OK')
+              ).then(function(){
+                // alert("Beta Test Version, should redirect in release version");
+                $window.location.href = '/onboarding.php';
+              });
             }
             else if (response.data.status == "failed"){
-              alert(response.data.reason);
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Alert')
+                  .content(response.data.reason)
+                  .ok('OK')
+              );
             }
           }, function errorCallback(response) {
-            alert("Oops, something went wrong, please contact us");
-            // $scope.body = "Oops, something went wrong, please contact us for more information";
-            // $('#failedPay').modal('show');
+            $mdDialog.show(
+              $mdDialog.alert()
+                .clickOutsideToClose(false)
+                .title('Alert')
+                .content('Oops, payment went wrong, please contact us.')
+                .ok('OK')
+            );
           }).then(function(){
               $scope.enableButton();
-              // $scope.flag = false;
           });
-      }
-
-      $scope.linkToPage = function(){
-        $window.location.href = '/onboarding.php';
-      }
-
-      function companyInfotoJson(token){
-
-          $scope.dmdiiMembershipInfo = {
-            mainPointContact: $scope.company.main,
-            financePointContact: $scope.company.finance,
-            legalPointContact: $scope.company.legal,
-            secondAddress: $scope.company.secondAddress,
-            annualRevenue: $scope.company.selectedAnnualRevenue,
-            employeeSize: $scope.company.selectedEmployeeSize,
-            startUp: $scope.company.startUp,
-            dunsCode: $scope.company.duns
-          };
-
-          var MembershipInfo = JSON.stringify($scope.dmdiiMembershipInfo);
-
-          $scope.payment = {
-            stripeToken: token.id,
-            organizationModel:{
-              name:$scope.company.name,
-              id: $scope.company.id ? $scope.company.id : null,
-              location:null,
-              description:null,
-              division:null,
-              industry:null,
-              naicsCode:$scope.company.naicsCode,
-              email:null,
-              phone:null,
-              website:null,
-              socialMediaLinkedin:null,
-              socialMediaTwitter:null,
-              socialMediaInthenews:null,
-              perferedCommMethod:null,
-              productionCapabilities:null,
-              address:{
-                streetAddress1:$scope.company.firstAddress.line1,
-                streetAddress2:($scope.company.firstAddress.line2?$scope.company.firstAddress.line2:null),
-                city:$scope.company.firstAddress.city,
-                state:$scope.company.firstAddress.state,
-                country:"US",
-                zip:$scope.company.firstAddress.zipcode,
-              },
-              reasonJoining:null,
-              featureImage:null,
-              dmdiiMembershipInfo:MembershipInfo,
-              awards:null,
-              contacts:null,
-              areasOfExpertise:null,
-              desiredAreasOfExpertise:null,
-              postCollaboration:null,
-              upcomingProjectInterests:null,
-              pastProjects:null
-            }
-          };
-
-          // var jsoninfo = angular.toJson($scope.payment);
-          // // console.log(jsoninfo);
-          return $scope.payment;
-
       }
 
 }])

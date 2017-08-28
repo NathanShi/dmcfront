@@ -17,6 +17,7 @@ angular.module('dmc.widgets.companyonboardingTabs',[])
       $scope.steps = [
         {icon:'person_add', content:'Create Account'},
         {icon:'business', content:'Company Information'},
+        {icon:'mode_edit', content:'Sign Agreement'},
         {icon:'credit_card', content:'Confirm and Pay'}
       ];
 
