@@ -94,7 +94,9 @@ angular.module('dmc.company.onboarding')
               $window.location.href = '/onboarding.php';
             });
         }).then(function(){
-            callback();
+            $timeout( function(){
+              callback();
+            }, 5000);
         });
       }
 
@@ -121,20 +123,21 @@ angular.module('dmc.company.onboarding')
           }
         });
 
-        //If no info in database, check if user is back from payment page
-        //Using localStorage
-        if (angular.equals($scope.company, {})){
-            var haveStored = storageService.get('companyinfoCache');
-            if (haveStored && !angular.isUndefined(haveStored)){
-              $scope.company = JSON.parse(haveStored);
-              storageService.remove('companyinfoCache');
-            }
-            else
-              $scope.company = {};
-        }
       }
 
       checkUnVerified(retrieveOrgInfo);
+
+      //If no info in database, check if user is back from payment page
+      //Using localStorage
+      if (angular.equals($scope.company, {})){
+          var haveStored = storageService.get('companyinfoCache');
+          if (haveStored && !angular.isUndefined(haveStored)){
+            $scope.company = JSON.parse(haveStored);
+            storageService.remove('companyinfoCache');
+          }
+          else
+            $scope.company = {};
+      }
 
       //Form submission
       $scope.save = function(company) {

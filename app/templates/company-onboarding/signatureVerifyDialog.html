@@ -8,14 +8,14 @@
            </md-toolbar>
            <md-dialog-content class="rows">
              <strong>Verified Signature:</strong>
-             <table class="table">
+             <table class="table" ng-show="sameUser.length">
                <thead>
                  <td>Name</td>
                  <td>Email</td>
                  <td>IP</td>
                  <td>Date</td>
                </thead>
-               <tr ng-repeat="signature in signedInfo | filter: { user :  'same' }" class="success">
+               <tr ng-repeat="signature in sameUser = (signedInfo | filter: { user :  'same' })" class="success">
                  <td>{{ signature.name }}</td>
                  <td>{{ signature.email }}</td>
                  <td>{{ signature.ip }}</td>
@@ -24,14 +24,14 @@
              </table>
              <hr>
              <strong>Unexpected Signature:</strong>
-             <table class="table">
+             <table class="table" ng-show="diffUser.length">
                <thead>
                  <td>Name</td>
                  <td>Email</td>
                  <td>IP</td>
                  <td>Date</td>
                </thead>
-               <tr ng-repeat="signature in signedInfo | filter: { user :  'different'  }" class="danger">
+               <tr ng-repeat="signature in diffUser = (signedInfo | filter: { user :  'different' })" class="danger">
                  <td>{{ signature.name }}</td>
                  <td>{{ signature.email }}</td>
                  <td>{{ signature.ip }}</td>
