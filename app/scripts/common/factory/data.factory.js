@@ -627,7 +627,7 @@ return {
           return {
             get: prefix + id,
             getByService: prefix + 'service/' + id,
-            getByOrganization: prefix + 'organization/' + id,
+            getByOrganization: prefix + 'organization/' + id
         };
       },
       getDMDIIDocuments: function(id) {
