@@ -97,6 +97,7 @@ angular.module('dmc.company.onboarding', [
               company.docuSigned = jsonType.docuSigned;
               company.templateID = jsonType.templateID;
               company.formURL = jsonType.formURL;
+              company.token = jsonType.token;
 
               return company;
             }
@@ -191,6 +192,7 @@ angular.module('dmc.company.onboarding', [
                 }
                 populateCompany.mainPhone = data.main.phone;
                 populateCompany.mainEmail = data.main.email;
+                populateCompany.mainFax = "-";
 
                 var popType = {};
 
@@ -216,6 +218,14 @@ angular.module('dmc.company.onboarding', [
                     }
                     populateCompany.techPhone = data.tech.phone;
                     populateCompany.techEmail = data.tech.email;
+                    populateCompany.techFax = "-";
+                }else {
+                    populateCompany.techName = "-";
+                    populateCompany.techAddress = "-";
+                    populateCompany.techCSZ = "-";
+                    populateCompany.techPhone = "-";
+                    populateCompany.techEmail = "-";
+                    populateCompany.techFax = "-";
                 }
 
                 if (data.legal != null){
@@ -229,6 +239,14 @@ angular.module('dmc.company.onboarding', [
                     }
                     populateCompany.legalPhone = data.legal.phone;
                     populateCompany.legalEmail = data.legal.email;
+                    populateCompany.legalFax = "-";
+                }else {
+                    populateCompany.legalName = "-";
+                    populateCompany.legalAddress = "-";
+                    populateCompany.legalCSZ = "-";
+                    populateCompany.legalPhone = "-";
+                    populateCompany.legalEmail = "-";
+                    populateCompany.legalFax = "-";
                 }
 
                 if (data.finance != null){
@@ -242,6 +260,14 @@ angular.module('dmc.company.onboarding', [
                     }
                     populateCompany.financePhone = data.finance.phone;
                     populateCompany.financeEmail = data.finance.email;
+                    populateCompany.financeFax = "-";
+                }else {
+                    populateCompany.financeName = "-";
+                    populateCompany.financeAddress = "-";
+                    populateCompany.financeCSZ = "-";
+                    populateCompany.financePhone = "-";
+                    populateCompany.financeEmail = "-";
+                    populateCompany.financeFax = "-";
                 }
 
                 return populateCompany;
@@ -264,7 +290,9 @@ angular.module('dmc.company.onboarding', [
                   orgTYPEs: data.orgTYPEs,
                   docuSigned: data.docuSigned,
                   templateID: data.templateID,
-                  formURL: data.formURL
+                  formURL: data.formURL,
+                  Token: data.token,
+                  verifiedSignatures: data.verifiedSignatures
                 };
 
                 var MembershipInfoString = JSON.stringify(dmdiiMembershipInfoObj);

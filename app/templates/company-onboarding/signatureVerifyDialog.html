@@ -1,0 +1,51 @@
+          <md-dialog aria-labelledby="verifiedSignatures">
+           <md-toolbar class="md-toolbar-tools">
+               <h3 style="color:white;">Please Confirm the Signature</h3>
+               <span flex></span>
+               <md-button class="md-icon-button md-primary" aria-label="closeDialog" style="padding-top:5px" ng-click="closeDialog()">
+                  <ng-md-icon icon="close" style="fill:white"></ng-md-icon>
+               </md-button>
+           </md-toolbar>
+           <md-dialog-content class="rows">
+             <strong>Verified Signature:</strong>
+             <table class="table" ng-show="sameUser.length">
+               <thead>
+                 <td>Name</td>
+                 <td>Email</td>
+                 <td>IP</td>
+                 <td>Date</td>
+               </thead>
+               <tr ng-repeat="signature in sameUser = (signedInfo | filter: { user :  'same' })" class="success">
+                 <td>{{ signature.name }}</td>
+                 <td>{{ signature.email }}</td>
+                 <td>{{ signature.ip }}</td>
+                 <td>{{ signature.date + '000'  | date:  'medium' }}</td>
+               </tr>
+             </table>
+             <hr>
+             <strong>Unexpected Signature:</strong>
+             <table class="table" ng-show="diffUser.length">
+               <thead>
+                 <td>Name</td>
+                 <td>Email</td>
+                 <td>IP</td>
+                 <td>Date</td>
+               </thead>
+               <tr ng-repeat="signature in diffUser = (signedInfo | filter: { user :  'different' })" class="danger">
+                 <td>{{ signature.name }}</td>
+                 <td>{{ signature.email }}</td>
+                 <td>{{ signature.ip }}</td>
+                 <td>{{ signature.date + '000'  | date:  'medium' }}</td>
+               </tr>
+             </table>
+             <h5>If you notice any unrecognized rows, please contact us immediately.</h5>
+           </md-dialog-content>
+           <md-dialog-actions align="end" style="order: 2;margin-bottom: 20px;">
+             <md-button class="md-raised md-warn" ng-click="answer( 'Back' )">
+               Go back and Sign
+             </md-button>
+             <md-button class="md-raised md-primary" style="color:white;" ng-click="answer( 'Confirm' )">
+               Confirm
+             </md-button>
+           </md-dialog-actions>
+          </md-dialog>
