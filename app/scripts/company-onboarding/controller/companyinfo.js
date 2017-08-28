@@ -49,46 +49,8 @@ angular.module('dmc.company.onboarding')
         $scope.isDisabled = true;
       }
 
-      $scope.company = {};
-
-      //Call '/organization/user' to retrieve organization info in database
-      ajax.get(dataFactory.payment().organizations, {}, function(response){
-        if (response.data.id != null){
-          if (response.data.isPaid == false){
-            //Call service.transResponse() to stream data to form
-            $scope.company = companyOnboardingModel.transResponse(response.data);
-            storageService.set('companyinfoCache', JSON.stringify($scope.company));
-          }
-          else{
-            $mdDialog.show(
-              $mdDialog.alert()
-                .clickOutsideToClose(false)
-                .title('Alert')
-                .content('You already have a Tier3 Membership organization in database, will redirect to dashboard.')
-                .ok('Got it!')
-            ).then(function(){
-              $window.location.href = '/onboarding.php';
-            });
-          }
-        }
-      });
-
-      //If no info in database, check if user is back from payment page
-      //Using localStorage
-      if (angular.equals($scope.company, {})){
-          var haveStored = storageService.get('companyinfoCache');
-          if (haveStored && !angular.isUndefined(haveStored)){
-            $scope.company = JSON.parse(haveStored);
-            storageService.remove('companyinfoCache');
-          }
-          else
-            $scope.company = {};
-      }
-
       //Initialize form to fill. function in '/company-onboarding.js'
-      $scope.company.selectedEmployeeSize = null;
-      $scope.company.selectedAnnualRevenue = null;
-      $scope.company.orgTYPEs = null;
+      $scope.company = {};
 
       $scope.orgType = companyOnboardingModel.initialOrgType();
 
@@ -107,6 +69,72 @@ angular.module('dmc.company.onboarding')
       };
 
       $scope.companyinfo = {};
+
+      var checkUnVerified = function(callback){
+        ajax.get(dataFactory.payment().userUnverify, {}, function successCallback(response){
+            if (response.data != true){
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Alert')
+                  .content(response.data.message)
+                  .ok('Got it!')
+              ).then(function(){
+                $window.location.href = '/onboarding.php';
+              });
+            }
+        }, function errorCallback(response) {
+            $mdDialog.show(
+              $mdDialog.alert()
+                .clickOutsideToClose(false)
+                .title('Alert')
+                .content(response.data.message)
+                .ok('Got it!')
+            ).then(function(){
+              $window.location.href = '/onboarding.php';
+            });
+        }).then(function(){
+            callback();
+        });
+      }
+
+      var retrieveOrgInfo = function(){
+        //Call '/organization/user' to retrieve organization info in database
+        ajax.get(dataFactory.payment().organizations, {}, function(response){
+          if (response.data.id != null){
+            if (response.data.isPaid == false){
+              //Call service.transResponse() to stream data to form
+              $scope.company = companyOnboardingModel.transResponse(response.data);
+              storageService.set('companyinfoCache', JSON.stringify($scope.company));
+            }
+            else{
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(false)
+                  .title('Alert')
+                  .content('You already have a Tier3 Membership organization in database, will redirect to dashboard.')
+                  .ok('Got it!')
+              ).then(function(){
+                $window.location.href = '/onboarding.php';
+              });
+            }
+          }
+        });
+
+        //If no info in database, check if user is back from payment page
+        //Using localStorage
+        if (angular.equals($scope.company, {})){
+            var haveStored = storageService.get('companyinfoCache');
+            if (haveStored && !angular.isUndefined(haveStored)){
+              $scope.company = JSON.parse(haveStored);
+              storageService.remove('companyinfoCache');
+            }
+            else
+              $scope.company = {};
+        }
+      }
+
+      checkUnVerified(retrieveOrgInfo);
 
       //Form submission
       $scope.save = function(company) {
