@@ -615,7 +615,7 @@ return {
       },
       payment: function(){
         return {
-          pay: localhost + 'payment',
+          pay: localhost + 'payment/organization',
           organizations: localhost + 'organizations/user',
           userUnverify: localhost + 'user/unverified'
         };
