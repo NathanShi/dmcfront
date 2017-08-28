@@ -29,11 +29,6 @@
 <script src="scripts/common/factory/notifications.factory.js"></script>
 <script src="scripts/common/footer/footer.js"></script>
 <script src="scripts/common/factory/location.factory.js"></script>
-<!-- <script src="scripts/components/ui-widgets/documents.directive.js"></script> -->
-<!-- <script src="scripts/components/ui-widgets/stars.directive.js"></script> -->
-<!-- <script src="scripts/components/ui-widgets/review.directive.js"></script> -->
-<!-- <script src="scripts/components/ui-widgets/rich-text.directive.js"></script> -->
-<!-- <script src="scripts/components/dropzone/dropzone.directive.js"></script> -->
 <script src="scripts/common/factory/socket.factory.js"></script>
 <script src="scripts/common/factory/ajax.factory.js"></script>
 <script src="scripts/common/factory/data.factory.js"></script>
@@ -48,6 +43,7 @@
 <script src="scripts/company-onboarding/controller/home.js"></script>
 <!-- <script src="scripts/company-onboarding/controller/autocomplete.js"></script> -->
 <script src="scripts/components/ui-widgets/company-onboarding-tabs.directive.js"></script>
+<script src="scripts/components/ui-widgets/stripe-payment.directive.js"></script>
 <script src="scripts/company-onboarding/controller/companyinfo.js"></script>
 <script src="scripts/company-onboarding/controller/landing.js"></script>
 
