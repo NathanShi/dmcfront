@@ -48,7 +48,7 @@ server.use(jsonServer.rewriter({
     '/market/new_services': '/services',
     '/market/services': '/services',
     '/market/components': '/services',
-    '/services/:id/pricing': '/service_price_single',
+    '/services/:id/pay_plan': '/service_price_single',
     '/service_permits/service/:id' : '/service_permit_service',
     '/service_permits/organization/:id' : '/service_permit_org',
     '/payment/plan/:id' : '/service_payment',

@@ -1,0 +1,18 @@
+<md-dialog class="modal-result" flex="70">
+  <!-- Reason for needing to purchase uses -->
+  <div>
+  </div>
+
+	<div ng-hide="hasPaymentPlans">
+    <h3>Sorry, this service does not have any payment plans registered.</h3>
+  </div>
+
+  <div ng-if="hasPaymentPlans" ng-repeat="plan in paymentPlans">
+    <div ng-if="plan.planType == pay_plans.PAY_PER_USE">
+      <div layout="row" layout-align="start center">
+        <h3>Purchase one use of this service (${{plan.price}}):</h3>
+        <button run-default-button class="btn green-button content-button" style="margin-left:20px" ng-click="purchasePermit(plan.id)">Purchase</button>
+      </div>
+    </div>
+  </div>
+</md-dialog>

@@ -249,8 +249,56 @@ angular.module('dmc.project')
 
             $scope.averageRun = ($scope.service.averageRun ? $scope.service.averageRun.toFixed(2) : 0);
 
+            // Service permit purchase modal
+            $scope.openPurchasePermitModal = function(service, ev){
+                $(window).scrollTop(0);
+                $mdDialog.show({
+                    controller: "ModalPurachasePermitController",
+                    templateUrl: "templates/project/pages/modal-purchase-permit.html",
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    locals: {
+                        service: service
+                    },
+                    clickOutsideToClose:true
+                })
+                .then(function() {
+                    $state.go('project.run-app', {ServiceId : $scope.service.id});
+                }, function() {
+                });
+            }
+
             // run Service
             $scope.run = function(){
+                // Check service permit
+                ajax.get(dataFactory.servicePermits($scope.userData.companyId).getByOrganization,{},function(response){
+                  console.log(response.data);
+
+                  var servicePermit = null;
+
+                  // If no valid permit for this service, bring up payment modal
+                  if(!response.data){
+                    console.log('No valid permit');
+                  }
+
+                  // Get permit for this service
+                  for (var i in response.data) {
+                    if (response.data[i].serviceId == $scope.service.parent){
+                      servicePermit = response.data[i];
+                    }
+                  }
+
+                  console.log(servicePermit);
+
+                  if(!servicePermit){
+                    console.log('No valid permit');
+                  }
+                  else if (servicePermit.uses == 0){
+                    console.log('No uses on permit');
+                    $scope.openPurchasePermitModal($scope.service);
+                  }
+                });
+
                 runModel();
             };
 
@@ -788,4 +836,65 @@ angular.module('dmc.project')
     $scope.uploadDocuments = function() {
       $mdDialog.hide($scope.documents);
     }
-});
+})
+.controller("ModalPurachasePermitController", [
+        '$scope',
+        '$state',
+        '$mdDialog',
+        '$http',
+        '$stateParams',
+        'dataFactory',
+        'service',
+        'ajax',
+        'toastModel',
+        function (
+            $scope,
+            $state,
+            $mdDialog,
+            $http,
+            $stateParams,
+            dataFactory,
+            service,
+            ajax,
+            toastModel) {
+
+    $scope.service = service;
+    $scope.pay_plans = {
+      PAY_ONCE : 'PAY_ONCE',
+      PAY_PER_USE : 'PAY_PER_USE',
+      PAY_FOR_USES : 'PAY_FOR_USES',
+      PAY_FOR_TIME : 'PAY_FOR_TIME'
+    };
+    $scope.pay_status = {
+      SUCCESS : 'succeeded',
+      FAILURE : 'failed'
+    };
+    $scope.hasPaymentPlans = true;
+
+    $scope.closeDialog = function() {
+      $mdDialog.hide();
+    }
+
+    // Get payment plans for service
+    ajax.get(dataFactory.services($scope.service.parent).get_pay_plan, {}, function(response){
+      if(!response.data){
+        $scope.hasPaymentPlans = false;
+        return;
+      }
+      $scope.paymentPlans = response.data
+    });
+
+    $scope.purchasePermit = function(planId){
+      ajax.update(dataFactory.payment(planId).servicePaymentInternal, {}, function (response) {
+          if(!response.data){
+            return;
+          }
+          if(response.data.status == $scope.pay_status.SUCCESS){
+            toastModel.showToast('success', 'One use for this service purchased!');
+            $scope.closeDialog();
+            return;
+          }
+      });
+    }
+
+}]);
