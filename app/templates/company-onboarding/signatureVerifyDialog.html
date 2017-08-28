@@ -7,7 +7,7 @@
                </md-button>
            </md-toolbar>
            <md-dialog-content class="rows">
-             <strong>Verified Signature:</strong>
+             <strong ng-show="sameUser.length">Verified Signature:</strong>
              <table class="table" ng-show="sameUser.length">
                <thead>
                  <td>Name</td>
@@ -23,7 +23,7 @@
                </tr>
              </table>
              <hr>
-             <strong>Unexpected Signature:</strong>
+             <strong ng-show="diffUser.length">Unexpected Signature:</strong>
              <table class="table" ng-show="diffUser.length">
                <thead>
                  <td>Name</td>

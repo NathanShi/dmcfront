@@ -147,32 +147,6 @@ angular.module('dmc.company.onboarding')
             $scope.company = {};
       }
 
-
-      // //Initialize form to fill. function in '/company-onboarding.js'
-      // $scope.company.selectedEmployeeSize = null;
-      // $scope.company.selectedAnnualRevenue = null;
-      // $scope.company.orgTYPEs = null;
-      //
-      // $scope.stateUSA = companyOnboardingModel.getStates();
-      //
-      // $scope.orgType = companyOnboardingModel.initialOrgType();
-      //
-      // $scope.employeeSize = companyOnboardingModel.initialEmployeeSize();
-      //
-      // $scope.annualRevenue = companyOnboardingModel.initialAnnualRevenue();
-      //
-      // $scope.orgTYPEs = companyOnboardingModel.initialOrgTYPEs();
-      //
-      // $scope.industryType = companyOnboardingModel.initialIndustryType();
-      //
-      // $scope.isOptionsRequired = function(){
-      //   return !$scope.orgType.some(function(options){
-      //     return options.selected;
-      //   });
-      // };
-      //
-      // $scope.companyinfo = {};
-
       //Form submission
       $scope.save = function(company) {
 
@@ -203,9 +177,6 @@ angular.module('dmc.company.onboarding')
             company.legal = null;
         }
 
-        // company.selectedEmployeeSize = company.selectedEmployeeSize.value;
-        // company.selectedAnnualRevenue = company.selectedAnnualRevenue.value;
-        // company.orgTYPEs = company.orgTYPEs.value;
         $scope.companyinfo = angular.copy(company);
         $scope.companyinfo.type = type;
 
@@ -225,19 +196,6 @@ angular.module('dmc.company.onboarding')
         "\nIf you kept having this problem, please contact us.";
         // storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));//Test
 
-// <<<<<<< HEAD
-//         // storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));
-//
-//         //Call 'esignDoc' to call PDFfiller API to generate Membership Agreement with populated fields
-//         ajax.create(dataFactory.esignOnline().docuSign, postDocInfo, function successCallback(response) {
-//             if (response.data.status == "eSignature Successful!"){
-//                 var generatedForm = JSON.parse(response.data.reason);
-//                 //Response will contain template_id & url
-//                 if (generatedForm.template_id && generatedForm.url){
-//                   $scope.companyinfo.templateID = generatedForm.template_id;
-//                   $scope.companyinfo.formURL = generatedForm.url;
-//                 }
-// =======
         ajax.get(dataFactory.esignOnline().esignToken, {}, function successCallback(response) {
               if (response.data.status == "eSignToken Successful!"){
                   $scope.companyinfo.token = response.data.reason;
@@ -284,8 +242,8 @@ angular.module('dmc.company.onboarding')
               $mdDialog.show(
                 $mdDialog.alert()
                   .clickOutsideToClose(false)
-                  .title('Successfully Generate Membership Agreement')
-                  .content('Please click OK to proceed, if this doesn\'t work please contact us')
+                  .title('Successfully Generated Membership Agreement')
+                  .content('Click OK to proceed')
                   .ok('OK')
               ).then(function(){
                 $timeout( function(){
@@ -299,7 +257,6 @@ angular.module('dmc.company.onboarding')
                   }
                 }, 500);
               });
-// >>>>>>> origin/DMC2017-754-yb-esign-with-token
             }
             else{
               $mdDialog.show(
@@ -310,37 +267,6 @@ angular.module('dmc.company.onboarding')
                   .ok('OK')
               );
             }
-// <<<<<<< HEAD
-//         }, function errorCallback(response) {
-//            responseErrorReason = "Error when calling for e-sign API. \nIf you kept having this problem, please contact us.";
-//         }).then(function(){
-//           if ($scope.companyinfo.templateID && $scope.companyinfo.formURL){
-//             //localStorage the form together with template_id & url
-//             storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));
-//             $mdDialog.show(
-//               $mdDialog.alert()
-//                 .clickOutsideToClose(false)
-//                 .title('Successfully Generated Membership Agreement')
-//                 .content('Click OK to proceed')
-//                 .ok('OK')
-//             ).then(function(){
-//               $timeout( function(){
-//                 //Go to the Membership Agreement URL
-//                 $window.location.href = $scope.companyinfo.formURL;
-//               }, 500);
-//             });
-//           }
-//           else{
-//             $mdDialog.show(
-//               $mdDialog.alert()
-//                 .clickOutsideToClose(false)
-//                 .title('Error')
-//                 .content(responseErrorReason)
-//                 .ok('OK')
-//             );
-//           }
-// =======
-// >>>>>>> origin/DMC2017-754-yb-esign-with-token
 
             $scope.enableButton();
           });
