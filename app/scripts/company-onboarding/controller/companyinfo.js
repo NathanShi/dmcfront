@@ -151,7 +151,7 @@ angular.module('dmc.company.onboarding')
       $scope.save = function(company) {
 
         $scope.disableButton();
-        // $scope.submitted = true;
+
 
         var type = [];
 
