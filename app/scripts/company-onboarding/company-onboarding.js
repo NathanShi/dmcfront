@@ -199,7 +199,7 @@ angular.module('dmc.company.onboarding', [
 
                 entireType.forEach(function(element) {
                     var temp = element.selection.replace(/\s/g, '');
-                    popType[temp] = "-";
+                    popType[temp] = "--";
                 });
 
                 data.type.forEach(function(element) {
