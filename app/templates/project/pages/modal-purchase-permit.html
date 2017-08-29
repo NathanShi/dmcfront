@@ -38,7 +38,9 @@
     </div>
 
     <div>
-      <ui-widget-stripe-payment stripeTokenHandler="stripeTokenHandler"></ui-widget-stripe-payment>
+      <ui-widget-stripe-payment
+        return-function="stripeTokenHandler">
+      </ui-widget-stripe-payment>
     </div>
   </div>
 </md-dialog>

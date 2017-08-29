@@ -916,7 +916,7 @@ angular.module('dmc.project')
     }
 
     $scope.stripeTokenHandler = function(token){
-      console.log('hello');
+      console.log('hello', token);
     }
 
 }]);

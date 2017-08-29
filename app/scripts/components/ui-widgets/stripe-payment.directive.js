@@ -9,24 +9,23 @@ angular.module('dmc.widgets.stripe-payment', [
     return {
         restrict: 'E',
         templateUrl: '/templates/components/ui-widgets/stripe-payment.html',
-        scope: true,
-        bindToController: {
-          stripeTokenHandler : '&'
+        scope: {
+          returnFunction : '='
         },
         controller: UiWidgetStripePaymentController,
         controllerAs: '$ctrl'
     };
 
-    function UiWidgetStripePaymentController($http, DMCUserModel, $window, ajax) {
-      var vm = this;
-      vm.isDisabled = false;
+    function UiWidgetStripePaymentController($scope, $http, DMCUserModel, $window, ajax) {
 
-      vm.disableButton = function(){
-        vm.isDisabled = true;
+      $scope.isDisabled = false;
+
+      $scope.disableButton = function(){
+        $scope.isDisabled = true;
       }
 
-      vm.enableButton = function(){
-        vm.isDisabled = false;
+      $scope.enableButton = function(){
+        $scope.isDisabled = false;
       }
 
       //== Stripe ==
@@ -75,7 +74,7 @@ angular.module('dmc.widgets.stripe-payment', [
       var form = document.getElementById('payment-form');
       form.addEventListener('submit', function(event) {
         event.preventDefault();
-        vm.disableButton();
+        $scope.disableButton();
         // changeButton();
 
         console.log('here 1');
@@ -88,9 +87,9 @@ angular.module('dmc.widgets.stripe-payment', [
             var errorElement = document.getElementById('card-errors');
             errorElement.textContent = result.error.message;
           } else {
-            console.log('here 4');
+            console.log('here 4', result.token);
             // Send the token to your server
-            vm.stripeTokenHandler(result.token);
+            $scope.returnFunction(result.token);
           }
         });
       });
