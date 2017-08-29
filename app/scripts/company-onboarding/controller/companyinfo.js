@@ -90,6 +90,9 @@ angular.module('dmc.company.onboarding')
               });
             }
         }, function errorCallback(response) {
+            if (angular.isUndefined(response.data.message)){
+              response.data.message = "We had an error processing this page, Please contact us."
+            }
             $mdDialog.show(
               $mdDialog.alert()
                 .clickOutsideToClose(false)

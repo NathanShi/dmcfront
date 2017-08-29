@@ -195,10 +195,10 @@ angular.module('dmc.company.onboarding', [
                 populateCompany.mainFax = "-";
 
                 var popType = {};
-                var entireType = initialOrgType().selection;
+                var entireType = this.initialOrgType();
 
                 entireType.forEach(function(element) {
-                    var temp = element.replace(/\s/g, '');
+                    var temp = element.selection.replace(/\s/g, '');
                     popType[temp] = "-";
                 });
 
