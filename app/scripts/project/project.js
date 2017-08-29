@@ -42,7 +42,9 @@ angular.module('dmc.project', [
     'dmc.widgets.project-tags',
     'dmc.sub-nav-menu',
     'dmc.input-file.directive',
-    'dmc.workspace-header'
+    'dmc.workspace-header',
+    'dmc.add_members',
+    'dmc.add_project.directive'
 ])
     .config(function($stateProvider, $urlRouterProvider, $httpProvider){
 
@@ -109,7 +111,8 @@ angular.module('dmc.project', [
         }).state('project.edit', {
             url: '/edit',
             controller: 'EditProjectCtrl as projectCtrl',
-            templateUrl: 'templates/project/pages/edit.html',
+            // templateUrl: 'templates/project/pages/edit.html',
+            templateUrl: 'templates/components/add-project/ap-index.html',
             resolve: resolve
         }).state('project.documents', {
             url: '/documents',
@@ -205,6 +208,15 @@ angular.module('dmc.project', [
                         return serviceModel.get_service($stateParams.ServiceId);
                     }]
                 }
+            }).state('project.run-app', {
+                url: '/services/:ServiceId/runapp?rerun',
+                controller: 'projectRunServicesCtrl as projectCtrl',
+                templateUrl: 'templates/project/pages/run-app.html',
+                resolve: {
+                    serviceData: ['serviceModel', '$stateParams', function (serviceModel, $stateParams) {
+                        return serviceModel.get_service($stateParams.ServiceId);
+                    }]
+                }
             }).state('project.services-detail', {
                 url: '/services/:ServiceId/detail',
                 controller: 'projectServicesDetailCtrl as projectCtrl',
@@ -229,7 +241,21 @@ angular.module('dmc.project', [
                     }]
                 }
             })
-
+            .state('project.services-app-history', {
+                url: '/services/:ServiceId/:from/app-history',
+                controller: 'projectServicesRunHistoryDetailCtrl as projectCtrl',
+                templateUrl: 'templates/project/pages/app-history.html',
+                resolve: {
+                    runHistory: ['serviceModel', '$stateParams', function (serviceModel, $stateParams) {
+                        return serviceModel.get_service_run_history($stateParams.ServiceId, {}, function (response) {
+                            return response;
+                        });
+                    }],
+                    serviceData: ['serviceModel', '$stateParams', function (serviceModel, $stateParams) {
+                        return serviceModel.get_service($stateParams.ServiceId);
+                    }]
+                }
+            })
             .state('project.publish-service-marketplace', {
                 url: '/services/:ServiceId/publish',
                 controller: 'PublishServiceMarketplaceCtrl as projectCtrl',
@@ -1077,6 +1103,15 @@ angular.module('dmc.project', [
 
             this.get_servers = function(callback){
                 return ajax.get(dataFactory.getAccountServersUrl($rootScope.userData.accountId),
+                    {},
+                    function(response){
+                        callback(response.data)
+                    }
+                )
+            };
+
+            this.get_servers_secure = function(callback){
+                return ajax.get(dataFactory.getServerSecureUrl($rootScope.userData.accountId),
                     {},
                     function(response){
                         callback(response.data)

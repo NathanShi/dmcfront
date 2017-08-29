@@ -100,7 +100,8 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
         fileLimit: '=',
         accessLevel: '=',
         isDmdii: '=',
-        allowVip: '='
+        allowVip: '=',
+        hideEdit: '='
       },
       controller: function($scope, $element, $attrs, dataFactory, ajax) {
         $scope.documentDropZone;
@@ -385,7 +386,7 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
     }
 
   }])
-  .controller('DocumentsUploadCtrl', ['$scope', '$mdDialog', function($scope, $mdDialog) {
+  .controller('DocumentsUploadCtrl', ['$scope', '$mdDialog', 'hideEdit', function($scope, $mdDialog, hideEdit) {
     $scope.cancel = function() {
       $mdDialog.cancel();
     }
@@ -393,11 +394,14 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
     $scope.uploadDocuments = function() {
       $mdDialog.hide($scope.documents);
     }
+
+    $scope.hideEdit = hideEdit;
+
   }])
-  .controller('DocDlCtrl', ['$scope', '$mdDialog', 'file', 'ajax', 'dataFactory', function($scope, $mdDialog, file, ajax, dataFactory) {
+  .controller('DocDlCtrl', ['$scope', '$mdDialog', 'file', 'ajax', 'dataFactory', '$http', function($scope, $mdDialog, file, ajax, dataFactory, $http) {
     $scope.file = file;
 
-    ajax.get(dataFactory.documentsUrl(file.baseDocId).versioned, {}, function(response) {
+    ajax.get(dataFactory.documentsUrl(file.baseDocId).s_versioned, {}, function(response) {
       $scope.docs = response.data;
       $scope.currentDoc = response.data.slice(-1)[0];
     });
@@ -405,6 +409,11 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
     $scope.ok = function() {
       $mdDialog.hide();
     }
+
+    $scope.downloadFile = function(id) {
+      window.location = dataFactory.documentsUrl(id).download;
+    }
+
   }])
   .controller('DocCtrl', ['$scope', '$mdDialog', 'file', 'ajax', 'dataFactory', function($scope, $mdDialog, file, ajax, dataFactory) {
     $scope.file = {};
@@ -474,7 +483,7 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
       'dmc_workspace': 'DMC Workspace',
     };
 
-    ajax.get(dataFactory.documentsUrl(file.baseDocId).versioned, {}, function(response) {
+    ajax.get(dataFactory.documentsUrl(file.baseDocId).s_versioned, {}, function(response) {
       $scope.docs = response.data;
       $scope.currentDoc = response.data.slice(-1)[0];
     });
@@ -647,16 +656,27 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
         }
 
         $scope.allSelected = function() {
-          return $scope.itemsSelected() &&
-            (kCount($scope.selectedDirs) + kCount($scope.selectedFiles) ==
-              $scope.currentDir.children.length + $scope.dirFiles.length);
+          return (kCount($scope.selectedDirs) + kCount($scope.selectedFiles) ==
+                  $scope.currentDir.children.length + $scope.dirFiles.length);
         }
 
         function kCount(obj) {
-          return Object.keys(obj).length;
+          return Object.values(obj).reduce(sumChecked, 0);
         }
 
-        $scope.toggle = function() {
+        function sumChecked(val, sum){
+          return sum + (val == true);
+        }
+
+        $scope.toggleDir = function(id) {
+          selectedDirs[id] = selectedDirs[id] ? false : true;
+        }
+
+        $scope.toggleFile = function(id){
+          selectedFiles[id] = selectedFiles[id] ? false : true;
+        }
+
+        $scope.toggleAll = function() {
           if ($scope.allSelected()) {
             resetSelection();
           } else {
@@ -681,7 +701,10 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
             templateUrl: 'templates/project/pages/documents-upload.html',
             parent: angular.element(document.body),
             targetEvent: ev,
-            clickOutsideToClose: false
+            clickOutsideToClose: false,
+            locals: {
+              hideEdit: false
+            }
           }).then(function(documents) {
             var promises = {};
 
@@ -727,9 +750,11 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
 
             if (newVersion) {
               fileUpload.uploadFileToUrl(newVersion.file, {}, newVersion.title + newVersion.type).then(function(response) {
+                var fileName = newVersion.title + newVersion.type;
                 newVersion = {};
                 angular.copy(file, newVersion);
                 newVersion.documentUrl = response.file.name;
+                newVersion.documentName = fileName;
                 return ajax.put(dataFactory.documentsUrl().save, newVersion, function(resp) {});
               });
             }
@@ -743,7 +768,7 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
           });
         }
 
-        $scope.downloadFile = function(file, ev) {
+        $scope.showDlDialog = function(file, ev) {
           $mdDialog.show({
             controller: 'DocDlCtrl',
             templateUrl: 'templates/components/ui-widgets/workspace/doc-download.html',
@@ -757,6 +782,7 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
             //handled in modal
           });
         };
+
         // This is only a placeholder to loosely structure the options around sharing
         $scope.shareOptions = [{
             name: "DMC Member",
@@ -926,7 +952,7 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
         }
 
         function getFiles() {
-          ajax.get(dataFactory.directoriesUrl($scope.currentDir.id).files, {}, function(docResp) {
+          ajax.get(dataFactory.directoriesUrl($scope.currentDir.id).s_files, {}, function(docResp) {
             $scope.dirFiles = docResp.data || [];
           });
         }

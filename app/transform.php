@@ -21,7 +21,8 @@
 
 <?php include 'build-vendor-rh.php' ?>
 
-<!-- build:js scripts/about/index.js -->
+
+<!-- build:js scripts/transform/index.js -->
 <script src="scripts/configs/ngMaterial-config.js"></script>
 <script src="scripts/common/header/header.js"></script>
 <script src="scripts/common/factory/notifications.factory.js"></script>
@@ -34,6 +35,9 @@
 <script src="scripts/common/models/toast-model.js"></script>
 <script src="scripts/transform/transform.js"></script>
 <script src="scripts/utilities/scroll.service.js"></script>
+
+<script src="scripts/components/ui-widgets/content-card.directive.js"></script>
+
 
 <!-- endbuild -->
 

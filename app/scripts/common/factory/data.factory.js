@@ -574,6 +574,7 @@ return {
         return {
           get: localhost + 'dmdiiProject/' + id,
           all: localhost + 'dmdiiprojects',
+          delete: localhost + 'dmdiiProjects/' + id,
           active: localhost + 'dmdiiprojects/member/active',
           contributors: localhost + 'dmdiiproject/contributingcompanies',
           search: localhost + 'dmdiiprojects/search'
@@ -614,7 +615,8 @@ return {
       },
       payment: function(){
         return {
-          pay: localhost + 'payment'
+          pay: localhost + 'payment',
+          organizations: localhost + 'organizations/user'
         };
       },
       getDMDIIDocuments: function(id) {
@@ -637,10 +639,12 @@ return {
         return {
           getSingle: localhost + 'documents/' + id,
           getList: localhost + 'documents',
+          download: localhost + 'documents/' + id + '/download',
           save: localhost + 'documents',
           update: localhost + 'documents/' + id,
           delete: localhost + 'documents/' + id,
           versioned: localhost + 'documents/versions/' + id,
+          s_versioned: localhost + 'documents/s_versions/' + id,
           // share: localhost + 'documents/'+id+'/user/'+userid
           share: localhost + 'documents/' + id + '/share?user=' + user + '&internal=' + internal + '&email=' + email,
           accept: localhost + 'documents/' + id + '/accept',
@@ -657,7 +661,8 @@ return {
           save: localhost + endpoint,
           update: localhost + endpoint + id,
           delete: localhost + endpoint + id,
-          files: localhost + 'documents/' + endpoint + id
+          files: localhost + 'documents/' + endpoint + id,
+          s_files: localhost + 'documents/' + 's_' + endpoint + id
         }
       },
       getApplicationTags: function() {
@@ -730,6 +735,9 @@ return {
       getAccountServersUrl: function(id) {
         return localhost + 'accounts/' + id + '/account_servers';
       },
+      getServerSecureUrl: function(id) {
+        return localhost + 'accounts/' + id + '/servers';
+      },
       // ---------------------------
       getServices: function(projectId) {
         if (projectId) {
@@ -753,8 +761,17 @@ return {
       getMarketComponents: function() {
         return localhost + 'market/components';
       },
+      getMarketPlaceServices: function() {
+          return localhost + 'market/services';
+      },
       getServicesTags: function() {
         return localhost + 'service_tags';
+      },
+      getDefaultServices: function() {
+        return localhost + 'defaultServices';
+      },
+      getDefaultService: function(parentId) {
+        return localhost + 'defaultServices/' + parentId;
       },
       /// profiles -----------------
       profiles: function(id) {
