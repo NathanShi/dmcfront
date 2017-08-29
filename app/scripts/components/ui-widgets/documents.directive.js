@@ -701,7 +701,10 @@ directive('uiWidgetUploadDocuments', ['$parse', '$q', 'toastModel', function($pa
             templateUrl: 'templates/project/pages/documents-upload.html',
             parent: angular.element(document.body),
             targetEvent: ev,
-            clickOutsideToClose: false
+            clickOutsideToClose: false,
+            locals: {
+              hideEdit: false
+            }
           }).then(function(documents) {
             var promises = {};
 

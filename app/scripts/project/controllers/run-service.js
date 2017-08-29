@@ -520,7 +520,7 @@ angular.module('dmc.project')
             }
 
 
-            var uploadDocs = function(documents, directoryId) {
+            var uploadDocs = function(documents, directoryId, docProcessingCallback) {
               var promises = {};
 
               for (var i in documents) {
@@ -543,8 +543,54 @@ angular.module('dmc.project')
               }
 
               $q.all(promises).then(function(docs) {
-                addAttachmentsToApp(makeAttachmentsCollection(docs));
+                resolveAllAttachmentScans(makeAttachmentsCollection(docs), docProcessingCallback);
               });
+            }
+
+            var resolveAllAttachmentScans = function(docs, docProcessingCallback) {
+              var promises = [];
+
+              for (var i=0; i<docs.length; i++) {
+                promises.push(pollForScannedFilePromise(docs[i].id))
+              }
+
+              $q.all(promises).then(function(scannnedDocs) {
+                // filter out any nulls in the colleciton
+                //  as a result of files be quarantined
+                var origLen = scannnedDocs.length;
+                scannnedDocs = scannnedDocs.filter(function(x){
+                  return !!x;
+                });
+                if (scannnedDocs.length != origLen) {
+                  alert("Error: One or more file quarantined by virus scan and can not be used");
+                }
+                docProcessingCallback(scannnedDocs)
+              });
+
+            }
+
+            var pollForScannedFilePromise = function(fileId) {
+              return $timeout(function() {
+                return ajax.get(dataFactory.documentsUrl(fileId).getSingle, {}).then(function(resp){
+                  if (resp.data.documentUrl.match(/dmcupfinal/i)) {
+                    return resp.data;
+                  } else if (resp.data.documentUrl.match(/fileQuarantined/i)) {
+                    return null;
+                  } else {
+                    return pollForScannedFilePromise(fileId);
+                  }
+                });
+              }, 500)
+            }
+
+
+            var setInputFile = function(file) {
+              if (file.length > 0) {
+                file = file[0]
+                $scope.fileUploadInProgress = false;
+                $scope.currentInputFile = file;
+                $scope.setinputFileValue($scope.currentInputFile);
+              }
             }
 
             $scope.fileUploadInProgress = false;
@@ -597,7 +643,7 @@ angular.module('dmc.project')
               return docs;
             }
 
-            var getOrCreateDirectory = function(app, documents, callback) {
+            var getOrCreateDirectory = function(app, documents, docProcessingCallback) {
               // var directoryId = 9999;
               var directoryId;
               var appName = app.title;
@@ -615,9 +661,15 @@ angular.module('dmc.project')
                 }
                 // if the previous loop didn't 'find' the app directory, create it
                 if (!directoryId) {
-                  createAppDirectory(directories.id, directoryName, documents, callback)
+                    ajax.create(dataFactory.directoriesUrl().save, {
+                      name: directoryName,
+                      parent: directories.id,
+                      children: []
+                    }, function(resp) {
+                      uploadDocs(documents, resp.data.id, docProcessingCallback);
+                    });
                 } else {
-                  callback(documents, directoryId);
+                  uploadDocs(documents, directoryId, docProcessingCallback);
                 }
 
 
@@ -627,15 +679,26 @@ angular.module('dmc.project')
               });
             }
 
+            $scope.attachmentUploadInProgress = false;
+            $scope.fileUploadInProgress = false;
+
+            var setInprogressVar = function(inProgressType){
+              if (inProgressType == "appAttachment") {
+                $scope.attachmentUploadInProgress = true;
+              } else if (inProgressType == "inputFile") {
+                $scope.fileUploadInProgress = true;
+              }
+            }
+
             $scope.uploadAppFile = function(ev) {
-              openDocModelAndExecCallback(ev, uploadDocs);
+              openDocModelAndExecCallback(ev, false, addAttachmentsToApp, "appAttachment");
             };
 
             $scope.uploadInputFile = function(ev) {
-              openDocModelAndExecCallback(ev, uploadInputFile);
+              openDocModelAndExecCallback(ev, true, setInputFile, "inputFile");
             }
 
-            var openDocModelAndExecCallback = function(ev, callbackFunc) {
+            var openDocModelAndExecCallback = function(ev, onlyFirstFile, docProcessingCallback, inProgressVar) {
               $mdDialog.show({
                 controller: 'DocumentsUploadCtrl as projectCtrl',
                 templateUrl: 'templates/project/pages/documents-upload.html',
@@ -647,7 +710,11 @@ angular.module('dmc.project')
                 }
               }).then(function(documents) {
                 if (documents.length > 0) {
-                  getOrCreateDirectory($scope.service, documents, callbackFunc);
+                  setInprogressVar(inProgressVar);
+                  if (onlyFirstFile) {
+                    documents = [documents[0]]
+                  }
+                  getOrCreateDirectory($scope.service, documents, docProcessingCallback);
                 }
               });
             }
@@ -666,9 +733,12 @@ angular.module('dmc.project')
             var attachFileInputId = 'attachedFileList';
 
             var addAttachmentsToApp = function(attachments) {
-              var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
-              attachFileInput.value = JSON.stringify(attachments)
-              $scope.run();
+              $scope.attachmentUploadInProgress = false;
+              if (attachments.length > 0) {
+                var attachFileInput = document.getElementById(attachFileInputId) || createAttachmentDOMElement();
+                attachFileInput.value = JSON.stringify(attachments)
+                $scope.run();
+              }
             }
 
             var createAttachmentDOMElement = function() {
@@ -702,6 +772,10 @@ angular.module('dmc.project')
                 }, event);
 
             };
+
+            function updateServiceStatus(service, currentStatus) {
+              return service.currentStatus ? $.extend(true,service.currentStatus,currentStatus) : currentStatus;
+            }
 
         }
     ]

@@ -1,3 +1,5 @@
+<main class="app-profile">
+
 <div class="container marketplace-box"  layout="row" ng-if="!product || !product.published">
     Service not found
 </div>
@@ -6,7 +8,7 @@
 	<div class="content-column" flex='100'>
 		<div ng-if="!not_found">
 			<!-- Search toolbar -->
-			<md-content class="marketplace-search" layout="row" layout-align="center center">
+			<!-- <md-content class="marketplace-search" layout="row" layout-align="center center">
 				<form ng-submit="submitSearch(searchModel)" class="marketplace-search-field global-search-form" flex="60">
 					<md-input-container md-no-float>
 						<md-icon>
@@ -23,13 +25,13 @@
 						<ng-md-icon icon="favorite" size="14"></ng-md-icon>
 						Favorites ({{favoritesCount}})
 					</md-button>
-                    <md-button class="md-raised dmc-button margin-left20"
+                    <md-button class="btn green-button content-button"
                                ng-disabled="!$root.comparedServices || !$root.comparedServices.services || $root.comparedServices.services.length == 0"
                                compare-button>
                         Compare ({{$root.comparedServices && $root.comparedServices.services ? $root.comparedServices.services.length : 0}})
                     </md-button>
 				</div>
-			</md-content>
+			</md-content> -->
 			<!--product-->
 			<md-content class="product">
 				<div layout="row" layout-margin>
@@ -54,7 +56,7 @@
 							<ng-md-icon icon="camera_alt" style="fill: #65AF3F;" size="25"></ng-md-icon>
 							Add photos
 						</md-button>
-						<div dmc-carousel
+						<!-- <div dmc-carousel
 								functions="carouselFunctions"
 								name-carousel="'carouselImages'"
 								type-carousel="'images'"
@@ -62,7 +64,7 @@
 								show-items="4"
 								carousel-source="service_images"
 								edit="true">
-						</div>
+						</div> -->
 					</div>
 					<div flex>
 						<!--product header-->
@@ -77,10 +79,10 @@
 								</md-input-container>
 								<span flex></span>
 
-								<md-button ng-click="cancelEdit()" class="md-raised dmc-button margin-left20">Cancel</md-button>
+								<md-button ng-click="cancelEdit()" class="btn red-button content-button">Cancel</md-button>
 								<md-button ng-click="saveEdit()"
                                            ng-disabled="!product.title || !product.description || !product.serviceType"
-                                           class="md-raised md-primary dmc-button margin-left20">Save</md-button>
+                                           class="btn green-button content-button">Save</md-button>
 							</div>
 						</div>
 
@@ -213,14 +215,13 @@
                                  class="content-panel"
                                  source="documents"
                                  auto-upload="false"
-                                 widget-title="'UPLOAD DOCUMENTS'"
                                  widget-type="'row'"
                                  file-limit="5"
                                  allow-tagging="true"></div>
 						</md-content>
 					</md-tab>
 
-					<md-tab label="Authors">
+					<!-- <md-tab label="Authors">
 						<md-content class="md-padding" ng-if="true">
 							<md-autocomplete
 									md-no-cache="true"
@@ -259,10 +260,12 @@
 								</div>
 							</div>
 						</md-content>
-					</md-tab>
+					</md-tab> -->
 				</md-tabs>
 			</md-content>
 		</div>
 		<h2 ng-if="not_found">Product not found</h2>
 	</div>
 </div>
+
+</main>

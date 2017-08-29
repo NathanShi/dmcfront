@@ -10,6 +10,7 @@ angular.module('dmc.marketplace', [
     'dmc.common.header',
     'dmc.common.footer',
     'dmc.model.toast-model',
+    'angularUtils.directives.dirPagination',
     "dmc.ajax",
     "dmc.data",
     "dmc.utilities",
@@ -23,7 +24,7 @@ angular.module('dmc.marketplace', [
         templateUrl: 'templates/marketplace/marketplace.html'
     });
     $urlRouterProvider.otherwise('/');
-}).controller('marketplaceController', ['$scope', '$element', '$location', 'scrollService', '$http', 'dataFactory', '$window', function ($scope, $element, $location, scrollService, $http, dataFactory, $window) {
+}).controller('marketplaceController', ['$scope', '$element', '$location', 'scrollService', '$http', 'ajax', 'dataFactory', '$window', function ($scope, $element, $location, scrollService, $http, ajax, dataFactory, $window) {
     $scope.gotoElement = function (eID) {
         // set the location.hash to the id of
         // the element you wish to scroll to.
@@ -37,58 +38,108 @@ angular.module('dmc.marketplace', [
       $window.location.href = '/dfars-assessment.php#/';
     }
 
-    $http.get(dataFactory.getMarketServices(), {
-        params: {
-            start: 0,
-            published: true
+    function getContentStatic(callbackFunction) {
+        ajax.get(dataFactory.getStaticJSON('static-marketplace.json'), {}, function(response){
+            $scope.marketplaceItems=response.data;
+            $scope.marketplaceItemsCopy =response.data;
+            callbackFunction();
+        });
+    }
+
+
+    var groupServicesByType = function(data) {
+      var serviceTypes = {};
+      var servicesGroupedByType = [];
+      for (var i in data) {
+        if (serviceTypes[data[i].categoryQuestion]) {
+            for (var j in servicesGroupedByType) {
+              if (servicesGroupedByType[j]["categoryQuestion"] == data[i].categoryQuestion) {
+                servicesGroupedByType[j]["content"].push(data[i])
+              }
+            }
+        } else {
+          servicesGroupedByType.push({
+            "categoryQuestion": data[i].categoryQuestion,
+            "categoryImage":data[i].categoryImg,
+            "categoryId":data[i].categoryId,
+            "content": [data[i]]
+          });
+          serviceTypes[data[i].categoryQuestion] = true
         }
-    }).success(function(response) {
-        console.log(response);
-        $scope.marketplaceItems = response;
+      };
+
+     servicesGroupedByType.sort(function(a, b){
+        if(a.categoryQuestion < b.categoryQuestion) return -1;
+        if(a.categoryQuestion > b.categoryQuestion) return 1;
+        return 0;
+      });
+      return servicesGroupedByType;
+    };
+
+    $scope.contentArray = groupServicesByType($scope.marketplaceItems)
+
+
+    getContentStatic(function(){
+      $scope.getLeanItems=[]
+      $scope.estimateItems=[]
+      $scope.cncOperationItems=[]
+      $scope.cmmOperationItems=[]
+
+      for (var i = 0; i < $scope.marketplaceItems.length; i++) {
+        // $scope.allMktItems.push($scope.marketplaceItems[i]);
+        if ($scope.marketplaceItems[i].categoryContent=='GET LEAN'){
+          $scope.getLeanItems.push($scope.marketplaceItems[i])
+        }
+        else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE ESTIMATES'){
+          $scope.estimateItems.push($scope.marketplaceItems[i])
+        }
+
+        else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE CNC OPERATIONS'){
+          $scope.cncOperationItems.push($scope.marketplaceItems[i])
+        }
+
+        else{
+          $scope.cmmOperationItems.push($scope.marketplaceItems[i])
+        }
+      }
     });
 
-    $http.get(dataFactory.getMarketServices(), {
-        params: {
-            start: 0,
-            limit: 5,
-            published: true
-        }
+
+    // $scope.search=function(text){
+    //   if (text){
+    //     text=text.toLowerCase();
+    //     var item =$scope.marketplaceItemsCopy.filter(function (obj){
+    //       if ((obj.title.toLowerCase().includes(text)) || obj.tags.includes(text) ){
+    //         return obj;
+    //       }
+    //     });
+    //     $scope.marketplaceItems=item;
+    //   }
+    //   else{
+    //     $scope.marketplaceItems=$scope.marketplaceItemsCopy;
+    //   }
+    // }
+
+    $scope.clearSearch = function(){
+      $scope.searchTerm='';
+    }
+
+
+
+    $http.get(dataFactory.getDefaultServices(), {
     }).success(function(response) {
-        console.log(response);
-        $scope.estimateItems = response;
+        $scope.serviceMap = {};
+        response.forEach(function (service){
+          $scope.serviceMap[service.parent] = {'serviceId': service.id, 'workspaceId': service.projectId};
+        });
     });
 
-    $http.get(dataFactory.getMarketServices(), {
-        params: {
-            start: 5,
-            limit: 5,
-            published: true
-        }
+    $http.get(dataFactory.getDefaultServices(), {
     }).success(function(response) {
-        console.log(response);
-        $scope.cncOperationItems = response;
-    });
-
-    $http.get(dataFactory.getMarketServices(), {
-        params: {
-            start: 10,
-            limit: 5,
-            published: true
-        }
-    }).success(function(response) {
-        console.log(response);
-        $scope.cmmOperationItems = response;
-    });
-
-    $http.get(dataFactory.getMarketServices(), {
-        params: {
-            start: 15,
-            limit: 5,
-            published: true
-        }
-    }).success(function(response) {
-        console.log(response);
-        $scope.getLeanItems = response;
+        $scope.serviceMap = {};
+        response.forEach(function (service){
+          $scope.serviceMap[service.parent] = {'serviceId': service.id, 'workspaceId': service.projectId};
+        });
     });
 
 }]);
