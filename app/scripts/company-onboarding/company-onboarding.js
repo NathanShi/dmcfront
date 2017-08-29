@@ -195,10 +195,16 @@ angular.module('dmc.company.onboarding', [
                 populateCompany.mainFax = "-";
 
                 var popType = {};
+                var entireType = initialOrgType().selection;
+
+                entireType.forEach(function(element) {
+                    var temp = element.replace(/\s/g, '');
+                    popType[temp] = "-";
+                });
 
                 data.type.forEach(function(element) {
                     var temp = element.replace(/\s/g, '');
-                    popType[temp] = "ON";
+                    popType[temp] = "X";
                 });
 
                 for(var key in popType) {
