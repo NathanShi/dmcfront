@@ -8,8 +8,9 @@ angular.module('dmc.dfars-assessment')
                                     "$location",
                                     "dataFactory",
                                     "toastModel",
-                                    'dfarsModules',
                                     '$sce',
+                                    'dfarsModules',
+                                    'savedData',
                                     function ($stateParams,
                                               $state,
                                               $scope,
@@ -17,11 +18,13 @@ angular.module('dmc.dfars-assessment')
                                               $location,
                                               dataFactory,
                                               toastModel,
-                                              dfarsModules, $sce) {
+                                              $sce,
+                                              dfarsModules,
+                                              savedData) {
 
         $scope.modules = dfarsModules;
         $scope.state = {moduleId: 0, sectionId: 0};
-        $scope.principals = [{"name": "John Doe", "title": "President"}, {"name": "Jane Doe", "title": "Information Technology Officer"}];
+        $scope.savedData = savedData;
 
         var nextModule = function(){
           ++$scope.state.moduleId;
@@ -96,6 +99,28 @@ angular.module('dmc.dfars-assessment')
           label = label.replace(/([A-Z])/g, ' $1').trim();
           label = label.charAt(0).toUpperCase() + label.slice(1);
           return label;
+        }
+
+        $scope.fieldCount = {};
+
+        $scope.initFields = function(header){
+          $scope.fieldCount[header] = 1;
+        }
+
+        $scope.addField = function(header) {
+          $scope.fieldCount[header]++;
+        };
+
+        $scope.removeField = function(header) {
+          $scope.fieldCount[header]--;
+        };
+
+        $scope.enableRemoveField = function(header, i) {
+          return (i+1 == $scope.fieldCount[header]) && (i != 0);
+        };
+
+        $scope.newArray = function(n) {
+          return new Array(n);
         }
     }]
 );

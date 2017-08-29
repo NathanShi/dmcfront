@@ -51,21 +51,21 @@
             <div ng-bind-html="trustedHtml(item.text)"></div>
           </div>
 
-          <div ng-if="item.type == 'iteratbleField'">
+          <div ng-if="item.type == 'iteratbleField'" ng-init="initFields(item.header)">
             <div layout="row">
               <h3 style="margin-top: 10px">{{item.header}}</h3>
-              <button ng-click="addField(item.header)">Add More</button>
-              <button ng-disabled="disableRemoveField(item.header)" ng-click="removeField(item.header)">Remove Last</button>
+              <button ng-click="addField(item.header)">Add</button>
             </div>
             <form>
               <table>
-                <tr>
+                <tr ng-repeat="i in newArray(fieldCount[item.header]) track by $index">
                   <th style="padding-left: 10px" ng-repeat="field in item.text">{{makeLabel(field)}} <input type="text" name="{{field}}"</input></th>
+                  <th ng-if="enableRemoveField(item.header, $index)"><button ng-click="removeField(item.header)">Remove</button></th>
                 </tr>
               </table>
             </form>
           </div>
-          
+
         </div>
       </div>
 
@@ -78,7 +78,7 @@
           <h1>Information System Security Plan (ISSP)</h1>
 
           <div class="report-cover-approvals">
-            <div ng-repeat="principal in principals">
+            <div ng-repeat="principal in savedData.intro.principals">
               <p>Approved by: {{principal.name}}, {{principal.title}}</p>
               <p>Signature: _________________________ Date: __________</p>
               <p></p>

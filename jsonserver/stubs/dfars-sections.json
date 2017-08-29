@@ -35,6 +35,11 @@
         "data": [
           {
             "type": "iteratbleField",
+            "header": "Define the Organization",
+            "text": ["nameOfOrganization", "nameOfInformationSystem"]
+          },
+          {
+            "type": "iteratbleField",
             "header": "Define Approvers",
             "text": ["name", "title"]
           },

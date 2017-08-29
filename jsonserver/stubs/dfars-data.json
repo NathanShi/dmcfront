@@ -1,0 +1,14 @@
+{
+  "intro": {
+    "principals": [
+      {
+        "name": "J Doe",
+        "title": "president"
+      },
+      {
+        "name": "J Doe",
+        "title": "vice president"
+      }
+    ]
+  }
+}

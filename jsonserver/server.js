@@ -87,6 +87,7 @@ server.use(jsonServer.rewriter({
     '/searchworkspace/:id': '/searchworkspace',
     '/dfars/modules': '/dfars-modules',
     '/dfars/sections': '/dfars-sections',
+    '/dfars/data' : '/dfars-data',
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
     'service_runs?serviceId=:id': '/service_runs',
     '/defaultServices': '/default-services',

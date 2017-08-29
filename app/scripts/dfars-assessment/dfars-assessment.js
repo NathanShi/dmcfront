@@ -17,6 +17,9 @@ angular.module('dmc.dfars-assessment', [
     var resolve = {
       dfarsModules: ['ajax', 'dataFactory', function (ajax, dataFactory) {
           return ajax.get(dataFactory.dfarsAssessment().getModules, {}, function(response){return response.data;});
+      }],
+      savedData: ['ajax', 'dataFactory', function (ajax, dataFactory) {
+          return ajax.get(dataFactory.dfarsAssessment().getSavedData, {}, function(response){return response.data;});
       }]
     };
 
