@@ -2,7 +2,34 @@
   {
     "id": 0,
     "moduleId": 0,
-    "sections": []
+    "sections": [
+      {
+        "id": 0,
+        "name": "DFARS and You",
+        "data": [
+          {
+            "type": "html",
+            "header": "What is it?",
+            "text": "<div layout='row' layout-align='space-between center'><img src='images/dod_seal.svg' height='100px'></img><div layout='column' layout-align='space-between center'><h2>DFARS: Defense Federal Acquisition Regulation Supplement</h2><h3>All Department of Defense Conractors must be adequately secure by December 31, 2017!</h3></div></div>"
+          },
+          {
+            "type": "info",
+            "header": "Am I a Department of Defense contractor?",
+            "text": "Even if you are not directly under contract with the Department of Defense, if you are a subcontractor anywhere within a Department of Defense supply chain this requirement still applies to you!"
+          },
+          {
+            "type": "info",
+            "header": "What does it mean to be adequately secure?",
+            "text": "The Department of Defense considers the security controls defined by the National Institute of Standards and Technologies as adequately secure."
+          },
+          {
+            "type": "info",
+            "header": "Where is this requirement coming from?",
+            "text": "This requirement is included in the most recent DFARS publication from October 2016, clause 252.204-7012: Safeguarding Covered Defense Information and Cyber Incident Reporting."
+          }
+        ]
+      }
+    ]
   },
   {
   "id": 1,
