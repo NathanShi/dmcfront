@@ -22,6 +22,7 @@
     <?php include 'build-vendor-rh.php' ?>
 
     <!-- build:js scripts/run-app/index.js -->
+    <script src="https://js.stripe.com/v3/"></script>
     <script src="scripts/configs/ngMaterial-config.js"></script>
     <script src="scripts/common/header/header.js"></script>
     <script src="scripts/common/footer/footer.js"></script>
@@ -40,6 +41,7 @@
     <script src="scripts/components/ui-widgets/tabs.directive.js"></script>
     <script src="scripts/components/ui-widgets/interfaces.directive.js"></script>
     <script src="scripts/components/ui-widgets/project-tags.directive.js"></script>
+    <script src="scripts/components/ui-widgets/stripe-payment.directive.js"></script>
     <script src="scripts/components/sub-nav-menu/sub-nav-menu.directive.js"></script>
     <script src="scripts/components/workspace-header/workspace-header.directive.js"></script>
     <script src="scripts/components/dropzone/dropzone.directive.js"></script>

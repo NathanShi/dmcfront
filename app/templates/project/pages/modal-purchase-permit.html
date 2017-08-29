@@ -1,0 +1,46 @@
+<md-dialog class="modal-result" flex="70">
+  <div ng-hide="addFunds">
+    <!-- Reason for needing to purchase uses -->
+    <div style="padding-bottom:10px">
+      <h2 style="margin-top:0px">Please pay to use {{service.title}}:</h2>
+      <h3 style="padding-bottom:10px">{{reason}}</h3>
+      <md-divider></md-divider>
+    </div>
+
+  	<div ng-hide="hasPaymentPlans">
+      <h3>Sorry, this service does not have any payment plans registered.</h3>
+    </div>
+
+    <div ng-if="hasPaymentPlans" ng-repeat="plan in paymentPlans">
+      <div ng-if="plan.planType == pay_plans.PAY_PER_USE">
+        <div layout="row" layout-align="start center">
+          <h3>Purchase one use of this service (${{centsToDollars(plan.price)}}):</h3>
+          <button run-default-button class="btn green-button content-button" style="margin-left:20px" ng-click="purchasePermit(plan.id)">Purchase</button>
+        </div>
+      </div>
+
+      <div ng-if="plan.planType == pay_plans.PAY_ONCE">
+      </div>
+
+      <div ng-if="plan.planType == pay_plans.PAY_FOR_USES">
+      </div>
+
+      <div ng-if="plan.planType == pay_plans.PAY_FOR_TIME">
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="addFunds">
+    <div style="padding-bottom:10px">
+      <h2 style="margin-top:0px">Please add funds for your organization:</h2>
+      <h3 style="padding-bottom:10px">Your organization does not have enough funds to make this purchase.</h3>
+      <md-divider></md-divider>
+    </div>
+
+    <div>
+      <ui-widget-stripe-payment
+        return-function="stripeTokenHandler">
+      </ui-widget-stripe-payment>
+    </div>
+  </div>
+</md-dialog>

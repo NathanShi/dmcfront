@@ -44,7 +44,8 @@ angular.module('dmc.project', [
     'dmc.input-file.directive',
     'dmc.workspace-header',
     'dmc.add_members',
-    'dmc.add_project.directive'
+    'dmc.add_project.directive',
+    'dmc.widgets.stripe-payment'
 ])
     .config(function($stateProvider, $urlRouterProvider, $httpProvider){
 
