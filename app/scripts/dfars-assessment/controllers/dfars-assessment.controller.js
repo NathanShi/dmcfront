@@ -9,6 +9,7 @@ angular.module('dmc.dfars-assessment')
                                     "dataFactory",
                                     "toastModel",
                                     'dfarsModules',
+                                    '$sce',
                                     function ($stateParams,
                                               $state,
                                               $scope,
@@ -16,7 +17,7 @@ angular.module('dmc.dfars-assessment')
                                               $location,
                                               dataFactory,
                                               toastModel,
-                                              dfarsModules) {
+                                              dfarsModules, $sce) {
 
         $scope.modules = dfarsModules;
         $scope.state = {moduleId: 0, sectionId: 0};
@@ -67,6 +68,10 @@ angular.module('dmc.dfars-assessment')
           return $scope.state.moduleId == 0;
         }
 
+        $scope.hidePrevious = function(){
+          return $scope.isStartModule() && $scope.state.sectionId == 0;
+        }
+
         $scope.isFinishModule = function(mod){
           return $scope.state.moduleId == $scope.modules.length - 1;
         }
@@ -82,5 +87,15 @@ angular.module('dmc.dfars-assessment')
         $scope.$watch('state.moduleId', function() {
     		    $scope.getSections().then(function(response){$scope.sections = response.sections;});
     		});
+
+        $scope.trustedHtml = function (plainText) {
+          return $sce.trustAsHtml(plainText);
+        }
+
+        $scope.makeLabel = function(label) {
+          label = label.replace(/([A-Z])/g, ' $1').trim();
+          label = label.charAt(0).toUpperCase() + label.slice(1);
+          return label;
+        }
     }]
 );

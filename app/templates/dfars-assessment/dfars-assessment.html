@@ -31,22 +31,16 @@
     <div flex="80" layout="column" class="moduleBody">
       <div layout="row">
         <h2>{{modules[state.moduleId].name}}</h2>
-        <h2 ng-if="isRequirementModule()">: {{sections[state.sectionId].name}}</h2>
+        <h2 ng-if="!isFinishModule()">: {{sections[state.sectionId].name}}</h2>
       </div>
 
       <md-divider></md-divider>
 
-      <div ng-if="isStartModule()" class="requirementModule">
-        <div flex layout='row' layout-align='space-between center'>
-          <img flex='30' src='images/dod_seal.svg' style='padding:0px 30px 0px 30px'></img>
-          <div flex='70' layout='column' layout-align='space-between center'>
-            <h2>DFARS: Defense Federal Acquisition Regulation Supplement</h2>
-            <h3>"All Department of Defense Conractors must be adequately secure by December 31, 2017!"</h3>
-          </div>
-        </div>
-      </div>
+      <!-- <div ng-if="isStartModule()" class="requirementModule">
+        <div flex layout='row' layout-align='space-between center'><img flex='30' src='images/dod_seal.svg' style='padding:0px 20px 0px 20px'></img><div flex='70' layout='column' layout-align='space-between center'><div layout='row'><h3 style='color: #363636; text-decoration: underline'>DFARS: Defense Federal Acquisition Regulation Supplement</h3></div><p style='font-size: 18px; text-align:center'>All Department of Defense Contractors</br>must be</br><span style='color: #65AF3F'>adequately secure</span></br>by</br><span style='color:red; text-decoration:underline'>December 31, 2017</span>!</p></div></div>
+      </div> -->
 
-      <div ng-if="isRequirementModule()" class="requirementModule">
+      <div ng-if="!isFinishModule()" class="requirementModule">
         <div ng-repeat="item in sections[state.sectionId].data">
           <div ng-if="item.type == 'info'">
             <h3>{{item.header}}</h3>
@@ -54,8 +48,24 @@
           </div>
 
           <div ng-if="item.type == 'html'">
-            <span ng-bind-html="item.text"></span>
+            <div ng-bind-html="trustedHtml(item.text)"></div>
           </div>
+
+          <div ng-if="item.type == 'iteratbleField'">
+            <div layout="row">
+              <h3 style="margin-top: 10px">{{item.header}}</h3>
+              <button ng-click="addField(item.header)">Add More</button>
+              <button ng-disabled="disableRemoveField(item.header)" ng-click="removeField(item.header)">Remove Last</button>
+            </div>
+            <form>
+              <table>
+                <tr>
+                  <th style="padding-left: 10px" ng-repeat="field in item.text">{{makeLabel(field)}} <input type="text" name="{{field}}"</input></th>
+                </tr>
+              </table>
+            </form>
+          </div>
+          
         </div>
       </div>
 
@@ -84,8 +94,8 @@
         <md-divider></md-divider>
 
         <div layout="row" layout-align="center center">
-          <md-button ng-hide="isStartModule()" ng-click="routePage('previous')">Previous</md-button>
-          <md-button ng-hide="isFinishModule()" ng-click="routePage('next')">Next</md-button>
+          <button ng-hide="hidePrevious()" ng-click="routePage('previous')">Previous</button>
+          <button ng-hide="isFinishModule()" ng-click="routePage('next')">Next</button>
         </div>
       </div>
     </div>

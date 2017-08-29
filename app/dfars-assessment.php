@@ -32,6 +32,7 @@
     <script src="scripts/common/factory/data.factory.js"></script>
     <script src="scripts/common/models/user-model.js"></script>
     <script src="scripts/common/models/toast-model.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
 
     <script src="scripts/dfars-assessment/dfars-assessment.js"></script>
     <script src="scripts/dfars-assessment/controllers/dfars-assessment.controller.js"></script>
