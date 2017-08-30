@@ -17,6 +17,10 @@ angular.module('dmc.component.horizontalmenu', [
         templateUrl: 'templates/components/tree-menu/horizontal-menu-tpl.html',
         controller: function($scope){
             $scope.clearUrl = $window.location.href.split('?')[0];
+
+            $scope.makeFilterName = function(s){
+              return s.replace(/ /g,'');
+            }
         }
       };
   }]
