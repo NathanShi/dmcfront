@@ -1,4 +1,8 @@
 <md-dialog class="modal-result" flex="70">
+  <div class="greyout" ng-show="submitted">
+    <div class="loader"></div>
+    <div style="font-size:22px;color:white">Processing Payment</div>
+  </div>
   <div ng-hide="addFunds">
     <!-- Reason for needing to purchase uses -->
     <div style="padding-bottom:10px">

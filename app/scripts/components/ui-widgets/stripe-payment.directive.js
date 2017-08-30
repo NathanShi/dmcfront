@@ -10,22 +10,25 @@ angular.module('dmc.widgets.stripe-payment', [
         restrict: 'E',
         templateUrl: '/templates/components/ui-widgets/stripe-payment.html',
         scope: {
-          returnFunction : '='
+          returnFunction : '=',
         },
         controller: UiWidgetStripePaymentController,
         controllerAs: '$ctrl'
     };
 
-    function UiWidgetStripePaymentController($scope, $http, DMCUserModel, $window, ajax) {
+    function UiWidgetStripePaymentController($scope, $http, DMCUserModel, $mdDialog, $window, ajax) {
 
       $scope.isDisabled = false;
+      $scope.submitted = false;
 
       $scope.disableButton = function(){
         $scope.isDisabled = true;
+        $scope.submitted = true;
       }
 
       $scope.enableButton = function(){
         $scope.isDisabled = false;
+        $scope.submitted = false;
       }
 
       //== Stripe ==
@@ -75,11 +78,15 @@ angular.module('dmc.widgets.stripe-payment', [
       form.addEventListener('submit', function(event) {
         event.preventDefault();
         $scope.disableButton();
-        // changeButton();
 
+        console.log($scope.isDisabled, $scope.submitted);
         console.log('here 1');
 
         stripe.createToken(card).then(function(result) {
+          $scope.$apply(function(){
+            $scope.enableButton();
+          });
+
           console.log('here 2');
           if (result.error) {
             console.log('here 3');
@@ -89,6 +96,7 @@ angular.module('dmc.widgets.stripe-payment', [
           } else {
             console.log('here 4', result.token);
             // Send the token to your server
+
             $scope.returnFunction(result.token);
           }
         });

@@ -271,6 +271,7 @@ angular.module('dmc.project')
 
             // run Service
             $scope.run = function(){
+
                 // Check service permit
                 ajax.get(dataFactory.servicePermits($scope.userData.companyId).getByOrganization,{},function(response){
                   var servicePermit = null;
@@ -834,7 +835,7 @@ angular.module('dmc.project')
         }
     ]
 )
-.controller('uploadAppFileController',function($scope,$mdDialog,ajax,dataFactory,$compile,project,$http,toastModel){
+.controller('uploadAppFileController',function($scope, $mdDialog,ajax,dataFactory,$compile,project,$http,toastModel){
     $scope.cancel = function() {
       $mdDialog.cancel();
     }
@@ -854,6 +855,7 @@ angular.module('dmc.project')
         'reason',
         'ajax',
         'toastModel',
+        '$timeout',
         function (
             $scope,
             $state,
@@ -864,7 +866,18 @@ angular.module('dmc.project')
             service,
             reason,
             ajax,
-            toastModel) {
+            toastModel,
+            $timeout) {
+
+    $scope.submitted = false;
+
+    $scope.disableButton = function(){
+      $scope.submitted = true;
+    }
+
+    $scope.enableButton = function(){
+      $scope.submitted = false;
+    }
 
     $scope.service = service;
     $scope.reason = reason;
@@ -917,6 +930,19 @@ angular.module('dmc.project')
 
     $scope.stripeTokenHandler = function(token){
       console.log('hello', token);
+      $scope.$apply(function(){
+        console.log("disable");
+        $scope.disableButton();
+      });
+
+      $scope.anotherFunction();
     }
 
+    $scope.anotherFunction = function(){
+
+      $timeout(function(){
+        $scope.enableButton();
+        console.log("enable");
+      }, 5000);
+    }
 }]);
