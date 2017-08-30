@@ -47,6 +47,7 @@
 <script src="scripts/company-onboarding/controller/companyinfo.js"></script>
 <script src="scripts/company-onboarding/controller/landing.js"></script>
 <script src="scripts/common/models/ui-mask.js"></script>
+<script src="scripts/components/ui-widgets/stripe-payment.directive.js"></script>
 
 <!-- endbuild -->
 

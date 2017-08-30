@@ -78,25 +78,22 @@ angular.module('dmc.widgets.stripe-payment', [
       form.addEventListener('submit', function(event) {
         event.preventDefault();
         $scope.disableButton();
-
-        console.log($scope.isDisabled, $scope.submitted);
-        console.log('here 1');
+        // console.log('here 1');
 
         stripe.createToken(card).then(function(result) {
           $scope.$apply(function(){
             $scope.enableButton();
           });
 
-          console.log('here 2');
+          // console.log('here 2');
           if (result.error) {
-            console.log('here 3');
+            // console.log('here 3');
             // Inform the user if there was an error
             var errorElement = document.getElementById('card-errors');
             errorElement.textContent = result.error.message;
           } else {
-            console.log('here 4', result.token);
+            // console.log('here 4', result.token);
             // Send the token to your server
-
             $scope.returnFunction(result.token);
           }
         });

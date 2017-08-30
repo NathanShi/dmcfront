@@ -18,7 +18,8 @@ angular.module('dmc.company.onboarding', [
     'ngMaterial',
     'ngMessages',
     'ngCookies',
-    'ui.mask'
+    'ui.mask',
+    'dmc.widgets.stripe-payment'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
