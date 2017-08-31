@@ -38,7 +38,7 @@ angular.module('dmc.company.onboarding')
 
       $anchorScroll();
 
-      //Next button control
+      //Next button & grey out control
       $scope.isDisabled = false;
       $scope.submitted = false;
 
@@ -76,6 +76,7 @@ angular.module('dmc.company.onboarding')
 
       $scope.companyinfo = {};
 
+      //Call user/unverified to see if user is already a verified member of an org.
       var checkUnVerified = function(callback){
         ajax.get(dataFactory.payment().userUnverify, {}, function successCallback(response){
             if (response.data != true){
@@ -109,8 +110,8 @@ angular.module('dmc.company.onboarding')
         });
       }
 
+      //Call '/organization/user' to retrieve organization info in database
       var retrieveOrgInfo = function(){
-        //Call '/organization/user' to retrieve organization info in database
         ajax.get(dataFactory.payment().organizations, {}, function(response){
           if (response.data.id != null){
             if (response.data.isPaid == false){
@@ -136,7 +137,7 @@ angular.module('dmc.company.onboarding')
 
       }
 
-      checkUnVerified(retrieveOrgInfo);
+      checkUnVerified(retrieveOrgInfo); //Comment if TEST
 
       //If no info in database, check if user is back from payment page
       //Using localStorage
@@ -194,11 +195,11 @@ angular.module('dmc.company.onboarding')
         // console.log($scope.companyinfo);
         //Call service.populateField() to stream info for Membership Agreement
         var postDocInfo = companyOnboardingModel.populateField($scope.companyinfo);
-        // console.log(postDocInfo);
         var responseErrorReason = "Oops, we had a problem when generating Membership Agreement, please try again later. " +
         "\nIf you kept having this problem, please contact us.";
         // storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo));//Test
 
+        //Call /esignToken to create token
         ajax.get(dataFactory.esignOnline().esignToken, {}, function successCallback(response) {
               if (response.data.status == "eSignToken Successful!"){
                   $scope.companyinfo.token = response.data.reason;
@@ -222,7 +223,7 @@ angular.module('dmc.company.onboarding')
               );
         }).then(function(){
 
-          //Call 'esignDoc' to call PDFfiller API to generate Membership Agreement with populated fields
+          //Call '/esignDoc' to call PDFfiller API to generate Membership Agreement with populated fields
           ajax.create(dataFactory.esignOnline().docuSign, postDocInfo, function successCallback(response) {
               if (response.data.status == "eSignature Successful!"){
                   var generatedForm = JSON.parse(response.data.reason);
@@ -241,7 +242,7 @@ angular.module('dmc.company.onboarding')
             if ($scope.companyinfo.templateID && $scope.companyinfo.formURL){
               //localStorage the form together with template_id & url
               storageService.set('companyinfoCache', JSON.stringify($scope.companyinfo))
-              console.log($scope.companyinfo.formURL + "?token=" + $scope.companyinfo.token);
+              // console.log($scope.companyinfo.formURL + "?token=" + $scope.companyinfo.token);
               $mdDialog.show(
                 $mdDialog.alert()
                   .clickOutsideToClose(false)
@@ -250,7 +251,7 @@ angular.module('dmc.company.onboarding')
                   .ok('OK')
               ).then(function(){
                 $timeout( function(){
-                  console.log("url", $scope.companyinfo.formURL, "token", $scope.companyinfo.token);
+                  // console.log("url", $scope.companyinfo.formURL, "token", $scope.companyinfo.token);
                   //Go to the Membership Agreement URL
                   if (!angular.isUndefined($scope.companyinfo.token)){
                     $window.location.href = $scope.companyinfo.formURL + "?token=" +$scope.companyinfo.token;
@@ -322,6 +323,7 @@ angular.module('dmc.company.onboarding')
       $scope.isDisabled = false;
       $scope.submitted = false;
 
+      //Submit button & grey out control
       $scope.enableButton = function(){
         $scope.isDisabled = false;
         $scope.submitted = false;
@@ -396,6 +398,7 @@ angular.module('dmc.company.onboarding')
         }
       }
 
+      //Go back button
       $scope.back = function(){
         if ($scope.company){
           storageService.set('companyinfoCache', JSON.stringify($scope.company));
@@ -403,6 +406,7 @@ angular.module('dmc.company.onboarding')
         $location.path('/companyinfo');
       }
 
+      //Scroll to payment div
       $scope.scroll = function(id){
         $scope.payment = true;
         var div = document.getElementById(id);
@@ -456,7 +460,7 @@ angular.module('dmc.company.onboarding')
                         var Signature = JSON.parse(response.data.reason);
                         // var Signature = response.data.reason; //Test
                         $scope.signedInfo = Signature.items;
-                        console.log("Signature", Signature);
+                        // console.log("Signature", Signature);
                         if (Signature.total == 0){
                             $mdDialog.show(
                               $mdDialog.alert()
@@ -485,13 +489,14 @@ angular.module('dmc.company.onboarding')
                               });
                             }
 
+                            //Modal for view signature information
                             $mdDialog.show({
                                 scope: $scope,
                                 preserveScope: true,
                                 clickOutsideToClose: false,
                                 templateUrl: '/templates/company-onboarding/signatureVerifyDialog.html',
                                 controller: function eSignDialogController($scope, $mdDialog) {
-                                  console.log("$scope.signedInfo", $scope.signedInfo);
+                                  // console.log("$scope.signedInfo", $scope.signedInfo);
                                   $scope.closeDialog = function() {
                                     $mdDialog.hide();
                                   };

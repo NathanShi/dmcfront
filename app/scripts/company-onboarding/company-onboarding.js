@@ -183,6 +183,7 @@ angular.module('dmc.company.onboarding', [
                 populateCompany.companyAddress1 = data.firstAddress.line1 + (data.firstAddress.line2 ? ("," + data.firstAddress.line2) : "");
                 populateCompany.companyCSZ = data.firstAddress.city + "," + data.firstAddress.state + "," + data.firstAddress.zipcode;
 
+                //populate Main Contact
                 populateCompany.mainName = data.main.fname + " " + data.main.lname;
                 if (data.main.mailAddress.includes(",")){
                     populateCompany.mainAddress = data.main.mailAddress.substring(0, data.main.mailAddress.indexOf(","));
@@ -198,6 +199,7 @@ angular.module('dmc.company.onboarding', [
                 var popType = {};
                 var entireType = this.initialOrgType();
 
+                //Mark 'X' for checked and '--' for unchecked
                 entireType.forEach(function(element) {
                     var temp = element.selection.replace(/\s/g, '');
                     popType[temp] = "--";
@@ -214,6 +216,7 @@ angular.module('dmc.company.onboarding', [
                    }
                 }
 
+                //populate Tech Contact
                 if (data.tech != null){
                     populateCompany.techName = data.tech.fname + " " + data.tech.lname;
                     if (data.tech.mailAddress.includes(",")){
@@ -235,6 +238,7 @@ angular.module('dmc.company.onboarding', [
                     populateCompany.techFax = "-";
                 }
 
+                //populate Legal Contact
                 if (data.legal != null){
                     populateCompany.legalName = data.legal.fname + " " + data.legal.lname;
                     if (data.legal.mail.includes(",")){
@@ -256,6 +260,7 @@ angular.module('dmc.company.onboarding', [
                     populateCompany.legalFax = "-";
                 }
 
+                //populate Finance Contact
                 if (data.finance != null){
                     populateCompany.financeName = data.finance.fname + " " + data.finance.lname;
                     if (data.finance.mailAddress.includes(",")){

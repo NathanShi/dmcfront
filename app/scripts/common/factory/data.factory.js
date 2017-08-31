@@ -615,7 +615,7 @@ return {
       },
       payment: function(id){
         return {
-          orgPayment: localhost + 'payment/organization',
+          // orgPayment: localhost + 'payment/organization',
           addFunds: localhost + 'payment/account',
           servicePaymentInternal: localhost + 'payment/plan/' + id,
           servicePaymentStripe: localhost + 'payment/plan/stripe',
@@ -628,7 +628,7 @@ return {
         return {
           docuSign: localhost + 'esignDoc',
           checkSignature: localhost + 'esignCheck/' + id,
-          callbackSignature: localhost + 'esignCallback',
+          // callbackSignature: localhost + 'esignCallback',
           esignToken: localhost + 'esignToken',
         };
       },
