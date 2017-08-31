@@ -90,6 +90,10 @@ angular.module('dmc.company.onboarding')
                 $window.location.href = '/onboarding.php';
               });
             }
+            else{
+              //if true, call retrieveOrgInfo() to see if org info is in database.
+              callback();
+            }
         }, function errorCallback(response) {
             if (angular.isUndefined(response.data.message)){
               response.data.message = "We had an error processing this page, Please contact us."
@@ -103,10 +107,6 @@ angular.module('dmc.company.onboarding')
             ).then(function(){
               $window.location.href = '/onboarding.php';
             });
-        }).then(function(){
-            $timeout( function(){
-              callback();
-            }, 5000);
         });
       }
 
