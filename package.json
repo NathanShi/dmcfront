@@ -38,7 +38,7 @@
     "gulp-tar": "^1.9.0",
     "gulp-uglify": "^2.0.0",
     "gulp-useref": "2.1.0",
-    "gulp-util": "^3.0.6",
+    "gulp-util": "^3.0.8",
     "handlebars": "^4.0.5",
     "http-proxy": "^1.11.2",
     "json-server": "^0.9.4",
@@ -64,8 +64,8 @@
     }
   },
   "dependencies": {
-    "babel-register": "^6.24.1",
-    "nodejs": "0.0.0"
+    "awesome-bootstrap-checkbox": "^1.0.0-alpha.5",
+    "babel-register": "^6.24.1"
   },
   "scripts": {
     "postinstall": "./post-install.sh",

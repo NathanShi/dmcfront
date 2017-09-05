@@ -123,6 +123,7 @@ div[dmc-top-header]{
       line-height: 55px;
       margin: 0 0 0 10px;
       padding: 0;
+      text-align: left;
       text-transform: none;
       color: $HeaderButtonText;
       ng-md-icon{
@@ -540,4 +541,21 @@ div[dmc-top-header]{
       margin-left:-5px;
       margin-bottom:3px;
     }
+}
+
+.md-button.not-member-button.md-button.ng-scope.md-default-theme {
+  background-color: $countMessageBackground;
+  color: $HeaderButtonText;
+  height: 25px;
+  min-height: 10px;
+  padding: 4px;
+  line-height: normal;
+}
+
+.button-container {
+  border-right: 1px $countMessageBackground solid;
+}
+
+.login-button-container {
+  width: 50px;
 }

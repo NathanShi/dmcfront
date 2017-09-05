@@ -20,7 +20,7 @@
     <!-- Footer -->
     <dmc-footer></dmc-footer>
 
-    <?php include 'build-vendor.php' ?>
+    <?php include 'build-vendor-rh.php' ?>
 
     <!-- build:js scripts/home/index.js -->
     <script src="scripts/common/models/toast-model.js"></script>

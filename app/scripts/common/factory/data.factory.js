@@ -574,6 +574,7 @@ return {
         return {
           get: localhost + 'dmdiiProject/' + id,
           all: localhost + 'dmdiiprojects',
+          delete: localhost + 'dmdiiProjects/' + id,
           active: localhost + 'dmdiiprojects/member/active',
           contributors: localhost + 'dmdiiproject/contributingcompanies',
           search: localhost + 'dmdiiprojects/search'
@@ -610,6 +611,12 @@ return {
           get: localhost + 'dmdiiquicklink',
           save: localhost + 'dmdiiquicklink',
           delete: localhost + 'dmdiiquicklink/' + id
+        };
+      },
+      payment: function(){
+        return {
+          pay: localhost + 'payment',
+          organizations: localhost + 'organizations/user'
         };
       },
       getDMDIIDocuments: function(id) {
@@ -754,8 +761,17 @@ return {
       getMarketComponents: function() {
         return localhost + 'market/components';
       },
+      getMarketPlaceServices: function() {
+          return localhost + 'market/services';
+      },
       getServicesTags: function() {
         return localhost + 'service_tags';
+      },
+      getDefaultServices: function() {
+        return localhost + 'defaultServices';
+      },
+      getDefaultService: function(parentId) {
+        return localhost + 'defaultServices/' + parentId;
       },
       /// profiles -----------------
       profiles: function(id) {
@@ -1068,6 +1084,9 @@ return {
       },
       getOnboardingBasicInfoUrl: function() {
         return localhost + 'user-basic-information'
+      },
+      getUserAcceptTermsAndConditionsUrl: function() {
+        return localhost + 'user-accept-terms-and-conditions'
       },
       getAccountNotificationCategoryItems: function() {
         return localhost + 'account-notification-category-items';
