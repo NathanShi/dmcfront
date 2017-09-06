@@ -257,6 +257,7 @@ angular.module('dmc.dmdiiProjects')
 
             // callback
             var callbackFunction = function(response){
+              console.log("callback response:", response)
                 if (angular.isDefined(response.data.count)) {
                     $scope.projects.arr = response.data.data;
                     $scope.projects.count = response.data.count;
@@ -274,10 +275,10 @@ angular.module('dmc.dmdiiProjects')
                 }
 
                 $scope.dmdiiProjectsLoading = false;
-                var numberProjects=$scope.projects.arr.length;
-                $scope.randProjectId = Math.floor(Math.random()*numberProjects);
-                $scope.randProject = $scope.projects.arr[$scope.randProjectId];
-                $scope.randProject.projectSummary = truncateText($scope.randProject.projectSummary, 350);
+                // var numberProjects=$scope.projects.arr.length;
+                // $scope.randProjectId = Math.floor(Math.random()*numberProjects);
+                // $scope.randProject = $scope.projects.arr[$scope.randProjectId];
+                // $scope.randProject.projectSummary = truncateText($scope.randProject.projectSummary, 350);
 
                 // insertData(response.data);
             };

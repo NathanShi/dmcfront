@@ -1,7 +1,7 @@
 <main>
 		<section class="container projects-head">
 			<h2>Projects</h2>
-			<div class="row status-row">
+			<!-- <div class="row status-row">
 				<div class="col-sm-4">
 					<h4>Projects Overview</h4>
 					<img ng-src="{{projectOverview.documentUrl}}" class="img-responsive">
@@ -38,12 +38,24 @@
 				</div>
 
 			</div>
-			</div>
+			</div> -->
 
 		</section>
 
+		<div class="gray" style="padding: 20px 0px;">
+		<section class="container">
+			<h4>Quick Links</h4>
+				<div class="row">
+					<div ng-repeat="doc in docs track by $index" class="col-sm-3">
+						<a href ng-click="quickLinkAction(doc)">{{doc.displayName}}</a>
+						<a href ng-click="deleteQuicklink($index, doc.id)" ng-show="userData.isDmdiiAdmin" class="delete-icon"><ng-md-icon icon="delete" style="fill: #999" size="16"></ng-md-icon></a>
+					</div>
+				</div>
+		</section>
+		</div>
+
 		<!-- TODO this needs to be made in to a module suitable for members, projects and ideally services -->
-		<section class="container content-padding">
+		<!-- <section class="container content-padding">
         <div class="row">
             <div class="col-md-12 project-main">
 								<div class="top-border"></div>
@@ -51,9 +63,7 @@
 									<div class="status status-complete">FEATURED PROJECT</div>
 									<div class="status">{{randProject.projectStatus.name}}</div>
 								</div>
-								<!-- <time>{{randProject.rootNumber | numberFixedLen:2}}-{{randProject.callNumber | numberFixedLen:2}}-{{randProject.projectNumber | numberFixedLen:2}}</time> -->
                 <h1><a ng-href="{{'/dmdii-project-page.php#/'+randProject.id}}">{{randProject.projectTitle}}</a></h1>
-								<!-- <h4>Summary</h4> -->
 								<div class="sublabels" layout="row">
 									<div>{{randProject.projectFocusArea.name}}</div>
 									<div>{{randProject.projectThrust.name}}</div>
@@ -62,11 +72,9 @@
             </div>
             </div>
         </div>
-		</section>
-
+		</section> -->
 
 		<section class="container">
-      <dmc-horizontal-menu tree-source="treeMenuModel"></dmc-horizontal-menu>
 
 			<div class="row content-row">
 				<div class="col-xs-4">
@@ -98,6 +106,9 @@
 					</div>
 				</div>
 			</div>
+
+			<dmc-horizontal-menu tree-source="treeMenuModel"></dmc-horizontal-menu>
+
 			<div class="projects-table">			<div class="table-responsive ">
 			<table class="table">
 				<thead>
