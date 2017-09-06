@@ -159,4 +159,25 @@
     "parent": null,
     "published": true,
     "averageRun": ""
-}]
+},
+{
+  "contentType": "integration",
+  "title": "Integration with [Partner X]",
+  "description": "Vivamus lobortis efficitur ultrices. Fusce elit nunc, sollicitudin in dapibus sit amet, vehicula id dolor. In dictum aliquam ipsum, in malesuada dolor rutrum et. Cras consectetur pulvinar cursus. <a href=\"https://www.google.com\">Integer molestie nulla eu cursus rutrum.</a> Ut placerat facilisis turpis eu laoreet. Proin quis erat justo. Integer in ligula sed justo congue auctor.",
+  "link": "/index.php",
+  "tags": ["app"],
+  "featureImage": {
+      "thumbnail": "",
+      "large": ""
+  }
+},
+{
+  "contentType": "static-content",
+  "title": "title",
+  "description": "description",
+  "featureImage": {
+      "thumbnail": "",
+      "large": ""
+  }
+}
+]

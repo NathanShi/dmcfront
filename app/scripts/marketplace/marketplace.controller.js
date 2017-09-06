@@ -21,6 +21,7 @@ angular.module('dmc.marketplace')
         '$window',
         'CompareModel',
         'isFavorite',
+        'ngSanitize',
         function($state,
                  $stateParams,
                  $scope,
@@ -34,7 +35,8 @@ angular.module('dmc.marketplace')
                  DMCUserModel,
                  $window,
                  CompareModel,
-                 isFavorite){
+                 isFavorite,
+                 ngSanitize){
             $scope.isSearch = is_search;
             var defaultPages = {
                 'all' : [],
