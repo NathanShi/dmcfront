@@ -257,7 +257,6 @@ angular.module('dmc.dmdiiProjects')
 
             // callback
             var callbackFunction = function(response){
-              console.log("callback response:", response)
                 if (angular.isDefined(response.data.count)) {
                     $scope.projects.arr = response.data.data;
                     $scope.projects.count = response.data.count;

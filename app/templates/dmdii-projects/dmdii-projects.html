@@ -1,7 +1,7 @@
 <main>
-		<section class="container projects-head">
-			<h2>Projects</h2>
-			<!-- <div class="row status-row">
+	<section class="container projects-head">
+		<h2>Projects</h2>
+		<!-- <div class="row status-row">
 				<div class="col-sm-4">
 					<h4>Projects Overview</h4>
 					<img ng-src="{{projectOverview.documentUrl}}" class="img-responsive">
@@ -40,22 +40,24 @@
 			</div>
 			</div> -->
 
-		</section>
+	</section>
 
-		<div class="gray" style="padding: 20px 0px;">
+	<div class="gray" style="padding: 20px 0px;">
 		<section class="container">
 			<h4>Quick Links</h4>
-				<div class="row">
-					<div ng-repeat="doc in docs track by $index" class="col-sm-3">
-						<a href ng-click="quickLinkAction(doc)">{{doc.displayName}}</a>
-						<a href ng-click="deleteQuicklink($index, doc.id)" ng-show="userData.isDmdiiAdmin" class="delete-icon"><ng-md-icon icon="delete" style="fill: #999" size="16"></ng-md-icon></a>
-					</div>
+			<div class="row">
+				<div ng-repeat="doc in docs track by $index" class="col-sm-3">
+					<a href ng-click="quickLinkAction(doc)">{{doc.displayName}}</a>
+					<a href ng-click="deleteQuicklink($index, doc.id)" ng-show="userData.isDmdiiAdmin" class="delete-icon">
+						<ng-md-icon icon="delete" style="fill: #999" size="16"></ng-md-icon>
+					</a>
 				</div>
+			</div>
 		</section>
-		</div>
+	</div>
 
-		<!-- TODO this needs to be made in to a module suitable for members, projects and ideally services -->
-		<!-- <section class="container content-padding">
+	<!-- TODO this needs to be made in to a module suitable for members, projects and ideally services -->
+	<!-- <section class="container content-padding">
         <div class="row">
             <div class="col-md-12 project-main">
 								<div class="top-border"></div>
@@ -74,9 +76,9 @@
         </div>
 		</section> -->
 
-		<section class="container">
+	<section class="container">
 
-			<div class="row content-row">
+		<!-- <div class="row content-row">
 				<div class="col-xs-4">
 					<div class="form-group has-feedback">
 						<form ng-submit="submit(searchModel)">
@@ -105,56 +107,95 @@
 
 					</div>
 				</div>
+			</div> -->
+
+		<div class="row content-row" style="padding: 10px 0px 0px 0px">
+
+			<div class="col-xs-11">
+				<div class="form-group has-feedback">
+					<form ng-submit="submit(searchModel)">
+						<input ng-model="searchModel" type="text" class="form-control " placeholder="Search Projects">
+					</form>
+				</div>
 			</div>
 
-			<dmc-horizontal-menu tree-source="treeMenuModel"></dmc-horizontal-menu>
+			<div class="col-xs-1">
+				<div class="dropdown pull-right">
+					<button class="btn btn-default dropdown-toggle" type="button" id="itemstoshowdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							{{showArray[sizeModule].name}}<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="itemstoshowdropdown">
+						<li ng-repeat="item in showArray track by $index">
+							<a ng-click="selectItemDropDown($index)">{{item.name}}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 
-			<div class="projects-table">			<div class="table-responsive ">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Status</th>
+		</div>
+
+		<!-- <dmc-horizontal-menu tree-source="treeMenuModel"></dmc-horizontal-menu> -->
+
+		<div class="projects-table">
+			<div class="table-responsive ">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<!-- <th>Status</th>
 						<th>Focus</th>
-						<th>Thrust Area</th>
-					</tr>
-				</thead>
-				<tbody>
+						<th>Thrust Area</th> -->
+							<th ng-repeat="menu in treeMenuModel.data">
+								<div class="dropdown">
+									<a layout="row" layout-align="start center" class="dropdown-toggle" id="{{menu.title}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+									{{menu.title}}<span class="caret"></span>
+									</a>
+									<div class="dropdown-menu" aria-labelledby="{{menu.title}}" ng-click="$event.stopPropagation()">
+										<div ng-repeat="category in menu.categories">
+											<input type="checkbox" name="{{category.title}}" data-ng-model="category.title" id="{{category.title}}" />
+											<label for="{{category.title}}" class="labelForOp">{{category.title}}</label>
+										</div>
+									</div>
+								</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
 
-					<tr ng-repeat="project in projects.arr">
-						<td>
-							<a ng-href="{{'/dmdii-project-page.php#/'+project.id}}">{{project.projectTitle}}</a>
-							<!-- <time datetime="2011-01-12">January 12th, 2011</time> -->
-							<a ng-href="{{'member-page.php#/'+project.primeOrganization.id}}"><h6>{{project.primeOrganization.name}}</h6></a>
-							<div ng-if="project.kind != 'dmdiiEvent'" class="sublabel">{{project.rootNumber | numberFixedLen:2}}-{{project.callNumber | numberFixedLen:2}}-{{project.projectNumber | numberFixedLen:2}}</div>
-							<div ng-if="project.kind == 'dmdiiEvent'" class="sublabel">EVENT</div>
-						</td>
+						<tr ng-repeat="project in projects.arr">
+							<td>
+								<a ng-href="{{'/dmdii-project-page.php#/'+project.id}}">{{project.projectTitle}}</a>
+								<!-- <time datetime="2011-01-12">January 12th, 2011</time> -->
+								<a ng-href="{{'member-page.php#/'+project.primeOrganization.id}}"><h6>{{project.primeOrganization.name}}</h6></a>
+								<div ng-if="project.kind != 'dmdiiEvent'" class="sublabel">{{project.rootNumber | numberFixedLen:2}}-{{project.callNumber | numberFixedLen:2}}-{{project.projectNumber | numberFixedLen:2}}</div>
+								<div ng-if="project.kind == 'dmdiiEvent'" class="sublabel">EVENT</div>
+							</td>
 
-						<td>{{project.projectStatus.name}}</td>
-						<td>{{project.projectFocusArea.name}}</td>
-						<td>{{project.projectThrust.name}}</td>
-					</tr>
+							<td>{{project.projectStatus.name}}</td>
+							<td>{{project.projectFocusArea.name}}</td>
+							<td>{{project.projectThrust.name}}</td>
+						</tr>
 
-				</tbody>
-			</table>
+					</tbody>
+				</table>
 			</div>
 
-						<div class="row">
-							<div class="col-xs-6">
-								<button id="prevPage" ng-if="hasPrev()" class="btn btn-next pull-right" ng-click="getPrev()">
+			<div class="row">
+				<div class="col-xs-6">
+					<button id="prevPage" ng-if="hasPrev()" class="btn btn-next pull-right" ng-click="getPrev()">
 										PREV
 								</button>
-							</div>
+				</div>
 
-							<div class="col-xs-6">
-								<button id="nextPage" ng-if="hasNext()" class="btn btn-next pull-left" ng-click="getNext()">
+				<div class="col-xs-6">
+					<button id="nextPage" ng-if="hasNext()" class="btn btn-next pull-left" ng-click="getNext()">
 										NEXT
 								</button>
-							</div>
-						</div>
-
+				</div>
 			</div>
-		</section>
+
+		</div>
+	</section>
 
 	<recent-news news="news"></recent-news>
 
