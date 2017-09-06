@@ -10,6 +10,7 @@
 @import 'members';
 @import 'academia';
 @import 'workspaces';
+@import 'companyonboard';
 
 body {
 	font-family:'Roboto', sans-serif;}
@@ -53,8 +54,8 @@ time {
 
 }
 .filter-container {
-	border-top:1px solid $border-color;
-	border-bottom:1px solid $border-color;
+	//border-top:1px solid $border-color;
+	//border-bottom:1px solid $border-color;
 	.collapse {
 		padding-bottom: 30px;
 	}
