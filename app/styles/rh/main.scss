@@ -173,16 +173,23 @@ div.progress {
 	text-decoration:none;
 	&:hover, &:focus, &:active {
 		text-decoration:none;
+		cursor: pointer;
 	}
 	.caret {
-		transition: transform .4s;
-		transform: rotate(-180deg);
+		//transition: transform .4s;
+		//transform: rotate(-180deg);
 	}
 	&.collapsed {
 		.caret{
-		transform: rotate(0deg);
+		//transform: rotate(0deg);
 	}
 }
+}
+
+.dropdown-menu{
+	&:hover{
+		
+	}
 }
 
 .sublabels {

@@ -25,31 +25,26 @@
     <div flex layout="row" class="row content-row">
 
       <div class="col-sm-12" ng-repeat="level in treeSource.data">
-          <a layout="row" layout-align="start center" class="toggle-control collapsed" data-toggle="collapse" data-target="#filter-{{makeFilterName(level.title)}}"><h4>{{level.title}}</h4><span class="caret"></span></a>
-          <div class="collapse" id="filter-{{makeFilterName(level.title)}}">
+          <a layout="row" layout-align="start center" class="toggle-control collapsed dropdown-toggle" data-toggle="dropdown" data-target="#filter-{{makeFilterName(level.title)}}" id="itemstoshowdropdown" aria-haspopup="true" aria-expanded="true">
+            <h4>{{level.title}}</h4><span class="caret"></span>
+          </a>
+          <!-- <div class="collapse" id="filter-{{makeFilterName(level.title)}}"> -->
+          <div class="dropdown-menu" aria-labelledby="itemstoshowdropdown">
             <div ng-repeat="category in level.categories">
               <input type="checkbox" name="coType" data-ng-model="type.selected" id="{{category.title}}"/>
               <label for="{{category.title}}" class="labelForOp">{{category.title}}</label>
             </div>
           </div>
+
+          <!-- <button class="btn btn-default dropdown-toggle" type="button" id="itemstoshowdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		    			{{showArray[sizeModule].name}}<span class="caret"></span>
+		  		</button> -->
+					<!-- <ul class="dropdown-menu" aria-labelledby="itemstoshowdropdown">
+						<li ng-repeat="item in showArray track by $index">
+							<a ng-click="selectItemDropDown($index)">{{item.name}}</a>
+						</li>
+					</ul> -->
       </div>
-
-      <!-- <a class="toggle-control collapsed" data-toggle="collapse" data-target="#member-filters"><span class="caret"></span></a>
-      <a ng-href="{{clearUrl}}">Clear Filters</a>
-      <div ng-repeat="level in treeSource.data">
-        <h4>{{level.title}}</h4>
-
-        <div class="collapse" id="member-filters" ng-repeat="category in level.categories">
-          <!-- <a ng-class="{'selected' : category.opened}" ng-href="{{category.href}}">{{category.title}}</a> -->
-          <!-- <input type="checkbox" name="coType" data-ng-model="type.selected" id="{{category.title}}"/>
-          <label for="{{category.title}}" class="labelForOp">{{category.title}}</label>
-        </div>
-      </div> -->
-
-      <!-- <div class="col-sm-6 text-right">
-        <a ng-href="{{clearUrl}}">Clear Filters</a>
-      </div> -->
-
 
     </div>
   </div>
