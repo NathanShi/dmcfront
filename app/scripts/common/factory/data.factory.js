@@ -773,6 +773,9 @@ return {
       getDefaultService: function(parentId) {
         return localhost + 'defaultServices/' + parentId;
       },
+      userFavorites: function() {
+          return localhost + 'userFavorites';
+      },
       /// profiles -----------------
       profiles: function(id) {
         var name = 'profiles';

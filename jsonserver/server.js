@@ -86,7 +86,7 @@ server.use(jsonServer.rewriter({
     '/organizations/myVPC': '/myVPC',
     '/searchworkspace/:id': '/searchworkspace',
     // '/update-user-notification-item/:id' : '/user-notification-items/:id'
-    '/users/:id/my_favorites': '/my-favorites'
+    '/users/:id/my_favorites': '/my-favorites',
     'service_runs?serviceId=:id': '/service_runs',
     '/defaultServices': '/default-services',
     '/defaultService/:id': '/default-services/:id'

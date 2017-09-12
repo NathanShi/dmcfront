@@ -7,7 +7,7 @@ angular.module('dmc.widgets.content', [
     'ng-showdown',
     'ngYoutubeEmbed',
     'dmc.component.run-default-button'
-]).directive('uiWidgetContent', ['$parse', 'dataFactory', function ($parse, dataFactory) {
+]).directive('uiWidgetContent', ['$parse', 'dataFactory', 'toastModel', function ($parse, dataFactory, toastModel) {
     return {
         restrict: 'A',
         templateUrl: '/templates/components/ui-widgets/content-card.html',
@@ -103,6 +103,47 @@ angular.module('dmc.widgets.content', [
         vm.redirectToServiceHistory = function(projectId, serviceId) {
           $window.location.href = '/run-app.php#/'+projectId+'/services/'+serviceId+'/run/app-history';
         }
+        
+        vm.favoriteContent = function() {
+            $http.post(dataFactory.userFavorites(), {
+                    contentId: vm.categorizedContent.id,
+                    contentType: getContentTypeNumber()
+            }).then(function(response) {
+                toggleFavoritedOn();
+            }).error(function(message) {
+                toastModel.showToast('error', 'There was an error favoriting this content.')
+            });
+        };
+    
+        vm.unFavoriteContent = function() {
+            $http.delete(dataFactory.userFavorites(), {
+                contentId: vm.categorizedContent.id,
+                contentType: getContentTypeNumber()
+            }).then(function(response) {
+                toggleFavoritedOff();
+            }).error(function(message) {
+                toastModel.showToast('error', 'There was an error unfavoriting this content.')
+            });
+        };
+        
+        var getContentTypeNumber = function() {
+            switch(vm.categorizedContent.contentType) {
+                case 'app':
+                    return 1;
+                case 'document':
+                    return 2;
+                default:
+                    return 3;
+            }
+        };
+        
+        var toggleFavoritedOn = function() {
+            vm.categorizedContent.favorited = true;
+        };
+    
+        var toggleFavoritedOff = function() {
+            vm.categorizedContent.favorited = false;
+        };
 
     }
 
