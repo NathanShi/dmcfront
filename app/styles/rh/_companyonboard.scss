@@ -274,6 +274,18 @@ button[disabled]{
   margin: 40px auto 40px auto;
   width: 90%;
   max-width: 1200px;
+
+  h4{
+    font-size: 1.1em;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0px;
+    li {
+      font-size: .8em;
+    }
+  }
 }
 
 .column-header {
@@ -299,9 +311,15 @@ button[disabled]{
   color: white;
 }
 
-.tier1-title-container h2, .tier2-title-container h2, .tier3-title-container h2 {
+.tier1-title-container h2, .tier2-title-container h2, .tier3-title-container h2, .all-tier-title-container h2 {
   font-weight: 600;
   margin-bottom: 5px;
+}
+
+.all-tier-title-container {
+  background-color: darkgrey;
+  padding-bottom: 15px;
+  color: white;
 }
 
 .sub-title {
@@ -375,4 +393,15 @@ button[disabled]{
 .arrow-icon {
   margin: 0px auto;
   display: block;
+}
+
+.mem-tiers {
+  h4 {
+    // border-bottom: 1px solid lightgrey;
+    margin-right: 10px;
+  }
+  ul {
+    margin: 0px 20px;
+  }
+  margin-bottom: 30px;
 }
