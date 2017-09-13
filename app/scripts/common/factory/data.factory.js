@@ -1127,13 +1127,6 @@ return {
       getNotificationsStatisticPm: function() {
         return localhost + 'notifications-pm-statistic';
       },
-      addMyFavorite: function(id){
-        return localhost + 'users/' + id + '/my_favorites';
-      },
-      getMyFavorites: function(id){
-        return localhost + 'users/' + id + '/my_favorites';
-      },
-
       //RESOURCES
       getAllResourceLabs: function() {
         return localhost + 'resource/lab';
@@ -1141,8 +1134,7 @@ return {
       getResourceLab: function(id) {
         return localhost + 'resource/lab/' + id;
       },
-
-
+      
       getAllResourceBays: function() {
         return localhost + 'resource/bay/';
       },

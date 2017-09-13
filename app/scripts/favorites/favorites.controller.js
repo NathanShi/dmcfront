@@ -278,5 +278,4 @@ angular.module('dmc.all-favorites')
                 ]
             };
         };
-    }]
-);
+    }]);
