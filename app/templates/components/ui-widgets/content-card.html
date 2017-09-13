@@ -28,12 +28,11 @@
                       <button run-default-button class="btn green-button content-button" ng-click="$ctrl.goToIntegration($ctrl.categorizedContent.link)">Run</button>
                     </div>
 
-                    <div class="fav-button-container col-sm-6 col-md-6">
+                    <div class="fav-button-container col-sm-6 col-md-6 pull-right">
                         <ng-md-icon ng-if="!$ctrl.categorizedContent.favorited" ng-click="$ctrl.favoriteContent()" class="pull-right fav-button" icon="favorite" style="fill: grey" size="25"></ng-md-icon>
                         <ng-md-icon ng-if="$ctrl.categorizedContent.favorited" ng-click="$ctrl.favoriteContent()" class="pull-right fav-button" icon="favorite" style="fill: #84C641" size="25"></ng-md-icon>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

@@ -110,22 +110,22 @@ angular.module('dmc.widgets.content', [
                     contentType: getContentTypeNumber()
             }).then(function(response) {
                 toggleFavoritedOn();
-            }).error(function(message) {
+            }, function(message) {
                 toastModel.showToast('error', 'There was an error favoriting this content.')
             });
         };
-    
+
         vm.unFavoriteContent = function() {
             $http.delete(dataFactory.userFavorites(), {
                 contentId: vm.categorizedContent.id,
                 contentType: getContentTypeNumber()
             }).then(function(response) {
                 toggleFavoritedOff();
-            }).error(function(message) {
+            }, function(message) {
                 toastModel.showToast('error', 'There was an error unfavoriting this content.')
             });
         };
-        
+
         var getContentTypeNumber = function() {
             switch(vm.categorizedContent.contentType) {
                 case 'app':
@@ -136,11 +136,11 @@ angular.module('dmc.widgets.content', [
                     return 3;
             }
         };
-        
+
         var toggleFavoritedOn = function() {
             vm.categorizedContent.favorited = true;
         };
-    
+
         var toggleFavoritedOff = function() {
             vm.categorizedContent.favorited = false;
         };
