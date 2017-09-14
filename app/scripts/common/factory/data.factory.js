@@ -773,8 +773,13 @@ return {
       getDefaultService: function(parentId) {
         return localhost + 'defaultServices/' + parentId;
       },
-      userFavorites: function() {
-          return localhost + 'userFavorites';
+      userFavorites: function(contentId, contentType) {
+          var name = 'userFavorites';
+          return {
+              get: localhost + name + ((contentType != null) ? '?contentType=' + contentType : ''),
+              create: localhost + name + '?contentId=' + contentId + '&contentType=' + contentType,
+              delete: localhost + name + '?contentId=' + contentId + '&contentType=' + contentType,
+          };
       },
       /// profiles -----------------
       profiles: function(id) {
