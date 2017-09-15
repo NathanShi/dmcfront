@@ -86,7 +86,7 @@ angular.module('dmc.widgets.content', [
         vm.categorizedContent = categorizeContent(vm.contentItem);
 
         vm.downloadFile = function(id) {
-          console.log("download called")
+            console.log("download called");
             window.location = dataFactory.documentsUrl(id).download;
         };
 
@@ -105,24 +105,22 @@ angular.module('dmc.widgets.content', [
         }
         
         vm.favoriteContent = function() {
-            $http.post(dataFactory.userFavorites(), {
-                    contentId: vm.categorizedContent.id,
-                    contentType: getContentTypeNumber()
-            }).then(function(response) {
-                toggleFavoritedOn();
-            }, function(message) {
-                toastModel.showToast('error', 'There was an error favoriting this content.')
+            console.log(vm.categorizedContent.id);
+            console.log(getContentTypeNumber());
+            $http.post(dataFactory.userFavorites(vm.categorizedContent.id, getContentTypeNumber()).create, {})
+                .then(function(response) {
+                    toggleFavoritedOn();
+                }, function(message) {
+                    toastModel.showToast('error', 'There was an error favoriting this content.')
             });
         };
 
         vm.unFavoriteContent = function() {
-            $http.delete(dataFactory.userFavorites(), {
-                contentId: vm.categorizedContent.id,
-                contentType: getContentTypeNumber()
-            }).then(function(response) {
-                toggleFavoritedOff();
-            }, function(message) {
-                toastModel.showToast('error', 'There was an error unfavoriting this content.')
+            $http.delete(dataFactory.userFavorites(vm.categorizedContent.id, getContentTypeNumber()).delete, {})
+                .then(function(response) {
+                    toggleFavoritedOff();
+                }, function(message) {
+                    toastModel.showToast('error', 'There was an error unfavoriting this content.')
             });
         };
 

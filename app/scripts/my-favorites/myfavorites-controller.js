@@ -1,38 +1,5 @@
 
 angular.module('dmc.myfavorites')
-    .controller('myfavoritesCtrl', [
-        '$scope',
-        // '$stateParams',
-        // '$state',
-        // '$location',
-        // 'menuFavorite',
-        // 'ajax',
-        // 'dataFactory',
-        // 'isFavorite',
-        // 'DMCUserModel',
-        // 'CompareModel',
-        // '$cookies',
-        function (  $scope,
-                    // $stateParams,
-                    // $state,
-                    // $location,
-                    // menuFavorite,
-                    // ajax,
-                    // dataFactory,
-                    // isFavorite,
-                    // DMCUserModel,
-                    // CompareModel,
-                    // $cookies
-                  ) {
-                  
+    .controller('myfavoritesCtrl', ['$scope', function ($scope) {
 
-
-    }]
-)
-
-.directive('favbutton',function(){
-  return{
-    template: '<p>In the favbutton</p>',
-    restrict: 'E'
-  }
-});
+    }]);
