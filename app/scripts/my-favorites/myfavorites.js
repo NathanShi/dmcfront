@@ -8,6 +8,7 @@ angular.module('dmc.myfavorites', [
 	'dmc.common.header',
 	'dmc.common.footer',
 	"dmc.ajax",
+    "dmc.widgets.content"
 ])
     .config(function($stateProvider, $urlRouterProvider, $httpProvider){
         $stateProvider
@@ -21,7 +22,7 @@ angular.module('dmc.myfavorites', [
            .state('myFavorites.my', {
                url: '/my',
                templateUrl: 'templates/myfavorites/myfavorites.html',
-               controller: 'myfavoritesCtrl2'
+               controller: 'myfavoritesCtrl'
            });
         $urlRouterProvider.otherwise('/my');
     });

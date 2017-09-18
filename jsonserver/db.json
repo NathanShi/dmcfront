@@ -11572,5 +11572,15 @@
       "month": 7
     }
   ],
-  "search": {}
+  "search": {},
+  "userFavorites": [
+    {
+      "id" : 1,
+      "contentId" : 297,
+      "contentType" : {
+        "id" : 1,
+        "contentType" : "APP"
+      }
+    }
+  ]
 }

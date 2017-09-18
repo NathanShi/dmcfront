@@ -124,7 +124,11 @@ server.get('/dmdiiMember', function (req, res) {
   membersOrig = {"count": membersData.length ,"data" : membersData.slice(start,end) }
 
   res.jsonp(membersOrig)
-})
+});
+
+server.get('/userFavorites?contentType=:id', function (req, res) {
+   res.jsonp([{"id":1,"contentId":297,"contentType":{"id":1,"contentType":"APP"}}]);
+});
 
 server.get('/projects_tags', function (req, res) {
   var projectTags = JSON.parse(fs.readFileSync('stubs/project_tags.json'));

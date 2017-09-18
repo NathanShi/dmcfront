@@ -27,80 +27,65 @@
             <li role="presentation" class="active hidden-xs"><a data-target="#favApps" aria-controls="favApps" role="tab" data-toggle="tab">Applications</a></li>
             <li role="presentation" class="hidden-xs"><a data-target="#favDoc" aria-controls="favDoc" role="tab" data-toggle="tab">Documents</a></li>
             <li role="presentation" class="hidden-xs"><a data-target="#favVid" aria-controls="favVid" role="tab" data-toggle="tab">Videos</a></li>
-            <li role="presentation" class="hidden-xs"><a data-target="#favWork" aria-controls="favWork" role="tab" data-toggle="tab">Workspaces</a></li>
-            <li role="presentation" class="hidden-xs"><a data-target="#favOrg" aria-controls="favOrg" role="tab" data-toggle="tab">Organizations</a></li>
+            <!--<li role="presentation" class="hidden-xs"><a data-target="#favWork" aria-controls="favWork" role="tab" data-toggle="tab">Workspaces</a></li>-->
+            <!--<li role="presentation" class="hidden-xs"><a data-target="#favOrg" aria-controls="favOrg" role="tab" data-toggle="tab">Organizations</a></li>-->
 
         </ul>
     </section>
 
-<section class="gray">
-    <div class="container">
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="favApps">
-                  <div class="row ">
+    <section>
+        <div class="container">
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="favApps">
 
-                  </div>
-            </div>
-            <div role="tabpanel" class="tab-pane fade " id="favDoc">
-                <div class="row ">
-                    <div class="col-xs-12">
-                  </div>
+                      <div ng-repeat="item in favoriteApps | filter:searchTerm">
+                          <div ui-widget-content
+                               content-item="item"
+                               serviceMap="serviceMap">
+                          </div>
+                      </div>
                 </div>
-            </div>
-
-            <div role="tabpanel" class="tab-pane fade " id="favVid">
-
-                <div class="row ">
-                    <div class="col-xs-12">
-
-                  </div>
-                </div>
-
-            </div>
-
-            <div role="tabpanel" class="tab-pane fade " id="favWork">
-
-                <div class="row ">
-                    <div class="col-xs-12">
-
+                <div role="tabpanel" class="tab-pane fade " id="favDoc">
+                    <div class="row ">
+                        <div class="col-xs-12">
+                      </div>
                     </div>
                 </div>
 
-            </div>
+                <div role="tabpanel" class="tab-pane fade " id="favVid">
 
-            <div role="tabpanel" class="tab-pane fade " id="favOrg">
+                    <div class="row ">
+                        <div class="col-xs-12">
 
-                <div class="row ">
-                    <div class="col-xs-12">
-
+                      </div>
                     </div>
+
                 </div>
 
-            </div>
+                <!--<div role="tabpanel" class="tab-pane fade " id="favWork">-->
 
+                    <!--<div class="row ">-->
+                        <!--<div class="col-xs-12">-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                <!--<div role="tabpanel" class="tab-pane fade " id="favOrg">-->
+
+                    <!--<div class="row ">-->
+                        <!--<div class="col-xs-12">-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+            </div>
         </div>
-    </div>
 
-</section>
-
-
-  <!-- <div>
-       <md-button ng-contoller="myfavoritesCtrl2" class="favoriteButton" md-no-ink aria-label="myfavorites" ng-click="addFav()">
-          <ng-md-icon class="star" icon="star"  size="25" ></ng-md-icon>
-      </md-button>
-</div> -->
-
-
-
-
-      <!-- <favbutton></favbutton> -->
-
-
-
-
-
-
-
+    </section>
 
 </main>

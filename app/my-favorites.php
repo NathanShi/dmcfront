@@ -51,6 +51,8 @@
 
     <script src="scripts/my-favorites/myfavorites.js"></script>
     <script src="scripts/my-favorites/myfavorites-controller.js"></script>
+    <script src="scripts/components/ui-widgets/content-card.directive.js"></script>
+    <script src="scripts/components/run-default-button/run-default-button.js"></script>
 
     <!-- endbuild -->
     <script type="text/javascript">
