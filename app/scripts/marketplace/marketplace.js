@@ -112,8 +112,8 @@ angular.module('dmc.marketplace', [
         serviceIdList = mergeSet(serviceIdList, resourceMap[i].categoryServices);
       }
 
-      // populateServiceData(serviceIdList)
       populateResourceData(dataFactory.getServices(), serviceIdList, "categoryServices");
+      populateDocumentData(documentIdList, "categoryDocuments");
     })
 
     var mergeSet = function(existingSet, newSet) {
@@ -125,28 +125,41 @@ angular.module('dmc.marketplace', [
       return existingSet;
     }
 
-    var populateServiceData = function(serviceIds) {
-      ajax.get(dataFactory.getServices(), {id: serviceIds}, function(response){
-        $scope.resourceMap.forEach(function(resourceGroup){
-          resourceGroup.contentSet = response.data.filter(function(service){
-            return resourceGroup.categoryServices.indexOf(service.id) != -1
-          })
-        });
-      });
-    }
+    // var populateServiceData = function(serviceIds) {
+    //   ajax.get(dataFactory.getServices(), {id: serviceIds}, function(response){
+    //     $scope.resourceMap.forEach(function(resourceGroup){
+    //       resourceGroup.contentSet = response.data.filter(function(service){
+    //         return resourceGroup.categoryServices.indexOf(service.id) != -1
+    //       })
+    //     });
+    //   });
+    // }
 
     var populateResourceData = function(endpoint, ids, resourceType) {
       ajax.get(endpoint, {id: ids}, function(response){
-        $scope.resourceMap.forEach(function(resourceGroup){
-          resourceGroup.contentSet = resourceGroup.contentSet || [];
+          populateResourceDataCallback(response, resourceType);
+      });
+    }
 
-          var matchingResources = response.data.filter(function(resource){
-            return resourceGroup[resourceType].indexOf(resource.id) != -1;
-          })
-
-          resourceGroup.contentSet = resourceGroup.contentSet.concat(matchingResources);
-
+    var populateDocumentData = function(ids, resourceType) {
+      ids.forEach(function(id) {
+        ajax.get(dataFactory.documentsUrl(id).getSingle, {}, function(response){
+            populateResourceDataCallback({data: [response.data]}, resourceType);
         });
+      })
+
+    }
+
+    var populateResourceDataCallback = function(response, resourceType) {
+      $scope.resourceMap.forEach(function(resourceGroup){
+        resourceGroup.contentSet = resourceGroup.contentSet || [];
+
+        var matchingResources = response.data.filter(function(resource){
+          return resourceGroup[resourceType].indexOf(resource.id) != -1;
+        })
+
+        resourceGroup.contentSet = resourceGroup.contentSet.concat(matchingResources);
+
       });
     }
 

@@ -3,7 +3,7 @@
     "categoryImg": "images/ruler.png",
     "categoryDescription": "IMPROVE CMM OPERATIONS",
     "categoryId": "improve-cmm",
-    "categoryServices": [465, 466, 497, 498],
+    "categoryServices": [466, 497, 498],
     "categoryDocuments": [550],
     "categoryStaticContent": [{
         "contentType": "static-content",
@@ -19,8 +19,8 @@
     "categoryImg": "images/calc.png",
     "categoryDescription": "IMPROVE ESTIMATES",
     "categoryId": "improve-estimates",
-    "categoryServices": [465],
-    "categoryDocuments": [550],
+    "categoryServices": [906],
+    "categoryDocuments": [],
     "categoryStaticContent": [{
         "contentType": "static-content",
         "title": "title",
@@ -35,8 +35,8 @@
     "categoryDescription": "IMPROVE CNC OPERATIONS",
     "categoryImg": "images/computer.png",
     "categoryId": "improve-cnc",
-    "categoryServices": [465, 466, 497, 498],
-    "categoryDocuments": [550],
+    "categoryServices": [466, 497, 498],
+    "categoryDocuments": [],
     "categoryStaticContent": [{
         "contentType": "static-content",
         "title": "title",
@@ -51,7 +51,7 @@
     "categoryDescription": "GET LEAN",
     "categoryImg": "images/meter.png",
     "categoryId": "get-lean",
-    "categoryServices": [465, 466, 497, 498],
+    "categoryServices": [466, 497, 498],
     "categoryDocuments": [550],
     "categoryStaticContent": [{
         "contentType": "static-content",
