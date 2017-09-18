@@ -107,7 +107,7 @@
                             <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc.png" type="image/png" height="25px">
                         </div>
-                        <div ng-repeat="estimateItem in estimateItems">
+                        <div ng-repeat="estimateItem in resourceMap[1].contentSet">
                         <div ui-widget-content
                              content-item="estimateItem"
                              serviceMap="serviceMap">
@@ -127,7 +127,7 @@
                             <img ng-click="gotoElement('cnc-operations')" class="pull-right margin-right-3" ng-src="images/computer.png" type="image/png" height="25px">
                             <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
                         </div>
-                        <div ng-repeat="cncItem in cncOperationItems">
+                        <div ng-repeat="cncItem in resourceMap[2].contentSet">
                           <div ui-widget-content
                                content-item="cncItem"
                                serviceMap="serviceMap">
@@ -148,7 +148,7 @@
                             <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
                         </div>
 
-                        <div ng-repeat="cmmItem in cmmOperationItems">
+                        <div ng-repeat="cmmItem in resourceMap[0].contentSet">
                           <div ui-widget-content
                                content-item="cmmItem"
                                serviceMap="serviceMap">
@@ -169,7 +169,7 @@
                             <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
                         </div>
 
-                        <div ng-repeat="leanItem in getLeanItems">
+                        <div ng-repeat="leanItem in resourceMap[3].contentSet">
                           <div
                           ui-widget-content
                                content-item="leanItem"
@@ -225,7 +225,7 @@
                     </div>
                   </div> -->
 
-                  <div ng-repeat="item in marketplaceItems | filter:searchTerm">
+                  <div ng-repeat="item in allResources | filter:searchTerm">
                     <div ui-widget-content
                          content-item="item"
                          serviceMap="serviceMap">

@@ -103,6 +103,7 @@ angular.module('dmc.marketplace', [
 
 
     getContentStatic(function(resourceMap){
+      $scope.allResources = [];
       $scope.resourceMap = resourceMap;
       var serviceIdList = [];
       var documentIdList = [];
@@ -147,7 +148,6 @@ angular.module('dmc.marketplace', [
             populateResourceDataCallback({data: [response.data]}, resourceType);
         });
       })
-
     }
 
     var populateResourceDataCallback = function(response, resourceType) {
@@ -161,28 +161,15 @@ angular.module('dmc.marketplace', [
         resourceGroup.contentSet = resourceGroup.contentSet.concat(matchingResources);
 
       });
+
+      // Create second list of all assets for all categories
+      mergeSet($scope.allResources, response.data)
     }
 
-    // $scope.search=function(text){
-    //   if (text){
-    //     text=text.toLowerCase();
-    //     var item =$scope.marketplaceItemsCopy.filter(function (obj){
-    //       if ((obj.title.toLowerCase().includes(text)) || obj.tags.includes(text) ){
-    //         return obj;
-    //       }
-    //     });
-    //     $scope.marketplaceItems=item;
-    //   }
-    //   else{
-    //     $scope.marketplaceItems=$scope.marketplaceItemsCopy;
-    //   }
-    // }
 
     $scope.clearSearch = function(){
       $scope.searchTerm='';
     }
-
-
 
     $http.get(dataFactory.getDefaultServices(), {
     }).success(function(response) {
