@@ -21,7 +21,7 @@ angular.module('dmc.marketplace', [
     }).state('marketplace.home', {
         url: '/',
         controller: 'marketplaceController',
-        templateUrl: 'templates/marketplace/marketplace.html'
+        templateUrl: 'templates/marketplace/marketplaceII.html'
     });
     $urlRouterProvider.otherwise('/');
 }).controller('marketplaceController', ['$scope', '$element', '$location', 'scrollService', '$http','ajax','dataFactory', function ($scope, $element, $location, scrollService, $http, ajax,dataFactory) {
