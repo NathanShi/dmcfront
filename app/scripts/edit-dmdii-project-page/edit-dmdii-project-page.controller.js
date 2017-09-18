@@ -4,6 +4,7 @@ angular.module('dmc.edit-project')
     .controller('DMCEditProjectPageController', [
         '$stateParams',
         '$scope',
+        '$state',
         '$q',
         '$timeout',
         '$showdown',
@@ -17,6 +18,7 @@ angular.module('dmc.edit-project')
         'fileUpload',
         function ($stateParams,
                 $scope,
+                $state,
                 $q,
                 $timeout,
                 $showdown,
@@ -90,7 +92,7 @@ angular.module('dmc.edit-project')
             $scope.descriptionLimit = 5000;
             $scope.isValid = false;
             $scope.isSaved = false;
-            $scope.fieldName = 'Project Summary'
+            $scope.fieldName = 'Project Summary (Required)'
 
             $scope.$on('isValid', function (event, data) {
                 $scope.isValid = data;
@@ -112,10 +114,18 @@ angular.module('dmc.edit-project')
                     $scope.title = 'Edit Project';
                     $scope.action = 'Edited';
                     ajax.get(dataFactory.getDMDIIProject($stateParams.projectId).get, responseData(), callbackFunction);
+                } else if ($stateParams.eventId) {
+                    $scope.isEvent = true;
+                    $scope.title = 'Edit Event';
+                    $scope.action = 'Edited';
+                    ajax.get(dataFactory.getDMDIIProject($stateParams.eventId).get, responseData(), callbackFunction);
+                } else if ($state.current.url == '/event') {
+                    $scope.isEvent = true;
+                    $scope.title = 'Create Event';
+                    $scope.action = 'Created';
                 } else {
                     $scope.title = 'Create Project';
                     $scope.action = 'Created';
-
                 }
             };
             $scope.getDMDIIProject();
@@ -243,7 +253,11 @@ angular.module('dmc.edit-project')
             var callbackSaveFunction = function(response) {
                 if (response.status === 200) {
                     toastModel.showToast('success', 'Member Successfully ' + $scope.action + '!')
-                    $window.location.href = '/dmdii-project-page.php#/' + response.data.id;
+                    if (response.data.isEvent) {
+                      $window.location.href = '/dmdii-project-page.php#/event/' + response.data.id;
+                    } else {
+                      $window.location.href = '/dmdii-project-page.php#/' + response.data.id;
+                    }
                 }
             }
 
@@ -259,7 +273,7 @@ angular.module('dmc.edit-project')
                     return;
                 }
 
-                if ($scope.project.projectStatus.id != 1) {
+                if ($scope.isEvent || $scope.project.projectStatus.id != 1) {
                     var startDate = new Date($scope.date.awarded);
                     var year = startDate.getFullYear();
                     var month = startDate.getMonth() + 1;
@@ -280,8 +294,9 @@ angular.module('dmc.edit-project')
                 }
 
                 $scope.project.projectSummary = convertToMarkdown($scope.project.projectSummary);
-
                 $scope.project.projectIdentifier = $scope.project.rootNumber + '-' + $scope.project.callNumber + '-' + $scope.project.projectNumber
+                $scope.project.isEvent = $scope.isEvent;
+
                 ajax.create(dataFactory.saveDMDIIProject().project, $scope.project, callbackSaveFunction);
             };
 

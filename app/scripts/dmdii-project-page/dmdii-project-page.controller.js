@@ -19,6 +19,8 @@ angular.module('dmc.dmdiiProj')
         'is_search',
         'DMCUserModel',
         '$window',
+        'questionToastModel',
+        'toastModel',
         function($state,
                  $stateParams,
                  $scope,
@@ -30,7 +32,9 @@ angular.module('dmc.dmdiiProj')
                  $location,
                  is_search,
                  DMCUserModel,
-                 $window){
+                 $window,
+                 questionToastModel,
+                 toastModel){
 
             $scope.searchModel = angular.isDefined($stateParams.text) ? $stateParams.text : null;
 
@@ -52,28 +56,6 @@ angular.module('dmc.dmdiiProj')
             // callback for project
             var callbackFunction = function(response){
                 $scope.project = response.data;
-
-                if(($scope.project.dmdiiFunding == 5983) && ($scope.project.costShare == 8395)){
-                  $scope.project.kind='dmdiiEvent'
-                }else{
-                  $scope.project.kind='dmdiiProject'
-                }
-
-                var awardDate = new Date($scope.project.awardedDate);
-                var year = awardDate.getFullYear();
-                var month = awardDate.getMonth() + 1;
-                month = (month < 10) ? '0' + month : month;
-                var day = awardDate.getDate()+1;
-
-                $scope.project.awardedDate = month + '-' + day + '-' + year;
-
-                var endDate = new Date($scope.project.endDate);
-                var year = endDate.getFullYear();
-                var month = endDate.getMonth() + 1;
-                month = (month < 10) ? '0' + month : month;
-                var day = endDate.getDate()+1;
-
-                $scope.project.endDate = month + '-' + day + '-' + year;
 
                 ajax.get(dataFactory.getDMDIIProject().contributors, {projectId: $scope.project.id}, function(response) {
                     $scope.project.contributingCompanies = response.data;
@@ -122,7 +104,26 @@ angular.module('dmc.dmdiiProj')
             };
             $scope.getDMDIIProject();
 
-  
+            // delete server
+            $scope.deleteProject = function(event){
+                questionToastModel.show({
+                    question: "Are you sure you want to delete this project?",
+                    buttons: {
+                        ok: function(){
+                            ajax.delete(dataFactory.getDMDIIProject($scope.project.id).delete, {},
+                                function (response) {
+                                    toastModel.showToast("success", "Project successfully removed!");
+                                    $window.location.href='/dmdii-projects.php#/dmdii_projects';
+                                }, function (response) {
+                                    toastModel.showToast("error", response.statusText);
+                                }
+                            );
+                        },
+                        cancel: function(){}
+                    }
+                }, event);
+            };
+
 		}
     ]
 ).filter('numberFixedLen', function () {

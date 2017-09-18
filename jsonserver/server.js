@@ -65,6 +65,7 @@ server.use(jsonServer.rewriter({
     '/dmdiiProject/events/:id': '/dmdiiProjectEvents/:id',
     '/dmdiiProject/news': '/dmdiiProjectNews',
     '/dmdiiprojects/member/active': '/dmdiiprojectsmembersactive',
+    '/dmdiiprojects/member': '/dmdiiprojectsmembersactive',
     '/dmdiiProject/:id': '/dmdiiProjects/:id',
     '/dmdiidocuments/dmdiiProjectId': '/dmdiidocuments',
     '/dmdiidocument/filetype': '/dmdiidocument',
@@ -110,6 +111,8 @@ server.get('/model_poll/:id', function(req,res) {
   // }
   res.jsonp({"outParams":{"outputFile":{"type":"String","name":"outputFile","unit":"","category":null,"value":"https://psubucket01.s3.amazonaws.com/TDP_1496950468.zip?Signature=KcDIjOLmMxU9oVFcGOQbZxliEfs%3D&Expires=1498160069&AWSAccessKeyId=AKIAJAPMB5APBIC6STKQ","parameterid":"20984","instancename":null},"outputTemplate":{"type":"String","name":"outputTemplate","unit":"","category":null,"value":"<div class=\"project-run-services padding-10\" ng-if=\"!runHistory\" layout=\"column\">          <style>            #custom-dome-UI {             margin-top: -30px;           }          </style>            <div id=\"custom-dome-UI\">             <div layout=\"row\" layout-wrap style=\"padding: 0px 30px\">               <h2>Technical Data Package Created Successfully:</h2>               <p><a href=\"{{outputFile}}\">{{outputFile}}</a></p>             </div>           </div>        </div>   <script> </script>","parameterid":"20985","instancename":null}},"status":1})
 })
+
+
 
 server.get('/dmdiiMember', function (req, res) {
   var membersOrig = JSON.parse(fs.readFileSync('stubs/dmdiiMember.json'));
