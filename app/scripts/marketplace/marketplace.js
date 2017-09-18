@@ -36,9 +36,10 @@ angular.module('dmc.marketplace', [
 
     function getContentStatic(callbackFunction) {
         ajax.get(dataFactory.getStaticJSON('static-marketplace.json'), {}, function(response){
-            $scope.marketplaceItems=response.data;
-            $scope.marketplaceItemsCopy =response.data;
-            callbackFunction();
+            // $scope.marketplaceItems=response.data;
+            // $scope.marketplaceItemsCopy =response.data;
+            // $scope.resourceMap=response.data;
+            callbackFunction(response.data);
         });
     }
 
@@ -74,32 +75,80 @@ angular.module('dmc.marketplace', [
 
     $scope.contentArray = groupServicesByType($scope.marketplaceItems)
 
+    //
+    // getContentStatic(function(){
+    //   $scope.getLeanItems=[]
+    //   $scope.estimateItems=[]
+    //   $scope.cncOperationItems=[]
+    //   $scope.cmmOperationItems=[]
+    //
+    //   for (var i = 0; i < $scope.marketplaceItems.length; i++) {
+    //     // $scope.allMktItems.push($scope.marketplaceItems[i]);
+    //     if ($scope.marketplaceItems[i].categoryContent=='GET LEAN'){
+    //       $scope.getLeanItems.push($scope.marketplaceItems[i])
+    //     }
+    //     else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE ESTIMATES'){
+    //       $scope.estimateItems.push($scope.marketplaceItems[i])
+    //     }
+    //
+    //     else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE CNC OPERATIONS'){
+    //       $scope.cncOperationItems.push($scope.marketplaceItems[i])
+    //     }
+    //
+    //     else{
+    //       $scope.cmmOperationItems.push($scope.marketplaceItems[i])
+    //     }
+    //   }
+    // });
 
-    getContentStatic(function(){
-      $scope.getLeanItems=[]
-      $scope.estimateItems=[]
-      $scope.cncOperationItems=[]
-      $scope.cmmOperationItems=[]
 
-      for (var i = 0; i < $scope.marketplaceItems.length; i++) {
-        // $scope.allMktItems.push($scope.marketplaceItems[i]);
-        if ($scope.marketplaceItems[i].categoryContent=='GET LEAN'){
-          $scope.getLeanItems.push($scope.marketplaceItems[i])
-        }
-        else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE ESTIMATES'){
-          $scope.estimateItems.push($scope.marketplaceItems[i])
-        }
+    getContentStatic(function(resourceMap){
+      $scope.resourceMap = resourceMap;
+      var serviceIdList = [];
+      var documentIdList = [];
 
-        else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE CNC OPERATIONS'){
-          $scope.cncOperationItems.push($scope.marketplaceItems[i])
-        }
-
-        else{
-          $scope.cmmOperationItems.push($scope.marketplaceItems[i])
-        }
+      for (var i=0; i<resourceMap.length; i++) {
+        documentIdList = mergeSet(documentIdList, resourceMap[i].categoryDocuments);
+        serviceIdList = mergeSet(serviceIdList, resourceMap[i].categoryServices);
       }
-    });
 
+      // populateServiceData(serviceIdList)
+      populateResourceData(dataFactory.getServices(), serviceIdList, "categoryServices");
+    })
+
+    var mergeSet = function(existingSet, newSet) {
+      newSet.forEach(function(x){
+        if (existingSet.indexOf(x) == -1) {
+          existingSet.push(x)
+        }
+      })
+      return existingSet;
+    }
+
+    var populateServiceData = function(serviceIds) {
+      ajax.get(dataFactory.getServices(), {id: serviceIds}, function(response){
+        $scope.resourceMap.forEach(function(resourceGroup){
+          resourceGroup.contentSet = response.data.filter(function(service){
+            return resourceGroup.categoryServices.indexOf(service.id) != -1
+          })
+        });
+      });
+    }
+
+    var populateResourceData = function(endpoint, ids, resourceType) {
+      ajax.get(endpoint, {id: ids}, function(response){
+        $scope.resourceMap.forEach(function(resourceGroup){
+          resourceGroup.contentSet = resourceGroup.contentSet || [];
+
+          var matchingResources = response.data.filter(function(resource){
+            return resourceGroup[resourceType].indexOf(resource.id) != -1;
+          })
+
+          resourceGroup.contentSet = resourceGroup.contentSet.concat(matchingResources);
+
+        });
+      });
+    }
 
     // $scope.search=function(text){
     //   if (text){

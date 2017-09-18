@@ -19,7 +19,7 @@
     "categoryImg": "images/calc.png",
     "categoryDescription": "IMPROVE ESTIMATES",
     "categoryId": "improve-estimates",
-    "categoryServices": [465, 466, 497, 498],
+    "categoryServices": [465],
     "categoryDocuments": [550],
     "categoryStaticContent": [{
         "contentType": "static-content",
