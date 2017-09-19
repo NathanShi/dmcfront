@@ -66,22 +66,4 @@
             "large": ""
         }
     }]
-},
-{
-    "categoryTitle": "GET AWESOME LIKE MARCIN",
-    "categoryImage": "Factory1.png",
-    "categoryDescription": "Eleifend vivamus nisl ornare donec facilisi consectetuer, non eu id sodales et ipsum vel, ut aliquam pulvinar vitae sollicitudin sapiente cras. Pulvinar maecenas, magna amet vel. Vitae natoque rutrum, vestibulum wisi. Leo et et tortor eu tincidunt nulla, quam adipiscing semper urna sapien, elit justo morbi amet ultricies, malesuada vestibulum dui tempus dui, maecenas dui nisl id. Eleifend mi, a gravida pede, cras orci. Sed justo justo aliquam amet, gravida nunc volutpat adipiscing vestibulum. Euismod nulla maecenas arcu sed dolor, et wisi suspendisse mauris nulla dictum consequat. Ut commodo libero duis suscipit in sagittis, ac sodales a. Dui lectus sollicitudin eu interdum vehicula blandit.",
-    "categoryImg": "images/meter.png",
-    "categoryId": "get-marcin",
-    "categoryServices": [466, 497, 498],
-    "categoryDocuments": [550],
-    "categoryStaticContent": [{
-        "contentType": "static-content",
-        "title": "title",
-        "description": "description",
-        "featureImage": {
-            "thumbnail": "",
-            "large": ""
-        }
-    }]
 }]
