@@ -144,12 +144,24 @@
 }
 
 .resource_center_group {
+  border: 2px solid white;
   padding: 100px 0px;
-  border: 5px solid white;
+  max-height: 100px;
+  height: 100px;
   background: $brand-accent;
-  color: white;
   font-size: 1.5em;
   text-align: center;
   height: 100%;
-  background-image: url("http://www.pmcorp.com/portals/5/FactoryDesign.jpg");
+  color: black;
+  background-image: url("../images/factory.jpg");
+  background-size: cover;
+  &_detail{
+    background: blue;
+  }
+  &_small{
+    padding: 0px;
+  }
+  &.selected-node {
+    border-bottom: 5px solid $brand-accent;
+  }
 }

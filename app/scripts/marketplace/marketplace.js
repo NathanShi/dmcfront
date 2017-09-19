@@ -167,6 +167,14 @@ angular.module('dmc.marketplace', [
     }
 
 
+    $scope.selectResourceNode = function(selectedNode) {
+      $scope.selectedNode = selectedNode;
+    }
+
+    $scope.returnToHome = function() {
+      $scope.selectedNode = null;
+    }
+
     $scope.clearSearch = function(){
       $scope.searchTerm='';
     }

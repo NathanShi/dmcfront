@@ -24,9 +24,27 @@
             <div role="tabpanel" class="tab-pane fade in active" id="forsmms">
               <section class="container">
 
-                  <div class="row">
-                    <div ng-repeat="resourceGroup in resourceMap" class="col-xs-6 resource_center_group">
-                      {{resourceGroup.categoryDescription}}
+                  <div class="row fade in">
+                    <div ng-repeat="resourceGroup in resourceMap">
+                      <a ng-click="selectResourceNode(resourceGroup)" class="resource_center_group"
+                        ng-class="{'resource_center_group_small': selectedNode,
+                                  'col-xs-6': !selectedNode,
+                                  'col-xs-3': selectedNode,
+                                  'selected-node': resourceGroup.categoryId == selectedNode.categoryId}">
+                        {{resourceGroup.categoryDescription}}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div ng-if="selectedNode" class="row">
+                    <h3>{{selectedNode.categoryDescription}}</h3>
+                    <h5 ng-click="returnToHome()">BACK</H5>
+                  </div>
+
+                  <div ng-repeat="item in selectedNode.contentSet">
+                    <div ui-widget-content
+                         content-item="item"
+                         serviceMap="serviceMap">
                     </div>
                   </div>
 
