@@ -24,8 +24,8 @@
 
     <section class="container">
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active hidden-xs"><a data-target="#favApps" aria-controls="favApps" role="tab" data-toggle="tab">Applications</a></li>
-            <li role="presentation" class="hidden-xs"><a data-target="#favDoc" aria-controls="favDoc" role="tab" data-toggle="tab">Documents</a></li>
+            <li ng-click="getFavoriteApps()" role="presentation" class="active hidden-xs"><a data-target="#favApps" aria-controls="favApps" role="tab" data-toggle="tab">Applications</a></li>
+            <li ng-click="getFavoriteDocuments()" role="presentation" class="hidden-xs"><a data-target="#favDoc" aria-controls="favDoc" role="tab" data-toggle="tab">Documents</a></li>
             <li role="presentation" class="hidden-xs"><a data-target="#favVid" aria-controls="favVid" role="tab" data-toggle="tab">Videos</a></li>
             <!--<li role="presentation" class="hidden-xs"><a data-target="#favWork" aria-controls="favWork" role="tab" data-toggle="tab">Workspaces</a></li>-->
             <!--<li role="presentation" class="hidden-xs"><a data-target="#favOrg" aria-controls="favOrg" role="tab" data-toggle="tab">Organizations</a></li>-->
@@ -38,7 +38,6 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="favApps">
-
                       <div ng-repeat="item in favoriteApps | filter:searchTerm">
                           <div ui-widget-content
                                content-item="item"
@@ -47,9 +46,10 @@
                       </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade " id="favDoc">
-                    <div class="row ">
-                        <div class="col-xs-12">
-                      </div>
+                    <div ng-repeat="item in favoriteDocs | filter:searchTerm">
+                        <div ui-widget-content
+                             content-item="item">
+                        </div>
                     </div>
                 </div>
 

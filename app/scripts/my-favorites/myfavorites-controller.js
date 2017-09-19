@@ -3,22 +3,23 @@ angular.module('dmc.myfavorites')
     .controller('myfavoritesCtrl', ['$scope', '$http', 'dataFactory', function ($scope, $http, dataFactory) {
         
         var favoriteAppIds= [];
+        var favoriteDocIds= [];
         $scope.favoriteApps = [];
+        $scope.favoriteDocs = [];
         $scope.serviceMap = [];
-    
-        getFavoriteApps();
         
-        function getFavoriteApps() {
+        $scope.getFavoriteApps = function() {
             $http.get(dataFactory.userFavorites(null, "1").get).then(function (response) {
+                favoriteAppIds = [];
                 response.data.forEach(function (userFavorite) {
-                    console.log(userFavorite);
                     favoriteAppIds.push(userFavorite.contentId);
                 }, function (message) {
                     console.log(message);
                 });
                 
                 $http.get(dataFactory.services(favoriteAppIds.toString()).get).then(function (response) {
-                    console.log(response);
+                    $scope.serviceMap = [];
+                    $scope.favoriteApps = [];
                     if (Array.isArray(response.data)) {
                         response.data.forEach(function (service) {
                             if(service.parent) {
@@ -40,6 +41,30 @@ angular.module('dmc.myfavorites')
                     }
                 });
             });
-        }
+        };
+        
+        $scope.getFavoriteDocuments = function() {
+            favoriteDocIds = [];
+            $http.get(dataFactory.userFavorites(null, "2").get).then(function (response) {
+                response.data.forEach(function (userFavorite) {
+                    favoriteDocIds.push(userFavorite.contentId);
+                }, function (message) {
+                    console.log(message);
+                });
+                
+                $http.get(dataFactory.documentsUrl().getList, {
+                    ids: favoriteDocIds.toString()
+                }).then(function (response) {
+                    $scope.favoriteDocs = [];
+                    if (Array.isArray(response.data)) {
+                        $scope.favoriteDocs = response.data;
+                    } else {
+                        $scope.favoriteDocs.push(response.data);
+                    }
+                });
+            });
+        };
+    
+        $scope.getFavoriteApps();
         
     }]);
