@@ -25,20 +25,23 @@
               <section class="container">
 
                   <div class="row fade in">
+                    <h5 ng-if="selectedNode" ng-click="returnToHome()">BACK</H5>
                     <div ng-repeat="resourceGroup in resourceMap">
                       <a ng-click="selectResourceNode(resourceGroup)" class="resource_center_group"
                         ng-class="{'resource_center_group_small': selectedNode,
                                   'col-xs-6': !selectedNode,
                                   'col-xs-3': selectedNode,
                                   'selected-node': resourceGroup.categoryId == selectedNode.categoryId}">
-                        {{resourceGroup.categoryDescription}}
+                        {{resourceGroup.categoryTitle}}
                       </a>
                     </div>
                   </div>
 
                   <div ng-if="selectedNode" class="row">
-                    <h3>{{selectedNode.categoryDescription}}</h3>
-                    <h5 ng-click="returnToHome()">BACK</H5>
+                      <div class="col-xs-12 category-description">
+                        <h4>Summary</h4>
+                        {{selectedNode.categoryDescription}}
+                      </div>
                   </div>
 
                   <div ng-repeat="item in selectedNode.contentSet">
