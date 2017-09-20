@@ -25,7 +25,14 @@
             <div role="tabpanel" class="tab-pane fade in active" id="forsmms">
               <section class="container">
 
-                  <div class="row">
+                <div ui-widget-content-path
+                  ng-repeat="contentNode in nodeStack track by $index"
+                  content-node="contentNode"
+                  is-last="$last"
+                  add-to-stack="addToNodeStack(node, selected)">
+                </div>
+
+                  <!-- <div class="row">
                     <div class="back-button-container">
                       <ng-md-icon ng-if="selectedNode" ng-click="returnToHome()" class="nav-back" style="fill: white" icon="navigate_before" size="25"></ng-md-icon>
                     </div>
@@ -56,7 +63,7 @@
                          content-item="item"
                          serviceMap="serviceMap">
                     </div>
-                  </div>
+                  </div> -->
 
               </section>
             </div>
@@ -116,37 +123,3 @@
           </div>
         </div>
 </main>
-
-
-
-<!--
-
-<div ng-repeat="contentGroup in contentArray">
-  <div class="container transform-main">
-    <div class = "row margin-bottom-10">
-
-      <img class = "bullet-image" ng-src="{{contentGroup.categoryImage}}" type="image/png" height="80px">
-        <div class="col-sm-7 co l-md-10 bottom-border path-link">
-          <a ng-click="selectedIndex = $index">{{contentGroup.categoryQuestion}}</h2>
-        </div>
-    </div>
-  </div>
-
-</div>
-
-<div ng-repeat="contentGroup in contentArray" class="transform-section">
-    <div class="container transform-content">
-        <div class="row nav-row">
-            <a ng-click="gotoElement('main-section')"><ng-md-icon class="nav-back top" style="fill: white" icon="navigate_before" size="25"></ng-md-icon></a>
-            <a href="index.php"><ng-md-icon class="pull-right nav-home" icon="home" style="fill: white" size="25"></ng-md-icon></a>
-            <img ng-click="gotoElement('get-lean')" class="pull-right margin-right-3" ng-src="images/meter.png" type="image/png" height="25px">
-            <img ng-click="gotoElement('cmm-operations')" class="pull-right margin-right-3" ng-src="images/ruler_grey.png" type="image/png" height="25px">
-            <img ng-click="gotoElement('cnc-operations')" class="pull-right https://mail.google.com/mail/u/0/#inboxmargin-right-3" ng-src="images/computer_grey.png" type="image/png" height="25px">
-            <img ng-click="gotoElement('improved-estimates')" class="pull-right margin-right-3" ng-src="images/calc_grey.png" type="image/png" height="25px">
-        </div>
-        <div
-        ui-widget-content
-             content-item="contentGroup.content">
-        </div>
-    </div>
-</div> -->

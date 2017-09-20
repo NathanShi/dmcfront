@@ -1,0 +1,48 @@
+<div ng-if="!isLast" class="row">
+  <div style="background-image: url('../images/{{contentNode.selectedNode.categoryImage}}'); height: 30px;" class="col-xs-12">
+    {{contentNode.selectedNode.categoryTitle}}
+  </div>
+</div>
+
+<div ng-if="isLast">
+  <div class="row">
+    <div class="back-button-container">
+      <ng-md-icon ng-if="contentNode.selectedNode" ng-click="returnToHome(contentNode)" class="nav-back" style="fill: white" icon="navigate_before" size="25"></ng-md-icon>
+    </div>
+    <div ng-repeat="resourceGroup in contentNode.resourceGroups"
+    class="resource_center_group"
+    style="background-image: url('../images/{{resourceGroup.categoryImage}}')"
+    ng-click="selectResourceGroup(contentNode, resourceGroup)"
+    ng-class="{'hide-group': contentNode.selectedNode && resourceGroup != contentNode.selectedNode,
+              'resource_center_group_small': contentNode.selectedNode,
+              'col-xs-6': !contentNode.selectedNode,
+              'col-xs-12': contentNode.selectedNode && resourceGroup.categoryId == contentNode.selectedNode.categoryId,
+              'hide-group': contentNode.selectedNode && resourceGroup.categoryId != contentNode.selectedNode.categoryId,
+              'selected-node': resourceGroup.categoryId == contentNode.selectedNode.categoryId}">
+
+      <span>{{resourceGroup.categoryTitle}}</span>
+    </div>
+  </div>
+
+  <div ng-if="contentNode.selectedNode" class="row">
+      <div class="col-xs-12 category-description">
+        <h4>Summary</h4>
+        {{contentNode.selectedNode.categoryDescription}}
+      </div>
+  </div>
+
+  <div ng-if="contentNode.selectedNode && contentNode.selectedNode.subCategories" class="row">
+    <div ng-repeat="subGroup in contentNode.selectedNode.subCategories"
+      class="resource_center_group col-xs-3"
+      ng-click="addToStack({node: contentNode.selectedNode.subCategories, selected: subGroup})">
+      <span>{{subGroup.categoryTitle}}</span>
+    </div>
+  </div>
+
+  <div ng-repeat="item in contentNode.selectedNode.contentSet">
+    <div ui-widget-content
+         content-item="item"
+         serviceMap="serviceMap">
+    </div>
+  </div>
+</div>

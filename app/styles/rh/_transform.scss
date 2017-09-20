@@ -167,14 +167,15 @@
   color: black;
   // background-image: url("../images/factory.jpg");
   background-size: cover;
-  transition: all .15s linear;
-  &_detail{
-    background: blue;
-  }
+  transition: all .15s ease-out;
 }
 
 .hide-group {
-  display: none;
+  transition: all .15s ease-in;
+  width: 0px;
+  height: 0px;
+  padding: 0px;
+  overflow: hidden;
 }
 
 .category-description {

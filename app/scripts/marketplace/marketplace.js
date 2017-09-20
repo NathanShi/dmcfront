@@ -14,7 +14,8 @@ angular.module('dmc.marketplace', [
     "dmc.ajax",
     "dmc.data",
     "dmc.utilities",
-    "dmc.widgets.content"
+    "dmc.widgets.content",
+    "dmc.widgets.contentPath"
 ]).config(function($stateProvider, $urlRouterProvider, $httpProvider){
     $stateProvider.state('marketplace', {
         template: '<ui-view />'
@@ -25,14 +26,14 @@ angular.module('dmc.marketplace', [
     });
     $urlRouterProvider.otherwise('/');
 }).controller('marketplaceController', ['$scope', '$element', '$location', 'scrollService', '$http','ajax','dataFactory', function ($scope, $element, $location, scrollService, $http, ajax,dataFactory) {
-    $scope.gotoElement = function (eID) {
-        // set the location.hash to the id of
-        // the element you wish to scroll to.
-        $location.hash(eID);
-
-        // call scrollTo
-        scrollService.scrollTo(eID);
-    };
+    // $scope.gotoElement = function (eID) {
+    //     // set the location.hash to the id of
+    //     // the element you wish to scroll to.
+    //     $location.hash(eID);
+    //
+    //     // call scrollTo
+    //     scrollService.scrollTo(eID);
+    // };
 
     function getContentStatic(callbackFunction) {
         ajax.get(dataFactory.getStaticJSON('static-marketplace.json'), {}, function(response){
@@ -44,67 +45,42 @@ angular.module('dmc.marketplace', [
     }
 
 
-    var groupServicesByType = function(data) {
-      var serviceTypes = {};
-      var servicesGroupedByType = [];
-      for (var i in data) {
-        if (serviceTypes[data[i].categoryQuestion]) {
-            for (var j in servicesGroupedByType) {
-              if (servicesGroupedByType[j]["categoryQuestion"] == data[i].categoryQuestion) {
-                servicesGroupedByType[j]["content"].push(data[i])
-              }
-            }
-        } else {
-          servicesGroupedByType.push({
-            "categoryQuestion": data[i].categoryQuestion,
-            "categoryImage":data[i].categoryImg,
-            "categoryId":data[i].categoryId,
-            "content": [data[i]]
-          });
-          serviceTypes[data[i].categoryQuestion] = true
-        }
-      };
-
-     servicesGroupedByType.sort(function(a, b){
-        if(a.categoryQuestion < b.categoryQuestion) return -1;
-        if(a.categoryQuestion > b.categoryQuestion) return 1;
-        return 0;
-      });
-      return servicesGroupedByType;
-    };
-
-    $scope.contentArray = groupServicesByType($scope.marketplaceItems)
-
-    //
-    // getContentStatic(function(){
-    //   $scope.getLeanItems=[]
-    //   $scope.estimateItems=[]
-    //   $scope.cncOperationItems=[]
-    //   $scope.cmmOperationItems=[]
-    //
-    //   for (var i = 0; i < $scope.marketplaceItems.length; i++) {
-    //     // $scope.allMktItems.push($scope.marketplaceItems[i]);
-    //     if ($scope.marketplaceItems[i].categoryContent=='GET LEAN'){
-    //       $scope.getLeanItems.push($scope.marketplaceItems[i])
+    // var groupServicesByType = function(data) {
+    //   var serviceTypes = {};
+    //   var servicesGroupedByType = [];
+    //   for (var i in data) {
+    //     if (serviceTypes[data[i].categoryQuestion]) {
+    //         for (var j in servicesGroupedByType) {
+    //           if (servicesGroupedByType[j]["categoryQuestion"] == data[i].categoryQuestion) {
+    //             servicesGroupedByType[j]["content"].push(data[i])
+    //           }
+    //         }
+    //     } else {
+    //       servicesGroupedByType.push({
+    //         "categoryQuestion": data[i].categoryQuestion,
+    //         "categoryImage":data[i].categoryImg,
+    //         "categoryId":data[i].categoryId,
+    //         "content": [data[i]]
+    //       });
+    //       serviceTypes[data[i].categoryQuestion] = true
     //     }
-    //     else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE ESTIMATES'){
-    //       $scope.estimateItems.push($scope.marketplaceItems[i])
-    //     }
+    //   };
     //
-    //     else if ($scope.marketplaceItems[i].categoryContent=='IMPROVE CNC OPERATIONS'){
-    //       $scope.cncOperationItems.push($scope.marketplaceItems[i])
-    //     }
+    //  servicesGroupedByType.sort(function(a, b){
+    //     if(a.categoryQuestion < b.categoryQuestion) return -1;
+    //     if(a.categoryQuestion > b.categoryQuestion) return 1;
+    //     return 0;
+    //   });
+    //   return servicesGroupedByType;
+    // };
     //
-    //     else{
-    //       $scope.cmmOperationItems.push($scope.marketplaceItems[i])
-    //     }
-    //   }
-    // });
+    // $scope.contentArray = groupServicesByType($scope.marketplaceItems)
 
 
     getContentStatic(function(resourceMap){
       $scope.allResources = [];
       $scope.resourceMap = resourceMap;
+      $scope.addToNodeStack(resourceMap);
       var serviceIdList = [];
       var documentIdList = [];
 
@@ -166,11 +142,6 @@ angular.module('dmc.marketplace', [
       mergeSet($scope.allResources, response.data)
     }
 
-
-    $scope.selectResourceNode = function(selectedNode) {
-      $scope.selectedNode = selectedNode;
-    }
-
     $scope.returnToHome = function() {
       $scope.selectedNode = null;
     }
@@ -179,20 +150,15 @@ angular.module('dmc.marketplace', [
       $scope.searchTerm='';
     }
 
-    $http.get(dataFactory.getDefaultServices(), {
-    }).success(function(response) {
-        $scope.serviceMap = {};
-        response.forEach(function (service){
-          $scope.serviceMap[service.parent] = {'serviceId': service.id, 'workspaceId': service.projectId};
-        });
-    });
+    $scope.nodeStack = [];
+    $scope.addToNodeStack = function(node, selected) {
+      console.log('add to node stack called')
+      var contentNode = {
+        resourceGroups: node,
+        selected: selected
+      }
+      $scope.nodeStack.push(contentNode);
+    }
 
-    $http.get(dataFactory.getDefaultServices(), {
-    }).success(function(response) {
-        $scope.serviceMap = {};
-        response.forEach(function (service){
-          $scope.serviceMap[service.parent] = {'serviceId': service.id, 'workspaceId': service.projectId};
-        });
-    });
 
 }]);
